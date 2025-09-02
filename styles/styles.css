@@ -1,0 +1,153 @@
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Changed from height to min-height to allow content to expand */
+  margin: 0;
+  background-color: #eee;
+  padding: 20px; /* Added padding to prevent content from touching edges */
+  box-sizing: border-box;
+}
+
+#instructions {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%; /* Ensure it takes full width for centering */
+}
+
+div#outpt2 {
+  background-color:#fff;
+  width:90%;
+  height:40%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 17px;
+  margin-top: 10px;
+}
+textarea#output {
+  height: auto;
+  min-height: 6em;
+  line-height: 1.25;
+  resize: vertical;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px; /* Match #textArea for consistency */
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  margin: 3%;
+  padding: 10px;
+  width: 90%; /* Responsive width instead of fixed 300px */
+  max-width: 800px; /* Prevent it from becoming too wide */
+}
+
+h5 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 130%; /* Match table font-size */
+  margin: 3% 3% 1%;
+  color: #333;
+  font-weight: bold;
+  text-align: center; /* Align with tables */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.25;
+}
+table {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 100%;
+  margin: 3% auto;
+  border-collapse: separate;
+  border-spacing: 4px;
+  width: 100%; /* Responsive width */
+  max-width: 800px; /* Consistent with textarea */
+}
+
+table td,th {
+  padding: 5px;
+  text-align:center;
+  margin: 3% auto;
+}
+
+table.striped, .striped table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 3% auto;
+    font-family: Arial, sans-serif;
+    border: 2px solid #ccc;
+}
+
+table.striped th, table.striped td, .striped table th, .striped table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Alternate row colors */
+table.striped tr:nth-child(even),  .striped table tr:nth-child(even){
+    background-color: #eef;
+}
+table.striped tr:nth-child(odd),  .striped table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+/* First row (header) styling */
+table.striped th, .striped table th {
+    background-color: navy;
+    color: white;
+    font-weight: bold;
+}
+
+s {
+font-size: 120%;
+vertical-align: super;
+text-decoration: none;
+}
+
+#debug {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  margin: 3% 3% 5px;
+  border: 1px solid #ccc;
+  padding: 3px;
+  text-align: left; /* Override #instructions text-align for debug */
+  width: 70%;
+  max-width: 800px;
+}
+
+.highlight {
+background-color: #dba;
+font-size:120%;
+}
+
+ k {
+    font-family: 'Courier New', Courier, monospace; /* Monospaced font for keyboard aesthetic */
+    color: #fff; /* White text */
+    background-color: #1c2526; /* Dark background, resembling a key */
+    padding: 6px 9px; /* Padding to mimic key size */
+    border-radius: 6px 9px; /* Rounded corners */
+    border: 1px solid #3a3a3a; /* Subtle border for definition */
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.5), /* Inner shadow for left/bottom */
+                2px 2px 4px rgba(0, 0, 0, 0.3); /* Outer shadow for depth */
+    display: inline-block; /* Inline-block for key-like appearance */
+    text-align: center; /* Center text like on a key */
+    font-size: 13px; /* Adjust font size as needed */
+    font-weight: bold; /* Bold for better readability */
+    text-transform: uppercase; /* Uppercase for keyboard key vibe */
+    margin-right: 0.2em;
+}
+
+.textarea
+{
+  background-color:#fff;
+  width:80%;
+  height:40%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+.strong_digit  {
+font-weight: bold;
+}
