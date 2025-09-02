@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chorded Keypress to Digit Input</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="markdown striped">
+  ### [T9](https://en.wikipedia.org/wiki/T9_(predictive_text))-MultiTap/(e.161 [numpad](#e161))-inspired 3-Pass Mirrored-hands Text-Input
+
+  |              | numpad       |              |
+  |:------------:|:------------:|:------------:|
+  |              | 1<s>abc.</s> | 2<s>def.</s> |
+  | 3<s>ghi.</s> | 4<s>jkl.</s> | 5<s>mno.</s> |
+  | 6<s>pqrs</s> | 7<s>tuv.</s> | 8<s>wxyz</s> |
+  |              |              |              |
+
+  ## 3-Pass Input
+
+  |Pass|Word 1      |Word 2       |Word 3     |Word 4          |Other   |
+  |----|------------|-------------|-----------|----------------|--------|
+  | 1st|<k>space</k>|<k>&#47;</k> |<k>space</k> + <k>&#47;</k>||<k>B</k>|
+  | 2nd|  <k>j</k>  |   <k>k</k>   | <k>l</k>  |   <k>;</k>     |<k>h</k>|
+  | 3rd|  missing   | word        | (qwerty) + <k>Enter</k> |
+
+  ### 63576 = pints = shots = riots = 36,57,6 (pair reordered for 2-finger chords)
+
+  ## Variants
+
+|  mapping | single hand chording | difficulty | alternate fingerings|
+|--------|---|---|---|
+|  - [ 8 keys per hand ](mappings/v2/index.html)|no | easy| no|
+|  - [ 4 keys per hand ](mappings/v3/index.html)|ish|medium| g & h double digit|
+|- [12 keys per hand ](mappings/v1/index.html)| yes | hard| 3rd row, g & h double digit|
+
+  <script src="lib/marked.min.js"></script>
+  <script>
+    // Process all Markdown content within the body
+    document.querySelector('body.markdown').innerHTML = marked.parse(document.querySelector('body.markdown').innerHTML);
+  </script>
+</body>
+</html>
