@@ -11,9 +11,11 @@ let need3rdPass = 0; // Flag for active missing word input, set by M chord or re
 let pendingHfnGps = []; //pending hyphen groups
 let groupIndex = 0;
 
+let lastDecidingSpan="";
 let presdKeys = new Set();   //keys list for current chord
 let timeoutId = null;        //timeout needed to register keypresses
                              //together not individuality 
+
 const validKeys = new Set(Object.keys(primeMap));
 
 //to select from hyphenated reserve words on 2nd pass
@@ -170,34 +172,7 @@ function mark3rdPassWds() {
 
 // Appends chords to global frag, returns true for success or false for invalid
 
-function appendChord_old(left,right){ 
-  let leftLen  = left.length;      
-  let rightLen = right.length;  
-                                  
-  if(leftLen==0) {                
-    left    =right;                   
-    leftLen =rightLen;          
-    right   ="";}                    
-                                
-  let fragLen      = frag.length;      
-  let isFragOdd    = fragLen % 2;    
-  let fragLast     = frag.slice(-1);
-// detect doubled digits  
-  let rightIsDbl   = (right % 11 == 0);
-  let leftIsDbl    = (left  % 11 == 0);
- 
 
-  // even cant follow odd unless it is a double 
-  if(!isFragOdd && leftLen==1 && rightLen==2 && !rightIsDbl) return false; 
-  if(isFragOdd  && leftLen==2 && !leftIsDbl)         return false; 
-  if(fragLast < left || !isFragOdd ){
-  frag = frag + left + right;
-  } else {  //swap left and fragLast (i.e reorder)
-    frag = frag.substring(0,fragLen-1) + left + fragLast  + right;
-  } 
-  if(!dic[frag]) frag="";
-  return true;
-}
 // Combines fragment and chords, handling even/odd lengths and doubled digits
 function appendChord_recursive(ofrag, leftChord, rightChord) {
   // Coerce inputs to strings to handle numbers or undefined
@@ -236,47 +211,12 @@ function appendChord_recursive(ofrag, leftChord, rightChord) {
   
   // Recurse with single digit, combining frag, ordered m/singleL, and result
   const result = appendChord_recursive(singleL, r, "");
-  return result === false ? false : ofra + order(g, singleL) + result;
+//  return result === false ? false : ofra + order(g, singleL) + result;
+return typeof result === 'string' && result.match(/[a-z]/) ? false : ofra + order(g, singleL) + result;
 }
 
 
-function appendChord(leftChord, rightChord) {
-  // Coerce inputs to strings to handle numbers or undefined
-  let l = String(leftChord);   // Can be single or two-finger chord
-  let r = String(rightChord);  // Can be single or two-finger chord
-  
-  // Base case: if left chord is empty, shift right to left
-  if (l === "") { l = r; r = ""; }
-  // Base case: if left chord is still empty, append nothing
-  if (l === "") return true;
-  
-  let fragLen = frag.length || 1;
-  let isFragOdd = fragLen % 2;
-  let fragLast = frag.slice(-1);
-  
-  // Check for doubled digits (e.g., "55" = 5*11)
-  let lNum = parseInt(l);
-  let rNum = parseInt(r);
-  let lIsDbl = lNum % 11 === 0;
-  let rIsDbl = rNum % 11 === 0;
-  
-  // Reject: even frag + single left + non-doubled right (length 2)
-  if (!isFragOdd && l.length === 1 && r.length === 2 && !rIsDbl) return false;
-  // Reject: odd frag + non-doubled left (length 2)
-  if (isFragOdd && l.length === 2 && !lIsDbl) return false;
-  
-  // Append: if frag is even or last char < left, append left + right
-  if (!isFragOdd || fragLast < l) {
-    frag += l + r;
-  } else {
-    // Swap left and last char, append right
-    frag = frag.substring(0, fragLen - 1) + order(fragLast, l) + r;
-  }
-  
-  // Reset frag if not in dictionary
-  if (!dic[frag]) frag = "";
-  return true;
-}
+
 
 // Orders two characters lexicographically
 function order(m, n) { return m < n ? `${m}${n}` : `${n}${m}`; }
@@ -299,8 +239,8 @@ function parseAffixes(text){
   t = t.replace(/⟑\s*⟑\s*([^⟑]*)⟑\s*⟑\s*/g,(_,PHRASE) => PHRASE.toUpperCase());
   t = t.replace(/⟐\s*⟐\s*([^⟐]*)⟐\s*⟐\s*/g, (_, w) => w.split(/[^a-z]+/).map(wd => wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
 // directly preceeded by a mark affects single words   
-  t = t.replace(/⟑ ([a-z]*)([^a-z]*)/g, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
-  t = t.replace(/⟐ ([a-z])([^a-z]*)/g, (_,B,ilbo) => B.toUpperCase() + ilbo);
+  t = t.replace(/⟑\s*([a-z]*)([^a-z]*)/g, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
+  t = t.replace(/⟐\s*([a-z])([^a-z]*)/g, (_,B,ilbo) => B.toUpperCase() + ilbo);
   return t;
 }
 
@@ -356,7 +296,7 @@ function nonAlphabetic() {
   if(dic[frag]){
  	  removeWordOptions();
     let bwords="<span id='deciding'>" + boldFirstNLtrs(frag) +"</span>";
-    wdOpts.innerHTML = bwords;
+//  wdOpts.innerHTML = bwords;
     setMd(md() + bwords);
    }
    return true;
@@ -436,9 +376,8 @@ function processBiChord() {
   
   if (chord) {
   //appends chord and/or rejects ambig chord
-//    if(!appendChord_old(left,right)){
     if(!(frag=appendChord_recursive(frag,left,right))){
-  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord seq');
+  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord - even after odd?');
         } 
   } else console.warn('No valid chord generated, skipping appendChord');
  
@@ -452,9 +391,11 @@ function processBiChord() {
   	removeWordOptions();
     let opts =`<span id='deciding'>${boldCueWds}</span>`; 
     setMd(  md()   + opts);
-    wdOpts.innerHTML = opts;//? previous frag might be good for trigger happy users
+ // wdOpts.innerHTML = opts;//? previous frag might be good for trigger happy users
+    wdOpts.innerHTML = lastDecidingSpan;
     renderMarkdown();
     } else {
+        frag="";
   	  	removeWordOptions();
         setMd(md() + (append ? append + ' \u275A' : '\u275A'));
         wdOpts.innerHTML = '';

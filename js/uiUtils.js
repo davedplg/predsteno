@@ -72,6 +72,7 @@ function updtDebugInfo(keys, lProduct, rProduct, thumbChord, chord, wd) {
 function removeWordOptions() {
   mdRepl(/<span id='deciding'>.*?<\/span>|\u275A+/g, '');
   let decidingSpan = outpt2.querySelector('#deciding');
+  lastDecidingSpan = decidingSpan ? decidingSpan.innerHTML : '';
   if (decidingSpan) { 
   decidingSpan.remove()
   renderMarkdown();
