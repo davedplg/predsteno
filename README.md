@@ -34,3 +34,11 @@ A T9-inspired web app for predictive text input using chorded keypresses, mappin
 
 ## License
 MIT
+
+
+## Credits
+This project uses [marked.js](https://github.com/markedjs/marked) (`marked.min.js`), licensed under the [MIT License](https://github.com/markedjs/marked/blob/master/LICENSE.md).
+
+
+CMU prounuciation dictionary and BNC data was used in compiling the dictionary.  The pronunciation granularity was increased from word to transcription, to letter to phoneme by the author.
+

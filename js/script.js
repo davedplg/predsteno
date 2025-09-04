@@ -1,3 +1,5 @@
+// Uses marked.min.js (https://github.com/markedjs/marked) under MIT License
+
 //import { primeMap, productMap, NON_ALPHA_CHORDS, passThroughKeys } from './mappings.js';
 //import { dic } from './toptxts.js';
 //import { reserves } from './reserves.js';
