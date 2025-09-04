@@ -5,8 +5,10 @@ A T9-inspired web app for predictive text input using chorded keypresses, mappin
 ![e.161](/numpad.png)
 ## Features
 - Predictive text with 2-3 word suggestions per chord input.
+  ![word options](/blindPressSpace.png)
 - Input from one or both hands, one or more fingers per hand
 - Three-pass parsing: chord input, reserve word selection, and QWERTY fallback.
+  ![nice needs b](/nicePressB.png) ![mice needs j](/micePressJ.png)
 - Markdown rendering for formatted output.
 - Debug interface for chord and word tracking.
 
