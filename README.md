@@ -1,14 +1,23 @@
 
 # Chorded Predictive Text App
 
-A T9-inspired web app for predictive text input using chorded keypresses, mapping the alphabet to digits 1-9 with a custom dictionary.
+A T9-inspired web app for predictive text input using chorded keypresses, mapping the alphabet to digits 1-9 with a custom dictionary. 
+
+**This is not t9**; 1) the digits are **1 less** than the [E.161](https://en.wikipedia.org/wiki/E.161)  mapping, 2) and **reordered** pairwise ascending.  
+
+'blind' = 14352 (E.161-1) = 14352 (reordered) = 14352 = 41532 (reordered) = 'jamie'.
+
 ![e.161](/numpad.png)
 ## Features
 - Predictive text with 2-3 word suggestions per chord input.
+
   ![word options](/blindPressSpace.png)
 - Input from one or both hands, one or more fingers per hand
 - Three-pass parsing: chord input, reserve word selection, and QWERTY fallback.
-  ![nice needs b](/nicePressB.png) ![mice needs j](/micePressJ.png)
+
+| press b for extra words | press **j**,k,l,; for mice, ince, goad, nida resp.|
+|---|---|
+ | ![nice needs b](/nicePressB.png) | ![mice needs j](/micePressJ.png) |
 - Markdown rendering for formatted output.
 - Debug interface for chord and word tracking.
 
