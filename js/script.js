@@ -12,6 +12,9 @@ let chord = '', thumbChord = ''; // both chords appended, thumb chord
 let need3rdPass = 0; // Flag for active missing word input, set by M chord or recursion
 let pendingHfnGps = []; //pending hyphen groups
 let groupIndex = 0;
+let bwords = '';
+let opts = '';
+let oldOpts = '';
 
 let lastDecidingSpan="";
 let presdKeys = new Set();   //keys list for current chord
@@ -297,8 +300,12 @@ function nonAlphabetic() {
   frag = frag.replace(/.$/, '');
   if(dic[frag]){
  	  removeWordOptions();
-    let bwords="<span id='deciding'>" + boldFirstNLtrs(frag) +"</span>";
-//  wdOpts.innerHTML = bwords;
+    if(String(frag).length % 2 == 0 ){
+      bwords="<span id='deciding'>" + boldFirstNLtrs(frag) +"</span>";
+    } else {
+      bwords="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag) +"</span>";
+    }
+    wdOpts.innerHTML = bwords;
     setMd(md() + bwords);
    }
    return true;
@@ -389,18 +396,28 @@ function processBiChord() {
  
   let boldCueWds =boldFirstNLtrs(frag);   
   
-  if (dic[frag]) { // if word finished delete suggestions
+  if (dic[frag]) { 
   	removeWordOptions();
-    let opts =`<span id='deciding'>${boldCueWds}</span>`; 
+//  let opts =`<span id='deciding'>${boldCueWds}</span>`; 
+    oldOpts=opts;
+    if(String(frag).length % 2 == 0 ){
+      opts="<span id='deciding'>" + boldFirstNLtrs(frag) +"</span>";
+    } else {
+      opts="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag) +"</span>";
+    }
+
     setMd(  md()   + opts);
  // wdOpts.innerHTML = opts;//? previous frag might be good for trigger happy users
-    wdOpts.innerHTML = lastDecidingSpan;
+    wdOpts.innerHTML = opts + (opts.match(/style=/)?' single letter needed after odd':'');
     renderMarkdown();
-    } else {
-        frag="";
+    } else { // if word finished delete suggestions
+//      frag="";
+        frag=frag.slice(0,-2);
   	  	removeWordOptions();
-        setMd(md() + (append ? append + ' \u275A' : '\u275A'));
-        wdOpts.innerHTML = '';
+//      setMd(md() + (append ? append + ' \u275A' : '\u275A'));
+        setMd(  md()   + oldOpts);
+//      wdOpts.innerHTML = '';
+        wdOpts.innerHTML = oldOpts; 
    }
  presdKeys.clear();
 }
@@ -415,7 +432,7 @@ function on3rdPass(key)  {
     const input = outpt2.querySelector('input.missing-word');
     if (input) {
       event.preventDefault();
-      const value = input.value || `gg`;
+      const value = input.value || ``;
       mdRepl(inputRegex, value);
       mark3rdPassWds(); // Recursively handle next placeholder
     }
