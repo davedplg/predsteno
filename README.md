@@ -1,23 +1,29 @@
 
-# Chorded Predictive Text App
+# Chorded Predictive Text [App](https://davedplg.github.io/predsteno/)
 
-A T9-inspired web app for predictive text input using chorded keypresses, mapping the alphabet to digits 1-9 with a custom dictionary. 
 
-**This is not t9**; 1) the digits are **1 less** than the [E.161](https://en.wikipedia.org/wiki/E.161)  mapping, 2) and **reordered** pairwise ascending.  
+A proof of concept T9-inspired demo web app [here on githubpages](https://davedplg.github.io/predsteno/
+)for predictive text input using chorded keypresses, mapping the alphabet to digits 1-8 with a custom dictionary. 
 
-'blind' = 14352 (E.161-1) = 14352 (reordered) = 14352 = 41532 (reordered) = 'jamie'.
+**THIS IS NOT T9**; 1) the digits are **1 LESS** than the [E.161](https://en.wikipedia.org/wiki/E.161)  mapping, 2) and **REORDERED** pairwise ascending.  
+
+|word     | E.161-1| pairwise reordered|
+|----     |------- |-------------------|
+|blind    | 14,35,2|14,35,2            |
+|jamie    | 41,53,2|14,35,2            |
 
 ![e.161](/numpad.png)
 ## Features
 - Predictive text with 2-3 word suggestions per chord input.
 
-  ![word options](/blindPressSpace.png)
 - Input from one or both hands, one or more fingers per hand
 - Three-pass parsing: chord input, reserve word selection, and QWERTY fallback.
-
-| press b for extra words | press **j**,k,l,; for mice, ince, goad, nida resp.|
-|---|---|
- | ![nice needs b](/nicePressB.png) | ![mice needs j](/micePressJ.png) |
+ |pass   | scr. shot | action | result|
+|-------|-----------|-----------|--------|-------|
+|1st    | ![word options](/blindPressSpace.png)|press space|blind|
+|1st    | ![word options](/blindPressSpace.png)|press /    |jamie|
+|1st    |![nice needs b](/nicePressB.png)| mice not option: press b| reserve group inserted|
+|2nd    |![mice needs j](/micePressJ.png)| press j (not-kl;) | mice| 
 - Markdown rendering for formatted output.
 - Debug interface for chord and word tracking.
 
