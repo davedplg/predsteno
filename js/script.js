@@ -296,8 +296,9 @@ function nonAlphabetic() {
     wdOpts.innerHTML =   '---';
     return true;
    }
-   
+  if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
   frag = frag.replace(/.$/, '');
+  
   if(dic[frag]){
  	  removeWordOptions();
     if(String(frag).length % 2 == 0 ){

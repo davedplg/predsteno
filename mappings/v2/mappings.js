@@ -1,7 +1,7 @@
 //These keys will register in the text area as is
 
 //export  \
-const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|']);
+const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','\'','{','}','/','\\','?','|','<','>']);
 
 
 /* These prime mappings, map the keys to prime numbers, 
@@ -41,8 +41,11 @@ const primeMap = {
      'enter': 71,
   //honorary thumb rejects word options for reserves
      'b': 146, 
+     'meta': 146, 
 
     '/': 74,
+    '[': 74,
+    'alt': 74,
     '\\': 82,
     ' ' : 62
 };
@@ -146,8 +149,8 @@ const productMap = {
 // includes codes corresponding to non alphabetic input
 //export \
 const NON_ALPHA_CHORDS = {
-  '91': '.  ⟐ ' ,
-  '92': ', ' ,
+  '91': '+.  ⟐ ' ,
+  '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
   '96': ' ⟑ ' ,
