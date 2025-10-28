@@ -8,6 +8,7 @@
 let left='',right=''; //left and right hand chords
 let frag = '';   // encoded fragment
 let lProduct = 1, rProduct = 1, thumbProduct = 1;
+let lastlProduct = 1;
 let chord = '', thumbChord = ''; // both chords appended, thumb chord
 let need3rdPass = 0; // Flag for active missing word input, set by M chord or recursion
 let pendingHfnGps = []; //pending hyphen groups
@@ -43,6 +44,12 @@ const reserveRegEx =   /[a-zA-Z'+]+(?:\u2194['+a-zA-Z]+)+/;
 ///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
 const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 
+function clearFrag(){
+   frag='';
+   removeWordOptions();
+   lastDecidingSpan='';
+ }
+
 /** calcProducts: calculate prime (p) products
  * there will be 1-6 keys pressed simultaneously
  * each alphabetic key will map to 1 of 8 digits.
@@ -59,7 +66,8 @@ const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
  */ 
 
 function calcPrimeProducts() { 
-  let lProduct = 1, rProduct = 1, thumbProduct=1;
+  lastlProduct = lProduct;
+  let lProductT = 1, rProduct = 1, thumbProduct=1;
   for (const key of presdKeys) {
     const prime = primeMap[key];
     if (prime % 2 === 0 ) {
@@ -69,10 +77,11 @@ function calcPrimeProducts() {
       rProduct *= prime / 2; //right keys 
       } 
     } else {
-      lProduct *= prime;     //left keys
+      lProductT *= prime;     //left keys
     }
   }
-  return { lProduct, rProduct,thumbProduct };
+  lProduct = lProductT;
+  return { lProduct , rProduct,thumbProduct };
 }
 
 //function tr(str, fromChars, toChars) {
@@ -285,7 +294,7 @@ function nonAlphabetic() {
   if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) {
 
   if (special !== 'D') {
-    frag = '';
+    clearFrag();
     setMd(md() + special + '\u275A');
     wdOpts.innerHTML = '';
     return true;
@@ -313,24 +322,45 @@ function nonAlphabetic() {
  }
 
 }
+//A function that splits the options list
+//in two when the frag lenghth is less than
+//3. single and 2-finger chord words have
+//4 options we split these in two pairs
+//the front pair for right hand single chord words
+//the rear pair other wise for composite and left
+//hand words
+function RHSawareDic(f){
+  const wdList = dic[f]?.split('-') || [];
+  if(thumbProduct > 1 && rProduct*lProduct == 1) lProduct = lastlProduct;
+  if(frag.length < 3){
+    if(lProduct == 1){
+      return (wdList[0] || ' ') + '-' + (wdList[1] || ', ');
+    } else
+    { 
+      return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
+    }
+   }
+  return dic[f];
+}
 
 //User chooses from 2-3 options with two spacebar keys
 function multiSpacebar() {
-  const wdList = dic[frag]?.split('-') || [];
+//  const wdList = dic[frag]?.split('-') || [];
+  const wdList = RHSawareDic(frag)?.split('-') || [];
   let wd = '';
   switch (thumbChord) {
     case 'wd1': wd = wdList[0] || ' '; break;
     case 'wd2': wd = wdList[1] || ''; break;
-    case 'wd3': wd = wdList[2] || ''; break;
-    case 'missed': wd = reserves[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`; frag = ''; break;
-    case 'space': wd = ' '; frag = ''; break;
+//  case 'wd3': wd = wdList[2] || ''; break;
+    case 'missed': wd = reserves[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`; clearFrag(); break;
+    case 'space': wd = ' '; clearFrag(); break;
   }
 		removeWordOptions();
 
     setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
     wdOpts.innerHTML = '';
    
-  if (thumbChord !== 'missed' && thumbChord !== 'space') frag = '';
+  if (thumbChord !== 'missed' && thumbChord !== 'space') clearFrag();
   renderMarkdown();
 }
 
@@ -341,7 +371,8 @@ function multiSpacebar() {
  */
 
 function boldFirstNLtrs(frg) {
-    let wds=dic[frg];
+//  let wds=dic[frg];
+    let wds=RHSawareDic(frg);
     let n    =frg.length;
     if (typeof wds !== 'string' || n < 0) return '';
     return caps2boldLcase(wds
