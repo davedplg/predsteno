@@ -26,7 +26,11 @@ const validKeys = new Set(Object.keys(primeMap));
 
 //to select from hyphenated reserve words on 2nd pass
 const keyMap2ndPass = {
-  'h': 5,
+  'u': 5,
+  'i': 6,
+  'o': 7,
+  'p': 8,
+  'h': 9,
   'j': 1,
   'k': 2,
   'l': 3,
@@ -40,7 +44,8 @@ const optionKeys = Object.keys(keyMap2ndPass);
 const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 // reserveRegEx detects unhighlighted raw groups
 // of reserve words · 
-const reserveRegEx =   /[a-zA-Z'+]+(?:\u2194['+a-zA-Z]+)+/;
+//const reserveRegEx =   /[a-zA-Z'+]+(?:\u2194['+a-zA-Z]+)+/;
+const reserveRegEx =   /[\p{L}'+0]+(?:\u{2194}[\p{L}'+0]+)+/u;
 ///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
 const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 
@@ -106,16 +111,20 @@ function mapChordToDigits(lProduct, rProduct) {
 
 // pick from inserted reserves
 function select2ndPassWd(key) { 
+  console.log(` 2nd pass frag:${frag}`);
   const choice = keyMap2ndPass[key];
   if (!choice) return;
 //hyphenated reserve word options are inside span tags
   const wds = mdMatch(spanRegEx)[1]; 
-  const wdList = wds.split("\u2194") || [];
+  const wdList = reserves[frag].split("-") || [];
+//const wdList = reserves[frag].split("\u2194") || [];
+//const wdList = wds.split("\u2194") || [];
   let selectedWord = wdList[choice - 1] || wdList[0] || '';
+//let selectedWord = reserves[choice - 1] || reserves[0] || '';
 
-// user selects h (5) if 3rd pass is needed for qwerty 
+// user selects h (9) if 3rd pass is needed for qwerty 
 // 999 used as place holder. 
-  if (choice === 5)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
+  if (choice === 9)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
 // swap hyphenated word options with selected word
   mdRepl(spanRegEx, selectedWord);
   renderMarkdown();
@@ -311,9 +320,9 @@ function nonAlphabetic() {
   if(dic[frag]){
  	  removeWordOptions();
     if(String(frag).length % 2 == 0 ){
-      bwords="<span id='deciding'>" + boldFirstNLtrs(frag) +"</span>";
+      bwords="<span id='deciding'>" + boldFirstNLtrs(frag,dic) +"</span>";
     } else {
-      bwords="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag) +"</span>";
+      bwords="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag,dic) +"</span>";
     }
     wdOpts.innerHTML = bwords;
     setMd(md() + bwords);
@@ -329,8 +338,8 @@ function nonAlphabetic() {
 //the front pair for right hand single chord words
 //the rear pair other wise for composite and left
 //hand words
-function RHSawareDic(f){
-  const wdList = dic[f]?.split('-') || [];
+function RHSawareDic(f,dict){
+  const wdList = dict[f]?.split('-') || [];
   if(thumbProduct > 1 && rProduct*lProduct == 1) lProduct = lastlProduct;
   if(frag.length < 3){
     if(lProduct == 1){
@@ -340,19 +349,20 @@ function RHSawareDic(f){
       return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
     }
    }
-  return dic[f];
+  return dict[f];
 }
 
 //User chooses from 2-3 options with two spacebar keys
 function multiSpacebar() {
 //  const wdList = dic[frag]?.split('-') || [];
-  const wdList = RHSawareDic(frag)?.split('-') || [];
+  const wdList = RHSawareDic(frag,dic)?.split('-') || [];
   let wd = '';
   switch (thumbChord) {
     case 'wd1': wd = wdList[0] || ' '; break;
     case 'wd2': wd = wdList[1] || ''; break;
 //  case 'wd3': wd = wdList[2] || ''; break;
-    case 'missed': wd = reserves[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`; clearFrag(); break;
+//  case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`; clearFrag(); break;
+    case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`;  break;
     case 'space': wd = ' '; clearFrag(); break;
   }
 		removeWordOptions();
@@ -362,6 +372,18 @@ function multiSpacebar() {
    
   if (thumbChord !== 'missed' && thumbChord !== 'space') clearFrag();
   renderMarkdown();
+//if(mdMatch(reserveRegEx) || mdMatch(missingRegEx)){
+
+if (mdMatch(reserveRegEx) || mdMatch(missingRegEx)) {
+  reParseParagraph(() => {  // Anon fn as callback—your comma-vibe dep
+    clearFrag();
+    removeWordOptions();
+  });
+}
+//  reParseParagraph();
+//  clearFrag();
+//  removeWordOptions();
+//}
 }
 
 /* Help user remember how many letters they have typed
@@ -370,9 +392,9 @@ function multiSpacebar() {
  * the current frag. Do this to all options in dic[frg]
  */
 
-function boldFirstNLtrs(frg) {
+function boldFirstNLtrs(frg,dict) {
 //  let wds=dic[frg];
-    let wds=RHSawareDic(frg);
+    let wds=RHSawareDic(frg,dict);
     let n    =frg.length;
     if (typeof wds !== 'string' || n < 0) return '';
     return caps2boldLcase(wds
@@ -387,7 +409,7 @@ function boldFirstNLtrs(frg) {
 function caps2boldLcase(str) {
     return str
         .replace(/[A-Z]+/g, '<b>$&</b>') // capital ltrs in <b> tags
-        .toLowerCase(); // Convert the entire string to lowercase
+//      .toLowerCase(); // Convert the entire string to lowercase
 }
 
 //handle both hands chords
@@ -426,29 +448,27 @@ function processBiChord() {
  
   if (thumbChord) multiSpacebar(); //select the encoding word option 
  
-  let boldCueWds =boldFirstNLtrs(frag);   
+  let capsOpts =boldFirstNLtrs(frag,caps);   
+  let dicOpts  =boldFirstNLtrs(frag,dic);   
   
   if (dic[frag]) { 
   	removeWordOptions();
-//  let opts =`<span id='deciding'>${boldCueWds}</span>`; 
+    let CueOpts =`<span id='deciding'>${capsOpts}</span>`; 
     oldOpts=opts;
     if(String(frag).length % 2 == 0 ){
-      opts="<span id='deciding'>" + boldFirstNLtrs(frag) +"</span>";
+      opts=`<span id='deciding'>${capsOpts}</span>`; 
     } else {
-      opts="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag) +"</span>";
+      opts=`<span id='deciding' style='color:red'>${capsOpts}</span>`; 
     }
 
     setMd(  md()   + opts);
- // wdOpts.innerHTML = opts;//? previous frag might be good for trigger happy users
-    wdOpts.innerHTML = opts + (opts.match(/style=/)?' single letter needed after odd':'');
+    wdOpts.innerHTML = CueOpts + (CueOpts.match(/style=/)?' single letter needed after odd':'');
     renderMarkdown();
     } else { // if word finished delete suggestions
 //      frag="";
         frag=frag.slice(0,-2);
   	  	removeWordOptions();
-//      setMd(md() + (append ? append + ' \u275A' : '\u275A'));
         setMd(  md()   + oldOpts);
-//      wdOpts.innerHTML = '';
         wdOpts.innerHTML = oldOpts; 
    }
  presdKeys.clear();
