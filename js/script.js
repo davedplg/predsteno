@@ -134,7 +134,7 @@ function select2ndPassWd(key) {
   } else {
     pendingHfnGps = 0; // No more groups, allow other keys
     } 
-  
+  clearFrag();
   }
 
 //highlight hypenated reserve.js words with css highlight
@@ -259,11 +259,11 @@ function parseAffixes(text){
  function parseCaseMarking(text) {
   let t=text;
 // sandwiched by pairs of marks modifies whole phrases   
-  t = t.replace(/⟑\s*⟑\s*([^⟑]*)⟑\s*⟑\s*/g,(_,PHRASE) => PHRASE.toUpperCase());
-  t = t.replace(/⟐\s*⟐\s*([^⟐]*)⟐\s*⟐\s*/g, (_, w) => w.split(/[^a-z]+/).map(wd => wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
+  t = t.replace(/⟑\s*⟑\s*([^⟑]*)⟑\s*⟑\s*/gu,(_,PHRASE) => PHRASE.toUpperCase());
+  t = t.replace(/⟐\s*⟐\s*([^⟐]*)⟐\s*⟐\s*/gu, (_, w) => w.split(/[^a-z]+/).map(wd => wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
 // directly preceeded by a mark affects single words   
-  t = t.replace(/⟑\s*([a-z]*)([^a-z]*)/g, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
-  t = t.replace(/⟐\s*([a-z])([^a-z]*)/g, (_,B,ilbo) => B.toUpperCase() + ilbo);
+  t = t.replace(/⟑\s*(\p{L}*)([^\p{L}]*)/gu, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
+  t = t.replace(/⟐\s*([\p{L}])([^\p{L}]*)/gu, (_,B,ilbo) => B.toUpperCase() + ilbo);
   return t;
 }
 
@@ -310,7 +310,7 @@ function nonAlphabetic() {
   }
   // We are deleteing from here on in
   if (frag === '') {
-    mdRepl(/[a-z-\u2194\u275A]+$| +$|\n$|.$/, '\u275A');
+    mdRepl(/[a-z-\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
     wdOpts.innerHTML =   '---';
     return true;
    }
@@ -320,9 +320,9 @@ function nonAlphabetic() {
   if(dic[frag]){
  	  removeWordOptions();
     if(String(frag).length % 2 == 0 ){
-      bwords="<span id='deciding'>" + boldFirstNLtrs(frag,dic) +"</span>";
+      bwords="<span id='deciding'>" + boldFirstNLtrs(frag,caps) +"</span>";
     } else {
-      bwords="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag,dic) +"</span>";
+      bwords="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag,caps) +"</span>";
     }
     wdOpts.innerHTML = bwords;
     setMd(md() + bwords);
@@ -358,11 +358,16 @@ function multiSpacebar() {
   const wdList = RHSawareDic(frag,dic)?.split('-') || [];
   let wd = '';
   switch (thumbChord) {
-    case 'wd1': wd = wdList[0] || ' '; break;
-    case 'wd2': wd = wdList[1] || ''; break;
+    case 'wd1': wd = wdList[0] || ' '; clearFrag(); break;
+    case 'wd2': wd = wdList[1] || ''; clearFrag(); break;
 //  case 'wd3': wd = wdList[2] || ''; break;
 //  case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`; clearFrag(); break;
-    case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`;  break;
+    case 'missed': 
+      wd = reservecaps[frag]; 
+      wd = wd.match(/-/) ? wd.replace(/-/g,"\u2194") : (reserves[frag]  || `\u2014\u2014${frag}\u2014\u2014`);
+//    clearFrag();
+      break;
+//  case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194")  || `\u2014\u2014${frag}\u2014\u2014`;  break;
     case 'space': wd = ' '; clearFrag(); break;
   }
 		removeWordOptions();
@@ -433,7 +438,9 @@ function processBiChord() {
     presdKeys.clear();   
     renderMarkdown();
     // paragraph triggers 2nd parse
-    if (mdMatch(/\n\n\u275A$/))  reParseParagraph();                         
+    if (mdMatch(/\n\n\u275A$/))  {
+    reParseParagraph();                         
+    }
   return;
   }
   

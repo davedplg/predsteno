@@ -22,8 +22,9 @@ div#outpt2 {
   width:90%;
   height:40%;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 17px;
+  font-size: 24px;
   margin-top: 10px;
+  font-weight: bold; /* Bold for better readability */
 }
 textarea#output {
   height: auto;
@@ -146,8 +147,25 @@ font-size:120%;
   font-family: 'Courier New', Courier, monospace;
   font-size: 22px;
   margin-top: 10px;
+  color: #d00;
+  font-weight: bold; /* Bold for better readability */
 }
 
 .strong_digit  {
 font-weight: bold;
+}
+
+v {
+    color: #d00;
+    font-weight: bold; /* Bold for better readability */
+}
+
+vc {
+    color: #00d;
+    font-weight: bold; /* Bold for better readability */
+}
+
+x {
+    color: #555;
+    font-weight: bold; /* Bold for better readability */
 }

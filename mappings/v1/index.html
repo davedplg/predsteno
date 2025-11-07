@@ -10,15 +10,15 @@
 <body>
   <h4> <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input</h4>
   <h4> press enter (perhaps twice) to start</h4>
-        <textarea id="output" rows="4" cols="80" readonly>
+    <textarea id="output" rows="4" cols="80" readonly>
 #### markdown enabled 
 - ' '+' '+ enter = enter 
 - enter + enter = paragraph
 **three** blind *mice* 
-        </textarea>
-        <h4 id="wdOpts">suggestions</h4>
-        <div id="outpt2" >
-       </div>
+    </textarea>
+  <a id="md_download" href='#' onclick="exportMD();">md</a>
+  <h4 id="wdOpts">suggestions</h4>
+  <div id="outpt2" > </div>
 
 <div id="debug" onclick="this.children[2].style.display = 
   this.children[2].style.display === 'none' ? 'block' : 'none';">

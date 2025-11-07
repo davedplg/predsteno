@@ -46,6 +46,7 @@ function renderMarkdown() {
 //  console.log(md().replace(/\n/g,"\\n\n"));
   let htm=marked.parse(md());
   htm  = htm.replace(/ + \u275A/,"\uFE4E\uFE4E\u275A")
+  htm = format_augmented_words(htm);
   setHtml(htm);
 //  console.log(`--------\n ${html()}\n`);
   outputMarkdown.focus();
@@ -80,3 +81,136 @@ function removeWordOptions() {
   }
 }
 
+function format_augmented_words(t){
+  t=t.replace(/πħ/gi,'th');
+  t=t.replace(/ŝħ/gi,'sh');
+  t=t.replace(/ĉħ/gi,'ch');
+  t=t.replace(/þħ/gi,'ph');
+  t=t.replace(/îg0ħ/gi,'iġḩ');
+  t=t.replace(/iñg0/gi,'ing');
+  t=t.replace(/ār/gi, 'ař');
+  t=t.replace(/ëw(0)*/gi, 'eẇ');
+  t=t.replace(/ør/gi, 'oř');
+  t=t.replace(/õw(0)*/gi,'oẇ');
+  t=t.replace(/õù/gi,'ou');
+  t=t.replace(/âì/gi,'ai');
+  t=t.replace(/êè/gi,'ee');
+  t=t.replace(/êà/gi,'ea');
+  t=t.replace(/öò/gi,'oo');
+  t=t.replace(/åw(0)*/gi,'aẇ');
+  t=t.replace(/èŕ/gi,'eř');
+  t=t.replace(/(?<![<][^>]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
+  t=t.replace(/(<v[^<0]*)0/gi,'$1');
+  t=t.replace(/(.)0($1)/gi,'$1$2');
+  t=t.replace(/τħ/gi,'<vc>th</vc>');
+  t=t.replace(/[ħàèìòù]+|(.)0(?!$1)/gi,'<x>$&</x>');
+  t=t.replace(/ñ/g,'n');
+  t=t.replace(/Ñ/g,'N');
+  t=t.replace(/(?<![</][^>]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+/gi,'<vc>$&</vc>');
+  t=t.replace(/ř/g,'r');
+  t=t.replace(/ẇ/g,'w');
+  t=t.replace(/ġ/g,'g');
+  t=t.replace(/ḩ/g,'h');
+  return t;
+}
+
+function removeDiacritics(str) {
+  return str
+    .normalize('NFD')  // Decompose: e.g., 'á' → 'a' + combining acute accent
+    .replace(/[\u0300-\u036f]/g, '');  // Remove the diacritic marks
+}
+
+function downloadContent({ content, filename, type, linkId }) {
+  const link = document.getElementById(linkId);
+  if (!link) return console.error(`Link #${linkId} not found`);
+
+  const blob = new Blob(['\uFEFF'+ content], { type });
+  const url = URL.createObjectURL(blob);
+  link.href = url;
+  link.download = filename;
+  link.click();
+  
+  setTimeout(() => {
+    link.href = '#';
+    link.download = '';
+    URL.revokeObjectURL(url);
+  }, 100);
+}
+
+
+
+async function makeHTML(){
+
+  const htmlContent = document.getElementById('outpt2').innerHTML;
+
+  // 1. Fetch the actual CSS file from server
+  let css = '';
+  try {
+    const response = await fetch('../../styles/styles.css');
+    if (response.ok) {
+      css = await response.text();
+    } else {
+      console.warn('CSS fetch failed, falling back to inline styles');
+    }
+  } catch (err) {
+    console.warn('CSS fetch failed', err);
+  }
+
+  // 2. Build full HTML with embedded CSS
+  const fullHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exported Notes</title>
+  <style>
+    /* Embedded live CSS */
+    ${css}
+    
+    /* Fallback: ensure v/vc colors */
+    v  { color: red  !important; }
+    vc { color: blue !important; }
+    x  { color: grey !important; }
+  </style>
+</head>
+<body>
+  ${htmlContent}
+</body>
+</html>`;
+return fullHTML;
+}
+
+let downloadingMD = false;
+let downloadingHTML = false;
+
+function exportMD() {
+ 
+  if (downloadingMD) return;  // ← BLOCK REPEAT
+  downloadingMD = true;
+  
+  const md = document.getElementById('output').value;
+  
+  if (!md.trim()) return alert('No markdown.');
+  downloadContent({ content: md, filename: `notes-${Date.now()}.md`, type: 'text/markdown; charset=utf-8', linkId: 'md_download' });
+
+if (confirm('Download HTML too?')) {
+    exportHTML();  // chain
+  } else {
+    downloading = false;
+  }
+  setTimeout(() => downloadingMD = false, 1000);  // ← 1s cooldown
+}
+
+async function exportHTML() {
+ 
+  if (downloadingHTML) return;  // ← BLOCK REPEAT
+  downloadingHTML = true;
+
+  const htmlContent = document.getElementById('outpt2').innerHTML;
+  
+  if (!htmlContent.trim()) return alert('No HTML.');
+  const fullHTML = await makeHTML();
+  downloadContent({ content: fullHTML, filename: `rendered-${Date.now()}.html`, type: 'text/html; charset=utf-8', linkId: 'html_download' });
+
+  setTimeout(() => downloadingHTML = false, 1000);  // ← 1s cooldown
+}
