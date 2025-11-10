@@ -274,9 +274,7 @@ function parseAffixes(text){
  *  user supplies the word uisng qwerty entry on the 3rd pass 
 */
 function reParseParagraph(){
-//if(mdMatch(/[a-zA-Z'+]\u2194/)){
-  //\p{L}'+0-9
-  if(mdMatch(/[\p{L}'+0-9]\u2194/)){
+  if(mdMatch(/[0-9a-zA-Z'+]\u2194/)){
     markReserves();                      //2nd input pass
   } else if (mdMatch(missingRegEx)) {
       need3rdPass = 1;
