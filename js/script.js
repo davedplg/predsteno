@@ -44,8 +44,8 @@ const optionKeys = Object.keys(keyMap2ndPass);
 const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 // reserveRegEx detects unhighlighted raw groups
 // of reserve words · 
-//const reserveRegEx =   /[a-zA-Z'+]+(?:\u2194['+a-zA-Z]+)+/;
-const reserveRegEx =   /[\p{L}'+0]+(?:\u{2194}[\p{L}'+0]+)+/u;
+//const reserveRegEx =   /[1-9a-zA-Z'+]+(?:\u2194['+1-9a-zA-Z]+)+/;
+const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
 ///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
 const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 
@@ -57,7 +57,7 @@ function clearFrag(){
 
 /** calcProducts: calculate prime (p) products
  * there will be 1-6 keys pressed simultaneously
- * each alphabetic key will map to 1 of 8 digits.
+ * each alphabetic key will map to 1 of 8 nigits.
  * easiest to give each digit uniquie prime p (left hand keys),
  * or 2p (for the right hand keys). Then sort them
  * into thumbkeys (2p>58), right keys (2p <58), and left
@@ -113,7 +113,7 @@ function mapChordToDigits(lProduct, rProduct) {
 function select2ndPassWd(key) { 
   console.log(` 2nd pass frag:${frag}`);
   const choice = keyMap2ndPass[key];
-  if (!choice) return;
+  if (!choice || frag=='') return;
 //hyphenated reserve word options are inside span tags
   const wds = mdMatch(spanRegEx)[1]; 
   const wdList = reserves[frag].split("-") || [];
@@ -274,7 +274,9 @@ function parseAffixes(text){
  *  user supplies the word uisng qwerty entry on the 3rd pass 
 */
 function reParseParagraph(){
-  if(mdMatch(/[a-zA-Z'+]\u2194/)){
+//if(mdMatch(/[a-zA-Z'+]\u2194/)){
+  //\p{L}'+0-9
+  if(mdMatch(/[\p{L}'+0-9]\u2194/)){
     markReserves();                      //2nd input pass
   } else if (mdMatch(missingRegEx)) {
       need3rdPass = 1;

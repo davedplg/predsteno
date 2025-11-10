@@ -115,9 +115,13 @@ function format_augmented_words(t){
 }
 
 function removeDiacritics(str) {
+  str=str.replace(/ħ/g,"h");
+  str=str.replace(/Ħ/,"H");
+  str=str.replace(/[τπ]/g,"t");
+  str=str.replace(/[ΤΠ]/g,"T");
   return str
     .normalize('NFD')  // Decompose: e.g., 'á' → 'a' + combining acute accent
-    .replace(/[\u0300-\u036f]/g, '');  // Remove the diacritic marks
+    .replace(/[0ħ\u0300-\u036f]/g, '');  // Remove the diacritic marks
 }
 
 function downloadContent({ content, filename, type, linkId }) {
@@ -192,6 +196,7 @@ function exportMD() {
   
   if (!md.trim()) return alert('No markdown.');
   downloadContent({ content: md, filename: `notes-${Date.now()}.md`, type: 'text/markdown; charset=utf-8', linkId: 'md_download' });
+  downloadContent({ content: removeDiacritics(md), filename: `TO_notes-${Date.now()}.md`, type: 'text/markdown; charset=utf-8', linkId: 'TO_md_download' });
 
 if (confirm('Download HTML too?')) {
     exportHTML();  // chain
