@@ -310,7 +310,9 @@ function nonAlphabetic() {
   }
   // We are deleteing from here on in
   if (frag === '') {
-    mdRepl(/[a-z-\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
+//  mdRepl(/[a-z-\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
+//  mdRepl(/[\p{L}\-z\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
+    mdRepl(/(?:(?:<[^>]*>)*\S+(?:<[^>]*>)*)$/, '\u275A');
     wdOpts.innerHTML =   '---';
     return true;
    }

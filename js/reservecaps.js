@@ -1,7 +1,7 @@
 //export
 const reservecaps={
    "2": "D2",
-   "5": "M",
+   "5": "+'M",
    "6": "S",
    "7": "T-V-U",
    "12": "AD1-AD2-EB1-EB2-AE-DA",
