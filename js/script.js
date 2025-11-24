@@ -31,6 +31,7 @@ const keyMap2ndPass = {
   'o': 7,
   'p': 8,
   'h': 9,
+  'b': 1,
   'j': 1,
   'k': 2,
   'l': 3,
@@ -135,6 +136,7 @@ function select2ndPassWd(key) {
     pendingHfnGps = 0; // No more groups, allow other keys
     } 
   clearFrag();
+  requestAnimationFrame(() => outputMarkdown.focus());
   }
 
 //highlight hypenated reserve.js words with css highlight
@@ -144,6 +146,29 @@ function markReserves() {
 }
 
 function mark3rdPassWds() {
+  const placeholder = mdMatch(missingRegEx);
+  if (!placeholder) {
+    need3rdPass = 0;
+    renderMarkdown();
+    requestAnimationFrame(() => outputMarkdown.focus());
+    return;
+  }
+
+  mdRepl(missingRegEx, `<input class="missing-word" placeholder="type word" autofocus />`);
+  renderMarkdown();
+
+  // THIS IS THE KEY: focus the actual <input> in the preview, not the textarea
+  requestAnimationFrame(() => {
+    const input = outpt2.querySelector('input.missing-word');
+    if (input) {
+      input.focus();
+      input.select(); // nice UX: select all so user can overtype instantly
+    } else {
+      outputMarkdown.focus(); // fallback
+    }
+  });
+}
+function mark3rdPassWdsOld() {
     const placeholder = mdMatch(missingRegEx);
      
     if (!placeholder) {//no 3rd parse frag placeholders
@@ -312,7 +337,7 @@ function nonAlphabetic() {
   if (frag === '') {
 //  mdRepl(/[a-z-\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
 //  mdRepl(/[\p{L}\-z\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
-    mdRepl(/(?:(?:<[^>]*>)*\S+(?:<[^>]*>)*)$/, '\u275A');
+    mdRepl(/(?:(?:<[^>]*>)*\S+(?:<[^>]*>)*$)/, '\u275A');
     wdOpts.innerHTML =   '---';
     return true;
    }
@@ -354,32 +379,161 @@ function RHSawareDic(f,dict){
   return dict[f];
 }
 
-//User chooses from 2-3 options with two spacebar keys
+/**
+ * NEW & IMPROVED multiSpacebar() – handles all thumb-chord cases
+ * Fixes:
+ *   • Focus loss when a single reserve word auto-inserts
+ *   • Ghost <span id='deciding'> or old options staying on screen
+ *   • Inconsistent clearFrag() behaviour
+ */
+function multiSpacebarAIDumb() {
+  const wdList = RHSawareDic(frag, dic)?.split('-') || [];
+  let wd = '';
+
+  switch (thumbChord) {
+    case 'wd1':
+      wd = wdList[0] || ' ';
+      clearFrag();
+      break;
+
+    case 'wd2':
+      wd = wdList[1] || '';
+      clearFrag();
+      break;
+
+    case 'space':
+      wd = ' ';
+      clearFrag();
+      break;
+
+    case 'missed': {
+      const options = (reserves[frag] || '').split('-').filter(Boolean);
+    
+      if (options.length === 1) {
+        wd = options[0];                    // real diacritic word
+        clearFrag();
+        removeWordOptions();
+      } else if (options.length > 1) {
+        //  wd = options.join('\u2194');        // 2nd-pass mode
+      wd = reservecaps[frag].replace(/-/g,'\u2194'); 
+      } else {
+        wd = `\u2014\u2014MissingWord\u2014\u2014`;   // missing
+//      wd = `\u2014\u2014${frag}\u2014\u2014`;   // missing
+        clearFrag();
+        removeWordOptions();
+      }
+      break;
+    }
+    default:
+      // Unknown thumb chord – treat as normal space (safety)
+      wd = ' ';
+      clearFrag();
+  }
+
+  // ────── COMMIT THE WORD ──────
+  removeWordOptions();  // always clean old cues first
+  setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
+  renderMarkdown();
+
+  // ────── TRIGGER 2ND/3RD PASS ONLY WHEN NEEDED ──────
+  if (thumbChord === 'missed') {
+    const justInsertedMultiOption = wd.includes('\u2194') || wd.includes('-');
+    if (justInsertedMultiOption) {
+      reParseParagraph();   // will call markReserves() → nice highlight appears
+    } else if (wd.includes('\u2014\u2014')) {
+      // missing-word placeholder → go straight to 3rd pass input fields
+      need3rdPass = 1;
+      mark3rdPassWds();
+    }
+    // single auto-inserted reserve word falls through here → does nothing → perfect
+  }
+}
+
 function multiSpacebar() {
+  const wdList = RHSawareDic(frag, dic)?.split('-') || [];
+  let wd = '';
+
+  switch (thumbChord) {
+    case 'wd1':
+      wd = wdList[0] || ' ';
+      clearFrag();
+      break;
+
+    case 'wd2':
+      wd = wdList[1] || '';
+      clearFrag();
+      break;
+
+    case 'space':
+      wd = ' ';
+      clearFrag();
+      break;
+
+    case 'missed': {
+      const capsStr = reservecaps[frag] || '';
+
+      if (!capsStr) {
+        // No entry at all
+//      wd = `\u2014\u2014${frag}\u2014\u2014`;
+        wd = `\u2014\u2014MissingWord\u2014\u2014`;
+        clearFrag();
+        removeWordOptions();
+      }
+      else if (!capsStr.includes('-')) {
+        // Exactly ONE option → insert real diacritic version
+        wd = reserves[frag] || capsStr;   // safe fallback
+        clearFrag();
+        removeWordOptions();
+      }
+      else {
+        // Multiple options → show capitalized hints
+        wd = capsStr.replace(/-/g, '\u2194');
+        // do NOT clearFrag — 2nd-pass needs it
+      }
+      break;
+    }
+
+    default:
+      wd = ' ';
+      clearFrag();
+  }
+
+  // ────── THIS BLOCK RUNS FOR EVERY SINGLE PATH ──────
+  removeWordOptions();
+  setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
+  renderMarkdown();
+  requestAnimationFrame(() => outputMarkdown.focus());
+
+  // ────── Only trigger next phase when needed ──────
+  if (thumbChord === 'missed' && wd.includes('\u2194')) {
+    reParseParagraph();
+  } else if (thumbChord === 'missed' && wd.includes('\u2014\u2014')) {
+    need3rdPass = 1;
+    mark3rdPassWds();
+  }
+}
+//User chooses from 2-3 options with two spacebar keys
+function multiSpacebarOld() {
 //  const wdList = dic[frag]?.split('-') || [];
   const wdList = RHSawareDic(frag,dic)?.split('-') || [];
   let wd = '';
   switch (thumbChord) {
     case 'wd1': wd = wdList[0] || ' '; clearFrag(); break;
     case 'wd2': wd = wdList[1] || ''; clearFrag(); break;
-//  case 'wd3': wd = wdList[2] || ''; break;
-//  case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194") || `\u2014\u2014${frag}\u2014\u2014`; clearFrag(); break;
     case 'missed': 
       wd = reservecaps[frag]; 
-      wd = wd.match(/-/) ? wd.replace(/-/g,"\u2194") : (reserves[frag]  || `\u2014\u2014${frag}\u2014\u2014`);
-//    clearFrag();
+//    wd = wd.match(/-/) ? wd.replace(/-/g,"\u2194") : (reserves[frag]  || `\u2014\u2014${frag}\u2014\u2014`);
+      wd = wd.match(/-/) ? wd.replace(/-/g,"\u2194") : (reserves[frag]  || `\u2014\u2014MissingWord\u2014\u2014`);
       break;
-//  case 'missed': wd = reservecaps[frag].replace(/-/g,"\u2194")  || `\u2014\u2014${frag}\u2014\u2014`;  break;
     case 'space': wd = ' '; clearFrag(); break;
   }
 		removeWordOptions();
-
+    clearFrag();
     setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
     wdOpts.innerHTML = '';
-   
+    requestAnimationFrame(() => outputMarkdown.focus());
   if (thumbChord !== 'missed' && thumbChord !== 'space') clearFrag();
   renderMarkdown();
-//if(mdMatch(reserveRegEx) || mdMatch(missingRegEx)){
 
 if (mdMatch(reserveRegEx) || mdMatch(missingRegEx)) {
   reParseParagraph(() => {  // Anon fn as callback—your comma-vibe dep
@@ -391,6 +545,7 @@ if (mdMatch(reserveRegEx) || mdMatch(missingRegEx)) {
 //  clearFrag();
 //  removeWordOptions();
 //}
+
 }
 
 /* Help user remember how many letters they have typed
@@ -487,8 +642,26 @@ function processBiChord() {
 
 const inputRegex = /<input [^>]*>/;
 
+function on3rdPass(key) {
+  if (key === 'enter') {
+    const input = outpt2.querySelector('input.missing-word');
+    if (input) {
+      event.preventDefault();
+      const value = input.value.trim() || '???';
+      mdRepl(inputRegex, value);
+      renderMarkdown();
+      requestAnimationFrame(() => outputMarkdown.focus()); // back to source
+      // Check for next missing word
+      if (mdMatch(missingRegEx)) {
+        mark3rdPassWds();
+      } else {
+        need3rdPass = 0;
+      }
+    }
+  }
+}
 //Third pass key handling
-function on3rdPass(key)  {
+function on3rdPassOld(key)  {
   if (key === 'enter') {
     const input = outpt2.querySelector('input.missing-word');
     if (input) {
@@ -518,8 +691,16 @@ function on2ndPass(key){
 
 document.addEventListener('keydown', (event) => {
  const key = event.key.toLowerCase();
- if (mdMatch(spanRegEx) && optionKeys.includes(key)) {
-   on2ndPass(key);
+// if (mdMatch(spanRegEx) && optionKeys.includes(key)) {
+//   event.preventDefault();
+//   on2ndPass(key);
+//   return;
+// }
+ if (mdMatch(spanRegEx)) {
+   event.preventDefault();
+   if (optionKeys.includes(key)) {
+     on2ndPass(key);
+   }
    return;
  }
  if (need3rdPass) {
