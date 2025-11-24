@@ -334,13 +334,26 @@ function nonAlphabetic() {
     return true;
   }
   // We are deleteing from here on in
-  if (frag === '') {
-//  mdRepl(/[a-z-\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
-//  mdRepl(/[\p{L}\-z\u2194\u275A]+$| +$|\n$|.$|[<][^>]*[>]/, '\u275A');
-    mdRepl(/(?:(?:<[^>]*>)*\S+(?:<[^>]*>)*$)/, '\u275A');
-    wdOpts.innerHTML =   '---';
-    return true;
-   }
+
+if (frag === '') {
+  const cleaned = md()
+    .replace(/\u275A$/, '')  // remove cursor
+    .replace(/\s+$/, ' ')    // collapse trailing spaces → one space
+    .replace(/[^\s]+(?=\s*$)/, '')
+ // .replace(/[\p{L}\p{M}'’-]+[^\s]*\s*$/u, ''); // delete last word + following space
+
+  setMd(cleaned + '\u275A');
+  wdOpts.innerHTML = '---';
+  renderMarkdown();
+  requestAnimationFrame(() => outputMarkdown.focus());
+  return true;
+}
+//if (frag === '') {
+//  mdRepl(/(?:(?:<[^>]*>)*\S+(?:<[^>]*>)*$)/, '\u275A');
+//    setMd(md().replace(/[\p{L}\p{M}'’-]+[^\s]*$/u, '') + '\u275A');
+//    wdOpts.innerHTML =   '---';
+//    return true;
+//   }
   if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
   frag = frag.replace(/.$/, '');
   
