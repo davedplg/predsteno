@@ -43,12 +43,10 @@ const dbgWd = document.getElementById('debugWord');
 const CHORD_TIMEOUT = 80;
 
 function renderMarkdown() {
-//  console.log(md().replace(/\n/g,"\\n\n"));
   let htm=marked.parse(md());
   htm  = htm.replace(/ + \u275A/,"\uFE4E\uFE4E\u275A")
   htm = format_augmented_words(htm);
   setHtml(htm);
-//  console.log(`--------\n ${html()}\n`);
   outputMarkdown.focus();
   outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
 }
@@ -71,7 +69,6 @@ function updtDebugInfo(keys, lProduct, rProduct, thumbChord, chord, wd) {
 
 // function to word options and containing span tags
 function removeWordOptions() {
-//mdRepl(/<span id='deciding'>.*?<\/span>|\u275A+/g, '');
   mdRepl(/<span id='deciding'.*?<\/span>|\u275A+/g, '');
   let decidingSpan = outpt2.querySelector('#deciding');
   lastDecidingSpan = decidingSpan ? decidingSpan.innerHTML : '';

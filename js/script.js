@@ -1,17 +1,13 @@
 // Uses marked.min.js (https://github.com/markedjs/marked) under MIT License
 
-//import { primeMap, productMap, NON_ALPHA_CHORDS, passThroughKeys } from './mappings.js';
-//import { dic } from './toptxts.js';
-//import { reserves } from './reserves.js';
-
 
 let left='',right=''; //left and right hand chords
-let frag = '';   // encoded fragment
-let lProduct = 1, rProduct = 1, thumbProduct = 1;
+let frag = '';        // encoded fragment
+let lProduct = 1, rProduct = 1, thumbProduct = 1; //prime products from key combinations. Keys have prime values
 let lastlProduct = 1;
 let chord = '', thumbChord = ''; // both chords appended, thumb chord
 let need3rdPass = 0; // Flag for active missing word input, set by M chord or recursion
-let pendingHfnGps = []; //pending hyphen groups
+let pendingHfnGps = []; //pending hyphen groups (2nd parse options)
 let groupIndex = 0;
 let bwords = '';
 let opts = '';
@@ -31,7 +27,7 @@ const keyMap2ndPass = {
   'o': 7,
   'p': 8,
   'h': 9,
-  'b': 1,
+  'b': 1,   // duplicated so user can dbl click b; 1st and 2nd parse
   'j': 1,
   'k': 2,
   'l': 3,
@@ -40,11 +36,11 @@ const keyMap2ndPass = {
 const optionKeys = Object.keys(keyMap2ndPass);
 
 // spanRegEx detects the first group of hyphenated
-// reserve words after it has been highlighted
+// reserve (2nd parse) words after it has been highlighted
 // in a span with class="highlight"
 const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 // reserveRegEx detects unhighlighted raw groups
-// of reserve words · 
+// of reserve words for later highlighting 
 //const reserveRegEx =   /[1-9a-zA-Z'+]+(?:\u2194['+1-9a-zA-Z]+)+/;
 const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
 ///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
@@ -58,7 +54,7 @@ function clearFrag(){
 
 /** calcProducts: calculate prime (p) products
  * there will be 1-6 keys pressed simultaneously
- * each alphabetic key will map to 1 of 8 nigits.
+ * each alphabetic key will map to 1 of 8 digits (This will vary in subsequent neobet variants).
  * easiest to give each digit uniquie prime p (left hand keys),
  * or 2p (for the right hand keys). Then sort them
  * into thumbkeys (2p>58), right keys (2p <58), and left
@@ -68,7 +64,9 @@ function clearFrag(){
  * (especially if later we reuse the function for 
  * 2+finger chords) depending on their order registerd.
  * Prime products ensures a single combination.
- * 
+ * Think steno has key ordering precedence; doubt this will 
+ * be so useful with collapsed neobets for some combinatorial
+ * hunch I have yet to justify.
  */ 
 
 function calcPrimeProducts() { 
@@ -90,16 +88,6 @@ function calcPrimeProducts() {
   return { lProduct , rProduct,thumbProduct };
 }
 
-//function tr(str, fromChars, toChars) {
-//  if (fromChars.length !== toChars.length) {
-//    throw new Error("fromChars and toChars strings must have equal length");
-//  }
-//  const map = {};
-//  for (let i = 0; i < fromChars.length; i++) {
-//    map[fromChars[i]] = toChars[i];
-//  }
-//  return str.replace(/./g, char => map[char] || char);
-//}
 
 /* mapChordToDigits: map chord to digits
  * turns prime products into digit strings 
@@ -118,13 +106,11 @@ function select2ndPassWd(key) {
 //hyphenated reserve word options are inside span tags
   const wds = mdMatch(spanRegEx)[1]; 
   const wdList = reserves[frag].split("-") || [];
-//const wdList = reserves[frag].split("\u2194") || [];
-//const wdList = wds.split("\u2194") || [];
   let selectedWord = wdList[choice - 1] || wdList[0] || '';
-//let selectedWord = reserves[choice - 1] || reserves[0] || '';
 
 // user selects h (9) if 3rd pass is needed for qwerty 
-// 999 used as place holder. 
+// MissingWord used as place holder. May need to change
+// for neobets where n > 8..
   if (choice === 9)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
 // swap hyphenated word options with selected word
   mdRepl(spanRegEx, selectedWord);
@@ -157,7 +143,7 @@ function mark3rdPassWds() {
   mdRepl(missingRegEx, `<input class="missing-word" placeholder="type word" autofocus />`);
   renderMarkdown();
 
-  // THIS IS THE KEY: focus the actual <input> in the preview, not the textarea
+  // THIS IS THE KEY: focus the actual <input> in the preview, not the textarea. May supply option for multi-tap 3rd parse entry later.
   requestAnimationFrame(() => {
     const input = outpt2.querySelector('input.missing-word');
     if (input) {
@@ -167,25 +153,6 @@ function mark3rdPassWds() {
       outputMarkdown.focus(); // fallback
     }
   });
-}
-function mark3rdPassWdsOld() {
-    const placeholder = mdMatch(missingRegEx);
-     
-    if (!placeholder) {//no 3rd parse frag placeholders
-        need3rdPass = 0;
-        renderMarkdown();
-        removeWordOptions();
-        reParseParagraph();
-        return;
-    }
-
-    const placeholderNum = placeholder[1];
-   //put place holders into input field for qwerty input
-    mdRepl(missingRegEx, `<input class="missing-word" data-placeholder="${placeholderNum}" placeholder="${placeholderNum}" />`);
-    renderMarkdown();
-    //give field focus
-    const input = outpt2.querySelector('input.missing-word');
-    input.focus();
 }
 
 /**
@@ -312,10 +279,15 @@ function reParseParagraph(){
 }
 
 /* Delete, Enter, comma, period, and other functions 
- * and characters are detected and handled here
- * these chords are defined in NON_ALPHA_CHORDS
+ * and characters are detected and handled here.
+ * These characters are blocked by input keys.
+ * these chords are defined in NON_ALPHA_CHORDS.
+ * Originially all punctuation was here until the 
+ * passThrough keys event block was added.
  * lproduct > rproduct here (by construction) as 
- * these dont collide with reordered digit pairs.
+ * these dont collide with reordered digit pairs. Not sure 
+ * this convention will work with 1-finger chord dual
+ * hand input variants.
  * technically p1*p2 can be less than 31 3*3,3*5,3*7,5*5
  * but these are 
 */
@@ -324,7 +296,7 @@ function nonAlphabetic() {
 	removeWordOptions();
  
   let special = NON_ALPHA_CHORDS[chord];
-  
+    // may fall over with n > 8 in future variants
   if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) {
 
   if (special !== 'D') {
@@ -335,12 +307,11 @@ function nonAlphabetic() {
   }
   // We are deleteing from here on in
 
-if (frag === '') {
-  const cleaned = md()
+  if (frag === '') {
+    const cleaned = md()
     .replace(/\u275A$/, '')  // remove cursor
     .replace(/\s+$/, ' ')    // collapse trailing spaces → one space
     .replace(/[^\s]+(?=\s*$)/, '')
- // .replace(/[\p{L}\p{M}'’-]+[^\s]*\s*$/u, ''); // delete last word + following space
 
   setMd(cleaned + '\u275A');
   wdOpts.innerHTML = '---';
@@ -348,12 +319,6 @@ if (frag === '') {
   requestAnimationFrame(() => outputMarkdown.focus());
   return true;
 }
-//if (frag === '') {
-//  mdRepl(/(?:(?:<[^>]*>)*\S+(?:<[^>]*>)*$)/, '\u275A');
-//    setMd(md().replace(/[\p{L}\p{M}'’-]+[^\s]*$/u, '') + '\u275A');
-//    wdOpts.innerHTML =   '---';
-//    return true;
-//   }
   if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
   frag = frag.replace(/.$/, '');
   
@@ -372,12 +337,17 @@ if (frag === '') {
 
 }
 //A function that splits the options list
-//in two when the frag lenghth is less than
-//3. single and 2-finger chord words have
+//in two when the frag length is less than
+//3 (legacy to original e.161 based neobet). 
+//single and 2-finger chord words have
 //4 options we split these in two pairs
 //the front pair for right hand single chord words
 //the rear pair other wise for composite and left
-//hand words
+//hand words. This will need to understand when future
+//variants are single finger chords as these will not
+//afford handedness and pairwise reordering will be
+//turned off. May still have handedness for single letter
+//words i.e. 2n frags may be handed.
 function RHSawareDic(f,dict){
   const wdList = dict[f]?.split('-') || [];
   if(thumbProduct > 1 && rProduct*lProduct == 1) lProduct = lastlProduct;
@@ -399,69 +369,10 @@ function RHSawareDic(f,dict){
  *   • Ghost <span id='deciding'> or old options staying on screen
  *   • Inconsistent clearFrag() behaviour
  */
-function multiSpacebarAIDumb() {
-  const wdList = RHSawareDic(frag, dic)?.split('-') || [];
-  let wd = '';
 
-  switch (thumbChord) {
-    case 'wd1':
-      wd = wdList[0] || ' ';
-      clearFrag();
-      break;
-
-    case 'wd2':
-      wd = wdList[1] || '';
-      clearFrag();
-      break;
-
-    case 'space':
-      wd = ' ';
-      clearFrag();
-      break;
-
-    case 'missed': {
-      const options = (reserves[frag] || '').split('-').filter(Boolean);
-    
-      if (options.length === 1) {
-        wd = options[0];                    // real diacritic word
-        clearFrag();
-        removeWordOptions();
-      } else if (options.length > 1) {
-        //  wd = options.join('\u2194');        // 2nd-pass mode
-      wd = reservecaps[frag].replace(/-/g,'\u2194'); 
-      } else {
-        wd = `\u2014\u2014MissingWord\u2014\u2014`;   // missing
-//      wd = `\u2014\u2014${frag}\u2014\u2014`;   // missing
-        clearFrag();
-        removeWordOptions();
-      }
-      break;
-    }
-    default:
-      // Unknown thumb chord – treat as normal space (safety)
-      wd = ' ';
-      clearFrag();
-  }
-
-  // ────── COMMIT THE WORD ──────
-  removeWordOptions();  // always clean old cues first
-  setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
-  renderMarkdown();
-
-  // ────── TRIGGER 2ND/3RD PASS ONLY WHEN NEEDED ──────
-  if (thumbChord === 'missed') {
-    const justInsertedMultiOption = wd.includes('\u2194') || wd.includes('-');
-    if (justInsertedMultiOption) {
-      reParseParagraph();   // will call markReserves() → nice highlight appears
-    } else if (wd.includes('\u2014\u2014')) {
-      // missing-word placeholder → go straight to 3rd pass input fields
-      need3rdPass = 1;
-      mark3rdPassWds();
-    }
-    // single auto-inserted reserve word falls through here → does nothing → perfect
-  }
-}
-
+//User chooses from 2-3 options with two spacebar keys
+//May try to add direct 2nd parse 'b' button to here so
+//User can press it since they learn high freq misses
 function multiSpacebar() {
   const wdList = RHSawareDic(frag, dic)?.split('-') || [];
   let wd = '';
@@ -486,8 +397,6 @@ function multiSpacebar() {
       const capsStr = reservecaps[frag] || '';
 
       if (!capsStr) {
-        // No entry at all
-//      wd = `\u2014\u2014${frag}\u2014\u2014`;
         wd = `\u2014\u2014MissingWord\u2014\u2014`;
         clearFrag();
         removeWordOptions();
@@ -525,46 +434,13 @@ function multiSpacebar() {
     mark3rdPassWds();
   }
 }
-//User chooses from 2-3 options with two spacebar keys
-function multiSpacebarOld() {
-//  const wdList = dic[frag]?.split('-') || [];
-  const wdList = RHSawareDic(frag,dic)?.split('-') || [];
-  let wd = '';
-  switch (thumbChord) {
-    case 'wd1': wd = wdList[0] || ' '; clearFrag(); break;
-    case 'wd2': wd = wdList[1] || ''; clearFrag(); break;
-    case 'missed': 
-      wd = reservecaps[frag]; 
-//    wd = wd.match(/-/) ? wd.replace(/-/g,"\u2194") : (reserves[frag]  || `\u2014\u2014${frag}\u2014\u2014`);
-      wd = wd.match(/-/) ? wd.replace(/-/g,"\u2194") : (reserves[frag]  || `\u2014\u2014MissingWord\u2014\u2014`);
-      break;
-    case 'space': wd = ' '; clearFrag(); break;
-  }
-		removeWordOptions();
-    clearFrag();
-    setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
-    wdOpts.innerHTML = '';
-    requestAnimationFrame(() => outputMarkdown.focus());
-  if (thumbChord !== 'missed' && thumbChord !== 'space') clearFrag();
-  renderMarkdown();
-
-if (mdMatch(reserveRegEx) || mdMatch(missingRegEx)) {
-  reParseParagraph(() => {  // Anon fn as callback—your comma-vibe dep
-    clearFrag();
-    removeWordOptions();
-  });
-}
-//  reParseParagraph();
-//  clearFrag();
-//  removeWordOptions();
-//}
-
-}
 
 /* Help user remember how many letters they have typed
  * by bolding the start of the words presented to the user
  * the length of the bolding is the same as the length of
  * the current frag. Do this to all options in dic[frg]
+ * Think this may have screwed up when html color tags were
+ * added or when I bolded selection option font-weight css 
  */
 
 function boldFirstNLtrs(frg,dict) {
@@ -584,7 +460,6 @@ function boldFirstNLtrs(frg,dict) {
 function caps2boldLcase(str) {
     return str
         .replace(/[A-Z]+/g, '<b>$&</b>') // capital ltrs in <b> tags
-//      .toLowerCase(); // Convert the entire string to lowercase
 }
 
 //handle both hands chords
@@ -651,10 +526,11 @@ function processBiChord() {
  presdKeys.clear();
 }
 
-
+// event handling (keypresses) functions below
 
 const inputRegex = /<input [^>]*>/;
 
+//Third pass key handling
 function on3rdPass(key) {
   if (key === 'enter') {
     const input = outpt2.querySelector('input.missing-word');
@@ -673,20 +549,6 @@ function on3rdPass(key) {
     }
   }
 }
-//Third pass key handling
-function on3rdPassOld(key)  {
-  if (key === 'enter') {
-    const input = outpt2.querySelector('input.missing-word');
-    if (input) {
-      event.preventDefault();
-      const value = input.value || ``;
-      mdRepl(inputRegex, value);
-      mark3rdPassWds(); // Recursively handle next placeholder
-    }
-        return;
-  }
-      return;
- }   
 /* handle2ndPassWords this selects from the
  *
 */
