@@ -40,7 +40,8 @@ const dbgThumbs = document.getElementById('debugThumbs');
 const dbgChord = document.getElementById('debugChord');
 const dbgWd = document.getElementById('debugWord');
 
-const CHORD_TIMEOUT = 80;
+//const CHORD_TIMEOUT = 80;
+const CHORD_TIMEOUT = 110;
 
 function renderMarkdown() {
   let htm=marked.parse(md());

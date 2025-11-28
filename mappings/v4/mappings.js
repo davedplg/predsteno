@@ -1,7 +1,7 @@
 //These keys will register in the text area as is
 
 //export  \
-const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','\'','{','}','/','\\','?','|','<','>']);
+const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>']);
 
 
 /* These prime mappings, map the keys to prime numbers, 
@@ -38,14 +38,14 @@ const primeMap = {
      't': 59,
      'y': 61,
      'backspace': 97,
-     'enter': 71,
+     'enter':  71,
   //honorary thumb rejects word options for reserves
-      'b': 146, 
-     'meta': 146, 
+      '\\': 146, 
+//   'meta': 146,  for some full-size keyboards
 
     'alt': 74,
-     '\\': 82,
-    ' ' : 62
+//     '\\': 82,
+    ' ' :  62,
 };
 
 
@@ -138,7 +138,7 @@ const productMap = {
     37       : 'wd2', //  /        selct 2nd word
     [31 * 37]: 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
-    73       : 'missed', // this is now letter b
+    73       : 'missed', // this is now letter /
  // [37 * 41]: '6', // actual independent space
 
 

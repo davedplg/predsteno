@@ -12,18 +12,18 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 // export \
  const primeMap = {
     // Left:  primes
-    'a': 11,          //def
-    's':  3,          //ghi
-    'd':  5,          //mon
-    'f': 23,          //pqrs
+    'a': 19,          //abc 
+    's': 11,          //def
+    'd':  3,          //ghi
+    'f':  5,          //mon
     // Left: squared key doubles middle row keys 
     'g': 29,
 
     // Right: doubled primes
-    ';': 22,         //def
-    'l':  6,         //ghi
-    'k': 10,         //mon
-    'j': 46,         //pqrs
+    ';': 38,         //def
+    'l': 22,         //ghi
+    'k':  6,         //mon
+    'j': 10,         //pqrs
     // right: squared key doubles middle row keys
      'h': 58,
     // other functions
@@ -34,8 +34,8 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
      'backspace': 97,
      'enter': 71,
   //honorary thumb rejects word options for reserves
-  // 'meta': 146,  for full-size keyboards?
     '\\': 146,
+//   'meta': 146, for full-sized keyboards
 
     'alt': 74,
     ' ' : 62
@@ -52,29 +52,28 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 
 // export \
  const productMap = {
+    19: '1',   
     11: '2',   
      3: '3',   
      5: '5',   
-    23: '6',  
 
+ [29  *  19]       : '11', 
  [29  *  11]       : '22', 
  [29  *   3]       : '33', 
  [29  *   5]       : '55', 
- [29  *  23]       : '66', 
 
- [11  *    3]       : '23', 
- [11  *    5]       : '25', 
- [11  *   23]       : '26', 
+ [19  *    3]       : '4', 
+ [19  *    5]       : '6', 
+ [11  *    5]       : '7', 
+ [ 3  *    5]       : '8', 
  
- [ 3  *    5]       : '35', 
- [ 3  *   23]       : '36', 
- 
- [ 5  *   23]       : '56', 
+ [ 19  *   11]       : '91', 
+ [  3  *   11]       : '92', 
 
- [23  *   3  *  5]  : '1', 
- [23  *  11  *  5]  : '4', 
- [23  *  11  *  3]  : '7', 
- [ 5  *  11  *  3]  : '8', 
+ [19  *   3  *  5]  : '93', 
+ [19  *  11  *  5]  : '96', 
+ [19  *  11  *  3]  : '97', 
+ [ 5  *  11  *  3]  : '94', 
 
 //comma, stop, delete
 

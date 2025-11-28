@@ -27,7 +27,7 @@ const keyMap2ndPass = {
   'o': 7,
   'p': 8,
   'h': 9,
-  'b': 1,   // duplicated so user can dbl click b; 1st and 2nd parse
+  '\\': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
   'j': 1,
   'k': 2,
   'l': 3,
@@ -393,27 +393,12 @@ function multiSpacebar() {
       clearFrag();
       break;
 
-    case 'missed': {
-      const capsStr = reservecaps[frag] || '';
-
-      if (!capsStr) {
-        wd = `\u2014\u2014MissingWord\u2014\u2014`;
-        clearFrag();
-        removeWordOptions();
-      }
-      else if (!capsStr.includes('-')) {
-        // Exactly ONE option → insert real diacritic version
-        wd = reserves[frag] || capsStr;   // safe fallback
-        clearFrag();
-        removeWordOptions();
-      }
-      else {
-        // Multiple options → show capitalized hints
-        wd = capsStr.replace(/-/g, '\u2194');
-        // do NOT clearFrag — 2nd-pass needs it
-      }
+    case 'missed': 
+//    removeWordOptions();
+      wd = reserves[frag].includes('-')
+        ? reservecaps[frag].replace(/-/g, '\u2194')
+        : reserves[frag];
       break;
-    }
 
     default:
       wd = ' ';
@@ -428,7 +413,7 @@ function multiSpacebar() {
 
   // ────── Only trigger next phase when needed ──────
   if (thumbChord === 'missed' && wd.includes('\u2194')) {
-    reParseParagraph();
+    markReserves();
   } else if (thumbChord === 'missed' && wd.includes('\u2014\u2014')) {
     need3rdPass = 1;
     mark3rdPassWds();
