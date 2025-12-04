@@ -24,7 +24,7 @@ div#outpt2 {
   font-family: 'Courier New', Courier, monospace;
   font-size: 24px;
   margin-top: 10px;
-  font-weight: bold; /* Bold for better readability */
+  font-weight: 700; /* Bold for better readability */
 }
 textarea#output {
   height: auto;
@@ -47,7 +47,7 @@ h5 {
   font-size: 130%; /* Match table font-size */
   margin: 3% 3% 1%;
   color: #333;
-  font-weight: bold;
+  font-weight: 700;
   text-align: center; /* Align with tables */
 }
 
@@ -148,24 +148,32 @@ font-size:90%;
   font-size: 22px;
   margin-top: 10px;
   color: #d00;
-  font-weight: bold; /* Bold for better readability */
+  font-weight: 700; /* Bold for better readability */
 }
 
 .strong_digit  {
-font-weight: bold;
+font-weight: 700;
 }
 
 v {
     color: #d00;
-    font-weight: bold; /* Bold for better readability */
+    font-weight: 700; /* Bold for better readability */
 }
 
 vc {
     color: #00d;
-    font-weight: bold; /* Bold for better readability */
+    font-weight: 700; /* Bold for better readability */
 }
 
 x {
     color: #555;
-    font-weight: bold; /* Bold for better readability */
+    font-weight: 700; /* Bold for better readability */
+} 
+
+z {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #d00;
+  text-underline-offset: 2px;
 }
+

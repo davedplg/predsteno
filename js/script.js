@@ -438,15 +438,16 @@ function boldFirstNLtrs(frg,dict) {
     return caps2boldLcase(wds
         .split('-')
         .map(wd => {
-            if (n > wd.length) return wd.toUpperCase();//??
-            return wd.slice(0, n).toUpperCase() + wd.slice(n);
+            if (n > wd.length) return wd.toLowerCase();//??
+            return wd.slice(0, n).toLowerCase() + wd.slice(n);
         })
         .join('-'));
 }
 //frag length is number of keys pressed so far for word
 function caps2boldLcase(str) {
-    return str
-        .replace(/[A-Z]+/g, '<b>$&</b>') // capital ltrs in <b> tags
+    let bolded=str
+        .replace(/[a-z]+/g, '<z>$&</z>') // lcase ltrs in <b> tags
+    return bolded.toUpperCase();
 }
 
 //handle both hands chords
@@ -493,7 +494,12 @@ if (thumbChord) {
   return;  // ← "We're done here. Word committed. Move on."
 }
   let capsOpts =boldFirstNLtrs(frag,caps);   
-  
+  tidyWordOptions(capsOpts);
+  presdKeys.clear();
+}
+
+function tidyWordOptions(capsOpts)
+{  
   if (dic[frag]) { 
   	removeWordOptions();
     let CueOpts =`<span id='deciding'>${capsOpts}</span>`; 
@@ -514,8 +520,8 @@ if (thumbChord) {
         setMd(  md()   + oldOpts);
         wdOpts.innerHTML = oldOpts; 
    }
- presdKeys.clear();
-}
+}  
+
 
 // event handling (keypresses) functions below
 
