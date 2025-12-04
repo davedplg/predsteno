@@ -122,7 +122,8 @@ function select2ndPassWd(key) {
     pendingHfnGps = 0; // No more groups, allow other keys
     } 
   clearFrag();
-  requestAnimationFrame(() => outputMarkdown.focus());
+  removeWordOptions();
+//  requestAnimationFrame(() => outputMarkdown.focus());
   }
 
 //highlight hypenated reserve.js words with css highlight
@@ -266,6 +267,8 @@ function parseAffixes(text){
  *  user supplies the word uisng qwerty entry on the 3rd pass 
 */
 function reParseParagraph(){
+  //setMd(removeEmojiCursor(md())); // Existing: Remove cursor.
+  removeWordOptions(); // NEW: Clear any lingering first-parse spans before highlighting reserves.
   if(mdMatch(/[0-9a-zA-Z'+]\u2194/)){
     markReserves();                      //2nd input pass
   } else if (mdMatch(missingRegEx)) {
@@ -394,7 +397,6 @@ function multiSpacebar() {
       break;
 
     case 'missed': 
-//    removeWordOptions();
       wd = reserves[frag].includes('-')
         ? reservecaps[frag].replace(/-/g, '\u2194')
         : reserves[frag];
@@ -483,10 +485,14 @@ function processBiChord() {
  
   let append='';
  
-  if (thumbChord) multiSpacebar(); //select the encoding word option 
+//  if (thumbChord) multiSpacebar(); //select the encoding word option 
  
+if (thumbChord) {
+  multiSpacebar();
+  presdKeys.clear();
+  return;  // ← "We're done here. Word committed. Move on."
+}
   let capsOpts =boldFirstNLtrs(frag,caps);   
-  let dicOpts  =boldFirstNLtrs(frag,dic);   
   
   if (dic[frag]) { 
   	removeWordOptions();
@@ -558,6 +564,7 @@ document.addEventListener('keydown', (event) => {
 // }
  if (mdMatch(spanRegEx)) {
    event.preventDefault();
+   removeWordOptions();
    if (optionKeys.includes(key)) {
      on2ndPass(key);
    }
