@@ -46,11 +46,6 @@ const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
 ///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
 const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 
-function clearFrag(){
-   frag='';
-   removeWordOptions();
-   lastDecidingSpan='';
- }
 
 /** calcProducts: calculate prime (p) products
  * there will be 1-6 keys pressed simultaneously
@@ -113,16 +108,21 @@ function select2ndPassWd(key) {
 // for neobets where n > 8..
   if (choice === 9)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
 // swap hyphenated word options with selected word
-  mdRepl(spanRegEx, selectedWord);
-  renderMarkdown();
+//   mdRepl(spanRegEx, selectedWord);
+//   clearFrag();
+//   renderMarkdown();
+    insertWord(selectedWord);
+    mdRepl(spanRegEx, '');
+    requestAnimationFrame(() => outputMarkdown.focus());
+    clearFrag();
 //Are there any more hyphenated words
-  if (mdMatch(reserveRegEx)) {
-    markReserves(); // Highlight next group
-  } else {
-    pendingHfnGps = 0; // No more groups, allow other keys
-    } 
-  clearFrag();
-  removeWordOptions();
+//     if (mdMatch(reserveRegEx)) {
+//       markReserves(); // Highlight next group
+//     } else {
+//    pendingHfnGps = 0; // No more groups, allow other keys
+//     } 
+//  clearFrag();
+//  removeWordOptions();
 //  requestAnimationFrame(() => outputMarkdown.focus());
   }
 
@@ -275,10 +275,11 @@ function reParseParagraph(){
       need3rdPass = 1;
       mark3rdPassWds();                  //3rd input pass
     } else  {
-          setMd(parseAffixes(md()))      //1st format pass
-          setMd(parseCaseMarking(md()))  //2nd format pass
+    //    setMd(parseAffixes(md()))      //1st format pass
+    //    setMd(parseCaseMarking(md()))  //2nd format pass
           renderMarkdown();
       } 
+  console.log('reParseParagraph');
 }
 
 /* Delete, Enter, comma, period, and other functions 
@@ -319,7 +320,7 @@ function nonAlphabetic() {
   setMd(cleaned + '\u275A');
   wdOpts.innerHTML = '---';
   renderMarkdown();
-  requestAnimationFrame(() => outputMarkdown.focus());
+//requestAnimationFrame(() => outputMarkdown.focus());
   return true;
 }
   if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
@@ -328,9 +329,9 @@ function nonAlphabetic() {
   if(dic[frag]){
  	  removeWordOptions();
     if(String(frag).length % 2 == 0 ){
-      bwords="<span id='deciding'>" + boldFirstNLtrs(frag,caps) +"</span>";
+      bwords="<span id='deciding'>" + underlineFirstNLtrs(frag,caps) +"</span>";
     } else {
-      bwords="<span id='deciding' style='color:red'>" + boldFirstNLtrs(frag,caps) +"</span>";
+      bwords="<span id='deciding' style='color:red'>" + underlineFirstNLtrs(frag,caps) +"</span>";
     }
     wdOpts.innerHTML = bwords;
     setMd(md() + bwords);
@@ -366,7 +367,7 @@ function RHSawareDic(f,dict){
 }
 
 /**
- * NEW & IMPROVED multiSpacebar() – handles all thumb-chord cases
+ * NEW & IMPROVED firstParse() – handles all thumb-chord cases
  * Fixes:
  *   • Focus loss when a single reserve word auto-inserts
  *   • Ghost <span id='deciding'> or old options staying on screen
@@ -376,43 +377,32 @@ function RHSawareDic(f,dict){
 //User chooses from 2-3 options with two spacebar keys
 //May try to add direct 2nd parse 'b' button to here so
 //User can press it since they learn high freq misses
-function multiSpacebar() {
+function firstParse() {
   const wdList = RHSawareDic(frag, dic)?.split('-') || [];
   let wd = '';
 
   switch (thumbChord) {
-    case 'wd1':
-      wd = wdList[0] || ' ';
-      clearFrag();
-      break;
-
-    case 'wd2':
-      wd = wdList[1] || '';
-      clearFrag();
-      break;
-
-    case 'space':
-      wd = ' ';
-      clearFrag();
-      break;
+    case 'wd1'  : wd = wdList[0] || ''; break;
+    case 'wd2'  : wd = wdList[1] || ''; break;
+    case 'space': wd = ' '            ; break;
 
     case 'missed': 
-      wd = reserves[frag].includes('-')
+      wd = (reserves[frag] || '').includes('-') 
         ? reservecaps[frag].replace(/-/g, '\u2194')
         : reserves[frag];
       break;
 
     default:
       wd = ' ';
-      clearFrag();
+//    clearFrag();
   }
-
   // ────── THIS BLOCK RUNS FOR EVERY SINGLE PATH ──────
-  removeWordOptions();
-  setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
-  renderMarkdown();
-  requestAnimationFrame(() => outputMarkdown.focus());
-
+  if(!wd.includes('\u2194')) clearFrag();
+//removeWordOptions();
+//setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
+//renderMarkdown();
+//requestAnimationFrame(() => outputMarkdown.focus());
+  insertWord(wd);
   // ────── Only trigger next phase when needed ──────
   if (thumbChord === 'missed' && wd.includes('\u2194')) {
     markReserves();
@@ -423,19 +413,19 @@ function multiSpacebar() {
 }
 
 /* Help user remember how many letters they have typed
- * by bolding the start of the words presented to the user
- * the length of the bolding is the same as the length of
+ * by underlineing the start of the words presented to the user
+ * the length of the underlineing is the same as the length of
  * the current frag. Do this to all options in dic[frg]
  * Think this may have screwed up when html color tags were
- * added or when I bolded selection option font-weight css 
+ * added or when I underlineed selection option font-weight css 
  */
 
-function boldFirstNLtrs(frg,dict) {
+function underlineFirstNLtrs(frg,dict) {
 //  let wds=dic[frg];
     let wds=RHSawareDic(frg,dict);
     let n    =frg.length;
     if (typeof wds !== 'string' || n < 0) return '';
-    return caps2boldLcase(wds
+    return caps2underlineLcase(wds
         .split('-')
         .map(wd => {
             if (n > wd.length) return wd.toLowerCase();//??
@@ -444,10 +434,10 @@ function boldFirstNLtrs(frg,dict) {
         .join('-'));
 }
 //frag length is number of keys pressed so far for word
-function caps2boldLcase(str) {
-    let bolded=str
+function caps2underlineLcase(str) {
+    let underlineed=str
         .replace(/[a-z]+/g, '<z>$&</z>') // lcase ltrs in <b> tags
-    return bolded.toUpperCase();
+    return underlineed.toUpperCase();
 }
 
 //handle both hands chords
@@ -486,14 +476,14 @@ function processBiChord() {
  
   let append='';
  
-//  if (thumbChord) multiSpacebar(); //select the encoding word option 
+//  if (thumbChord) firstParse(); //select the encoding word option 
  
 if (thumbChord) {
-  multiSpacebar();
+  firstParse();
   presdKeys.clear();
   return;  // ← "We're done here. Word committed. Move on."
 }
-  let capsOpts =boldFirstNLtrs(frag,caps);   
+  let capsOpts =underlineFirstNLtrs(frag,caps);   
   tidyWordOptions(capsOpts);
   presdKeys.clear();
 }
@@ -515,7 +505,7 @@ function tidyWordOptions(capsOpts)
     renderMarkdown();
     } else { // if word finished delete suggestions
 //      frag="";
-        frag=frag.slice(0,-2);
+        frag=frag.slice(0,-2) || '';
   	  	removeWordOptions();
         setMd(  md()   + oldOpts);
         wdOpts.innerHTML = oldOpts; 
@@ -553,6 +543,7 @@ function on3rdPass(key) {
 
 function on2ndPass(key){
    event.preventDefault();
+   console.log('on2ndPass');
    select2ndPassWd(key);
 // reserveRegEx a regEx to find hyphenated reserve words
    if (!mdMatch(reserveRegEx)) {
@@ -586,7 +577,6 @@ document.addEventListener('keydown', (event) => {
 // punctuation and digits
  if (passThroughKeys.has(key)) {
    event.preventDefault();
-// setMd(md().replace(/\u275A$/, '') + key + '\u275A');
    mdRepl(/\u275A$/,  key + '\u275A');
    renderMarkdown();
    return;

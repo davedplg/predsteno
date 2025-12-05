@@ -40,15 +40,79 @@ const dbgThumbs = document.getElementById('debugThumbs');
 const dbgChord = document.getElementById('debugChord');
 const dbgWd = document.getElementById('debugWord');
 
-//const CHORD_TIMEOUT = 80;
-const CHORD_TIMEOUT = 110;
+const CHORD_TIMEOUT = 80;
+//const CHORD_TIMEOUT = 110;
+
+function clearFrag(){
+   frag='';
+   removeWordOptions();
+   lastDecidingSpan='';
+ }
+
+/**
+ * insertWord — the single source of truth for ALL word insertion
+ * Replaces firstParse() word insertion, second-parse insertion, singleton reserves, everything.
+ */
+
+function insertWord(word, addSpace = true) {
+  removeWordOptions();
+
+  let text = removeEmojiCursor(md());
+  text += word;
+  if (addSpace) text += ' ';
+  text += '\u275A';
+
+  setMd(text);
+//if(!word.includes('\u2194')) clearFrag();
+  renderMarkdown();
+}
 
 function renderMarkdown() {
+  let text = md();
+
+  // 1. Remove any old cursor first
+  text = removeEmojiCursor(text);
+
+  // 2. Apply affixes and case marking in memory (NO setMd!)
+  text = parseAffixes(text);
+  text = parseCaseMarking(text);
+
+  // 3. NOW update the markdown — ONCE
+  setMd(text);
+
+  // 4. Add exactly ONE cursor at the end
+  if (!text.endsWith('\u275A'))  text += '\u275A'; 
+
+  // 5. Render to HTML
+  let htm = marked.parse(text);
+
+  // 6. Double-space → long cursor (your visual style)
+  htm = htm.replace(/ + \u275A/g, '\uFE4E\uFE4E\u275A');
+
+  // 7. Apply phonetic formatting
+  htm = format_augmented_words(htm);
+
+  // 8. Update preview
+  setHtml(htm);
+
+  // 9. Focus and scroll
+  requestAnimationFrame(() => {
+    outputMarkdown.focus();
+    outputMarkdown.setSelectionRange(text.length, text.length);
+    outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
+  });
+}
+function renderMarkdownOld() {
+  setMd(parseAffixes(md()));
+  setMd(parseCaseMarking(md()));
+
   let htm=marked.parse(md());
+  htm  = htm.replace(/([^\u275A])$/,"$1\u275A")
   htm  = htm.replace(/ + \u275A/,"\uFE4E\uFE4E\u275A")
   htm = format_augmented_words(htm);
   setHtml(htm);
-  outputMarkdown.focus();
+//outputMarkdown.focus();
+  requestAnimationFrame(() => outputMarkdown.focus());
   outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
 }
 
