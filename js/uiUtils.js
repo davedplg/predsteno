@@ -76,6 +76,7 @@ function renderMarkdown() {
   // 2. Apply affixes and case marking in memory (NO setMd!)
   text = parseAffixes(text);
   text = parseCaseMarking(text);
+  text = text.replace(/^ {4}/gm, '\u00A0\u00A0\u00A0\u00A0');
 
   // 3. NOW update the markdown — ONCE
   setMd(text);
@@ -163,16 +164,19 @@ function format_augmented_words(t){
   t=t.replace(/èŕ/gi,'eř');
   t=t.replace(/(?<![<][^>]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
-  t=t.replace(/(.)0($1)/gi,'$1$2');
   t=t.replace(/τħ/gi,'<vc>th</vc>');
-  t=t.replace(/[ħàèìòù]+|(.)0(?!$1)/gi,'<x>$&</x>');
+  t=t.replace(/[ħàèìòù]/gi, '<x>$&</x>'); 
+  t=t.replace(/([a-zA-Z])(0)(?!\1)/gi, '<x>$1</x>');  
+  t=t.replace(/([a-zA-Z])0/gi,'$1');
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
-  t=t.replace(/(?<![</][^>]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+/gi,'<vc>$&</vc>');
+  t=t.replace(/(?<![</][^>]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   t=t.replace(/ř/g,'r');
   t=t.replace(/ẇ/g,'w');
   t=t.replace(/ġ/g,'g');
   t=t.replace(/ḩ/g,'h');
+  //merge similar tags
+  t=t.replace(/<\/v><v>|<\/x><x>|<\/vc><vc>/gi,'');
   return t;
 }
 
