@@ -577,7 +577,8 @@ document.addEventListener('keydown', (event) => {
 // punctuation and digits
  if (passThroughKeys.has(key)) {
    event.preventDefault();
-   mdRepl(/\u275A$/,  key + '\u275A');
+// mdRepl(/\u275A$/,  key + '\u275A');
+   setMd(md()+key);
    renderMarkdown();
    return;
   }
