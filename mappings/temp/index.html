@@ -1,27 +1,19 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chorded Keypress to Digit Mapper</title>
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
   <h4> <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input</h4>
   <h4> press enter (perhaps twice) to start</h4>
-  <textarea id="output" rows="4" cols="80" readonly>
-#### mār#kdõw0n enâblèd 
-- 'spâçè' + entèŕ = nëw0 lînè 
-- entèŕ  + entèŕ = parágraph
-**Mãrý** had *a* littlè lamb0, Its fleeçè wáś wħîtè aś snôw0 
-  </textarea>
- <a id="md_download" href='#' onclick="exportMD();">Export MD & HTM</a>
- <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
-<a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
-  <h4 id="wdOpts">suggestions</h4>
-  <div id="outpt2" >
- </div>
+        <textarea id="output" rows="4" cols="80" readonly>
+#### markdown enabled 
+- ' '+' '+ enter = enter 
+- enter + enter = paragraph
+**twinkle** twinkle *litte* star 
+        </textarea>
+        <h4 id="wdOpts">suggestions</h4>
+        <div id="outpt2" >
+       </div>
 
 <div id="debug" onclick="this.children[2].style.display = 
   this.children[2].style.display === 'none' ? 'block' : 'none';">
@@ -51,6 +43,9 @@
       <tr class="strong_digit">
         <td><k>A</k><k>S</k><k>D</k><k>F</k> &rarr; 2,3,5,6</td>
         <td>6,5,3,2 &larr; <k>J</k><k>K</k><k>L</k><k>;</k></td>
+       <tr class="strong_digit">
+        <td><k>Z</k><k>X</k><k>C</k><k>V</k> &rarr; 8,7,4,1</td>
+        <td>1,4,8,7 &larr; <k>N</k><k>M</k><k>&lt;</k><k>&gt;</k></td>
       </tr>
    </table>
     
@@ -62,13 +57,13 @@
  | 3<s>ghi.</s> | 4<s>jkl.</s> | 5<s>mno.</s> |  |<k>y</k><s>comma</s>|
  | 6<s>pqrs</s> | 7<s>tuv.</s> | 8<s>wxyz</s> |  | <k>w</k>+<k>e</k>+<k>r</k><s>Uppercase-⟑</s> |
  |              |              |              |  | <k>q</k>+<k>w</k>+<k>e</k><s>Titlecase-⟐</s> |
-#### 63576 = pints = shots = riots = 36,57,6 (pair reordered for 2-finger chords)
+### 63576 = pints = shots = riots = 36,57,6 (pair reordered for 2-finger chords)
     </div>
      <a id="3pass">
    <div class="markdown striped">
  |Pass|Word 1      |Word 2       |Word 3     |Word 4          |Other   |
  |----|------------|-------------|-----------|----------------|--------|
- | 1st|<k>space</k>|<k>alt</k> |<k>space</k> + <k>alt</k>||<k>B/meta</k>|
+ | 1st|<k>space</k>|<k>&#47;</k> |<k>space</k> + <k>&#47;</k>||<k>B</k>|
  | 2nd|  <k>j</k>  |   <k>k</k>   | <k>l</k>  |   <k>;</k>     |<k>h</k>|
  | 3rd|  missing   | word        | (qwerty) + <k>Enter</k> |
      </div>
@@ -76,12 +71,12 @@
     <a id="top8">
    <div class="markdown striped">
 #### singles
-|Top 8                |Single Digit         |Words               |    
+ |Top 8                |Single Digit         |Words               |    
  |---------------------|---------------------|--------------------|
  |                     |1<s>And-A-Be</s>     |2<s>For-+'D-Do</s>  |
  | 3<s>In-It-Is</s>    |4<s>+'ll-Like-La</s> |5<s>Of-on-or</s>    |
  | 6<s>She-So-+'Re</s> |7<s>The-To-+'T</s>   |8<s>Was-Wasn-We</s> | 
-#### doubles
+#### doubles 
 |digits| spacebar| / | spacebar + /|
 |----|----|----|----|
 |11|can|about||
@@ -120,24 +115,23 @@
 |77|turned|turn|tu|
 |78|type|types|yu|
 |88|wycliffe|wyatt||
-
- </div>
+</div>
 
   </div>
-  <script src="../../js/reservecaps.js"></script>
-  <script src="../../js/caps.js"></script>
   <script src="../../js/toptxts.js"></script>
   <script src="../../js/reserves.js"></script>
   <script src="mappings.js"></script>
+  <script src="../../js/uiUtils.js"></script>
+  <!--  <script type="module" src="../../js/script.js"></script> -->
   <script  src="../../js/script.js"></script>
-  <script src="../../lib/marked.min.js" > </script>
-  <script>
+  <script src="../../lib/marked.min.js" >
+  </script>
+<script>
   const markdownElements = document.querySelectorAll('.markdown');
   markdownElements.forEach(element => {
     element.innerHTML = marked.parse(element.innerHTML);
   });
-  </script>
-  <script src="../../js/uiUtils.js"></script>
-
-  </body>
+</script>
+ 
+</body>
 </html>

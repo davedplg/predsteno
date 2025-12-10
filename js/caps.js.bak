@@ -1,5 +1,4 @@
-//export
-const caps={
+EXPORT CONST CAPS={
    "1": "AND-A-BIY1-BUY1",
    "2": "FAW1-FROM1-DOO1-FURST",
    "3": "IN1-IT-IZ1-HIY1",

@@ -1,7 +1,7 @@
 //These keys will register in the text area as is
 
-// export \
-const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','/','?','|','<','>']);
+//export  \
+const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|']);
 
 
 /* These prime mappings, map the keys to prime numbers, 
@@ -9,35 +9,41 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
  * are doubled so they can be distinguished 
  * from the left hand keys
 */
-// export \
- const primeMap = {
+//export \
+const primeMap = {
     // Left:  primes
-    'a': 11,          //def
-    's':  3,          //ghi
-    'd':  5,          //mon
-    'f': 23,          //pqrs
+    'q': 3,   //abc on numpad
+    'w': 5,   //def
+    'e': 7,   //ghi
+    'r': 11,  //jkl
+    'a': 13,  //mno
+    's': 17,  //pqrs
+    'd': 19,  //tuv
+    'f': 23,  //wxyz
     // Left: squared key doubles middle row keys 
     'g': 29,
 
     // Right: doubled primes
-    ';': 22,         //def
-    'l':  6,         //ghi
-    'k': 10,         //mon
-    'j': 46,         //pqrs
+    'p': 6,  //abc 
+    'o': 10, //def
+    'i': 14, //ghi
+    'u': 22, //jkl 
+    ';': 26,
+    'l': 34,
+    'k': 38,
+    'j': 46,
     // right: squared key doubles middle row keys
      'h': 58,
-    // other functions
-     'q':  7,
-     'w': 17, 	
+    
      't': 59,
      'y': 61,
      'backspace': 97,
      'enter': 71,
   //honorary thumb rejects word options for reserves
-  // 'meta': 146,  for full-size keyboards?
-    '\\': 146,
+     'b': 146, 
 
-    'alt': 74,
+    '/': 74,
+    '\\': 82,
     ' ' : 62
 };
 
@@ -50,33 +56,18 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
  * a reordered ascending combination.
  */
 
-// export \
- const productMap = {
-    11: '2',   
-     3: '3',   
-     5: '5',   
-    23: '6',  
+//export \
+const productMap = {
+    3: '1',   // q/v or p/n
+    5: '2',   // w/c or o/m
+    7: '3',   // e/x or i/,
+    11: '4',  // f/z or j/.
+    13: '5',  // a or ;
+    17: '6',  // s or l
+    19: '7',  // d or k
+    23: '8',  // c or m
 
- [29  *  11]       : '22', 
- [29  *   3]       : '33', 
- [29  *   5]       : '55', 
- [29  *  23]       : '66', 
-
- [11  *    3]       : '23', 
- [11  *    5]       : '25', 
- [11  *   23]       : '26', 
- 
- [ 3  *    5]       : '35', 
- [ 3  *   23]       : '36', 
- 
- [ 5  *   23]       : '56', 
-
- [23  *   3  *  5]  : '1', 
- [23  *  11  *  5]  : '4', 
- [23  *  11  *  3]  : '7', 
- [ 5  *  11  *  3]  : '8', 
-
-//comma, stop, delete
+ //comma, stop, delete
 
   59:'91',   //,
   61:'92',   //.
@@ -85,8 +76,8 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //73:'95',   //missed
 
 
-    7: '96',  // sdf upper-case-marker
-    17: '97', //  asd title-case-marker
+    [17 * 19 * 23]: '96',  // sdf upper-case-marker
+    [17 * 19 * 13]: '97', //  asd title-case-marker
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
@@ -99,10 +90,10 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 };
 
 // includes codes corresponding to non alphabetic input
-// export \
- const NON_ALPHA_CHORDS = {
-  '91': '+.  ⟐ ' ,
-  '92': '+, ' ,
+//export \
+const NON_ALPHA_CHORDS = {
+  '91': '.  ⟐ ' ,
+  '92': ', ' ,
   '93': 'D' ,
   '94': '\n' ,
   '96': ' ⟑ ' ,

@@ -10,14 +10,14 @@
 <body>
   <h4> <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input</h4>
  <h4> press ENTER (perhaps twice) to start</h4>
+ <a id="md_download" href='#' onclick="exportMD();">Export MD & HTM</a>
  <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
 <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
-<a id="md_download" href='#' onclick="exportMD();">md</a>
         <textarea id="output" rows="4" cols="80" readonly>
-#### markdown enabled 
-- ' '+' '+ enter = enter 
-- enter + enter = paragraph
-**Humpty** Dumpty *sat* on a wall
+#### mār#kdõw0n enâblèd 
+- 'spâçè' + entèŕ = nëw0 lînè 
+- entèŕ  + entèŕ = parágraph
+**Woah** Ôħ wê ār0è hl0f wãy theŕè...
         </textarea>
         <h4 id="wdOpts">suggestions</h4>
         <div id="outpt2" >
@@ -148,8 +148,6 @@
   <script src="../../js/reserves.js"></script>
   <script src="../../js/reservecaps.js"></script>
   <script src="mappings.js"></script>
-  <script src="../../js/uiUtils.js"></script>
-  <!--  <script type="module" src="../../js/script.js"></script>-->
   <script src="../../js/script.js"></script>
   <script src="../../lib/marked.min.js" ></script>
    <script>
@@ -157,7 +155,8 @@
   markdownElements.forEach(element => {
     element.innerHTML = marked.parse(element.innerHTML);
   });
-</script>
+  </script>
+  <script src="../../js/uiUtils.js"></script>
 
 </body>
 </html>

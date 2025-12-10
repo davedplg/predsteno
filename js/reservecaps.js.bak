@@ -1,5 +1,4 @@
-//export
-const reservecaps={
+EXPORT CONST RESERVECAPS={
    "2": "D1-D2",
    "4": "L",
    "5": "+'M",
