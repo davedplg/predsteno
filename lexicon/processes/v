@@ -1,0 +1,7 @@
+s/,in,/,IN+,/
+s/,ŕè,/,+'RE,/
+s/,de,/,DE+,/
+s/,ir,/,IR+,/
+s/,dis,/,DIS+,/
+s/,antï,/,ANTI+,/
+s/,tranś,/,TRANS+,/

@@ -1,0 +1,251 @@
+Initial mapping: ABCDEFGHIJKLMNOPQRSTUVWXYZ, Reject count: 1108
+Improved! Swap R and H, reject count: 969 (was 1108), new mapping: ABCDEFGRIJKLMNOPQHSTUVWXYZ
+Improved! Swap R and L, reject count: 922 (was 969), new mapping: ABCDEFGLIJKRMNOPQHSTUVWXYZ
+Improved! Swap R and S, reject count: 919 (was 922), new mapping: ABCDEFGLIJKSMNOPQHRTUVWXYZ
+Initial mapping: ABCJEZGHDIKLMWOXQRSTUVNPY, Reject count: 682
+Improved! Swap R and H, reject count: 646 (was 682), new mapping: ABCJEZGRDIKLMWOXQHSTUVNPY
+Initial mapping: ABCJEZGHDIKLMWOXQRSTUVNPYF, Reject count: 806
+Improved! Swap R and H, reject count: 756 (was 806), new mapping: ABCJEZGRDIKLMWOXQHSTUVNPYF
+Improved! Swap R and O, reject count: 711 (was 756), new mapping: ABCJEZGODIKLMWRXQHSTUVNPYF
+Improved! Swap R and N, reject count: 699 (was 711), new mapping: ABCJEZGODIKLMWNXQHSTUVRPYF
+Improved! Swap N and S, reject count: 695 (was 699), new mapping: ABCJEZGODIKLMWSXQHNTUVRPYF
+Improved! Swap H and O, reject count: 663 (was 695), new mapping: ABCJEZGHDIKLMWSXQONTUVRPYF
+Improved! Swap R and D, reject count: 660 (was 663), new mapping: ABCJEZGHRIKLMWSXQONTUVDPYF
+No further improvements found.
+Final mapping: ABCJEZGHRIKLMWSXQONTUVDPYF
+Final reject count: 660
+Initial mapping: ABCJEZGHRIKLMWSXQONTUVDPYF, Reject count: 660
+Improved! Swap A and O, reject count: 633 (was 660), new mapping: OBCJEZGHRIKLMWSXQANTUVDPYF
+No further improvements found.
+Final mapping: OBCJEZGHRIKLMWSXQANTUVDPYF
+Final reject count: 633
+Initial mapping: OBCJEZGHRIKLMWSXQANTUVDPYF, Reject count: 633
+Improved! Swap D and C, reject count: 610 (was 633), new mapping: OBDJEZGHRIKLMWSXQANTUVCPYF
+Improved! Swap C and U, reject count: 603 (was 610), new mapping: OBDJEZGHRIKLMWSXQANTCVUPYF
+Improved! Swap C and M, reject count: 582 (was 603), new mapping: OBDJEZGHRIKLCWSXQANTMVUPYF
+No further improvements found.
+Final mapping: OBDJEZGHRIKLCWSXQANTMVUPYF
+Final reject count: 582
+Initial mapping: OBDJEZGHRIKLCWSXQANTMVUPYF, Reject count: 582
+Improved! Swap M and P, reject count: 572 (was 582), new mapping: OBDJEZGHRIKLCWSXQANTPVUMYF
+Improved! Swap B and V, reject count: 565 (was 572), new mapping: OVDJEZGHRIKLCWSXQANTPBUMYF
+No further improvements found.
+Final mapping: OVDJEZGHRIKLCWSXQANTPBUMYF
+Final reject count: 565
+Initial mapping: OVDJEZGHRIKLCWSXQANTPBUMYF, Reject count: 565
+No further improvements found.
+Final mapping: OVDJEZGHRIKLCWSXQANTPBUMYF
+Final reject count: 565
+Initial mapping: OVDJEZGHRIKLCWSXQANTPBUMYF, Reject count: 565
+No further improvements found.
+Final mapping: OVDJEZGHRIKLCWSXQANTPBUMYF
+Final reject count: 565
+Initial mapping: OVDJEZGHRIKLCWSXQANTPBUMYF, Reject count: 565
+Improved! Swap B and J, reject count: 544 (was 565), new mapping: OVDBEZGHRIKLCWSXQANTPJUMYF
+Improved! Swap V and J, reject count: 536 (was 544), new mapping: OJDBEZGHRIKLCWSXQANTPVUMYF
+Improved! Swap X and J, reject count: 527 (was 536), new mapping: OXDBEZGHRIKLCWSJQANTPVUMYF
+No further improvements found.
+Final mapping: OXDBEZGHRIKLCWSJQANTPVUMYF
+Final reject count: 527
+Initial mapping: OXDBEZGHRIKLCWSJQANTPVUMYF, Reject count: 10490
+Improved! Swap B and K, reject count: 10198 (was 10490), new mapping: OXDKEZGHRIBLCWSJQANTPVUMYF
+Improved! Swap B and V, reject count: 10175 (was 10198), new mapping: OXDKEZGHRIVLCWSJQANTPBUMYF
+Improved! Swap B and X, reject count: 10118 (was 10175), new mapping: OBDKEZGHRIVLCWSJQANTPXUMYF
+Improved! Swap X and J, reject count: 10080 (was 10118), new mapping: OBDKEZGHRIVLCWSXQANTPJUMYF
+Improved! Swap J and Z, reject count: 9948 (was 10080), new mapping: OBDKEJGHRIVLCWSXQANTPZUMYF
+Improved! Swap V and J, reject count: 9942 (was 9948), new mapping: OBDKEVGHRIJLCWSXQANTPZUMYF
+No further improvements found.
+Final mapping: OBDKEVGHRIJLCWSXQANTPZUMYF
+Final reject count: 9942
+Initial mapping: OXDBEZGHRIKLCWSJQANTPVUMYF, Reject count: 10490
+Improved! Swap E and A, reject count: 10459 (was 10490), new mapping: OXDBAZGHRIKLCWSJQENTPVUMYF
+Improved! Swap E and O, reject count: 10374 (was 10459), new mapping: EXDBAZGHRIKLCWSJQONTPVUMYF
+Initial mapping: OBDKEVGHRIJLCWSXQANTPZUMYF, Reject count: 9942
+No further improvements found.
+Final mapping: OBDKEVGHRIJLCWSXQANTPZUMYF
+Final reject count: 9942
+Initial mapping: OBDKEVGHRIJLCWSXQANTPZUMYF, Reject count: 9942
+Improved! Swap M and W, reject count: 9932 (was 9942), new mapping: OBDKEVGHRIJLCMSXQANTPZUWYF
+Improved! Swap M and P, reject count: 9921 (was 9932), new mapping: OBDKEVGHRIJLCPSXQANTMZUWYF
+Improved! Swap M and K, reject count: 9888 (was 9921), new mapping: OBDMEVGHRIJLCPSXQANTKZUWYF
+Improved! Swap F and V, reject count: 9871 (was 9888), new mapping: OBDMEFGHRIJLCPSXQANTKZUWYV
+Improved! Swap B and V, reject count: 9815 (was 9871), new mapping: OVDMEFGHRIJLCPSXQANTKZUWYB
+No further improvements found.
+Final mapping: OVDMEFGHRIJLCPSXQANTKZUWYB
+Final reject count: 9815
+Initial mapping: OVDMEFGHRIJLCPSXQANTKZUWYB, Reject count: 9815
+Improved! Swap L and M, reject count: 9784 (was 9815), new mapping: OVDLEFGHRIJMCPSXQANTKZUWYB
+No further improvements found.
+Final mapping: OVDLEFGHRIJMCPSXQANTKZUWYB
+Final reject count: 9784
+Initial mapping: OVDLEFGHRIJMCPSXQANTKZUWYB, Reject count: 9784
+No further improvements found.
+Final mapping: OVDLEFGHRIJMCPSXQANTKZUWYB
+Final reject count: 9784
+Initial mapping: OVDLEFGHRIJMCPSXQANTKZUWYB, Reject count: 9784
+Improved! Swap E and H, reject count: 9754 (was 9784), new mapping: OVDLHFGERIJMCPSXQANTKZUWYB
+No further improvements found.
+Final mapping: OVDLHFGERIJMCPSXQANTKZUWYB
+Final reject count: 9754
+Initial mapping: ABCDEFGHIJKLMNSPQROTUVWXYZ, Reject count: 10352
+Improved! Swap E and O, reject count: 10281 (was 10352), new mapping: ABCDOFGHIJKLMNSPQRETUVWXYZ
+Improved! Swap A and I, reject count: 10275 (was 10281), new mapping: IBCDOFGHAJKLMNSPQRETUVWXYZ
+Improved! Swap A and N, reject count: 10197 (was 10275), new mapping: IBCDOFGHNJKLMASPQRETUVWXYZ
+Improved! Swap E and A, reject count: 10175 (was 10197), new mapping: IBCDOFGHNJKLMESPQRATUVWXYZ
+Improved! Swap E and O, reject count: 10153 (was 10175), new mapping: IBCDEFGHNJKLMOSPQRATUVWXYZ
+Improved! Swap A and H, reject count: 10139 (was 10153), new mapping: IBCDEFGANJKLMOSPQRHTUVWXYZ
+Improved! Swap E and H, reject count: 10137 (was 10139), new mapping: IBCDHFGANJKLMOSPQRETUVWXYZ
+Improved! Swap O and H, reject count: 9987 (was 10137), new mapping: IBCDOFGANJKLMHSPQRETUVWXYZ
+No further improvements found.
+Final mapping: IBCDOFGANJKLMHSPQRETUVWXYZ
+Final reject count: 9987
+Initial mapping: ABCDEFGHIJKLMNSPQROTUVWXYZ, Reject count: 395
+Improved! Swap E and A, reject count: 389 (was 395), new mapping: EBCDAFGHIJKLMNSPQROTUVWXYZ
+Improved! Swap E and O, reject count: 385 (was 389), new mapping: OBCDAFGHIJKLMNSPQRETUVWXYZ
+Improved! Swap E and I, reject count: 384 (was 385), new mapping: OBCDAFGHEJKLMNSPQRITUVWXYZ
+Improved! Swap E and A, reject count: 380 (was 384), new mapping: OBCDEFGHAJKLMNSPQRITUVWXYZ
+Improved! Swap E and O, reject count: 360 (was 380), new mapping: EBCDOFGHAJKLMNSPQRITUVWXYZ
+Improved! Swap E and S, reject count: 357 (was 360), new mapping: SBCDOFGHAJKLMNEPQRITUVWXYZ
+Improved! Swap E and I, reject count: 356 (was 357), new mapping: SBCDOFGHAJKLMNIPQRETUVWXYZ
+No further improvements found.
+Final mapping: SBCDOFGHAJKLMNIPQRETUVWXYZ
+Final reject count: 356
+Initial mapping: ABCDEFGHIJKLMNSPQROTUVWXYZ, Reject count: 395
+Improved! Swap A and O, reject count: 392 (was 395), new mapping: OBCDEFGHIJKLMNSPQRATUVWXYZ
+Improved! Swap E and O, reject count: 390 (was 392), new mapping: EBCDOFGHIJKLMNSPQRATUVWXYZ
+Improved! Swap E and I, reject count: 389 (was 390), new mapping: IBCDOFGHEJKLMNSPQRATUVWXYZ
+Improved! Swap E and O, reject count: 385 (was 389), new mapping: IBCDEFGHOJKLMNSPQRATUVWXYZ
+Improved! Swap E and A, reject count: 382 (was 385), new mapping: IBCDAFGHOJKLMNSPQRETUVWXYZ
+Improved! Swap E and I, reject count: 372 (was 382), new mapping: EBCDAFGHOJKLMNSPQRITUVWXYZ
+Improved! Swap E and S, reject count: 363 (was 372), new mapping: SBCDAFGHOJKLMNEPQRITUVWXYZ
+Improved! Swap E and O, reject count: 361 (was 363), new mapping: SBCDAFGHEJKLMNOPQRITUVWXYZ
+Improved! Swap E and A, reject count: 360 (was 361), new mapping: SBCDEFGHAJKLMNOPQRITUVWXYZ
+Improved! Swap E and L, reject count: 352 (was 360), new mapping: SBCDLFGHAJKEMNOPQRITUVWXYZ
+Improved! Swap E and A, reject count: 351 (was 352), new mapping: SBCDLFGHEJKAMNOPQRITUVWXYZ
+Improved! Swap E and S, reject count: 349 (was 351), new mapping: EBCDLFGHSJKAMNOPQRITUVWXYZ
+Improved! Swap A and L, reject count: 346 (was 349), new mapping: EBCDAFGHSJKLMNOPQRITUVWXYZ
+Improved! Swap N and R, reject count: 344 (was 346), new mapping: EBCDAFGHSJKLMROPQNITUVWXYZ
+Improved! Swap O and I, reject count: 343 (was 344), new mapping: EBCDAFGHSJKLMRIPQNOTUVWXYZ
+No further improvements found.
+Final mapping: EBCDAFGHSJKLMRIPQNOTUVWXYZ
+Final reject count: 343
+Initial mapping: ABCDEFGHIJKLMNOPQRSTUVWXYZ, Reject count: 382
+Improved! Swap E and A, reject count: 369 (was 382), new mapping: EBCDAFGHIJKLMNOPQRSTUVWXYZ
+Improved! Swap E and S, reject count: 367 (was 369), new mapping: SBCDAFGHIJKLMNOPQRETUVWXYZ
+Improved! Swap T and S, reject count: 357 (was 367), new mapping: TBCDAFGHIJKLMNOPQRESUVWXYZ
+Improved! Swap E and I, reject count: 356 (was 357), new mapping: TBCDAFGHEJKLMNOPQRISUVWXYZ
+Improved! Swap E and T, reject count: 347 (was 356), new mapping: EBCDAFGHTJKLMNOPQRISUVWXYZ
+Improved! Swap R and S, reject count: 333 (was 347), new mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ
+No further improvements found.
+Final mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ
+Final reject count: 333
+Initial mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ, Reject count: 333
+No further improvements found.
+Final mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ
+Final reject count: 333
+Initial mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ, Reject count: 333
+No further improvements found.
+Final mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ
+Final reject count: 333
+Initial mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ, Reject count: 333
+No further improvements found.
+Final mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ
+Final reject count: 333
+Initial mapping: EBCDAFGHTJKLMNOPQSIRUVWXYZ, Reject count: 333
+Improved! Swap Y and K, reject count: 329 (was 333), new mapping: EBCDAFGHTJYLMNOPQSIRUVWXKZ
+Improved! Swap Y and B, reject count: 323 (was 329), new mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ
+No further improvements found.
+Final mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ
+Final reject count: 323
+Initial mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ, Reject count: 323
+No further improvements found.
+Final mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ
+Final reject count: 323
+Initial mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ, Reject count: 323
+No further improvements found.
+Final mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ
+Final reject count: 323
+Initial mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ, Reject count: 323
+No further improvements found.
+Final mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ
+Final reject count: 323
+Initial mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ, Reject count: 323
+No further improvements found.
+Final mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ
+Final reject count: 323
+Initial mapping: EYCDAFGHTJBLMNOPQSIRUVWXKZ, Reject count: 323
+Improved! Swap D and M, reject count: 322 (was 323), new mapping: EYCMAFGHTJBLDNOPQSIRUVWXKZ
+No further improvements found.
+Final mapping: EYCMAFGHTJBLDNOPQSIRUVWXKZ
+Final reject count: 322
+Initial mapping: EYCMAFGHTJBLDNOPQSIRUVWXKZ, Reject count: 322
+Improved! Swap C and B, reject count: 320 (was 322), new mapping: EYBMAFGHTJCLDNOPQSIRUVWXKZ
+Improved! Swap C and U, reject count: 316 (was 320), new mapping: EYBMAFGHTJULDNOPQSIRCVWXKZ
+No further improvements found.
+Final mapping: EYBMAFGHTJULDNOPQSIRCVWXKZ
+Final reject count: 316
+Initial mapping: EYBMAFGHTJULDNOPQSIRCVWXKZ, Reject count: 316
+No further improvements found.
+Final mapping: EYBMAFGHTJULDNOPQSIRCVWXKZ
+Final reject count: 316
+Initial mapping: EYBMAFGHTJULDNOPQSIRCVWXKZ, Reject count: 316
+Improved! Swap V and Z, reject count: 311 (was 316), new mapping: EYBMAFGHTJULDNOPQSIRCZWXKV
+No further improvements found.
+Final mapping: EYBMAFGHTJULDNOPQSIRCZWXKV
+Final reject count: 311
+Initial mapping: EYBMAFGHTJULDNOPQSIRCZWXKV, Reject count: 311
+No further improvements found.
+Final mapping: EYBMAFGHTJULDNOPQSIRCZWXKV
+Final reject count: 311
+Initial mapping: EYBMAFGHTJULDNOPQSIRCZWXKV, Reject count: 311
+No further improvements found.
+Final mapping: EYBMAFGHTJULDNOPQSIRCZWXKV
+Final reject count: 311
+Initial mapping: EYBMAFGHTJULDNOPQSIRCZWXKV, Reject count: 311
+No further improvements found.
+Final mapping: EYBMAFGHTJULDNOPQSIRCZWXKV
+Final reject count: 311
+Initial mapping: EYBMAFGHTJULDNOPQSIRCZWXKV, Reject count: 311
+Improved! Swap D and C, reject count: 308 (was 311), new mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+No further improvements found.
+Final mapping: EYBMAFGHTJULCNOPQSIRDZWXKV
+Final reject count: 308
+Initial mapping: EYBMAFGHTJULCNOPQSIRDZWXKV, Reject count: 308
+Improved! Swap L and W, reject count: 303 (was 308), new mapping: EYBMAFGHTJUWCNOPQSIRDZLXKV
+Improved! Swap J and Z, reject count: 300 (was 303), new mapping: EYBMAFGHTZUWCNOPQSIRDJLXKV
+Improved! Swap C and V, reject count: 299 (was 300), new mapping: EYBMAFGHTZUWVNOPQSIRDJLXKC
+No further improvements found.
+Final mapping: EYBMAFGHTZUWVNOPQSIRDJLXKC
+Final reject count: 299

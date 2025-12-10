@@ -1,0 +1,40 @@
+
+#!/usr/bin/awk -f
+
+# Usage: awk -v field=3 -f this_script.awk your_file.txt
+# Replace '3' with your desired field number (1-based).
+# This assumes space or tab-delimited fields. Adjust FS if needed.
+
+BEGIN {
+    # No initialization needed
+}
+
+{
+    # Get the word from the specified field
+    word = $field
+    
+    # Increment the count for this word (associative array acts as dictionary)
+    count[word]++
+    
+    # Append the new count to the word
+    
+    if (count[word] > 1) {
+            new_word = word "" count[word]
+        } else {
+            new_word = word
+        }
+    
+    
+    # Replace the original field with the new word
+    $field = new_word
+    
+    # Print the modified line
+    print
+}
+
+END {
+#     Optional: Print summary of counts if desired
+#     for (w in count) {
+#         print "Word '" w "' appeared " count[w] " times"
+#     }
+}
