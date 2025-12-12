@@ -22,16 +22,18 @@ const validKeys = new Set(Object.keys(primeMap));
 
 //to select from hyphenated reserve words on 2nd pass
 const keyMap2ndPass = {
-  'u': 5,
-  'i': 6,
-  'o': 7,
-  'p': 8,
-  'h': 9,
+  'u': 7,
+  'i': 8,
+  'o': 9,
+  'p': 10,
+  'h': 11,
   '\\': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
-  'j': 1,
-  'k': 2,
-  'l': 3,
-  ';': 4
+  ' ': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
+  'j': 3,
+  'k': 4,
+  'alt': 2,
+  'l': 5,
+  ';': 6
 };
 const optionKeys = Object.keys(keyMap2ndPass);
 
@@ -106,7 +108,7 @@ function select2ndPassWd(key) {
 // user selects h (9) if 3rd pass is needed for qwerty 
 // MissingWord used as place holder. May need to change
 // for neobets where n > 8..
-  if (choice === 9)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
+  if (choice === 11)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
 // swap hyphenated word options with selected word
 //   mdRepl(spanRegEx, selectedWord);
 //   clearFrag();
