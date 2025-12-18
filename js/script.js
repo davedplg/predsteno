@@ -303,36 +303,33 @@ function reParseParagraph(){
 */
 
 function nonAlphabetic() {
+  function addSpecialChar(special){
+    clearFrag();
+    setMd(md() + special);
+    wdOpts.innerHTML = '';
+    return true;
+   }
 	removeWordOptions();
  
   let special = NON_ALPHA_CHORDS[chord];
     // may fall over with n > 8 in future variants
   if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) {
 
-  if (special !== 'D') {
-    clearFrag();
-//  setMd(md() + special + '\u275A');
-    setMd(md() + special );
-    wdOpts.innerHTML = '';
-    return true;
-  }
+    if (special !== 'D')  return addSpecialChar(special); 
   // We are deleteing from here on in
 
   if (frag === '') {
     const cleaned = md()
-//  .replace(/\u275A$/, '')  // remove cursor
     .replace(/\s+$/, ' ')    // collapse trailing spaces → one space
     .replace(/[^\s]+(?=\s*$)/, '')
 
-//setMd(cleaned + '\u275A');
-  setMd(cleaned);
-  wdOpts.innerHTML = '---';
-  renderMarkdown();
-//requestAnimationFrame(() => outputMarkdown.focus());
+    setMd(cleaned);
+    wdOpts.innerHTML = '---';
+    renderMarkdown();
   return true;
 }
-  if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
   frag = frag.replace(/.$/, '');
+  if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
   
   if(dic[frag]){
  	  removeWordOptions();
