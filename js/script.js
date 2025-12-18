@@ -309,16 +309,8 @@ function nonAlphabetic() {
     wdOpts.innerHTML = '';
     return true;
    }
-	removeWordOptions();
- 
-  let special = NON_ALPHA_CHORDS[chord];
-    // may fall over with n > 8 in future variants
-  if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) {
 
-    if (special !== 'D')  return addSpecialChar(special); 
-  // We are deleteing from here on in
-
-  if (frag === '') {
+  function deleteWord(){
     const cleaned = md()
     .replace(/\s+$/, ' ')    // collapse trailing spaces → one space
     .replace(/[^\s]+(?=\s*$)/, '')
@@ -326,14 +318,29 @@ function nonAlphabetic() {
     setMd(cleaned);
     wdOpts.innerHTML = '---';
     renderMarkdown();
-  return true;
-}
-  frag = frag.replace(/.$/, '');
-  if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
+    return true;
+  }
+
+  function evenString(frag){String(frag).length % 2 == 0?true:false}
+
+	removeWordOptions();
+ 
+  let special = NON_ALPHA_CHORDS[chord];
+    // may fall over with n > 8 in future variants
+  if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) 
+  {
+    if (special !== 'D')  return addSpecialChar(special); 
+  // We are deleteing from here on in
+
+    if (frag === '')  return deleteWord();
+
+    frag = frag.replace(/.$/, '');
+    if(evenString(frag)) frag = frag.replace(/.$/, '');
+//if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
   
   if(dic[frag]){
  	  removeWordOptions();
-    if(String(frag).length % 2 == 0 ){
+    if(evenString(frag) ){
       bwords="<span id='deciding'>" + underlineFirstNLtrs(frag,caps) +"</span>";
     } else {
       bwords="<span id='deciding' style='color:red'>" + underlineFirstNLtrs(frag,caps) +"</span>";
