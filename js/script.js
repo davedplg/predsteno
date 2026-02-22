@@ -4,7 +4,8 @@
 let left='',right=''; //left and right hand chords
 let frag = '';        // encoded fragment
 let lProduct = 1, rProduct = 1, thumbProduct = 1; //prime products from key combinations. Keys have prime values
-let lastlProduct = 1;
+//let lastlProduct = 1;
+let lastrProduct = 1;
 let chord = '', thumbChord = ''; // both chords appended, thumb chord
 let need3rdPass = 0; // Flag for active missing word input, set by M chord or recursion
 let pendingHfnGps = []; //pending hyphen groups (2nd parse options)
@@ -16,7 +17,7 @@ let oldOpts = '';
 let lastDecidingSpan="";
 let presdKeys = new Set();   //keys list for current chord
 let timeoutId = null;        //timeout needed to register keypresses
-                             //together not individuality 
+//together not individuality 
 
 const validKeys = new Set(Object.keys(primeMap));
 
@@ -44,8 +45,14 @@ const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 // reserveRegEx detects unhighlighted raw groups
 // of reserve words for later highlighting 
 //const reserveRegEx =   /[1-9a-zA-Z'+]+(?:\u2194['+1-9a-zA-Z]+)+/;
-const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
+//const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
+//const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
 ///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
+
+// Matches word-like tokens (letters, numbers, punctuation) separated by at least one ↔ arrow
+// \p{P} catches commas, periods, quotes, brackets, dashes, etc. automatically
+//const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
+const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
 const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 
 
@@ -67,22 +74,24 @@ const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
  */ 
 
 function calcPrimeProducts() { 
-  lastlProduct = lProduct;
-  let lProductT = 1, rProduct = 1, thumbProduct=1;
+  //lastlProduct = lProduct;
+  //  lastrProduct = rProduct;
+  //  let lProductT = 1, rProduct = 1, thumbProduct=1;
+     let lp = 1, rp = 1, tp =1;
   for (const key of presdKeys) {
-    const prime = primeMap[key];
-    if (prime % 2 === 0 ) {
-      if(prime > 58){     //thumb keys 
-      thumbProduct *= prime / 2
+    const p = primeMap[key]; // p is prime
+    if (p % 2 === 0 ) {
+      if(p > 58){     
+      tp *= p / 2  //thumb product 
       } else {
-      rProduct *= prime / 2; //right keys 
+      rp *= p / 2; //right product 
       } 
     } else {
-      lProductT *= prime;     //left keys
+      lp *= p;     //left product
     }
   }
-  lProduct = lProductT;
-  return { lProduct , rProduct,thumbProduct };
+// lProduct = lProductT;
+  return { lp , rp,tp };
 }
 
 
@@ -102,7 +111,8 @@ function select2ndPassWd(key) {
   if (!choice || frag=='') return;
 //hyphenated reserve word options are inside span tags
   const wds = mdMatch(spanRegEx)[1]; 
-  const wdList = reserves[frag].split("-") || [];
+//const wdList = reserves[frag].split("-") || [];
+  const wdList = reserves[frag].split("\u2423") || [];
   let selectedWord = wdList[choice - 1] || wdList[0] || '';
 
 // user selects h (9) if 3rd pass is needed for qwerty 
@@ -237,15 +247,31 @@ return typeof result === 'string' && result.match(/[a-z]/) ? false : ofra + orde
 
 
 // Orders two characters lexicographically
-function order(m, n) { return m < n ? `${m}${n}` : `${n}${m}`; }
+function order(m, n) { 
+  if (pairwise_reordered_dic == false) return  `${m}${n}`;
+  return m < n ? `${m}${n}` : `${n}${m}`; 
+}
 
 /* affixes are Capitalised in dic 
  * +AFFIX is suffix, AFFIX+ is prefix
  */ 
 function parseAffixes(text){
  let t=text;                
- t = t.replace(/( +\+)(['A-Z]*)/g, (_,GAP,SUFX) => SUFX.toLowerCase());
- t = t.replace(/([A-Z']*)(\+ +)/g, (_,PREFX,GAP) => PREFX.toLowerCase());
+// t = t.replace(/( +\+)(['A-Z]*)/g, (_,GAP,SUFX) => SUFX.toLowerCase());
+     
+t = t.replace(
+  /(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
+//"$3".toLowerCase()
+ (_,SPAN,GAP,SUFX) => SUFX.toLowerCase()
+);
+// t = t.replace(/([A-Z']*)(\+ +)/g, (_,PREFX,GAP) => PREFX.toLowerCase());
+
+// suffix version
+//t = t.replace(/ \+('?)(?<suffix>[A-Z']+)/g, "'$<suffix>".toLowerCase());
+
+// prefix version (example)
+t = t.replace(/(?<prefix>[A-Z']+)\+ /g, (m, p) => p.toLowerCase() + "'");  
+// or whatever your prefix convention is
  return t;
 
 }
@@ -312,7 +338,8 @@ function nonAlphabetic() {
 
   function deleteWord(){
     const cleaned = md()
-    .replace(/\s+$/, ' ')    // collapse trailing spaces → one space
+// collapse trailing spaces → one space
+    .replace(/\s+$/, ' ')    
     .replace(/[^\s]+(?=\s*$)/, '')
 
     setMd(cleaned);
@@ -321,36 +348,29 @@ function nonAlphabetic() {
     return true;
   }
 
-  function evenString(frag){String(frag).length % 2 == 0?true:false}
-
 	removeWordOptions();
  
   let special = NON_ALPHA_CHORDS[chord];
     // may fall over with n > 8 in future variants
   if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) 
   {
+    //  delete or special charac.
     if (special !== 'D')  return addSpecialChar(special); 
-  // We are deleteing from here on in
-
+    
+    // delete entire word
     if (frag === '')  return deleteWord();
-
-    frag = frag.replace(/.$/, '');
+    
+    // delete to even string
     if(evenString(frag)) frag = frag.replace(/.$/, '');
-//if(String(frag).length % 2 == 0 )frag = frag.replace(/.$/, '');
+    frag = frag.replace(/.$/, '');
   
-  if(dic[frag]){
- 	  removeWordOptions();
-    if(evenString(frag) ){
-      bwords="<span id='deciding'>" + underlineFirstNLtrs(frag,caps) +"</span>";
-    } else {
-      bwords="<span id='deciding' style='color:red'>" + underlineFirstNLtrs(frag,caps) +"</span>";
-    }
-    wdOpts.innerHTML = bwords;
-    setMd(md() + bwords);
-   }
-   return true;
+//  if(dic[frag]) setWordOptions(); 
+    
+//  return true;
  }
 
+    if(dic[frag]) setWordOptions(); 
+    
 }
 //A function that splits the options list
 //in two when the frag length is less than
@@ -364,19 +384,25 @@ function nonAlphabetic() {
 //afford handedness and pairwise reordering will be
 //turned off. May still have handedness for single letter
 //words i.e. 2n frags may be handed.
-function RHSawareDic(f,dict){
-  const wdList = dict[f]?.split('-') || [];
-  if(thumbProduct > 1 && rProduct*lProduct == 1) lProduct = lastlProduct;
-  if(frag.length < 3){
-    if(lProduct == 1){
-      return (wdList[0] || ' ') + '-' + (wdList[1] || ', ');
-    } else
-    { 
-      return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
-    }
-   }
-  return dict[f];
-}
+//function RHSawareDic(f,dict){
+//  const wdList = dict[f]?.split('-') || [];
+//  if(thumbProduct > 1 && rProduct*lProduct == 1) rProduct = lastrProduct;
+// if(frag.length < 3){
+//    //    if(lProduct == 1){
+//    //      return (wdList[0] || ' ') + '-' + (wdList[1] || ', ');
+//    //    } else
+//    //    { 
+//    //      return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
+//    //    }
+//    if(rProduct > 1){
+//      return (wdList[0] || ' ') + '-' + (wdList[1] || ', ');
+//    } else
+//    { 
+//      return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
+//    }
+//   }
+//  return dict[f];
+//}
 
 /**
  * NEW & IMPROVED firstParse() – handles all thumb-chord cases
@@ -390,18 +416,31 @@ function RHSawareDic(f,dict){
 //May try to add direct 2nd parse 'b' button to here so
 //User can press it since they learn high freq misses
 function firstParse() {
-  const wdList = RHSawareDic(frag, dic)?.split('-') || [];
+// const wdList = RHSawareDic(frag, dic)?.split('-') || [];
+//const wdList =  dic[frag]?.split('-') || [];
+  const wdList =  dic[frag]?.split('\u2423') || [];
+//const wdListR = reserves[frag].split("-") || [];
+//const wdListR = reserves[frag]?.split("-") ?? [];
+  const wdListR = reserves[frag]?.split("\u2423") ?? [];
+// want to get rid of below once dic and reserves are
+// merged
   let wd = '';
 
   switch (thumbChord) {
     case 'wd1'  : wd = wdList[0] || ''; break;
     case 'wd2'  : wd = wdList[1] || ''; break;
+// below wants to be changed to wdList[2]
+// and wdList[3]  
+    case 'wd3'  : wd = wdListR[0] || ''; break;
+    case 'wd4'  : wd = wdListR[1] || ''; break;
     case 'space': wd = ' '            ; break;
 
     case 'missed': 
-      wd = (reserves[frag] || '').includes('-') 
-        ? reservecaps[frag].replace(/-/g, '\u2194')
-        : reserves[frag];
+//      wd = (reserves[frag] || '').includes('-') 
+//        ? reservecaps[frag].replace(/-/g, '\u2194')
+        wd = (reserves[frag] || '').includes('\u2423') 
+          ? reservecaps[frag].replace(/\u2423/g, '\u2194')
+       : reserves[frag];
       break;
 
     default:
@@ -409,14 +448,14 @@ function firstParse() {
 //    clearFrag();
   }
   // ────── THIS BLOCK RUNS FOR EVERY SINGLE PATH ──────
-  if(!wd.includes('\u2194')) clearFrag();
+  if(!(wd+' ').includes('\u2194')) clearFrag();
 //removeWordOptions();
 //setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
 //renderMarkdown();
 //requestAnimationFrame(() => outputMarkdown.focus());
   insertWord(wd);
   // ────── Only trigger next phase when needed ──────
-  if (thumbChord === 'missed' && wd.includes('\u2194')) {
+  if (thumbChord === 'missed' && String(wd).includes('\u2194')) {
     markReserves();
   } else if (thumbChord === 'missed' && wd.includes('\u2014\u2014')) {
     need3rdPass = 1;
@@ -434,16 +473,19 @@ function firstParse() {
 
 function underlineFirstNLtrs(frg,dict) {
 //  let wds=dic[frg];
-    let wds=RHSawareDic(frg,dict);
+//  let wds=RHSawareDic(frg,dict);
+    let wds=dict[frg] || '';
     let n    =frg.length;
     if (typeof wds !== 'string' || n < 0) return '';
     return caps2underlineLcase(wds
-        .split('-')
+//      .split('-')
+        .split('\u2423')
         .map(wd => {
             if (n > wd.length) return wd.toLowerCase();//??
             return wd.slice(0, n).toLowerCase() + wd.slice(n);
         })
-        .join('-'));
+//      .join('-'));
+        .join('\u2423'));
 }
 //frag length is number of keys pressed so far for word
 function caps2underlineLcase(str) {
@@ -460,7 +502,9 @@ function caps2underlineLcase(str) {
  * @returns {void}
  */
 function processBiChord() {
-  ({lProduct, rProduct, thumbProduct}  = calcPrimeProducts());
+
+({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
+//({lProduct, rProduct, thumbProduct}  = calcPrimeProducts());
   ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
   chord         = left+right;     
   thumbChord    = productMap[thumbProduct] || '';
@@ -497,8 +541,33 @@ if (thumbChord) {
 }
   let capsOpts =underlineFirstNLtrs(frag,caps);   
   tidyWordOptions(capsOpts);
+//setWordOptions(frag);
+//setWordOptions();
   presdKeys.clear();
 }
+  function evenString(frag){String(frag).length % 2 == 0?true:false}
+
+//function setWordOptions(frag){
+  function setWordOptions(){
+   	removeWordOptions();
+    console.log('setWordOptions');    
+    // odd frags red to warn next chord must b singleton
+    // or double to avoid ambiguity
+    bwords="<span id='deciding' style='color:red'>" 
+    // remove warning if even frag
+    if(evenString(frag) ) bwords="<span id='deciding'>" 
+    // old words to remind user what last options
+    // were to notice overshootig common abbreviated
+    // words and give wdOpts purpose
+    let oldBwords=bwords;
+    flen=frag.length;
+    let oldfrag = frag.substr(0,flen-2);  
+    if(flen>2){ oldBwords+= underlineFirstNLtrs(oldfrag,caps); }
+    bwords+=    underlineFirstNLtrs(frag,caps);
+    wdOpts.innerHTML = oldBwords +"</span>";
+    setMd(md() + bwords + "</span>");
+   }
+
 
 function tidyWordOptions(capsOpts)
 {  

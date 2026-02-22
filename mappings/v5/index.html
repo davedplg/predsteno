@@ -8,72 +8,65 @@
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
-  <h4> <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input</h4>
- <h4> press ENTER (perhaps twice) to start</h4>
- <a id="md_download" href='#' onclick="exportMD();">Export MD & HTM</a>
- <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
+<h4> <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input</h4>
+<h4> press ENTER (perhaps twice) to start</h4>
+<a id="md_download" href='#' onclick="exportMD();">Export MD & HTM</a>
+<a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
 <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
-        <textarea id="output" rows="4" cols="80" readonly>
+      <textarea id="output" rows="4" cols="80" readonly>
 # mārkdõw0n enâblèd 
 - 'spâçè' + entèŕ = nëw0 lînè 
 - entèŕ  + entèŕ = parágraph
 **Woah** Ôħ wê ār0è hl0f wãy theŕè...
-        </textarea>
-        <h4 id="wdOpts">suggestions</h4>
-        <div id="outpt2" >
-       </div>
+      </textarea>
+      <h4 id="wdOpts">suggestions</h4>
+      <div id="outpt2" >
+     </div>
 
 <div id="debug" onclick="this.children[2].style.display = 
-  this.children[2].style.display === 'none' ? 'block' : 'none';">
-  <strong>Process Info: click to show/hide</strong><br>
-  <table style="display: none;">
-    <tr>
-      <td> Pressed Keys: <span id="debugKeys">-</span></td>
-      <td> Chord: <span id="debugChord">-</span></td>
-    </tr>
-    <tr>
-      <td> Left Product: <span id="debugLeftProduct">-</span></td>
-      <td> Right Product: <span id="debugRightProduct">-</span></td>
-    </tr>
-    <tr>
-      <td> Current Word: <span id="debugWord">-</span></td>
-      <td> Thumbs: <span id="debugThumbs">-</span></td>
-    </tr>
-  </table>
+this.children[2].style.display === 'none' ? 'block' : 'none';">
+<strong>Process Info: click to show/hide</strong><br>
+<table style="display: none;">
+  <tr>
+    <td> Pressed Keys: <span id="debugKeys">-</span></td>
+    <td> Chord: <span id="debugChord">-</span></td>
+  </tr>
+  <tr>
+    <td> Left Product: <span id="debugLeftProduct">-</span></td>
+    <td> Right Product: <span id="debugRightProduct">-</span></td>
+  </tr>
+  <tr>
+    <td> Current Word: <span id="debugWord">-</span></td>
+    <td> Thumbs: <span id="debugThumbs">-</span></td>
+  </tr>
+</table>
 </div>
-  <div id="instructions">
-    <a id="numpad">
-      <table >
-      <tr>
-        <th></th><th> All but (')</th><th></th>
-      </tr>
-      <tr class="strong_digit">
-        <td><k>S</k>+<k>D</k>+<k>F</k> &rarr; 1</td>
-        <td><k>'A</k>/<k>';</k></td>
-        <td>1 &larr; <k>J</k>+<k>K</k>+<k>L</k></td>
-      </tr>
-      <tr class="strong_digit">
-        <td><k>A</k>+<k>D</k>+<k>F</k> &rarr; 4</td>
-        <td><k>'S</k>/<k>'L</k></td>
-        <td>4 &larr; <k>J</k>+<k>K</k>+<k>;</k></td>
-      </tr>
-      <tr class="strong_digit">
-        <td><k>A</k>+<k>S</k>+<k>F</k> &rarr; 7</td>
-        <td><k>'D</k>/<k>'K</k></td>
-        <td>7 &larr; <k>J</k>+<k>L</k>+<k>;</k></td>
-      </tr>
-      <tr class="strong_digit">
-        <td><k>A</k>+<k>S</k>+<k>D</k> &rarr; 8</td>
-        <td><k>'F</k>/<k>'J</k></td>
-        <td>8 &larr; <k>K</k>+<k>L</k>+<k>;</k></td>
-      </tr>
-      <tr class="strong_digit">
-        <td><k>A</k><k>S</k><k>D</k><k>F</k> &rarr; 2,3,5,6</td>
-        <td></td>
-        <td>6,5,3,2 &larr; <k>J</k><k>K</k><k>L</k><k>;</k></td>
-      </tr>
-   </table>
-    
+<div id="instructions">
+  <a id="numpad">
+    <table >
+        <tr class="strong_digit">
+      <td><k>1</k>+<k>2</k> &rarr; .</td>
+      <td></td>
+      <td>, &larr; <k>2</k>+<k>3</k></td>
+    </tr>
+    <tr class="strong_digit">
+      <td><k>1</k>+<k>2</k>+<k>3</k> &rarr; Uppercase</td>
+      <td></td>
+      <td>bspace &larr; <k>1</k>+<k>3</k>+<k>5</k></td>
+    </tr>
+    <tr class="strong_digit">
+      <td><k>2</k>+<k>3</k>+<k>5</k> &rarr; enter</td>
+      <td></td>
+      <td>7 &larr; <k>2</k>+<k>3</k>+<k>5</k></td>
+    </tr>
+   <tr class="strong_digit">
+      <td><k>A</k><k>S</k><k>D</k><k>F</k> &rarr; 1,2,3,5</td>
+      <td></td>
+      <td>5,3,2,1 &larr; <k>J</k><k>K</k><k>L</k><k>;</k></td>
+    </tr>
+ </table>
+  <h4>Use 1,2,3,5 to make 4,6,7,8</h4>
+  
    </div> 
    <div class="markdown striped">
  |              | numpad       |              |  |          punc & case |
@@ -143,10 +136,10 @@
  </div>
 
   </div>
-  <script src="../../js/toptxts.js"></script>
-  <script src="../../js/caps.js"></script>
-  <script src="../../js/reserves.js"></script>
-  <script src="../../js/reservecaps.js"></script>
+  <script src="../../js/uni-8-select-2-homos/toptxts.js"></script>
+  <script src="../../js/uni-8-select-2-homos/caps.js"></script>
+  <script src="../../js/uni-8-select-2-homos/reserves.js"></script>
+  <script src="../../js/uni-8-select-2-homos/reservecaps.js"></script>
   <script src="mappings.js"></script>
   <script src="../../js/script.js"></script>
   <script src="../../lib/marked.min.js" ></script>

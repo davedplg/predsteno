@@ -1,3 +1,9 @@
+// this disables the order function that reorders the UI key input
+// when appending to odd fragments
+//export  \
+const pairwise_reordered_dic = false;
+
+
 //These keys will register in the text area as is
 
 //export  \
@@ -44,9 +50,10 @@ const primeMap = {
 
 //  '/': 74,   I think these were candidates for more
 //  '[': 74,   complete full-size keyboards
-    'alt': 74,
     '\\': 146,
-    ' ' : 62
+    'alt': 74,      //spacebar2
+    'control': 86,  //spacebar3
+    ' ' : 62        //spacebar1
 };
 
 
@@ -137,6 +144,9 @@ const productMap = {
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
+    43       : 'wd3', //  /        selct 3rd word
+    [43 * 31]: 'wd4', //  /        selct 4th word
+    [43 * 37]: 'wd4', //  /        selct 4th word
     [31 * 37]: 'missed', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
     73       : 'missed', // this is now letter b

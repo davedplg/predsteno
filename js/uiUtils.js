@@ -92,6 +92,11 @@ function renderMarkdown() {
 
   // 7. Apply phonetic formatting
   htm = format_augmented_words(htm);
+  // 7b. Unescape common entities you care about
+  htm = htm.replace(/&lt;/g, '<')
+           .replace(/&gt;/g, '>')
+           .replace(/&amp;/g, '&')
+           .replace(/&quot;/g, '"');
 
   // 8. Update preview
   setHtml(htm);
@@ -103,6 +108,9 @@ function renderMarkdown() {
     outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
   });
 }
+
+
+
 function renderMarkdownOld() {
   setMd(parseAffixes(md()));
   setMd(parseCaseMarking(md()));
@@ -145,6 +153,16 @@ function removeWordOptions() {
 }
 
 function format_augmented_words(t){
+  // Step 1: Protect sequences that look like HTML entities
+  // We use a negative lookahead to skip coloring if & is followed by entity-like content
+  // But easier: replace known entities first with placeholders that won't match coloring
+//  t = t.replace(/&(?:lt|gt|amp|quot|apos);/gi, m => {
+//    // Replace entity with a safe placeholder that coloring regexes won't touch
+//    return `\uE000${m}\uE000`;  // private-use area chars as guards
+//  });
+//  if (t.match(/\uE000.*\uE000/)) {
+//    return t.replace(/\uE000/g,"");  
+//  }
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
   t=t.replace(/πħ/gi,'th');
@@ -168,7 +186,7 @@ function format_augmented_words(t){
   t=t.replace(/åw(0)*/gi,'aẇ');
   t=t.replace(/èŕ/gi,'eř');
   //tag vowels <v>
-  t=t.replace(/(?<![<][^>]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
+  t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
   t=t.replace(/τħ/gi,'<vc>th</vc>');
@@ -182,7 +200,9 @@ function format_augmented_words(t){
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
   //tag voiced consonants <vc>
-  t=t.replace(/(?<![</][^>]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
+  //(?<![<][^>]*|&[^;]*)
+//  t=t.replace(/(?<![</][^>]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
+  t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   t=t.replace(/ř/g,'r');
   t=t.replace(/ẇ/g,'w');
   t=t.replace(/ġ/g,'g');
