@@ -3,15 +3,20 @@ set -eu
 #export PS4='+ $BASH_SOURCE:$LINENO '   # nicer trace
 #set -x
 
-CONFIG_FILE="${CONFIG_FILE:-./config.sh}"
+CONFIG_FILE="${CONFIG_FILE:-./config-uni-8.sh}"
+#CONFIG_FILE="\( {1:- \){CONFIG_FILE:-./config.sh}}"
 
 echo "=== REDUCED KEYBOARD CONFIG ==="
 cat "$CONFIG_FILE"
 echo "================="
-
 # shellcheck source=config.sh
+printenv | grep -v PATH
+   read -n 1 -s -r -p "Press any key "; clear
+
+#source "$CONFIG_FILE"
 source "$CONFIG_FILE"
 
+   read -n 1 -s -r -p "Press any key "; clear
 #log the intermediate files md5sum 
 
 log() {

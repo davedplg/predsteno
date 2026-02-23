@@ -666,7 +666,7 @@
 ,"stop":{"a":"stop","f":"630"}
 ,"decided":{"a":"dėçîdėd","f":"631"}
 ,"red":{"a":"red","f":"632"}
-,"poor":{"a":"pōòr","f":"633"}
+,"poor":{"a":"pòør0","f":"633"}
 ,"award":{"a":"áwår0d","f":"634"}
 ,"front":{"a":"frőnt","f":"635"}
 ,"hospital":{"a":"hospitál","f":"636"}
@@ -990,8 +990,6 @@
 ,"windy":{"a":"windý","f":"940"}
 ,"windyy":{"a":"wînd","f":"940"}
 ,"wind":{"a":"wind--HETERONYM--wînd","f":"940"}
-,"windxx":{"a":"wind","f":"940"}
-,"windyy":{"a":"wînd","f":"940"}
 ,"expect":{"a":"ėxpect","f":"941"}
 ,"win":{"a":"win","f":"942"}
 ,"rise":{"a":"rîśè","f":"943"}
@@ -1619,7 +1617,7 @@
 ,"trial":{"a":"trîál","f":"1561"}
 ,"programmes":{"a":"prôgrammèś","f":"1562"}
 ,"asking":{"a":"askiñg0","f":"1563"}
-,"tour":{"a":"tōùr","f":"1564"}
+,"tour":{"a":"tøùr0","f":"1564"}
 ,"aim":{"a":"âìm","f":"1565"}
 ,"formal":{"a":"før#mál","f":"1566"}
 ,"prison":{"a":"priśón","f":"1567"}
@@ -3674,6 +3672,8 @@
 ,"organized":{"a":"ør#gánîzèd","f":"3576"}
 ,"colored":{"a":"cőlòŕèd","f":"3577"}
 ,"coloured":{"a":"cőlòùŕèd","f":"3577"}
+,"colorful":{"a":"cőlòŕful","f":"3577"}
+,"colourful":{"a":"cőlòùŕful","f":"3577"}
 ,"counter":{"a":"cõùntèŕ","f":"3579"}
 ,"presents":{"a":"preśénts","f":"3580"}
 ,"premier":{"a":"premièŕ","f":"3581"}
@@ -4292,7 +4292,7 @@
 ,"correspondent":{"a":"cør#réspondént","f":"4184"}
 ,"incorporated":{"a":"incør#pórâtėd","f":"4185"}
 ,"deposit":{"a":"dépośit","f":"4186"}
-,"tourist":{"a":"tōùríst","f":"4187"}
+,"tourist":{"a":"tøùr0íst","f":"4187"}
 ,"backing":{"a":"back0iñg0","f":"4188"}
 ,"reflection":{"a":"réflecţìòn","f":"4189"}
 ,"curtains":{"a":"cùŕtáìnś","f":"4190"}
@@ -5020,7 +5020,7 @@
 ,"opponents":{"a":"óppônénts","f":"4897"}
 ,"undertaking":{"a":"undèŕtâkiñg0","f":"4898"}
 ,"filter":{"a":"filtèŕ","f":"4899"}
-,"tournament":{"a":"tōùrnámént","f":"4900"}
+,"tournament":{"a":"tøùr0námént","f":"4900"}
 ,"insist":{"a":"insist","f":"4901"}
 ,"upwards":{"a":"upwàŕdś","f":"4902"}
 ,"clouds":{"a":"clõùdś","f":"4903"}
@@ -5361,7 +5361,7 @@
 ,"spaces":{"a":"spâçėś","f":"5230"}
 ,"hint":{"a":"hint","f":"5231"}
 ,"lifting":{"a":"liftiñg0","f":"5232"}
-,"tourists":{"a":"tōùrists","f":"5233"}
+,"tourists":{"a":"tøùr0ists","f":"5233"}
 ,"forwards":{"a":"før#wàŕdś","f":"5234"}
 ,"custody":{"a":"custódý","f":"5235"}
 ,"distress":{"a":"distress","f":"5236"}
@@ -5503,7 +5503,7 @@
 ,"valued":{"a":"valûèd","f":"5362"}
 ,"desktop":{"a":"desktop","f":"5363"}
 ,"stimulus":{"a":"stimûlus","f":"5364"}
-,"tourism":{"a":"tōùriśm","f":"5365"}
+,"tourism":{"a":"tøùr0iśm","f":"5365"}
 ,"avoiding":{"a":"ávσìdiñg0","f":"5366"}
 ,"trusts":{"a":"trusts","f":"5367"}
 ,"neighbourhood":{"a":"neĩg0ħbòùŕhōòd","f":"5368"}
@@ -6703,7 +6703,7 @@
 ,"illustrates":{"a":"illústrâtès","f":"6558"}
 ,"sweeping":{"a":"swêèpiñg0","f":"6559"}
 ,"reconstruction":{"a":"rêcónstrucţìòn","f":"6560"}
-,"poorly":{"a":"pōòrlý","f":"6561"}
+,"poorly":{"a":"pòør0lý","f":"6561"}
 ,"videos":{"a":"vidêôś","f":"6562"}
 ,"collins":{"a":"collinś","f":"6563"}
 ,"sovereign":{"a":"sovèreíg0n","f":"6564"}
@@ -6812,7 +6812,7 @@
 ,"paula":{"a":"påùlá","f":"6670"}
 ,"limbs":{"a":"limb0ś","f":"6671"}
 ,"bombing":{"a":"bomb0iñg0","f":"6672"}
-,"tours":{"a":"tōùrś","f":"6673"}
+,"tours":{"a":"tøùr0ś","f":"6673"}
 ,"descent":{"a":"dėsc0ent","f":"6674"}
 ,"polls":{"a":"pôllś","f":"6675"}
 ,"airline":{"a":"ãìŕlînè","f":"6676"}
@@ -7203,7 +7203,7 @@
 ,"denis":{"a":"denis","f":"7076"}
 ,"dan":{"a":"dan","f":"7077"}
 ,"stitches":{"a":"stitĉħėś","f":"7078"}
-,"moor":{"a":"mōòr","f":"7079"}
+,"moor":{"a":"mòør0","f":"7079"}
 ,"duly":{"a":"dülý","f":"7080"}
 ,"scent":{"a":"sc0ent","f":"7081"}
 ,"sixteenth":{"a":"sixtêènπħ","f":"7082"}
@@ -7677,7 +7677,7 @@
 ,"riots":{"a":"rîóts","f":"7560"}
 ,"ensures":{"a":"ėnŝūrèś","f":"7561"}
 ,"notorious":{"a":"nôtørïòús","f":"7562"}
-,"poorer":{"a":"pōòrèŕ","f":"7563"}
+,"poorer":{"a":"pòør0èŕ","f":"7563"}
 ,"casting":{"a":"castiñg0","f":"7564"}
 ,"citizenship":{"a":"çitizénŝħip","f":"7565"}
 ,"indoor":{"a":"indøòr0","f":"7566"}
@@ -8013,7 +8013,7 @@
 ,"gut":{"a":"gut","f":"7897"}
 ,"evelyn":{"a":"evélẏn","f":"7898"}
 ,"solving":{"a":"solviñg0","f":"7899"}
-,"touring":{"a":"tōùriñg0","f":"7900"}
+,"touring":{"a":"tøùr0iñg0","f":"7900"}
 ,"hastings":{"a":"hâstiñg0ś","f":"7901"}
 ,"ambiguous":{"a":"ambigûòús","f":"7902"}
 ,"dame":{"a":"dâmè","f":"7903"}
@@ -9584,7 +9584,7 @@
 ,"outlines":{"a":"õùtlînèś","f":"9493"}
 ,"obstacle":{"a":"obstáclè","f":"9494"}
 ,"polytechnics":{"a":"polýtecħnics","f":"9495"}
-,"moors":{"a":"mōòrś","f":"9496"}
+,"moors":{"a":"mòør0ś","f":"9496"}
 ,"countless":{"a":"cõùntléss","f":"9497"}
 ,"henderson":{"a":"hendèŕsón","f":"9498"}
 ,"learner":{"a":"lèàŕnèŕ","f":"9499"}
@@ -10521,7 +10521,7 @@
 ,"darkened":{"a":"dār#kénèd","f":"10444"}
 ,"abolish":{"a":"áboliŝħ","f":"10445"}
 ,"inset":{"a":"inset","f":"10446"}
-,"poorest":{"a":"pōòrėst","f":"10447"}
+,"poorest":{"a":"pòør0ėst","f":"10447"}
 ,"chop":{"a":"ĉħop","f":"10448"}
 ,"creep":{"a":"crêèp","f":"10449"}
 ,"creeper":{"a":"crêèpèŕ","f":"10449"}
@@ -11195,7 +11195,6 @@
 ,"madeleine":{"a":"madéleìnè","f":"11156"}
 ,"sediments":{"a":"sedíménts","f":"11158"}
 ,"peacock":{"a":"pêàcock0","f":"11159"}
-,"mystical":{"a":"mẏsticál","f":"11161"}
 ,"mystical":{"a":"mẏsticál","f":"11161"}
 ,"sanction":{"a":"sañcţìòn","f":"11162"}
 ,"floppy":{"a":"floppý","f":"11163"}
@@ -12108,7 +12107,7 @@
 ,"chromosome":{"a":"ĉħrômósômè","f":"12118"}
 ,"nazis":{"a":"nazis!nātzêś","f":"12120"}
 ,"nun":{"a":"nun","f":"12121"}
-,"tournaments":{"a":"tòùŕnáménts","f":"12122"}
+,"tournaments":{"a":"tøùr0náménts","f":"12122"}
 ,"teresa":{"a":"térĕśá","f":"12123"}
 ,"monastic":{"a":"mónastic","f":"12124"}
 ,"psychoanalysis":{"a":"p0sŷcħôánalẏsís","f":"12125"}
@@ -12221,7 +12220,7 @@
 ,"retrieve":{"a":"rėtrìêvè","f":"12242"}
 ,"dignified":{"a":"dignífîèd","f":"12243"}
 ,"humorous":{"a":"hûmóròús","f":"12244"}
-,"moorland":{"a":"mōòrland","f":"12245"}
+,"moorland":{"a":"mòør0land","f":"12245"}
 ,"blah":{"a":"blāħ","f":"12246"}
 ,"defeats":{"a":"dėfêàts","f":"12247"}
 ,"scratching":{"a":"scratĉħiñg0","f":"12248"}
@@ -14156,7 +14155,7 @@
 ,"starved":{"a":"stār#vèd","f":"14274"}
 ,"littered":{"a":"littèŕèd","f":"14276"}
 ,"homelessness":{"a":"hômèléssnéss","f":"14277"}
-,"contours":{"a":"contōùrś","f":"14278"}
+,"contours":{"a":"contøùr0ś","f":"14278"}
 ,"amateurs":{"a":"amáťèùŕś","f":"14280"}
 ,"aroma":{"a":"árômá","f":"14281"}
 ,"monstrous":{"a":"monstròús","f":"14282"}
@@ -14734,7 +14733,7 @@
 ,"flashes":{"a":"flaŝħėś","f":"14878"}
 ,"glued":{"a":"glüèd","f":"14880"}
 ,"dispersal":{"a":"dispèŕsál","f":"14881"}
-,"toured":{"a":"tōùrèd","f":"14882"}
+,"toured":{"a":"tøùr0èd","f":"14882"}
 ,"specialising":{"a":"speçíàlîśiñg0","f":"14883"}
 ,"lineage":{"a":"linêáĝè","f":"14884"}
 ,"infamous":{"a":"infámòús","f":"14886"}
@@ -18600,7 +18599,7 @@
 ,"algiers":{"a":"alĝièrś","f":"19013"}
 ,"rea":{"a":"rêà","f":"19014"}
 ,"perfected":{"a":"pèŕfectéd","f":"19016"}
-,"moored":{"a":"mōòrèd","f":"19017"}
+,"moored":{"a":"mòør0èd","f":"19017"}
 ,"peanuts":{"a":"pêànuts","f":"19019"}
 ,"sauces":{"a":"såùçėś","f":"19020"}
 ,"hastened":{"a":"hâst0énèd","f":"19021"}
@@ -18896,7 +18895,7 @@
 ,"starred":{"a":"stārr0èd","f":"19332"}
 ,"justly":{"a":"justlý","f":"19333"}
 ,"boyfriends":{"a":"bσy0frìendś","f":"19334"}
-,"entourage":{"a":"entourage!ontōùrāĝè","f":"19335"}
+,"entourage":{"a":"entourage!ontøùr0āĝè","f":"19335"}
 ,"leafy":{"a":"lêàfý","f":"19336"}
 ,"embodiment":{"a":"embodïmént","f":"19338"}
 ,"balmoral":{"a":"balmorál","f":"19339"}
@@ -19410,7 +19409,7 @@
 ,"unarmed":{"a":"unār#mèd","f":"19895"}
 ,"pied":{"a":"pîèd","f":"19897"}
 ,"wastage":{"a":"wastáĝè","f":"19898"}
-,"detour":{"a":"dêtōùŕ","f":"19899"}
+,"detour":{"a":"dêtøùr0","f":"19899"}
 ,"drumming":{"a":"drummiñg0","f":"19900"}
 ,"mercifully":{"a":"mèŕçifùllý","f":"19901"}
 ,"indiscriminate":{"a":"indiscrimínátè","f":"19902"}
@@ -19673,7 +19672,7 @@
 ,"chests":{"a":"ĉħests","f":"20156"}
 ,"angler":{"a":"añglèŕ","f":"20157"}
 ,"greenfield":{"a":"grêènfìêld","f":"20158"}
-,"contour":{"a":"contōùr","f":"20159"}
+,"contour":{"a":"contøùr0","f":"20159"}
 ,"elicited":{"a":"ėliçitėd","f":"20160"}
 ,"unearthed":{"a":"unèàŕπħèð","f":"20163"}
 ,"mosquitoes":{"a":"mósqùïtôèś","f":"20164"}
@@ -23888,7 +23887,7 @@
 ,"flirt":{"a":"flìŕt","f":"25603"}
 ,"replicated":{"a":"replicâtėd","f":"25604"}
 ,"adele":{"a":"ádelè","f":"25605"}
-,"gourmet":{"a":"gōùrmĕt0","f":"25606"}
+,"gourmet":{"a":"gøùr0mĕt0","f":"25606"}
 ,"roi":{"a":"rσì","f":"25607"}
 ,"interconnected":{"a":"intèŕcónnectėd","f":"25608"}
 ,"slavs":{"a":"slāvś","f":"25609"}
@@ -23992,7 +23991,7 @@
 ,"landforms":{"a":"landfør#mś","f":"25742"}
 ,"retrieving":{"a":"rėtrìêviñg0","f":"25743"}
 ,"wakeham":{"a":"wakéħàm","f":"25745"}
-,"moorish":{"a":"mōòriŝħ","f":"25746"}
+,"moorish":{"a":"mòør0iŝħ","f":"25746"}
 ,"sihanouk":{"a":"sïħánōùk","f":"25747"}
 ,"gash":{"a":"gaŝħ","f":"25749"}
 ,"parables":{"a":"paráblèś","f":"25750"}
@@ -24189,7 +24188,7 @@
 ,"imitated":{"a":"imítâtėd","f":"26010"}
 ,"oboe":{"a":"ôbôè","f":"26011"}
 ,"cuddling":{"a":"cuddliñg0","f":"26012"}
-,"missouri":{"a":"míśśōùrï","f":"26017"}
+,"missouri":{"a":"míśśøùr0ï","f":"26017"}
 ,"hodder":{"a":"hoddèŕ","f":"26018"}
 ,"mineworkers":{"a":"mînèwòŕkèŕś","f":"26019"}
 ,"skate":{"a":"skâtè","f":"26020"}
@@ -24452,7 +24451,7 @@
 ,"counterclaim":{"a":"cõùntèŕclâìm","f":"26376"}
 ,"sheaf":{"a":"ŝħêàf","f":"26377"}
 ,"figaro":{"a":"figàŕô","f":"26378"}
-,"mooring":{"a":"mōòriñg0","f":"26379"}
+,"mooring":{"a":"mòør0iñg0","f":"26379"}
 ,"lakeland":{"a":"lâkèlánd","f":"26380"}
 ,"ashby":{"a":"aŝħbý","f":"26381"}
 ,"impelled":{"a":"impellèd","f":"26383"}
@@ -26961,7 +26960,7 @@
 ,"cauliflower":{"a":"cāùlíflõwèŕ","f":"29893"}
 ,"cauliflowers":{"a":"cāùlíflõwèŕś","f":"29893"}
 ,"unwrapped":{"a":"unw0rappèð","f":"29895"}
-,"gilmour":{"a":"g2ilmōùr","f":"29897"}
+,"gilmour":{"a":"g2ilmøùr0","f":"29897"}
 ,"osteoporosis":{"a":"ostêopòŕôsis","f":"29899"}
 ,"lefevre":{"a":"léfĕvrè","f":"29901"}
 ,"mumbling":{"a":"mumbliñg0","f":"29903"}
@@ -27669,7 +27668,7 @@
 ,"fanaticism":{"a":"fánatíçiśm","f":"30843"}
 ,"khasbulatov":{"a":"kħāsbulātov","f":"30845"}
 ,"shrieks":{"a":"ŝħrìêks","f":"30847"}
-,"moores":{"a":"mōòrèś","f":"30848"}
+,"moores":{"a":"mòør0èś","f":"30848"}
 ,"affronted":{"a":"áffróntėd","f":"30853"}
 ,"heretical":{"a":"héreticál","f":"30856"}
 ,"egan":{"a":"êgán","f":"30857"}
@@ -29437,7 +29436,7 @@
 ,"unattached":{"a":"unáttaĉħèð","f":"33525"}
 ,"waitresses":{"a":"wâìtréssėś","f":"33527"}
 ,"rebellions":{"a":"rėbellĩónś","f":"33528"}
-,"moorlands":{"a":"mōòrlandś","f":"33529"}
+,"moorlands":{"a":"mòør0landś","f":"33529"}
 ,"genitalia":{"a":"ĝenítālĩá","f":"33532"}
 ,"lewin":{"a":"lëwin","f":"33533"}
 ,"befits":{"a":"bėfits","f":"33534"}
@@ -33950,7 +33949,7 @@
 ,"tatyana":{"a":"tātyāná","f":"41176"}
 ,"degenerative":{"a":"dėĝenerátivè","f":"41177"}
 ,"theatrically":{"a":"πħêatricàllý","f":"41179"}
-,"noorda":{"a":"nōòrdá","f":"41182"}
+,"noorda":{"a":"nòør0dá","f":"41182"}
 ,"fielder":{"a":"fìêldèŕ","f":"41183"}
 ,"mara":{"a":"mārá","f":"41184"}
 ,"ifs":{"a":"ifs","f":"7000"}
@@ -35811,7 +35810,7 @@
 ,"mais":{"a":"mâìś","f":"44819"}
 ,"coconuts":{"a":"côcónuts","f":"44820"}
 ,"duets":{"a":"düets","f":"44823"}
-,"contoured":{"a":"contōùrèd","f":"44824"}
+,"contoured":{"a":"contøùr0èd","f":"44824"}
 ,"vaccinations":{"a":"vacçínâţìònś","f":"44826"}
 ,"daybreak":{"a":"dãýbrèâk","f":"44829"}
 ,"maharashtra":{"a":"māhàŕāŝħtrá","f":"44830"}
@@ -36443,7 +36442,7 @@
 ,"swiftness":{"a":"swiftnéss","f":"46127"}
 ,"blackmailing":{"a":"black0mâìliñg0","f":"46130"}
 ,"unremarked":{"a":"unrėmār#kèð","f":"46131"}
-,"detours":{"a":"dêtōùrś","f":"46134"}
+,"detours":{"a":"dêtøùr0ś","f":"46134"}
 ,"crossfire":{"a":"crossfîrè","f":"46138"}
 ,"katmandu":{"a":"katmandü","f":"46144"}
 ,"exclusionary":{"a":"ėxclüŝìónãrý","f":"46146"}
@@ -38720,7 +38719,7 @@
 ,"burgos":{"a":"bùŕgôś","f":"51029"}
 ,"anode":{"a":"anôdè","f":"51032"}
 ,"intercepts":{"a":"intèŕçepts","f":"51041"}
-,"boorish":{"a":"bōòriŝħ","f":"51044"}
+,"boorish":{"a":"bòør0iŝħ","f":"51044"}
 ,"earths":{"a":"èàŕπħs","f":"51045"}
 ,"buffeting":{"a":"buffétiñg0","f":"51046"}
 ,"peron":{"a":"péròn","f":"51048"}
@@ -39257,7 +39256,7 @@
 ,"longshore":{"a":"loñg0ŝħør#è","f":"52383"}
 ,"sars":{"a":"sār#ś","f":"52387"}
 ,"refrigerate":{"a":"rėfriĝérâtè","f":"52389"}
-,"tourniquet":{"a":"tòùŕniqμèt","f":"52391"}
+,"tourniquet":{"a":"tøùr0niqμèt","f":"52391"}
 ,"legates":{"a":"legátès","f":"52392"}
 ,"cala":{"a":"cālá","f":"52393"}
 ,"borja":{"a":"bør#ĵá","f":"52394"}
@@ -39870,7 +39869,7 @@
 ,"phan":{"a":"þħan","f":"53872"}
 ,"designates":{"a":"deśignâtès","f":"53878"}
 ,"saunter":{"a":"såùntèŕ","f":"53879"}
-,"moorhouse":{"a":"mōòrhõùsè","f":"53882"}
+,"moorhouse":{"a":"mòør0hõùsè","f":"53882"}
 ,"daydreaming":{"a":"dãýdrêàmiñg0","f":"53885"}
 ,"conservator":{"a":"cónsèŕvátòŕ","f":"53887"}
 ,"chevrolet":{"a":"ćħevrólĕt0","f":"53890"}
@@ -40300,7 +40299,7 @@
 ,"ministering":{"a":"ministèriñg0","f":"54973"}
 ,"flab":{"a":"flab","f":"54974"}
 ,"showings":{"a":"ŝħôwiñg0ś","f":"54975"}
-,"potpourri":{"a":"pôt0pōùrrï","f":"54979"}
+,"potpourri":{"a":"pôt0pøùr0rï","f":"54979"}
 ,"lackeys":{"a":"lack0êy0ś","f":"54980"}
 ,"jetted":{"a":"jettėd","f":"54982"}
 ,"walla":{"a":"wål0lá","f":"54984"}
@@ -41306,7 +41305,7 @@
 ,"stepchildren":{"a":"stepĉħildrén","f":"57541"}
 ,"poulton":{"a":"põùltón","f":"57544"}
 ,"kraemer":{"a":"krãèmèŕ","f":"57546"}
-,"wintour":{"a":"wintōùr","f":"57548"}
+,"wintour":{"a":"wintøùr0","f":"57548"}
 ,"jocks":{"a":"jock0s","f":"57551"}
 ,"frisby":{"a":"frisbý","f":"57554"}
 ,"jogs":{"a":"jogś","f":"57556"}
@@ -42387,7 +42386,7 @@
 ,"girolamo":{"a":"ĝirôlāmô","f":"60548"}
 ,"bandar":{"a":"bandār#","f":"60549"}
 ,"advisability":{"a":"advîśábilitý","f":"60559"}
-,"bloor":{"a":"blōòr","f":"60560"}
+,"bloor":{"a":"blòør0","f":"60560"}
 ,"pott":{"a":"pott","f":"60562"}
 ,"rickets":{"a":"rick0ėts","f":"60564"}
 ,"alianza":{"a":"alïanzá","f":"60567"}
@@ -44007,7 +44006,7 @@
 ,"deregulate":{"a":"dêregûlâtè","f":"65703"}
 ,"stayer":{"a":"stâyèŕ","f":"65704"}
 ,"troubleshooter":{"a":"troublèŝħöòtèŕ","f":"65705"}
-,"gourmets":{"a":"gōùrmĕt0ś","f":"65709"}
+,"gourmets":{"a":"gøùr0mĕt0ś","f":"65709"}
 ,"consuela":{"a":"cónsυĕlá","f":"65710"}
 ,"infestations":{"a":"infestâţìònś","f":"65714"}
 ,"bamberg":{"a":"bambèŕg","f":"65716"}
@@ -44505,7 +44504,7 @@
 ,"dismembering":{"a":"dismembériñg0","f":"67267"}
 ,"horseplay":{"a":"hør#sèplãý","f":"67272"}
 ,"horsefeathers":{"a":"hør#sèfeàτħèŕś","f":"67272"}
-,"spoor":{"a":"spōòr","f":"67273"}
+,"spoor":{"a":"spòør0","f":"67273"}
 ,"oscillators":{"a":"osc0íllâtòŕś","f":"67274"}
 ,"tricksters":{"a":"trick0stèŕś","f":"67275"}
 ,"nicolai":{"a":"nïcôlāï","f":"67276"}
@@ -46136,7 +46135,7 @@
 ,"lutz":{"a":"lutzŝ","f":"72735"}
 ,"adnan":{"a":"adnán","f":"72742"}
 ,"floridians":{"a":"floridïánś","f":"72749"}
-,"poore":{"a":"pōòrè","f":"72750"}
+,"poore":{"a":"pòør0è","f":"72750"}
 ,"derail":{"a":"dėrâìl","f":"72756"}
 ,"biosensor":{"a":"bîôsensòŕ","f":"72759"}
 ,"jodi":{"a":"jôdï","f":"72762"}
@@ -47039,7 +47038,7 @@
 ,"stagg":{"a":"stagg","f":"76161"}
 ,"witwatersrand":{"a":"witwåtèŕsrand","f":"76167"}
 ,"coon":{"a":"cöòn","f":"76171"}
-,"boorman":{"a":"bōòrmán","f":"76172"}
+,"boorman":{"a":"bòør0mán","f":"76172"}
 ,"telemarketing":{"a":"telémār#kétiñg0","f":"76174"}
 ,"szabo":{"a":"ŝz0ābô","f":"76179"}
 ,"firefighting":{"a":"fîrèfîg0ħtiñg0","f":"76181"}
@@ -48397,7 +48396,7 @@
 ,"ruggedly":{"a":"ruggédlý","f":"81945"}
 ,"desperado":{"a":"despérādô","f":"81947"}
 ,"vacuums":{"a":"vacûùmś","f":"81949"}
-,"tourville":{"a":"tōùrvillè","f":"81950"}
+,"tourville":{"a":"tøùr0villè","f":"81950"}
 ,"afrikaners":{"a":"afrikānèŕś","f":"81953"}
 ,"circularly":{"a":"çìŕcûlàŕlý","f":"81955"}
 ,"pleasantry":{"a":"pleàśántrý","f":"81970"}
@@ -48409,7 +48408,7 @@
 ,"waldon":{"a":"wåldón","f":"81986"}
 ,"enjoyments":{"a":"enjσy0ménts","f":"81989"}
 ,"macnaughton":{"a":"mácnåùg0ħtón","f":"81991"}
-,"poorhouse":{"a":"pōòrhõùsè","f":"81994"}
+,"poorhouse":{"a":"pòør0hõùsè","f":"81994"}
 ,"holcombe":{"a":"hôlcómb0è","f":"81997"}
 ,"goetz":{"a":"gòetzŝ","f":"81999"}
 ,"collinge":{"a":"collinĝè","f":"82000"}
@@ -48783,7 +48782,7 @@
 ,"kasner":{"a":"kasnèŕ","f":"83487"}
 ,"yasuhiro":{"a":"yāsühïrô","f":"83491"}
 ,"timorese":{"a":"tïmørêśè","f":"83493"}
-,"boor":{"a":"bōòr","f":"83499"}
+,"boor":{"a":"bòør0","f":"83499"}
 ,"felonies":{"a":"felónìêś","f":"83507"}
 ,"ardmore":{"a":"ār#dmør#è","f":"83510"}
 ,"outweighing":{"a":"õùtweĩg0ħìñg0","f":"83513"}
@@ -49959,7 +49958,7 @@
 ,"pounders":{"a":"põùndèŕś","f":"89041"}
 ,"jumbos":{"a":"jumbôś","f":"89043"}
 ,"kissimmee":{"a":"kissimmêè","f":"89045"}
-,"bourget":{"a":"bōùrg2et","f":"89047"}
+,"bourget":{"a":"bøùr0g2et","f":"89047"}
 ,"sonne":{"a":"sonnè","f":"89050"}
 ,"biscoe":{"a":"biscôè","f":"89053"}
 ,"cattolica":{"a":"cáttôlicá","f":"89063"}
@@ -51326,7 +51325,6 @@
 ,"thither":{"a":"πħiτħèŕ","f":"15000"}
 ,"thongs":{"a":"thoñg0ś","f":"15000"}
 ,"thousand":{"a":"πħõùśánd","f":"3000"}
-,"hundred":{"a":"hundred","f":"3000"}
 ,"thrillier":{"a":"πħrillìêŕ","f":"44444"}
 ,"thrilly":{"a":"πħrillý","f":"44444"}
 ,"thrones":{"a":"thrônèś","f":"44444"}

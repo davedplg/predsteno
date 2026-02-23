@@ -6,25 +6,41 @@ echo "merge two most frequent words of each frag"
 echo " This may have long hyphenated lists as I"
 echo " Work out how to do this"
 echo
+
+
+# Default values if not provided on CLI
+: ${N_COMMON:=2}       # e.g. run with N_COMMON=4 ./script.sh
+: ${RES_SLOTS:=7}      # reserve rows per fragment
+: ${SHORT_FRAG_MULT:=1}  # optional: how much to multiply n for short frags (1=keep same, 2=double, etc.)
+
 awk -F"," -v OFS="," '{$3 = int($3*10.5/$4); print $0}' data/d6* | \
 #sort -t"," -k2,2n -k3,3n data/d6* | \
 sort -t"," -k2,2n -k3,3n  | \
-awk -F"," -v OFS="," '
+#awk -F"," -v OFS="," '
+awk -F"," -v OFS="," \
+    -v n_common="$N_COMMON" \
+    -v res_reserve="$RES_SLOTS" \
+    -v short_mult="$SHORT_FRAG_MULT" '
 BEGIN {
   # frg_cnt is count of printed words with this fragment encoding
   # wdPrntd  is list of words printed so far
 }
   
 {
-  wd     = $1; # word
+# wd     = $1; # word
+  wd     = $6; # reformed word
   frg    = $2; # encoded fragment
   rnk    = $3; # frequency rank
   refLen = $4; # reformed word length
-  n   = 2    # number of words offered to user
-  res = 7    # second pass rows
+# n   = 2    # number of words offered to user
+# res = 7    # second pass rows
+  res = res_reserve    # second pass rows
 
-  if(length(frg) == 2) { n=4;} 
-  if(length(frg) == 1) { n=4;} 
+#  if(length(frg) == 2) { n=4;} 
+#  if(length(frg) == 1) { n=4;} 
+
+  if(length(frg) == 2) { n=n_common;} 
+  if(length(frg) == 1) { n=n_common;} 
  
 # print  word if new and frag has only been seen once before
    {print "input row: "$0;}

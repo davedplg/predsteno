@@ -9,9 +9,9 @@ echo "capitalise,CAPITALISE"
 echo "d4-e161.csv:"
 
 
-#add homophone indices 
-awk  -v field=3 -v OFS="," -F"," -f processes/count_homos.awk data/d3-reformed.csv data/d3-reformed.csv > data/temp
-mv data/temp  data/d3-reformed.csv
+##add homophone indices 
+#awk  -v field=3 -v OFS="," -F"," -f processes/count_homos.awk data/d3-reformed.csv data/d3-reformed.csv > data/temp
+#mv data/temp  data/d3-reformed.csv
 
 awk -F"," -v OFS=',' '{
   word=$3;
@@ -19,7 +19,7 @@ awk -F"," -v OFS=',' '{
   sub(/[A-Z]*!/, "", word); 
   len = length(word); 
   print $1, toupper($3), $2, len, $4, tolower($3) 
-  }' data/d3-reformed.csv > data/d4-e161.csv
+  }' data/d35-reformed.csv > data/d4-e161.csv
 head -${HEADLINES:-${HEADLINES:-2000}} data/d4-e161.csv | tail -${TAILLINES:-10}
 echo
 

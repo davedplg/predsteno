@@ -65,6 +65,8 @@ while (<>) {
     tr/ĜΜĖẎÞÇQĴĨŚŐΥÐ\
       /JIIIFSKYYZUWT/;
      s/WW/W/g;
+     s/UUR/AW/g;
+     s/DUERING/DAWING/g;
 #      /jjjjeiifaeiouszkyyzuaeiouw/;
     print "$_\n";
 }

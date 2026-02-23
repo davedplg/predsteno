@@ -8,12 +8,13 @@ sed -i  -f processes/affixes.sed data/o-*
  cat data/o-reserves.csv | awk  -FS"," -f sum-syns.awk | awk -v valcol=4 -f csv2js.awk |sed 's/texts=/reservecaps=/;s/.*/\U&/g'  >  reservecaps.js
 
 
-cp toptxts.js $maj/js/toptxts.js
-cp caps.js $maj/js/caps.js
-cp reservetxts.js $maj/js/reserves.js
-cp reservecaps.js $maj/js/reservecaps.js
+mkdir -p $maj/js/$DICNAME/js
+cp toptxts.js $maj/js/$DICNAME/toptxts.js
+cp caps.js $maj/js/$DICNAME/caps.js
+cp reservetxts.js $maj/js/$DICNAME/reserves.js
+cp reservecaps.js $maj/js/$DICNAME/reservecaps.js
 
-perl -i.bak -pe 's/export const dic={/\/\/export\nconst dic={/;s/#//g' $maj/js/toptxts.js
-perl -i.bak -pe 's/export const reserves={/\/\/export\nconst reserves={/;s/#//g' $maj/js/reserves.js
-perl -i.bak -pe 's/EXPORT CONST CAPS={/\/\/export\nconst caps={/' $maj/js/caps.js
-perl -i.bak -pe 's/EXPORT CONST RESERVECAPS={/\/\/export\nconst reservecaps={/' $maj/js/reservecaps.js
+perl -i.bak -pe 's/export const dic={/\/\/export\nconst dic={/;s/#//g' $maj/js/$DICNAME/toptxts.js
+perl -i.bak -pe 's/export const reserves={/\/\/export\nconst reserves={/;s/#//g' $maj/js/$DICNAME/reserves.js
+perl -i.bak -pe 's/EXPORT CONST CAPS={/\/\/export\nconst caps={/' $maj/js/$DICNAME/caps.js
+perl -i.bak -pe 's/EXPORT CONST RESERVECAPS={/\/\/export\nconst reservecaps={/' $maj/js/$DICNAME/reservecaps.js

@@ -22,8 +22,9 @@ sed \
 #
 # remove HETERONYM coding
 #
- sed \
--e 's/--HETERONYM--[^,]*//' | \
+# sed \
+#-e 's/--HETERONYM--[^,]*//' | \
+sed -e '/HETERO/d' | \
 # remove alternate pronunciation
 #
 ## 
