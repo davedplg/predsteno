@@ -143,10 +143,10 @@ const productMap = {
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
-    43       : 'wd3', //  /        selct 3rd word
+    43       : 'missed', //  /        selct 3rd word
     [43 * 31]: 'wd4', //  /        selct 4th word
     [43 * 37]: 'wd4', //  /        selct 4th word
-    [31 * 37]: 'missed', //  <space>/ select 3rd word
+    [31 * 37]: 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
     73       : 'missed', // this is now letter /
  // [37 * 41]: '6', // actual independent space
