@@ -364,13 +364,13 @@ function nonAlphabetic() {
     if(evenString(frag)) frag = frag.replace(/.$/, '');
     frag = frag.replace(/.$/, '');
   
-//  if(dic[frag]) setWordOptions(); 
-    
-//  return true;
- }
-
     if(dic[frag]) setWordOptions(); 
     
+    return true;
+ }
+
+//    if(dic[frag]) setWordOptions(); 
+//    renderMarkdown();
 }
 //A function that splits the options list
 //in two when the frag length is less than
@@ -439,8 +439,13 @@ function firstParse() {
 //      wd = (reserves[frag] || '').includes('-') 
 //        ? reservecaps[frag].replace(/-/g, '\u2194')
         wd = (reserves[frag] || '').includes('\u2423') 
-          ? reservecaps[frag].replace(/\u2423/g, '\u2194')
-       : reserves[frag];
+//         ? reservecaps[frag].replace(/\u2423/g, '\u2194')
+          ? reserves[frag].replace(/\u2423/g, '\u2194')
+                          .replace(/\+/g,"")
+                          
+       : reserves[frag].replace(/GT/g,"&gt;")
+                       .replace(/LT/g,"&lt;")
+      ;
       break;
 
     default:
@@ -520,7 +525,7 @@ function processBiChord() {
     if (mdMatch(/\n\n\u275A$/))  {
     reParseParagraph();                         
     }
-  return;
+  return true;
   }
   
   if (chord) {
