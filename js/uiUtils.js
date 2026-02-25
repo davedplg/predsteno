@@ -63,7 +63,6 @@ function insertWord(word, addSpace = true) {
   text += '\u275A';
 
   setMd(text);
-//if(!word.includes('\u2194')) clearFrag();
   renderMarkdown();
 }
 
@@ -120,7 +119,6 @@ function renderMarkdownOld() {
   htm  = htm.replace(/ + \u275A/,"\uFE4E\uFE4E\u275A")
   htm = format_augmented_words(htm);
   setHtml(htm);
-//outputMarkdown.focus();
   requestAnimationFrame(() => outputMarkdown.focus());
   outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
 }
@@ -155,14 +153,8 @@ function removeWordOptions() {
 function format_augmented_words(t){
   // Step 1: Protect sequences that look like HTML entities
   // We use a negative lookahead to skip coloring if & is followed by entity-like content
-  // But easier: replace known entities first with placeholders that won't match coloring
-//  t = t.replace(/&(?:lt|gt|amp|quot|apos);/gi, m => {
-//    // Replace entity with a safe placeholder that coloring regexes won't touch
-//    return `\uE000${m}\uE000`;  // private-use area chars as guards
-//  });
-//  if (t.match(/\uE000.*\uE000/)) {
-//    return t.replace(/\uE000/g,"");  
-//  }
+  // But easier: replace known entities first with placeholders 
+  // that won't match coloring
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
   t=t.replace(/πħ/gi,'th');
@@ -200,8 +192,6 @@ function format_augmented_words(t){
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
   //tag voiced consonants <vc>
-  //(?<![<][^>]*|&[^;]*)
-//  t=t.replace(/(?<![</][^>]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   t=t.replace(/ř/g,'r');
   t=t.replace(/ẇ/g,'w');

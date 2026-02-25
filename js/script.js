@@ -1,22 +1,37 @@
 // Uses marked.min.js (https://github.com/markedjs/marked) under MIT License
 
+//left and right hand chords
+let left='',right=''; 
 
-let left='',right=''; //left and right hand chords
-let frag = '';        // encoded fragment
-let lProduct = 1, rProduct = 1, thumbProduct = 1; //prime products from key combinations. Keys have prime values
+// encoded fragment
+let frag = '';        
+
+//prime products from key combinations. Keys have prime values
+let lProduct = 1, rProduct = 1, thumbProduct = 1; 
+
 //let lastlProduct = 1;
 let lastrProduct = 1;
-let chord = '', thumbChord = ''; // both chords appended, thumb chord
-let need3rdPass = 0; // Flag for active missing word input, set by M chord or recursion
-let pendingHfnGps = []; //pending hyphen groups (2nd parse options)
+
+// both chords appended, thumb chord
+let chord = '', thumbChord = ''; 
+
+// Flag for active missing word input, set by M chord or recursion
+let need3rdPass = 0; 
+
+//pending hyphen groups (2nd parse options)
+let pendingHfnGps = []; 
 let groupIndex = 0;
 let bwords = '';
 let opts = '';
 let oldOpts = '';
 
 let lastDecidingSpan="";
-let presdKeys = new Set();   //keys list for current chord
-let timeoutId = null;        //timeout needed to register keypresses
+
+//key list for - current chord
+let presdKeys = new Set();   
+
+//timeout - needed to register keypresses
+let timeoutId = null;        
 //together not individuality 
 
 const validKeys = new Set(Object.keys(primeMap));
@@ -43,15 +58,10 @@ const optionKeys = Object.keys(keyMap2ndPass);
 // in a span with class="highlight"
 const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 // reserveRegEx detects unhighlighted raw groups
-// of reserve words for later highlighting 
-//const reserveRegEx =   /[1-9a-zA-Z'+]+(?:\u2194['+1-9a-zA-Z]+)+/;
-//const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
-//const reserveRegEx =   /[\p{L}'+0-9]+(?:[\u{2194}][\p{L}'+0-9]+)+/u;
-///const reserveRegEx =   /[a-zA-Z'+]+(?:-['+a-zA-Z]+)+/;
-
-// Matches word-like tokens (letters, numbers, punctuation) separated by at least one ↔ arrow
+//    Matches word-like tokens 
+//      (letters, numbers, punctuation) 
+//     separated by at least one ↔ arrow
 // \p{P} catches commas, periods, quotes, brackets, dashes, etc. automatically
-//const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
 const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
 const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 
@@ -74,23 +84,23 @@ const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
  */ 
 
 function calcPrimeProducts() { 
-  //lastlProduct = lProduct;
-  //  lastrProduct = rProduct;
-  //  let lProductT = 1, rProduct = 1, thumbProduct=1;
      let lp = 1, rp = 1, tp =1;
   for (const key of presdKeys) {
-    const p = primeMap[key]; // p is prime
+    // p is prime
+    const p = primeMap[key]; 
     if (p % 2 === 0 ) {
       if(p > 58){     
-      tp *= p / 2  //thumb product 
+      //thumb product 
+      tp *= p / 2  
       } else {
-      rp *= p / 2; //right product 
+      //right product 
+      rp *= p / 2; 
       } 
     } else {
-      lp *= p;     //left product
+      //left product
+      lp *= p;
     }
   }
-// lProduct = lProductT;
   return { lp , rp,tp };
 }
 
@@ -120,22 +130,10 @@ function select2ndPassWd(key) {
 // for neobets where n > 8..
   if (choice === 11)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
 // swap hyphenated word options with selected word
-//   mdRepl(spanRegEx, selectedWord);
-//   clearFrag();
-//   renderMarkdown();
     insertWord(selectedWord);
     mdRepl(spanRegEx, '');
     requestAnimationFrame(() => outputMarkdown.focus());
     clearFrag();
-//Are there any more hyphenated words
-//     if (mdMatch(reserveRegEx)) {
-//       markReserves(); // Highlight next group
-//     } else {
-//    pendingHfnGps = 0; // No more groups, allow other keys
-//     } 
-//  clearFrag();
-//  removeWordOptions();
-//  requestAnimationFrame(() => outputMarkdown.focus());
   }
 
 //highlight hypenated reserve.js words with css highlight
@@ -205,8 +203,8 @@ function mark3rdPassWds() {
 function appendChord_recursive(ofrag, leftChord, rightChord) {
   // Coerce inputs to strings to handle numbers or undefined
   ofrag = String(ofrag);
-  let l = String(leftChord);   // Can be single or two-finger chord
-  let r = String(rightChord);  // Can be single or two-finger chord
+  let l = String(leftChord);   // Can be 1 or 2-finger chord
+  let r = String(rightChord);  // Can be 1 or 2-finger chord
   
   // Base case: if left chord is empty, shift right to left
   if (l === "") { l = r; r = ""; }
@@ -239,7 +237,6 @@ function appendChord_recursive(ofrag, leftChord, rightChord) {
   
   // Recurse with single digit, combining frag, ordered m/singleL, and result
   const result = appendChord_recursive(singleL, r, "");
-//  return result === false ? false : ofra + order(g, singleL) + result;
 return typeof result === 'string' && result.match(/[a-z]/) ? false : ofra + order(g, singleL) + result;
 }
 
@@ -257,34 +254,31 @@ function order(m, n) {
  */ 
 function parseAffixes(text){
  let t=text;                
-// t = t.replace(/( +\+)(['A-Z]*)/g, (_,GAP,SUFX) => SUFX.toLowerCase());
      
 t = t.replace(
   /(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
-//"$3".toLowerCase()
  (_,SPAN,GAP,SUFX) => SUFX.toLowerCase()
 );
-// t = t.replace(/([A-Z']*)(\+ +)/g, (_,PREFX,GAP) => PREFX.toLowerCase());
-
-// suffix version
-//t = t.replace(/ \+('?)(?<suffix>[A-Z']+)/g, "'$<suffix>".toLowerCase());
 
 // prefix version (example)
 t = t.replace(/(?<prefix>[A-Z']+)\+ /g, (m, p) => p.toLowerCase() + "'");  
-// or whatever your prefix convention is
  return t;
 
 }
 
 //The user must put these markers (⟑,⟐) before text to modify case
- function parseCaseMarking(text) {
+function parseCaseMarking(text) {
+// early return when options still in md()  
+  if (text.includes('⟐')){
+    if (text.includes('\u2194')){
+  return text;
+    }
+  }
+//if (text.includes('class="highlight"')) return text;
   let t=text;
 // sandwiched by pairs of marks modifies whole phrases   
-  t = t.replace(/⟑\s*⟑\s*([^⟑]*)⟑\s*⟑\s*/gu,
-           (_,PHRASE) => PHRASE.toUpperCase());
-  t = t.replace(/⟐\s*⟐\s*([^⟐]*)⟐\s*⟐\s*/gu, 
-          (_, w) => w.split(/[^a-z]+/).map(wd => 
-            wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
+  t = t.replace(/⟑\s*⟑\s*([^⟑]*)⟑\s*⟑\s*/gu, (_,PHRASE) => PHRASE.toUpperCase());
+  t = t.replace(/⟐\s*⟐\s*([^⟐]*)⟐\s*⟐\s*/gu, (_, w) => w.split(/[^a-z]+/).map(wd => wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
 // directly preceeded by a mark affects single words   
   t = t.replace(/⟑\s*(\p{L}*)([^\p{L}]*)/gu, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
   t = t.replace(/⟐\s*([\p{L}])([\p{L}]*)/gu, (_,B,ilbo) => B.toUpperCase() + ilbo);
@@ -300,15 +294,14 @@ t = t.replace(/⟐\s*⟐\s*([^⟐])⟐\s⟐\s*/gu, (_, w) => w.split(/[^\p{L}]+/
  *  user supplies the word uisng qwerty entry on the 3rd pass 
 */
 function reParseParagraph(){
-  removeWordOptions(); // NEW: Clear any lingering first-parse spans before highlighting reserves.
+//Clear lingering 1st-parse spans before highlighting reserves.
+  removeWordOptions();
   if(mdMatch(/[0-9a-zA-Z'+]\u2194/)){
     markReserves();                      //2nd input pass
   } else if (mdMatch(missingRegEx)) {
       need3rdPass = 1;
       mark3rdPassWds();                  //3rd input pass
     } else  {
-    //    setMd(parseAffixes(md()))      //1st format pass
-    //    setMd(parseCaseMarking(md()))  //2nd format pass
           renderMarkdown();
       } 
   console.log('reParseParagraph');
@@ -368,9 +361,6 @@ function nonAlphabetic() {
     
     return true;
  }
-
-//    if(dic[frag]) setWordOptions(); 
-//    renderMarkdown();
 }
 //A function that splits the options list
 //in two when the frag length is less than
@@ -385,23 +375,6 @@ function nonAlphabetic() {
 //turned off. May still have handedness for single letter
 //words i.e. 2n frags may be handed.
 //function RHSawareDic(f,dict){
-//  const wdList = dict[f]?.split('-') || [];
-//  if(thumbProduct > 1 && rProduct*lProduct == 1) rProduct = lastrProduct;
-// if(frag.length < 3){
-//    //    if(lProduct == 1){
-//    //      return (wdList[0] || ' ') + '-' + (wdList[1] || ', ');
-//    //    } else
-//    //    { 
-//    //      return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
-//    //    }
-//    if(rProduct > 1){
-//      return (wdList[0] || ' ') + '-' + (wdList[1] || ', ');
-//    } else
-//    { 
-//      return (wdList[2] || ' ') + '-' + (wdList[3] || ', ') 
-//    }
-//   }
-//  return dict[f];
 //}
 
 /**
@@ -416,11 +389,7 @@ function nonAlphabetic() {
 //May try to add direct 2nd parse 'b' button to here so
 //User can press it since they learn high freq misses
 function firstParse() {
-// const wdList = RHSawareDic(frag, dic)?.split('-') || [];
-//const wdList =  dic[frag]?.split('-') || [];
   const wdList =  dic[frag]?.split('\u2423') || [];
-//const wdListR = reserves[frag].split("-") || [];
-//const wdListR = reserves[frag]?.split("-") ?? [];
   const wdListR = reserves[frag]?.split("\u2423") ?? [];
 // want to get rid of below once dic and reserves are
 // merged
@@ -436,10 +405,7 @@ function firstParse() {
     case 'space': wd = ' '            ; break;
 
     case 'missed': 
-//      wd = (reserves[frag] || '').includes('-') 
-//        ? reservecaps[frag].replace(/-/g, '\u2194')
         wd = (reserves[frag] || '').includes('\u2423') 
-//         ? reservecaps[frag].replace(/\u2423/g, '\u2194')
           ? reserves[frag].replace(/\u2423/g, '\u2194')
                           .replace(/\+/g,"")
                           
@@ -450,14 +416,9 @@ function firstParse() {
 
     default:
       wd = ' ';
-//    clearFrag();
   }
   // ────── THIS BLOCK RUNS FOR EVERY SINGLE PATH ──────
   if(!(wd+' ').includes('\u2194')) clearFrag();
-//removeWordOptions();
-//setMd(md() + (wd ? wd + ' \u275A' : '\u275A'));
-//renderMarkdown();
-//requestAnimationFrame(() => outputMarkdown.focus());
   insertWord(wd);
   // ────── Only trigger next phase when needed ──────
   if (thumbChord === 'missed' && String(wd).includes('\u2194')) {
@@ -477,13 +438,10 @@ function firstParse() {
  */
 
 function underlineFirstNLtrs(frg,dict) {
-//  let wds=dic[frg];
-//  let wds=RHSawareDic(frg,dict);
     let wds=dict[frg] || '';
     let n    =frg.length;
     if (typeof wds !== 'string' || n < 0) return '';
     return caps2underlineLcase(wds
-//      .split('-')
         .split('\u2423')
         .map(wd => {
             if (n > wd.length) return wd.toLowerCase();//??
@@ -509,7 +467,6 @@ function caps2underlineLcase(str) {
 function processBiChord() {
 
 ({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
-//({lProduct, rProduct, thumbProduct}  = calcPrimeProducts());
   ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
   chord         = left+right;     
   thumbChord    = productMap[thumbProduct] || '';
@@ -537,7 +494,6 @@ function processBiChord() {
  
   let append='';
  
-//  if (thumbChord) firstParse(); //select the encoding word option 
  
 if (thumbChord) {
   firstParse();
@@ -546,8 +502,6 @@ if (thumbChord) {
 }
   let capsOpts =underlineFirstNLtrs(frag,caps);   
   tidyWordOptions(capsOpts);
-//setWordOptions(frag);
-//setWordOptions();
   presdKeys.clear();
 }
   function evenString(frag){String(frag).length % 2 == 0?true:false}
@@ -590,7 +544,6 @@ function tidyWordOptions(capsOpts)
     wdOpts.innerHTML = CueOpts + (CueOpts.match(/style=/)?' single letter needed after odd':'');
     renderMarkdown();
     } else { // if word finished delete suggestions
-//      frag="";
         frag=frag.slice(0,-2) || '';
   	  	removeWordOptions();
         setMd(  md()   + oldOpts);
@@ -640,11 +593,6 @@ function on2ndPass(key){
 
 document.addEventListener('keydown', (event) => {
  const key = event.key.toLowerCase();
-// if (mdMatch(spanRegEx) && optionKeys.includes(key)) {
-//   event.preventDefault();
-//   on2ndPass(key);
-//   return;
-// }
  if (mdMatch(spanRegEx)) {
    event.preventDefault();
    removeWordOptions();
@@ -663,7 +611,6 @@ document.addEventListener('keydown', (event) => {
 // punctuation and digits
  if (passThroughKeys.has(key)) {
    event.preventDefault();
-// mdRepl(/\u275A$/,  key + '\u275A');
    setMd(md()+key);
    renderMarkdown();
    return;
