@@ -1,5 +1,3 @@
-// Uses marked.min.js (https://github.com/markedjs/marked) under MIT License
-
 //left and right hand chords
 let left='',right=''; 
 
@@ -27,6 +25,11 @@ let oldOpts = '';
 
 let lastDecidingSpan="";
 
+// first and second parse separators
+// sep1=␣ sep2=↔ (double ended arrow)
+sep1 = '\u2423'
+sep2 = '\u2194'
+sep3 = '\u2014';
 //key list for - current chord
 let presdKeys = new Set();   
 
@@ -63,8 +66,8 @@ const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 //     separated by at least one ↔ arrow
 // \p{P} catches commas, periods, quotes, brackets, dashes, etc. automatically
 const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
-const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
-
+//const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
+const missingRegEx = new RegExp(sep3 + sep3 + 'MissingWord' + sep3 + sep3);
 
 /** calcProducts: calculate prime (p) products
  * there will be 1-6 keys pressed simultaneously
@@ -121,8 +124,7 @@ function select2ndPassWd(key) {
   if (!choice || frag=='') return;
 //hyphenated reserve word options are inside span tags
   const wds = mdMatch(spanRegEx)[1]; 
-//const wdList = reserves[frag].split("-") || [];
-  const wdList = reserves[frag].split("\u2423") || [];
+  const wdList = reserves[frag].split(sep1) || [];
   let selectedWord = wdList[choice - 1] || wdList[0] || '';
 
 // user selects h (9) if 3rd pass is needed for qwerty 
@@ -269,21 +271,17 @@ t = t.replace(/(?<prefix>[A-Z']+)\+ /g, (m, p) => p.toLowerCase() + "'");
 //The user must put these markers (⟑,⟐) before text to modify case
 function parseCaseMarking(text) {
 // early return when options still in md()  
-  if (text.includes('⟐')){
-    if (text.includes('\u2194')){
+  if (text.includes('⟐') || text.includes('⟑')){
+    if (text.includes(sep2)){
   return text;
     }
   }
-//if (text.includes('class="highlight"')) return text;
   let t=text;
-// sandwiched by pairs of marks modifies whole phrases   
-  t = t.replace(/⟑\s*⟑\s*([^⟑]*)⟑\s*⟑\s*/gu, (_,PHRASE) => PHRASE.toUpperCase());
-  t = t.replace(/⟐\s*⟐\s*([^⟐]*)⟐\s*⟐\s*/gu, (_, w) => w.split(/[^a-z]+/).map(wd => wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
-// directly preceeded by a mark affects single words   
-  t = t.replace(/⟑\s*(\p{L}*)([^\p{L}]*)/gu, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
-  t = t.replace(/⟐\s*([\p{L}])([\p{L}]*)/gu, (_,B,ilbo) => B.toUpperCase() + ilbo);
-   
-t = t.replace(/⟐\s*⟐\s*([^⟐])⟐\s⟐\s*/gu, (_, w) => w.split(/[^\p{L}]+/u).map(wd => wd.charAt(0).toUpperCase() + wd.slice(1)).join(' '));
+  let tCâs=/⟐\s*([\p{L}])([\p{L}]*)/gu
+  let uCâs=/⟑\s*([\p{L}])([\p{L}]*)/gu
+
+  t = t.replace(uCâs, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
+  t = t.replace(tCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
   return t;
 }
 
@@ -296,7 +294,7 @@ t = t.replace(/⟐\s*⟐\s*([^⟐])⟐\s⟐\s*/gu, (_, w) => w.split(/[^\p{L}]+/
 function reParseParagraph(){
 //Clear lingering 1st-parse spans before highlighting reserves.
   removeWordOptions();
-  if(mdMatch(/[0-9a-zA-Z'+]\u2194/)){
+  if(mdMatch(/`[0-9a-zA-Z'+]${sep2}`/)){
     markReserves();                      //2nd input pass
   } else if (mdMatch(missingRegEx)) {
       need3rdPass = 1;
@@ -389,8 +387,8 @@ function nonAlphabetic() {
 //May try to add direct 2nd parse 'b' button to here so
 //User can press it since they learn high freq misses
 function firstParse() {
-  const wdList =  dic[frag]?.split('\u2423') || [];
-  const wdListR = reserves[frag]?.split("\u2423") ?? [];
+  const wdList =  dic[frag]?.split(sep1) || [];
+  const wdListR = reserves[frag]?.split(sep1) ?? [];
 // want to get rid of below once dic and reserves are
 // merged
   let wd = '';
@@ -405,8 +403,8 @@ function firstParse() {
     case 'space': wd = ' '            ; break;
 
     case 'missed': 
-        wd = (reserves[frag] || '').includes('\u2423') 
-          ? reserves[frag].replace(/\u2423/g, '\u2194')
+        wd = (reserves[frag] || '').includes(sep1) 
+          ? reserves[frag].replace(new RegExp(sep1,'g'), sep2)
                           .replace(/\+/g,"")
                           
        : reserves[frag].replace(/GT/g,"&gt;")
@@ -418,10 +416,10 @@ function firstParse() {
       wd = ' ';
   }
   // ────── THIS BLOCK RUNS FOR EVERY SINGLE PATH ──────
-  if(!(wd+' ').includes('\u2194')) clearFrag();
+  if(!(wd+' ').includes(sep2)) clearFrag();
   insertWord(wd);
   // ────── Only trigger next phase when needed ──────
-  if (thumbChord === 'missed' && String(wd).includes('\u2194')) {
+  if (thumbChord === 'missed' && String(wd).includes(sep2)) {
     markReserves();
   } else if (thumbChord === 'missed' && wd.includes('\u2014\u2014')) {
     need3rdPass = 1;
@@ -442,13 +440,13 @@ function underlineFirstNLtrs(frg,dict) {
     let n    =frg.length;
     if (typeof wds !== 'string' || n < 0) return '';
     return caps2underlineLcase(wds
-        .split('\u2423')
+        .split(sep1)
         .map(wd => {
             if (n > wd.length) return wd.toLowerCase();//??
             return wd.slice(0, n).toLowerCase() + wd.slice(n);
         })
 //      .join('-'));
-        .join('\u2423'));
+        .join(sep1));
 }
 //frag length is number of keys pressed so far for word
 function caps2underlineLcase(str) {
