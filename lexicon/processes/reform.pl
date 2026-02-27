@@ -67,6 +67,7 @@ while (<>) {
      s/WW/W/g;
      s/UUR/AW/g;
      s/DUERING/DAWING/g;
+     s/YY/Y/g;
 #      /jjjjeiifaeiouszkyyzuaeiouw/;
     print "$_\n";
 }

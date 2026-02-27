@@ -63,7 +63,7 @@ const optionKeys = Object.keys(keyMap2ndPass);
 
 // spanRegEx detects the first group of hyphenated
 // reserve (2nd parse) words after it has been highlighted
-// in a span with class="highlight"
+// in a span with class="SecondParse"
 const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 // reserveRegEx detects unhighlighted raw groups
 //    Matches word-like tokens 
@@ -145,7 +145,7 @@ function select2ndPassWd(key) {
 
 //highlight hypenated reserve.js words with css highlight
 function markReserves() {
-  mdRepl(reserveRegEx, `<span class="highlight">$&</span>`);
+  mdRepl(reserveRegEx, `<span class="SecondParse">$&</span>`);
   renderMarkdown();
 }
 
@@ -384,7 +384,7 @@ function nonAlphabetic() {
  * NEW & IMPROVED firstParse() – handles all thumb-chord cases
  * Fixes:
  *   • Focus loss when a single reserve word auto-inserts
- *   • Ghost <span id='deciding'> or old options staying on screen
+ *   • Ghost <span id='firstParse'> or old options staying on screen
  *   • Inconsistent clearFrag() behaviour
  */
 
@@ -515,9 +515,9 @@ if (thumbChord) {
     console.log('setWordOptions');    
     // odd frags red to warn next chord must b singleton
     // or double to avoid ambiguity
-    bwords="<span id='deciding' style='color:black'>" 
+    bwords="<span id='firstParse' style='color:black'>" 
     // remove warning if even frag
-    if(evenString(frag) ) bwords="<span id='deciding'>" 
+    if(evenString(frag) ) bwords="<span id='firstParse'>" 
     // old words to remind user what last options
     // were to notice overshootig common abbreviated
     // words and give wdOpts purpose
@@ -535,12 +535,12 @@ function tidyWordOptions(capsOpts)
 {  
   if (dic[frag]) { 
   	removeWordOptions();
-    let CueOpts =`<span id='deciding'>${capsOpts}</span>`; 
+    let CueOpts =`<span id='firstParse'>${capsOpts}</span>`; 
     oldOpts=opts;
     if(String(frag).length % 2 == 0 ){
-      opts=`<span id='deciding'>${capsOpts}</span>`; 
+      opts=`<span id='firstParse'>${capsOpts}</span>`; 
     } else {
-      opts=`<span id='deciding' style='color:black'>${capsOpts}</span>`; 
+      opts=`<span id='firstParse' style='color:black'>${capsOpts}</span>`; 
     }
 
     setMd(  md()   + opts);

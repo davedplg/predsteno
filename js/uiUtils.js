@@ -126,11 +126,11 @@ function updtDebugInfo(keys, lProduct, rProduct, thumbChord, chord, wd) {
 
 // function to word options and containing span tags
 function removeWordOptions() {
-  mdRepl(/<span id='deciding'.*?<\/span>|\u275A+/g, '');
-  let decidingSpan = outpt2.querySelector('#deciding');
-  lastDecidingSpan = decidingSpan ? decidingSpan.innerHTML : '';
-  if (decidingSpan) { 
-  decidingSpan.remove()
+  mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
+  let firstParseSpan = outpt2.querySelector('#firstParse');
+  lastDecidingSpan = firstParseSpan ? firstParseSpan.innerHTML : '';
+  if (firstParseSpan) { 
+  firstParseSpan.remove()
   renderMarkdown();
   }
 }
