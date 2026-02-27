@@ -60,7 +60,7 @@ function insertWord(word, addSpace = true) {
   let text = removeEmojiCursor(md());
   text += word;
   if (addSpace) text += ' ';
-  text += '\u275A';
+  text += cursor;
 
   setMd(text);
   renderMarkdown();
@@ -81,13 +81,13 @@ function renderMarkdown() {
   setMd(text);
 
   // 4. Add exactly ONE cursor at the end
-  if (!text.endsWith('\u275A'))  text += '\u275A'; 
+  if (!text.endsWith(cursor))  text += cursor; 
 
   // 5. Render to HTML
   let htm = marked.parse(text);
 
   // 6. Double-space → long cursor (your visual style)
-  htm = htm.replace(/ + \u275A/g, '\uFE4E\uFE4E\u275A');
+  htm = htm.replace(/ + \u275A/g, '\uFE4E\uFE4E' + cursor);
 
   // 7. Apply phonetic formatting
   htm = format_augmented_words(htm);
@@ -106,21 +106,6 @@ function renderMarkdown() {
     outputMarkdown.setSelectionRange(text.length, text.length);
     outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
   });
-}
-
-
-
-function renderMarkdownOld() {
-  setMd(parseAffixes(md()));
-  setMd(parseCaseMarking(md()));
-
-  let htm=marked.parse(md());
-  htm  = htm.replace(/([^\u275A])$/,"$1\u275A")
-  htm  = htm.replace(/ + \u275A/,"\uFE4E\uFE4E\u275A")
-  htm = format_augmented_words(htm);
-  setHtml(htm);
-  requestAnimationFrame(() => outputMarkdown.focus());
-  outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
 }
 
 // Utility to remove emoji cursor
@@ -199,7 +184,7 @@ function format_augmented_words(t){
   t=t.replace(/ḩ/g,'h');
   //merge similar tags for debugging clarity 
   t=t.replace(/<\/v><v>|<\/x><x>|<\/vc><vc>/gi,'');
-  return t;
+ return t;
 }
 
 function removeDiacritics(str) {

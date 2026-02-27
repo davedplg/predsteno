@@ -8358,7 +8358,7 @@
 ,"denies":{"a":"dėnîèś","f":"8245"}
 ,"frequencies":{"a":"frêqυénçìêś","f":"8246"}
 ,"brow":{"a":"brõw","f":"8247"}
-,"monks":{"a":"móñks","f":"8249"}
+,"monks":{"a":"mőñks","f":"8249"}
 ,"fittings":{"a":"fittiñg0ś","f":"8250"}
 ,"wickets":{"a":"wick0éts","f":"8251"}
 ,"rovers":{"a":"rôvèŕś","f":"8252"}
@@ -9692,7 +9692,7 @@
 ,"nanny":{"a":"nanný","f":"9606"}
 ,"supplemented":{"a":"supplémentéd","f":"9607"}
 ,"apartments":{"a":"ápār#tménts","f":"9608"}
-,"monk":{"a":"móñk","f":"9609"}
+,"monk":{"a":"mőñk","f":"9609"}
 ,"darren":{"a":"darrén","f":"9610"}
 ,"aided":{"a":"âìdėd","f":"9611"}
 ,"flicked":{"a":"flick0èð","f":"9612"}
@@ -10385,7 +10385,7 @@
 ,"atkinson":{"a":"atkínsón","f":"10309"}
 ,"scum":{"a":"scum","f":"10310"}
 ,"donkey":{"a":"doñkêy0","f":"10311"}
-,"monkey":{"a":"móñkêy0","f":"10311"}
+,"monkey":{"a":"mőñkêy0","f":"10311"}
 ,"yourselves":{"a":"yøùr0selvèś","f":"10312"}
 ,"applause":{"a":"ápplåùśè","f":"10313"}
 ,"stripes":{"a":"strîpès","f":"10314"}
@@ -10928,7 +10928,7 @@
 ,"couch":{"a":"cõùĉħ","f":"10873"}
 ,"fossils":{"a":"fossílś","f":"10874"}
 ,"freddie":{"a":"freddìê","f":"10875"}
-,"monkeys":{"a":"móñkêy0ś","f":"10876"}
+,"monkeys":{"a":"mőñkêy0ś","f":"10876"}
 ,"pavilion":{"a":"pávilĩón","f":"10877"}
 ,"chemists":{"a":"cħemists","f":"10878"}
 ,"frown":{"a":"frõw0n","f":"10879"}
@@ -13073,7 +13073,7 @@
 ,"jessamy":{"a":"jessamý","f":"13131"}
 ,"tides":{"a":"tîdèś","f":"13133"}
 ,"huts":{"a":"huts","f":"13134"}
-,"monies":{"a":"mónìêś","f":"13135"}
+,"monies":{"a":"mőnìêś","f":"13135"}
 ,"freelance":{"a":"frêèlançè","f":"13136"}
 ,"cues":{"a":"cûèś","f":"13137"}
 ,"pertinent":{"a":"pèŕtínént","f":"13138"}
@@ -14597,7 +14597,7 @@
 ,"fidelity":{"a":"fídelítý","f":"14734"}
 ,"torment":{"a":"tør#ment","f":"14735"}
 ,"guildford":{"a":"gùild0førd","f":"14736"}
-,"mondays":{"a":"móndãýś","f":"14737"}
+,"mondays":{"a":"mőndãýś","f":"14737"}
 ,"dallas":{"a":"dallás","f":"14738"}
 ,"reconciled":{"a":"recónçîlèd","f":"14739"}
 ,"observable":{"a":"óbśèŕváblè","f":"14741"}
@@ -42299,7 +42299,7 @@
 ,"mutt":{"a":"mutt","f":"60317"}
 ,"weil":{"a":"wèîl","f":"60322"}
 ,"airlie":{"a":"ãìŕlìê","f":"60323"}
-,"monkees":{"a":"moñkêèś","f":"60324"}
+,"monkees":{"a":"mőñkêèś","f":"60324"}
 ,"romain":{"a":"rômâìn","f":"60327"}
 ,"travails":{"a":"trávâìlś","f":"60329"}
 ,"lashley":{"a":"laŝħlêy0","f":"60330"}

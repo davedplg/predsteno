@@ -30,6 +30,11 @@ let lastDecidingSpan="";
 sep1 = '\u2423'
 sep2 = '\u2194'
 sep3 = '\u2014';
+
+// cursor character
+cursor = '\u275A';
+
+
 //key list for - current chord
 let presdKeys = new Set();   
 
@@ -510,7 +515,7 @@ if (thumbChord) {
     console.log('setWordOptions');    
     // odd frags red to warn next chord must b singleton
     // or double to avoid ambiguity
-    bwords="<span id='deciding' style='color:red'>" 
+    bwords="<span id='deciding' style='color:black'>" 
     // remove warning if even frag
     if(evenString(frag) ) bwords="<span id='deciding'>" 
     // old words to remind user what last options
@@ -535,7 +540,7 @@ function tidyWordOptions(capsOpts)
     if(String(frag).length % 2 == 0 ){
       opts=`<span id='deciding'>${capsOpts}</span>`; 
     } else {
-      opts=`<span id='deciding' style='color:red'>${capsOpts}</span>`; 
+      opts=`<span id='deciding' style='color:black'>${capsOpts}</span>`; 
     }
 
     setMd(  md()   + opts);
