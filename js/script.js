@@ -328,7 +328,7 @@ function nonAlphabetic() {
   function addSpecialChar(special){
     clearFrag();
     setMd(md() + special);
-    wdOpts.innerHTML = '';
+ // wdOpts.innerHTML = '';
     return true;
    }
 
@@ -339,7 +339,7 @@ function nonAlphabetic() {
     .replace(/[^\s]+(?=\s*$)/, '')
 
     setMd(cleaned);
-    wdOpts.innerHTML = '---';
+//  wdOpts.innerHTML = '---';
     renderMarkdown();
     return true;
   }
@@ -526,7 +526,7 @@ if (thumbChord) {
     let oldfrag = frag.substr(0,flen-2);  
     if(flen>2){ oldBwords+= underlineFirstNLtrs(oldfrag,caps); }
     bwords+=    underlineFirstNLtrs(frag,caps);
-    wdOpts.innerHTML = oldBwords +"</span>";
+//  wdOpts.innerHTML = oldBwords +"</span>";
     setMd(md() + bwords + "</span>");
    }
 
@@ -539,11 +539,11 @@ function tidyWordOptions(capsOpts)
   opts=`<span id='firstParse'>${capsOpts}</span>`; 
   
     if (dic[frag]) { 
-    wdOpts.innerHTML = CueOpts + (CueOpts.match(/style=/)?' single letter needed after odd':'');
+//  wdOpts.innerHTML = CueOpts + (CueOpts.match(/style=/)?' single letter needed after odd':'');
     renderMarkdown();
     } else { // if word finished delete suggestions
         frag=frag.slice(0,-2) || '';
-        wdOpts.innerHTML = oldOpts; 
+//      wdOpts.innerHTML = oldOpts; 
    }
   setMd(  md()   + opts);
   renderMarkdown();
