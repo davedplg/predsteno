@@ -144,7 +144,7 @@ function select2ndPassWd(key) {
   }
 
 //highlight hypenated reserve.js words with css highlight
-function markReserves() {
+function hŷlŷt_2nd_pās_opts() {
   mdRepl(reserveRegEx, `<span class="SecondParse">$&</span>`);
   renderMarkdown();
 }
@@ -300,7 +300,7 @@ function reParseParagraph(){
 //Clear lingering 1st-parse spans before highlighting reserves.
   removeWordOptions();
   if(mdMatch(/`[0-9a-zA-Z'+]${sep2}`/)){
-    markReserves();                      //2nd input pass
+    hŷlŷt_2nd_pās_opts();                      //2nd input pass
   } else if (mdMatch(missingRegEx)) {
       need3rdPass = 1;
       mark3rdPassWds();                  //3rd input pass
@@ -425,7 +425,7 @@ function firstParse() {
   insertWord(wd);
   // ────── Only trigger next phase when needed ──────
   if (thumbChord === 'missed' && String(wd).includes(sep2)) {
-    markReserves();
+    hŷlŷt_2nd_pās_opts();
   } else if (thumbChord === 'missed' && wd.includes('\u2014\u2014')) {
     need3rdPass = 1;
     mark3rdPassWds();
@@ -533,25 +533,20 @@ if (thumbChord) {
 
 function tidyWordOptions(capsOpts)
 {  
-  if (dic[frag]) { 
-  	removeWordOptions();
-    let CueOpts =`<span id='firstParse'>${capsOpts}</span>`; 
-    oldOpts=opts;
-    if(String(frag).length % 2 == 0 ){
-      opts=`<span id='firstParse'>${capsOpts}</span>`; 
-    } else {
-      opts=`<span id='firstParse' style='color:black'>${capsOpts}</span>`; 
-    }
-
-    setMd(  md()   + opts);
+ 	removeWordOptions();
+  let CueOpts =`<span id='firstParse'>${capsOpts}</span>`; 
+  oldOpts=opts;// old
+  opts=`<span id='firstParse'>${capsOpts}</span>`; 
+  
+    if (dic[frag]) { 
     wdOpts.innerHTML = CueOpts + (CueOpts.match(/style=/)?' single letter needed after odd':'');
     renderMarkdown();
     } else { // if word finished delete suggestions
         frag=frag.slice(0,-2) || '';
-  	  	removeWordOptions();
-        setMd(  md()   + oldOpts);
         wdOpts.innerHTML = oldOpts; 
    }
+  setMd(  md()   + opts);
+  renderMarkdown();
 }  
 
 
