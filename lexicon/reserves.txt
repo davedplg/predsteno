@@ -32111,3 +32111,321 @@ reserve word 5 534
 reserve word 6 377
 reserve word 7 257
 rejected words 610
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40577
+reserve word 1 4769
+reserve word 2 2225
+reserve word 3 1230
+reserve word 4 790
+reserve word 5 538
+reserve word 6 379
+reserve word 7 261
+rejected words 628
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40577
+reserve word 1 4769
+reserve word 2 2225
+reserve word 3 1230
+reserve word 4 790
+reserve word 5 538
+reserve word 6 379
+reserve word 7 261
+rejected words 628
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40577
+reserve word 1 4769
+reserve word 2 2225
+reserve word 3 1230
+reserve word 4 790
+reserve word 5 538
+reserve word 6 379
+reserve word 7 261
+rejected words 628
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43739
+reserve word 1 4005
+reserve word 2 1645
+reserve word 3 828
+reserve word 4 444
+reserve word 5 262
+reserve word 6 162
+reserve word 7 112
+rejected words 188
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43739
+reserve word 1 4005
+reserve word 2 1645
+reserve word 3 828
+reserve word 4 444
+reserve word 5 262
+reserve word 6 162
+reserve word 7 112
+rejected words 188
+
+accepted words 43694
+reserve word 1 4022
+reserve word 2 1654
+reserve word 3 834
+reserve word 4 448
+reserve word 5 265
+reserve word 6 165
+reserve word 7 114
+rejected words 191
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43739
+reserve word 1 4005
+reserve word 2 1645
+reserve word 3 828
+reserve word 4 444
+reserve word 5 262
+reserve word 6 162
+reserve word 7 112
+rejected words 188
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43739
+reserve word 1 4005
+reserve word 2 1645
+reserve word 3 828
+reserve word 4 444
+reserve word 5 262
+reserve word 6 162
+reserve word 7 112
+rejected words 188
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43739
+reserve word 1 4005
+reserve word 2 1645
+reserve word 3 828
+reserve word 4 444
+reserve word 5 262
+reserve word 6 162
+reserve word 7 112
+rejected words 188
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43694
+reserve word 1 4022
+reserve word 2 1654
+reserve word 3 834
+reserve word 4 448
+reserve word 5 265
+reserve word 6 165
+reserve word 7 114
+rejected words 191
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40535
+reserve word 1 4786
+reserve word 2 2226
+reserve word 3 1235
+reserve word 4 794
+reserve word 5 540
+reserve word 6 380
+reserve word 7 265
+rejected words 638
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40535
+reserve word 1 4786
+reserve word 2 2226
+reserve word 3 1235
+reserve word 4 794
+reserve word 5 540
+reserve word 6 380
+reserve word 7 265
+rejected words 638
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40510
+reserve word 1 4788
+reserve word 2 2229
+reserve word 3 1238
+reserve word 4 797
+reserve word 5 543
+reserve word 6 381
+reserve word 7 267
+rejected words 646
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43666
+reserve word 1 4027
+reserve word 2 1660
+reserve word 3 839
+reserve word 4 450
+reserve word 5 268
+reserve word 6 166
+reserve word 7 116
+rejected words 195
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43666
+reserve word 1 4027
+reserve word 2 1660
+reserve word 3 839
+reserve word 4 450
+reserve word 5 268
+reserve word 6 166
+reserve word 7 116
+rejected words 195
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40510
+reserve word 1 4788
+reserve word 2 2229
+reserve word 3 1238
+reserve word 4 797
+reserve word 5 543
+reserve word 6 381
+reserve word 7 267
+rejected words 646
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40510
+reserve word 1 4788
+reserve word 2 2229
+reserve word 3 1238
+reserve word 4 797
+reserve word 5 543
+reserve word 6 381
+reserve word 7 267
+rejected words 646
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43666
+reserve word 1 4027
+reserve word 2 1660
+reserve word 3 839
+reserve word 4 450
+reserve word 5 268
+reserve word 6 166
+reserve word 7 116
+rejected words 195
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43665
+reserve word 1 4026
+reserve word 2 1661
+reserve word 3 838
+reserve word 4 450
+reserve word 5 267
+reserve word 6 164
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43667
+reserve word 1 4026
+reserve word 2 1661
+reserve word 3 838
+reserve word 4 450
+reserve word 5 267
+reserve word 6 163
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43667
+reserve word 1 4026
+reserve word 2 1661
+reserve word 3 838
+reserve word 4 450
+reserve word 5 267
+reserve word 6 163
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43667
+reserve word 1 4026
+reserve word 2 1661
+reserve word 3 838
+reserve word 4 450
+reserve word 5 267
+reserve word 6 163
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43667
+reserve word 1 4026
+reserve word 2 1661
+reserve word 3 838
+reserve word 4 450
+reserve word 5 267
+reserve word 6 163
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43702
+reserve word 1 4029
+reserve word 2 1661
+reserve word 3 839
+reserve word 4 452
+reserve word 5 268
+reserve word 6 163
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 46080
+reserve word 1 2476
+reserve word 2 1212
+reserve word 3 646
+reserve word 4 374
+reserve word 5 235
+reserve word 6 141
+reserve word 7 85
+rejected words 170
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43702
+reserve word 1 4029
+reserve word 2 1661
+reserve word 3 839
+reserve word 4 452
+reserve word 5 268
+reserve word 6 163
+reserve word 7 114
+rejected words 193
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40538
+reserve word 1 4792
+reserve word 2 2229
+reserve word 3 1238
+reserve word 4 798
+reserve word 5 540
+reserve word 6 381
+reserve word 7 266
+rejected words 639
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 40513
+reserve word 1 4787
+reserve word 2 2232
+reserve word 3 1236
+reserve word 4 801
+reserve word 5 541
+reserve word 6 381
+reserve word 7 264
+rejected words 636
+tr ABDEFGHIJKLMNOPRZTUVWYS 1122233344455A666777888
+
+accepted words 43684
+reserve word 1 4028
+reserve word 2 1658
+reserve word 3 839
+reserve word 4 451
+reserve word 5 265
+reserve word 6 162
+reserve word 7 113
+rejected words 191
