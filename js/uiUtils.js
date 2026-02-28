@@ -57,7 +57,7 @@ function clearFrag(){
 function insertWord(word, addSpace = true) {
   removeWordOptions();
 
-  let text = removeEmojiCursor(md());
+  let text = removeCursor(md());
   text += word;
   if (addSpace) text += ' ';
   text += cursor;
@@ -70,7 +70,7 @@ function renderMarkdown() {
   let text = md();
 
   // 1. Remove any old cursor first
-  text = removeEmojiCursor(text);
+  text = removeCursor(text);
 
   // 2. Apply affixes and case marking in memory (NO setMd!)
   text = parseAffixes(text);
@@ -109,7 +109,7 @@ function renderMarkdown() {
 }
 
 // Utility to remove emoji cursor
-function removeEmojiCursor(text) {
+function removeCursor(text) {
     return text.replace(/\u275A+$/, '');
 }
 

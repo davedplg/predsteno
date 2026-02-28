@@ -8,15 +8,24 @@
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
-  <h4> <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input</h4>
-  <h4> press enter (perhaps twice) to start</h4>
-    <textarea id="output" rows="4" cols="80" readonly>
-# mārkdõw0n enâblèd 
+  <details>
+    <summary>For Steno enter twice.</summary>
+    <h4> 
+      <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input
+    </h4>
+  </details>    
+   <details open>
+    <summary>See Markdown</summary>  
+      <textarea id="output" rows="9" cols="80" readonly>
+## mārkdõw0n enâblèd 
 - 'spâçè' + entèŕ = nëw0 lînè 
 - entèŕ  + entèŕ = parágraph
-**three** blînd *mîçè* 
-    </textarea>
- <a id="md_download" href='#' onclick="exportMD();">Export MD & HTML</a>
+**twinklè** twinklè *littlè* stār 
+      </textarea>
+    </summary>
+  </details>
+
+  <a id="md_download" href='#' onclick="exportMD();">SAVE</a>
  <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
 <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
   <div id="outpt2" > </div>
@@ -49,24 +58,6 @@
    </table>
     
    </div> 
-   <div class="markdown striped">
- |              | numpad       |              |  |          punc & case |
- |:------------:|:------------:|:------------:|:-:|:--------------------:|
- |              | 1<s>abc.</s> | 2<s>def.</s> |  |<k>t</k><s>period</s>|
- | 3<s>ghi.</s> | 4<s>jkl.</s> | 5<s>mno.</s> |  |<k>y</k><s>comma</s>|
- | 6<s>pqrs</s> | 7<s>tuv.</s> | 8<s>wxyz</s> |  | <k>w</k>+<k>e</k>+<k>r</k><s>Uppercase-⟑</s> |
- |              |              |              |  | <k>q</k>+<k>w</k>+<k>e</k><s>Titlecase-⟐</s> |
-#### 63576 = pints = shots = riots = 36,57,6 (pair reordered for 2-finger chords)
-    </div>
-     <a id="3pass">
-   <div class="markdown striped">
- |Pass|Word 1      |Word 2       |Word 3     |Word 4          |Other   |
- |----|------------|-------------|-----------|----------------|--------|
- | 1st|<k>space</k>|<k>alt</k> |<k>space</k> + <k>alt</k>||<k>B/meta</k>|
- | 2nd|  <k>j</k>  |   <k>k</k>   | <k>l</k>  |   <k>;</k>     |<k>h</k>|
- | 3rd|  missing   | word        | (qwerty) + <k>Enter</k> |
-     </div>
-
     <a id="top8">
    <div class="markdown striped">
 #### singles

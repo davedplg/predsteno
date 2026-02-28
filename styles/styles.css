@@ -11,6 +11,16 @@ body {
   box-sizing: border-box;
 }
 
+details {
+  width: 100%;          /* ← important: prevents flex from shrinking it */
+  max-width: 600px;     /* or whatever max width you want */
+  margin: 0.5em 0;      /* optional – nicer spacing */
+}
+
+summary {
+  text-align: left;
+}
+
 #instructions {
   margin-top: 20px;
   text-align: center;
@@ -20,11 +30,12 @@ body {
 div#outpt2 {
   background-color:#fff;
   width:90%;
-  height:40%;
+  height:70%;
   font-family: 'Courier New', Courier, monospace;
   font-size: 24px;
   margin-top: 10px;
   font-weight: 700; /* Bold for better readability */
+  border:2px;
 }
 textarea#output {
   height: auto;
@@ -32,7 +43,8 @@ textarea#output {
   line-height: 1.25;
   resize: vertical;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 15px; /* Match #textArea for consistency */
+  font-size: 21px; /* Match #textArea for consistency */
+  font-weight: 700; /* Bold for better readability */
   box-sizing: border-box;
   border: 1px solid #ccc;
   background-color: #f9f9f9;

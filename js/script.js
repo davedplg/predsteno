@@ -283,9 +283,11 @@ function parseCaseMarking(text) {
   }
   let t=text;
   let tCâs=/⟐\s*([\p{L}])([\p{L}]*)/gu
-  let uCâs=/⟑\s*([\p{L}])([\p{L}]*)/gu
+  let uCâs=/⟑\s*([\p{L}]*)/gu
+//let uCâs=/⟑\s*([\p{L}])([\p{L}]*)/gu
 
-  t = t.replace(uCâs, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
+//t = t.replace(uCâs, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
+  t = t.replace(uCâs, (_,FRODO) => FRODO.toUpperCase()) ;
   t = t.replace(tCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
   return t;
 }
@@ -476,7 +478,7 @@ function processBiChord() {
 
   updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
  
-  setMd(removeEmojiCursor(md()));
+  setMd(removeCursor(md()));
  
   if (nonAlphabetic()){
     presdKeys.clear();   
