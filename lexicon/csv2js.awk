@@ -1,6 +1,7 @@
 BEGIN {
 #    FS=","; # comma-separated input
-    print "export const texts={"; # Start JSON array
+    print "const texts={"; # Start JSON array
+#   print "export const texts={"; # Start JSON array
     first = 1;
 }
 NR > 1 { # Skip header if present; adjust if no header

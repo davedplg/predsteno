@@ -405,8 +405,13 @@ function firstParse() {
     case 'wd2'  : wd = wdList[1] || ''; break;
 // below wants to be changed to wdList[2]
 // and wdList[3]  
-    case 'wd3'  : wd = wdListR[0] || ''; break;
-    case 'wd4'  : wd = wdListR[1] || ''; break;
+//  case 'wd3'  : wd = wdListR[0] || ''; break;
+//  case 'wd4'  : wd = wdListR[1] || ''; break;
+    case 'wd3':  wd = wdList[2] ?? wdListR[0] ?? ''; break;
+//  case 'wd4':  wd = wdList[3] ?? (wdList[2]? wdListR[0] : wdList[1]) ?? ''; break;
+    case 'wd4':  wd = wdList[3] ??  (
+                 wdList[2] ? wdListR[0] : wdListR[1] 
+            ) ?? '';
     case 'space': wd = ' '            ; break;
 
     case 'missed': 

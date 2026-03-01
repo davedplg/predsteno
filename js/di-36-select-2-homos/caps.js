@@ -1,4 +1,3 @@
-//export
 const caps={
    "1": "AND␣A",
    "2": "FAW1␣FROM1",
