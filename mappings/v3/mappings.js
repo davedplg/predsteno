@@ -45,6 +45,7 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
     'alt': 74,      //spacebar2
     ' ' : 62,       //spacebar1
     'control': 86,  //spacebar3
+    'b': 86,        //spacebar3
 };
 
 

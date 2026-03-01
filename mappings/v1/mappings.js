@@ -39,6 +39,7 @@ const primeMap = {
   //honorary thumb rejects word options for reserves
      'meta': 146, 
 
+    'b': 86,  //spacebar3
     'control': 86,  //spacebar3
     'alt': 74,      //spacebar2
     ' ' : 62,       //spacebar1

@@ -52,6 +52,7 @@ const primeMap = {
    'alt': 74,      //spacebar2
     ' ' : 62,       //spacebar1
     'control': 86,  //spacebar3
+    'b': 86,        //spacebar3
 
 };
 
