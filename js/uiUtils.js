@@ -161,17 +161,19 @@ function format_augmented_words(t){
   t=t.replace(/êà/gi,'ea');
   t=t.replace(/öò/gi,'oo');
   t=t.replace(/åw(0)*/gi,'aẇ');
-  t=t.replace(/èŕ/gi,'eř');
+  //tag silent letters <x>
+  //vowels and h
+  t=t.replace(/τħ/gi,'<vc>th</vc>');
+  t=t.replace(/[ħàèìòù]/gi, '<x>$&</x>');  
+  //non doubled silents
+  t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
+//  t=t.replace(/([a-zA-Z])(0)(?!\1)/gi, '<x>$1</x>');  
+ t=t.replace(/èŕ/gi,'eř');
   //tag vowels <v>
   t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
-  t=t.replace(/τħ/gi,'<vc>th</vc>');
-  //tag silent letters <x>
-  //vowels and h
-  t=t.replace(/[ħàèìòù]/gi, '<x>$&</x>');  
-  //non doubled silents
-  t=t.replace(/([a-zA-Z])(0)(?!\1)/gi, '<x>$1</x>');  
+//t=t.replace(/τħ/gi,'<vc>th</vc>');
   //remaing doubled letters remove silent marking
   t=t.replace(/([a-zA-Z])0/gi,'$1');
   t=t.replace(/ñ/g,'n');

@@ -65,13 +65,14 @@ BEGIN {
 }
 }
 
-' > data/d7-ready4hyphenation.csv
+'|
+sed 's/#/0/g'  > data/d7-ready4hyphenation.csv
 cat data/d7-ready4hyphenation.csv | \
 grep -v input | \
 head -${HEADLINES:-2000}|\
 tail -${TAILLINES:-300}   | \
 grep -v 888888 | \
-sed 's/,/\t/g' 
+sed 's/,/\t/g;s/#/0/g' 
   
   # record final distribution of words (eg concatenees, reserve list second parse candidates, and rejected words)
   echo | tee >> reserves.txt 
