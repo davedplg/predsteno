@@ -18,20 +18,20 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 // export \
  const primeMap = {
     // Left:  primes
-    'a': 19,          //abc 
-    's': 11,          //def
-    'd':  3,          //ghi
-    'f':  5,          //mon
+    'a': 11,          //abc 
+    's':  3,          //def
+    'd':  5,          //ghi
+    'f': 23,          //mon
     // Left: squared key doubles middle row keys 
-    'g': 29,
+    'c': 29,
 
     // Right: doubled primes
-    ';': 38,         //def
-    'l': 22,         //ghi
-    'k':  6,         //mon
-    'j': 10,         //pqrs
+    ';': 22,         //def
+    'l':  6,         //ghi
+    'k': 10,         //mon
+    'j': 46,         //pqrs
     // right: squared key doubles middle row keys
-     'h': 58,
+     'm': 58,
     // other functions
      'q':  7,
      'w': 17, 	
@@ -59,28 +59,23 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 
 // export \
  const productMap = {
-    19: '1',   
     11: '2',   
      3: '3',   
      5: '5',   
+    23: '6',   
+    29: '8',   
 
- [29  *  19]       : '11', 
- [29  *  11]       : '22', 
- [29  *   3]       : '33', 
- [29  *   5]       : '55', 
+ [23  *  11]       : '1', 
+ [23  *   3]       : '4', 
+ [23  *   5]       : '7', 
 
- [19  *    3]       : '4', 
- [19  *    5]       : '6', 
- [11  *    5]       : '7', 
- [ 3  *    5]       : '8', 
- 
- [ 19  *   11]       : '91', 
- [  3  *   11]       : '92', 
+ [  3  *   11]       : '91', 
+ [  3  *    5]       : '92', 
 
- [19  *   3  *  5]  : '93', 
- [19  *  11  *  5]  : '96', 
- [19  *  11  *  3]  : '97', 
- [ 5  *  11  *  3]  : '94', 
+ [ 11  * 29]        : '96', 
+ [ 29  *  3]        : '94', 
+ [ 11  *  5]        : '93', 
+ [  5  * 29]        : '97', 
 
 //comma, stop, delete
 

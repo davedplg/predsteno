@@ -51,7 +51,7 @@ const keyMap2ndPass = {
   'o': 9,
   'p': 10,
   'h': 11,
-  '\\': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
+  'b': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
   ' ': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
   'j': 3,
   'k': 4,
