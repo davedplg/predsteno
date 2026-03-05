@@ -4,7 +4,12 @@ const outpt2 = document.getElementById('outpt2');
 const wdOpts = document.getElementById('wdOpts');
 
 const outputMarkdown = document.getElementById("output");
-const outputHTML = document.getElementById("outpt2");
+const outputHTML     = document.getElementById("outpt2");
+const markLetters    = document.getElementById("markLetters")
+const colorVowels    = document.getElementById("colorVowels")
+   
+colorVowels.addEventListener('change', renderMarkdown);
+markLetters.addEventListener('change', renderMarkdown);
 
 const md = () => {
   if (!outputMarkdown || !outputMarkdown.value) throw new error("outputMarkdown is undEFined or lacks a value property");
@@ -90,7 +95,15 @@ function renderMarkdown() {
   htm = htm.replace(/ + \u275A/g, '\uFE4E\uFE4E' + cursor);
 
   // 7. Apply phonetic formatting
-  htm = format_augmented_words(htm);
+  
+  let state = (markLetters.checked ? "marks " : "") +
+              (colorVowels.checked ? "color" : "");
+
+//  let state =
+//  (document.getElementById("markLetters").checked ? "marks " : "") +
+//  (document.getElementById("colorVowels").checked ? "color" : "");
+  
+  htm = format_augmented_words(htm,state);
   // 7b. Unescape common entities you care about
   htm = htm.replace(/&lt;/g, '<')
            .replace(/&gt;/g, '>')
@@ -107,7 +120,6 @@ function renderMarkdown() {
     outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
   });
 }
-
 // Utility to remove emoji cursor
 function removeCursor(text) {
     return text.replace(/\u275A+$/, '');
@@ -135,7 +147,8 @@ function removeWordOptions() {
   }
 }
 
-function format_augmented_words(t){
+//function format_augmented_words(t){
+function format_augmented_words(t,style){
   // Step 1: Protect sequences that look like HTML entities
   // We use a negative lookahead to skip coloring if & is followed by entity-like content
   // But easier: replace known entities first with placeholders 
@@ -155,6 +168,8 @@ function format_augmented_words(t){
   t=t.replace(/ëw(0)*/gi, 'eẇ');
   t=t.replace(/ør/gi, 'oř');
   t=t.replace(/õw(0)*/gi,'oẇ');
+  t=t.replace(/σì/gi,'oi');
+  t=t.replace(/σy/gi,'oy');
   t=t.replace(/õù/gi,'ou');
   t=t.replace(/âì/gi,'ai');
   t=t.replace(/êè/gi,'ee');
@@ -164,11 +179,11 @@ function format_augmented_words(t){
   //tag silent letters <x>
   //vowels and h
   t=t.replace(/τħ/gi,'<vc>th</vc>');
+  t=t.replace(/èŕ/gi,'eř');
   t=t.replace(/[ħàèìòù]/gi, '<x>$&</x>');  
   //non doubled silents
   t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
 //  t=t.replace(/([a-zA-Z])(0)(?!\1)/gi, '<x>$1</x>');  
- t=t.replace(/èŕ/gi,'eř');
   //tag vowels <v>
   t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   //forgot what im doing next
@@ -186,6 +201,21 @@ function format_augmented_words(t){
   t=t.replace(/ḩ/g,'h');
   //merge similar tags for debugging clarity 
   t=t.replace(/<\/v><v>|<\/x><x>|<\/vc><vc>/gi,'');
+  //style="color"
+  console.log(style);
+//if(style!='color') {
+  if(!style.includes('color')) {
+  t=t.replace(/\<(\/)*(v|vc|x)\>/g,"")
+  } else {
+  t=t.replace(/à/g,"a");
+  t=t.replace(/è/g,"e");
+  t=t.replace(/ì/g,"i");
+  t=t.replace(/ò/g,"o");
+  t=t.replace(/ù/g,"u");
+  t=t.replace(/ħ/g,"h");
+  }
+  
+ if(!style.includes("marks")) t=removeDiacritics(t);
  return t;
 }
 

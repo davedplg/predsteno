@@ -23,7 +23,7 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
     'd':  5,          //ghi
     'f': 23,          //mon
     // Left: squared key doubles middle row keys 
-    'c': 29,
+    'c': 19,
 
     // Right: doubled primes
     ';': 22,         //def
@@ -31,7 +31,7 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
     'k': 10,         //mon
     'j': 46,         //pqrs
     // right: squared key doubles middle row keys
-     'm': 58,
+     'm': 38,
     // other functions
      'q':  7,
      'w': 17, 	
@@ -63,19 +63,19 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
      3: '3',   
      5: '5',   
     23: '6',   
-    29: '8',   
+    19: '1',   
 
- [23  *  11]       : '1', 
- [23  *   3]       : '4', 
- [23  *   5]       : '7', 
+ [23  *  11]       : '8', 
+ [23  *   3]       : '7', 
+ [23  *   5]       : '4', 
 
  [  3  *   11]       : '91', 
  [  3  *    5]       : '92', 
 
- [ 11  * 29]        : '96', 
- [ 29  *  3]        : '94', 
+ [ 11  * 19]        : '96', 
+ [ 19  *  3]        : '94', 
  [ 11  *  5]        : '93', 
- [  5  * 29]        : '97', 
+ [  5  * 19]        : '97', 
 
 //comma, stop, delete
 

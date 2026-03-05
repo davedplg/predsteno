@@ -28,6 +28,15 @@
 <a id="md_download" href='#' onclick="exportMD();">SAVE</a>
 <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
 <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
+ <label>
+  <input type="checkbox" id="markLetters" checked>
+    Add marking
+</label>
+ 
+<label>
+  <input type="checkbox" id="colorVowels" checked>
+    Color vowels
+</label>
       <div id="outpt2" > </div>
 
 <div id="debug" onclick="this.children[2].style.display = 
@@ -52,25 +61,47 @@ this.children[2].style.display === 'none' ? 'block' : 'none';">
   <a id="numpad">
     <table >
   <tr class="strong_digit">
-      <td><k>A</k><k>S</k><k>D</k><k>F</k><k>C</k> &rarr; 2,3,5,6,8</td>
-      <td></td>
-      <td>8,6,5,3,2 &larr; <k>M</k><k>J</k><k>K</k><k>L</k><k>;</k></td>
+      <td><key>A</key><key>S</key><key>D</key><key>F</key><key>C</key></td>
+      <td> &rarr;</td>
+      <td> 2,3,5,6,1</td>
+      <td>1,6,5,3,2</td>
+      <td> &larr;</td>
+      <td> <key>M</key><key>J</key><key>K</key><key>L</key><key>;</key></td>
     </tr>
  <tr class="strong_digit">
-      <td><k>A</k><k>S</k><k>D</k>+<k>F</k> &rarr; 1,4,7</td>
-      <td></td>
-      <td>7,4,1 &larr; <k>J</k>+<k>K</k><k>L</k><k> ; </k></td>
+      <td><key>A</key><key>S</key><key>D</key>➕<key>F</key></td>
+      <td> &rarr;</td>
+      <td> 8,7,4</td>
+      <td>4,7,8</td>
+      <td> &larr;</td>
+      <td> <key>J</key>➕<key>K</key><key>L</key><key> ; </key></td>
     </tr>
  
     <tr class="strong_digit">
-      <td><k>2</k>+<k>3</k>;<k>2</k>+<k>8</k> &rarr; period ; space</td>
-      <td></td>
-      <td>comma ; enter &larr; <k>3</k>+<k>8</k> ; <k>3</k>+<k>5</k></td>
+      <td><kiy>2</kiy>➕<kiy>3</kiy></td>
+      <td> &rarr;</td>
+      <td> period</td>
+      <td>comma</td>
+      <td> &larr;</td>
+      <td> <kiy>3</kiy>➕<kiy>5</kiy></td>
     </tr>
+
+   <tr class="strong_digit">
+      <td><kiy>2</kiy>➕<kiy>1</kiy></td>
+      <td> &rarr;</td>
+      <td>space</td>
+      <td>enter</td>
+      <td> &larr;</td>
+      <td><kiy>3</kiy>➕<kiy>1</kiy></td>
+    </tr>
+
     <tr class="strong_digit">
-      <td><k>8</k>+<k>5</k> &rarr; Uppercase</td>
-      <td></td>
-      <td>bspace &larr; <k>2</k>+<k>5</k></td>
+      <td><kiy>5</kiy>➕<kiy>1</kiy></td>
+      <td> &rarr;</td>
+      <td> Uppercase</td>
+      <td>bspace</td>
+      <td> &larr;</td>
+      <td> <kiy>2</kiy>➕<kiy>5</kiy></td>
     </tr>
 
  </table>

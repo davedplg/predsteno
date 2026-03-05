@@ -28,6 +28,15 @@
   <a id="md_download" href='#' onclick="exportMD();">SAVE</a>
  <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
 <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
+ <label>
+  <input type="checkbox" id="markLetters" checked>
+    Add marking
+</label>
+ 
+<label>
+  <input type="checkbox" id="colorVowels" checked>
+    Color vowels
+</label>
   <div id="outpt2" > </div>
 
 <div id="debug" onclick="this.children[2].style.display = 
@@ -52,62 +61,71 @@
     <a id="numpad">
       <table >
       <tr class="strong_digit">
-        <td><k>A</k><k>S</k><k>D</k><k>F</k> &rarr; 2,3,5,6</td>
-        <td>8,7,4,1 &larr; <k>U</k><k>I</k><k>O</k><k>P</k></td>
+        <td><key>A</key><key>S</key><key>D</key><key>F</key></td>
+      <td> &rarr; </td>
+      <td>2,3,5,6</td>
+        <td>8,7,4,1 </td>
+      <td>&larr; </td>
+      <td><key>M</key><key>❟</key><key>.</key><key>/</key></td>
       </tr>
-   </table>
+
+    <tr class="strong_digit">
+      <td><key>A</key>➕<key>S</key></td>
+      <td> &rarr; </td>
+      <td>period</td>
+      <td>period</td>
+      <td>&larr; </td>
+      <td><key>.</key>➕<key>/</key></td>
+    </tr>
+ 
+    <tr class="strong_digit">
+      <td><key>S</key>➕<key>D</key></td>
+      <td> &rarr; </td>
+      <td>comma</td>
+      <td>comma</td>
+      <td>&larr; </td>
+      <td><key>❟</key>➕<key>.</key></td>
+    </tr>
+ 
+    <tr class="strong_digit">
+      <td><key>A</key>➕<key>C</key></td>
+      <td> &rarr; </td>
+      <td>space</td>
+      <td>space</td>
+      <td>&larr; </td>
+      <td><key>M</key>➕<key>/</key></td>
+    </tr>
+  
+    <tr class="strong_digit">
+      <td><key>D</key>➕<key>C</key></td>
+      <td> &rarr; </td>
+      <td>enter</td>
+      <td>enter</td>
+      <td>&larr; </td>
+      <td><key>M</key>➕<key>.</key></td>
+    </tr>
+  
+    <tr class="strong_digit">
+      <td><key>A</key>➕<key>D</key></td>
+      <td> &rarr; </td>
+      <td>delete</td>
+      <td>delete</td>
+      <td>&larr; </td>
+      <td><key>❟</key>➕<key>/</key></td>
+    </tr>
+ 
+    <tr class="strong_digit">
+      <td><key>C</key>➕<key>D</key></td>
+      <td> &rarr; </td>
+      <td>Uppercase</td>
+      <td>Uppercase</td>
+      <td>&larr; </td>
+      <td><key>M</key>➕<key>❟</key></td>
+    </tr>
+  </table>
     
    </div> 
     <a id="top8">
-   <div class="markdown striped">
-#### singles
-|Top 8                |Single Digit         |Words               |    
- |---------------------|---------------------|--------------------|
- |                     |1<s>And-A-Be</s>     |2<s>For-+'D-Do</s>  |
- | 3<s>In-It-Is</s>    |4<s>+'ll-Like-La</s> |5<s>Of-on-or</s>    |
- | 6<s>She-So-+'Re</s> |7<s>The-To-+'T</s>   |8<s>Was-Wasn-We</s> | 
-#### doubles
-|digits| spacebar| / | spacebar + /|
-|----|----|----|----|
-|11|can|about||
-|12|been|after|ad|
-|13|have|havn|ah|
-|14|all|also|+AL|
-|15|an|could|am|
-|16|as|are|sa|
-|17|at|but|ta|
-|18|by|way|ya|
-|22|development|felt|+ED|
-|23|he|her|if|
-|24|left|less|le|
-|25|me|new|en|
-|26|from|people|+ER|
-|27|very|+'VE|du|
-|28|were|weren|ye|
-|33|his|him|hi|
-|34|life|little|li|
-|35|into|how|go|
-|36|isn|should|sh|
-|37|that|this|ti|
-|38|with|which|yi|
-|44|lloyd|klerk|
-|45|know|old|jo|
-|46|place|play||
-|47|just|uk|ju|
-|48|lying|lydia|+LY|
-|55|not|no|mo|
-|56|some|something|Mr|
-|57|out|other|um|
-|58|you|would|my|
-|66|problem|problems||
-|67|up|such|us|
-|68|system|systems||
-|77|turned|turn|tu|
-|78|type|types|yu|
-|88|wycliffe|wyatt||
-
- </div>
-
   </div>
   <!--  <script src="../../js/uni-8-select-3-homos/reservecaps.js"></script> -->
   <script src="../../js/uni-8-select-3-homos/caps.js"></script>

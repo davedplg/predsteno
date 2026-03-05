@@ -751,7 +751,7 @@
 ,"model":{"a":"modél","f":"717"}
 ,"chance":{"a":"ĉħançè","f":"718"}
 ,"boy":{"a":"bσy0","f":"719"}
-,"boylike":{"a":"bσy0lîkè","f":"719"}
+,"boylike":{"a":"bσy0lîkè","f":"20000"}
 ,"agreement":{"a":"ágrêèmént","f":"720"}
 ,"received":{"a":"rėçêìvèd","f":"721"}
 ,"stood":{"a":"stōòd","f":"722"}

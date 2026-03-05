@@ -18,10 +18,10 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'q': 19,  'v': 19,  //abc  1+9 = 10; 1+0=1
-    'w': 13,  'c': 13,  //def  1+3 = 4 
-    'e': 7,   'x':  7,  //ghi  7   = 7
-    'r': 17,  'z': 17,  //jkl  1+7 = 8 
+    'q': 19,  'c': 19,  //abc  1+9 = 10; 1+0=1
+    'w': 13,  'x': 13,  //def  1+3 = 4 
+    'e': 7,   'z':  7,  //ghi  7   = 7
+    'r': 17,  'shift': 17,  //jkl  1+7 = 8 
     'a': 11,            //mno  1+1 = 2
     's': 3,             //pqrs 3   = 3 
     'd': 5,             //tuv  5   = 5
@@ -30,10 +30,10 @@ const primeMap = {
     'g': 29,
 
     // Right: doubled primes
-    'p': 38,  'n':38, //abc 
-    'o': 26, 'm':26, //def
-    'i': 14, ',':14, //ghi
-    'u': 34, '.':34, //jkl 
+    'p': 38,  'm':38, //abc 
+    'o': 26, ',':26, //def
+    'i': 14, '.':14, //ghi
+    'u': 34, '/':34, //jkl 
     ';': 22,
     'l': 6,
     'k': 10,
@@ -53,6 +53,7 @@ const primeMap = {
     ' ' : 62,       //spacebar1
     'control': 86,  //spacebar3
     'b': 86,        //spacebar3
+    'n': 29,        //spacebar3
 
 };
 
@@ -129,7 +130,18 @@ const productMap = {
  [29  *   3]      : '33',
  [29  *  11]      : '22',
  [29  *  19]      : '11',
-  
+
+ // period, comma, space, enter, delete, case toggle 
+ [ 23  *  5 *  3 ]       : '91', 
+ [ 23  *  5 *  11]       : '92', 
+ [ 23  * 3  *  11]       : '96', 
+ [  5 *  3  *  11]       : '94', 
+ [ 29  * 3  *   5]       : '93', 
+ [ 23  *  5 *  29]       : '97', 
+ [ 11  * 13 *   7]       : '97', 
+ [ 29 * 29 ]             : '97', 
+
+
  //comma, stop, delete
 
   59:'91',   //,
@@ -139,8 +151,6 @@ const productMap = {
 //73:'95',   //missed
 
 
-    [19 * 13 *  7]: '97',  // sdf upper-case-marker
-    [13 *  7 * 17]: '96', //  asd title-case-marker
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
@@ -158,7 +168,7 @@ const productMap = {
 // includes codes corresponding to non alphabetic input
 //export \
 const NON_ALPHA_CHORDS = {
-  '91': '+.  ⟐ ' ,
+  '91': '+.  ' ,
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
