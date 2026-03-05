@@ -8,14 +8,51 @@
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
-  <details>
-    <summary>For Steno enter twice.</summary>
-    <h4> 
-      <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a>-<a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a>/(e.161 <a href="#e161">numpad</a>)-inspired <a href="#3pass">3-Pass</a> Mirrored-hands Text-Input
-    </h4>
-  </details>    
-  <details open>
-    <summary>See Markdown</summary>  
+ <details>
+   <summary style="font-size:200%">Menu</summary>
+   <details>
+     <summary>file</summary>
+     <a id="md_download" href='#' onclick="exportMD();">SAVE</a> 
+     <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
+     <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
+   </details>
+   <details>
+     <summary>formatting</summary>
+     <label>
+       <input type="checkbox" id="markLetters" checked>
+         Add marking
+     </label>
+      
+     <label>
+       <input type="checkbox" id="colorVowels" checked>
+         Color vowels
+     </label>
+   </details>  
+   <details>
+     <summary>instructions</summary>
+     <ul>
+       <li>e.161 <a href="../../index.html#e161">numpad</a>: letter -> digit mapping</li>
+       <li> <a href="#chords">chords</a></li>
+       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
+       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
+       <li>Enter Twice to Start!</li>
+       <li>Mirrored-hands Text-Input</li>
+     </ul>
+   </details>
+   <details>
+     <summary>about</summary>
+     <h4> single-finger <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</h4>
+   </details>
+   <details>
+     <summary>context</summary>
+     <ul> 
+       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
+       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
+     </ul>
+   </details>    
+ </details>
+ <details>
+   <summary>See Markdown</summary>  
       <textarea id="output" rows="9" cols="80" readonly>
 ## mārkdõw0n enâblèd 
 - 'spâçè' + entèŕ = nëw0 lînè 
@@ -26,18 +63,6 @@
   </details>
 
 
- <a id="md_download" href='#' onclick="exportMD();">SAVE</a>
- <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
-<a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
- <label>
-  <input type="checkbox" id="markLetters" checked>
-    Add marking
-</label>
- 
-<label>
-  <input type="checkbox" id="colorVowels" checked>
-    Color vowels
-</label>
   <div id="outpt2" >
  </div>
 
