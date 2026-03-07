@@ -71,7 +71,6 @@ const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 //     separated by at least one ↔ arrow
 // \p{P} catches commas, periods, quotes, brackets, dashes, etc. automatically
 const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
-//const missingRegEx =   /\u2014\u2014MissingWord\u2014\u2014/
 const missingRegEx = new RegExp(sep3 + sep3 + 'MissingWord' + sep3 + sep3);
 
 /** calcProducts: calculate prime (p) products
@@ -282,11 +281,9 @@ function parseCaseMarking(text) {
     }
   }
   let t=text;
+  let uCâs=/⟐\s*⟐\s*([\p{L}][\p{L}]*)/gu
   let tCâs=/⟐\s*([\p{L}])([\p{L}]*)/gu
-  let uCâs=/⟑\s*([\p{L}]*)/gu
-//let uCâs=/⟑\s*([\p{L}])([\p{L}]*)/gu
-
-//t = t.replace(uCâs, (_,FRODO,not_a_word) => FRODO.toUpperCase() + not_a_word);
+  
   t = t.replace(uCâs, (_,FRODO) => FRODO.toUpperCase()) ;
   t = t.replace(tCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
   return t;

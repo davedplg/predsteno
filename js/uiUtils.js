@@ -147,6 +147,29 @@ function removeWordOptions() {
   }
 }
 
+function titleCase(word){
+  len  = word.length;
+  return word.charAt(0).toUpperCase() + word.substr(1-len)
+}
+
+// Runs title, upper and lowercase replacements
+function caseReplace(text, match,replace){
+ 
+ MATCH   = match.toUpperCase();
+ REPLACE = replace.toUpperCase();
+
+ Match   = titleCase(match);
+ Replace = titleCase(replace);
+  
+ text    = text.replaceAll(match,replace);
+ text    = text.replaceAll(MATCH,REPLACE);
+ text    = text.replaceAll(Match,Replace);
+ 
+ return text;
+
+}
+
+
 //function format_augmented_words(t){
 function format_augmented_words(t,style){
   // Step 1: Protect sequences that look like HTML entities
@@ -155,8 +178,7 @@ function format_augmented_words(t,style){
   // that won't match coloring
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
-  t=t.replace(/πħ/gi,'th');
-  t=t.replace(/ŝħ/gi,'sh');
+  t=t.replace(/πħ/gi,'th'); t=t.replace(/ŝħ/gi,'sh');
   t=t.replace(/ĉħ/gi,'ch');
   t=t.replace(/þħ/gi,'ph');
   //funky eye sound
@@ -164,6 +186,19 @@ function format_augmented_words(t,style){
   //ing is treated as lexical/trigraph
   t=t.replace(/iñg0/gi,'ing');
   //complex vowels
+  t=caseReplace(t,"ār", 'ař');
+  t=caseReplace(t,"ëw(0)*", 'eẇ');
+  t=caseReplace(t,"ør", 'oř');
+  t=caseReplace(t,"õw(0)*",'oẇ');
+  t=caseReplace(t,"σì",'oi');
+  t=caseReplace(t,"σy",'oy');
+  t=caseReplace(t,"õù",'ou');
+  t=caseReplace(t,"âì",'ai');
+  t=caseReplace(t,"êè",'ee');
+  t=caseReplace(t,"êà",'ea');
+  t=caseReplace(t,"öò",'oo');
+  t=caseReplace(t,"åw(0)*",'aẇ');
+ //
   t=t.replace(/ār/gi, 'ař');
   t=t.replace(/ëw(0)*/gi, 'eẇ');
   t=t.replace(/ør/gi, 'oř');
@@ -179,6 +214,7 @@ function format_augmented_words(t,style){
   //tag silent letters <x>
   //vowels and h
   t=t.replace(/τħ/gi,'<vc>th</vc>');
+  t=caseReplace(t,'τħ','<vc>th</vc>');
   t=t.replace(/èŕ/gi,'eř');
   t=t.replace(/[ħàèìòù]/gi, '<x>$&</x>');  
   //non doubled silents
