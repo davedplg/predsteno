@@ -154,21 +154,53 @@ function titleCase(word){
 
 // Runs title, upper and lowercase replacements
 function caseReplace(text, match,replace){
- 
- MATCH   = match.toUpperCase();
+
+ match_Re   = new RegExp(match,"g");//new
+
+//MATCH   = match.toUpperCase();
+ MATCH_Re  = new RegExp(match.toUpperCase(),"g")
  REPLACE = replace.toUpperCase();
 
- Match   = titleCase(match);
+// Match   = titleCase(match);
+ Match_Re   = new RegExp(titleCase(match),"g");
  Replace = titleCase(replace);
   
- text    = text.replaceAll(match,replace);
- text    = text.replaceAll(MATCH,REPLACE);
- text    = text.replaceAll(Match,Replace);
- 
+// text    = text.replaceAll(match,replace);
+// text    = text.replaceAll(MATCH,REPLACE);
+// text    = text.replaceAll(Match,Replace);
+ text    = text.replace(match_Re,replace);
+ text    = text.replace(MATCH_Re,REPLACE);
+ text    = text.replace(Match_Re,Replace);
+
  return text;
 
 }
+function loopReplace(t){
 
+const obj = { 
+  "πħ":'th', "ŝħ":'sh', "ĉħ":'ch', "þħ":'ph',
+  //funky eye sound
+  "îg0ħ":'iġḩ',
+  //ing is treated as lexical/trigraph
+  "iñg0":'ing',
+  //complex vowels
+  "ār(0)*":'ař', "ëw(0)*":'eẇ', "ør(0)*":'oř', "õw(0)*":'oẇ',
+  "σì":'oi'    , "σy(0)*":'oÿ', "õù":'ou'    , "âì" :'ai'   , 
+  "êè":'ee'    , "êà":'ea'    , "öò":'oo'    , "åw(0)*":'aẇ',
+  "ey":'ey'     , "ãÿ":'aÿ'    , 
+  
+
+
+
+}
+ 
+//Object.keys(obj).forEach(key => console.log(key, obj[key]));
+Object.keys(obj).forEach(key => {
+ t= caseReplace(t,key, obj[key]);
+});
+
+  return t;
+}
 
 //function format_augmented_words(t){
 function format_augmented_words(t,style){
@@ -178,50 +210,18 @@ function format_augmented_words(t,style){
   // that won't match coloring
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
-  t=t.replace(/πħ/gi,'th'); t=t.replace(/ŝħ/gi,'sh');
-  t=t.replace(/ĉħ/gi,'ch');
-  t=t.replace(/þħ/gi,'ph');
-  //funky eye sound
-  t=t.replace(/îg0ħ/gi,'iġḩ');
-  //ing is treated as lexical/trigraph
-  t=t.replace(/iñg0/gi,'ing');
-  //complex vowels
-  t=caseReplace(t,"ār", 'ař');
-  t=caseReplace(t,"ëw(0)*", 'eẇ');
-  t=caseReplace(t,"ør", 'oř');
-  t=caseReplace(t,"õw(0)*",'oẇ');
-  t=caseReplace(t,"σì",'oi');
-  t=caseReplace(t,"σy",'oy');
-  t=caseReplace(t,"õù",'ou');
-  t=caseReplace(t,"âì",'ai');
-  t=caseReplace(t,"êè",'ee');
-  t=caseReplace(t,"êà",'ea');
-  t=caseReplace(t,"öò",'oo');
-  t=caseReplace(t,"åw(0)*",'aẇ');
- //
-  t=t.replace(/ār/gi, 'ař');
-  t=t.replace(/ëw(0)*/gi, 'eẇ');
-  t=t.replace(/ør/gi, 'oř');
-  t=t.replace(/õw(0)*/gi,'oẇ');
-  t=t.replace(/σì/gi,'oi');
-  t=t.replace(/σy/gi,'oy');
-  t=t.replace(/õù/gi,'ou');
-  t=t.replace(/âì/gi,'ai');
-  t=t.replace(/êè/gi,'ee');
-  t=t.replace(/êà/gi,'ea');
-  t=t.replace(/öò/gi,'oo');
-  t=t.replace(/åw(0)*/gi,'aẇ');
-  //tag silent letters <x>
-  //vowels and h
-  t=t.replace(/τħ/gi,'<vc>th</vc>');
+  t=loopReplace(t);
+
+// t=t.replace(/τħ/gi,'<vc>th</vc>');
   t=caseReplace(t,'τħ','<vc>th</vc>');
-  t=t.replace(/èŕ/gi,'eř');
-  t=t.replace(/[ħàèìòù]/gi, '<x>$&</x>');  
+//  t=t.replace(/èŕ/gi,'eř');
+  t=caseReplace(t,'èŕ','eř');
+  t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
   //non doubled silents
   t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
 //  t=t.replace(/([a-zA-Z])(0)(?!\1)/gi, '<x>$1</x>');  
   //tag vowels <v>
-  t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūŷẏýġḩřẇ]+/gi,'<v>$&</v>');
+  t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
 //t=t.replace(/τħ/gi,'<vc>th</vc>');
@@ -231,10 +231,11 @@ function format_augmented_words(t,style){
   t=t.replace(/Ñ/g,'N');
   //tag voiced consonants <vc>
   t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
-  t=t.replace(/ř/g,'r');
-  t=t.replace(/ẇ/g,'w');
-  t=t.replace(/ġ/g,'g');
-  t=t.replace(/ḩ/g,'h');
+  t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
+  t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
+  t=t.replace(/ẇ/g,'w');  t=t.replace(/Ẇ/g,'W');
+  t=t.replace(/ġ/g,'g');  t=t.replace(/Ġ/g,'G');
+  t=t.replace(/ḩ/g,'h');  t=t.replace(/Ḩ/g,'H');
   //merge similar tags for debugging clarity 
   t=t.replace(/<\/v><v>|<\/x><x>|<\/vc><vc>/gi,'');
   //style="color"
@@ -243,12 +244,12 @@ function format_augmented_words(t,style){
   if(!style.includes('color')) {
   t=t.replace(/\<(\/)*(v|vc|x)\>/g,"")
   } else {
-  t=t.replace(/à/g,"a");
-  t=t.replace(/è/g,"e");
-  t=t.replace(/ì/g,"i");
-  t=t.replace(/ò/g,"o");
-  t=t.replace(/ù/g,"u");
-  t=t.replace(/ħ/g,"h");
+  t=t.replace(/à/g,"a");t=t.replace(/À/g,"A");
+  t=t.replace(/è/g,"e");t=t.replace(/È/g,"E");
+  t=t.replace(/ì/g,"i");t=t.replace(/Ì/g,"I");
+  t=t.replace(/ò/g,"o");t=t.replace(/Ò/g,"O");
+  t=t.replace(/ù/g,"u");t=t.replace(/Ù/g,"U");
+  t=t.replace(/ħ/g,"h");t=t.replace(/Ħ/g,"H");
   }
   
  if(!style.includes("marks")) t=removeDiacritics(t);

@@ -281,7 +281,7 @@ function parseCaseMarking(text) {
     }
   }
   let t=text;
-  let uCâs=/⟐\s*⟐\s*([\p{L}][\p{L}]*)/gu
+  let uCâs=/⟐\s*⟐\s*([\p{L}][\p{L}0]*)/gu
   let tCâs=/⟐\s*([\p{L}])([\p{L}]*)/gu
   
   t = t.replace(uCâs, (_,FRODO) => FRODO.toUpperCase()) ;
