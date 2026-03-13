@@ -18,25 +18,23 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 // export \
  const primeMap = {
     // Left:  primes
-    'a': 11,          //abc 
-    's':  3,          //def
-    'd':  5,          //ghi
-    'f': 23,          //mon
-    // Left: squared key doubles middle row keys 
-    'c': 19,
+    's': 11,          //def
+    'd':  3,          //ghi
+    'f':  5,          //mon
+    'g': 23,          //prz 
+    'v': 19,          //ab
 
     // Right: doubled primes
-    ';': 22,         //def
-    'l':  6,         //ghi
-    'k': 10,         //mon
-    'j': 46,         //pqrs
-    // right: squared key doubles middle row keys
-     'm': 38,
+    'l': 22,         //def
+    'k':  6,         //ghi
+    'j': 10,         //mon
+    'h': 46,         //prz
+     'n': 38,        //ab 
     // other functions
-     'q':  7,
-     'w': 17, 	
-     't': 59,
-     'y': 61,
+ //    'q':  7,
+ //    'w': 17, 	
+ //    't': 59,
+ //    'y': 61,
      'backspace': 97,
      'enter': 71,
   //honorary thumb rejects word options for reserves
@@ -65,17 +63,17 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
     23: '6',   
     19: '1',   
 
- [23  *  11]       : '8', 
- [23  *   3]       : '7', 
- [23  *   5]       : '4', 
+ [19  *  11]       : '8', 
+ [19  *   3]       : '7', 
+ [19  *   5]       : '4', 
 
  [  3  *   11]       : '91', 
  [  3  *    5]       : '92', 
 
- [ 11  * 19]        : '96', 
- [ 19  *  3]        : '94', 
+ [ 11  * 23]        : '96', 
+ [ 23  *  3]        : '94', 
  [ 11  *  5]        : '93', 
- [  5  * 19]        : '97', 
+ [  5  * 23]        : '97', 
 
 //comma, stop, delete
 
@@ -86,8 +84,8 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //73:'95',   //missed
 
 
-    7: '96',  // sdf upper-case-marker
-    17: '97', //  asd title-case-marker
+//  7: '96',  // sdf upper-case-marker
+//  17: '97', //  asd title-case-marker
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
@@ -109,7 +107,7 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
-  '96': ' ⟑ ' ,
+  '96': ' ',
   '97': ' ⟐ ' ,
 };
 

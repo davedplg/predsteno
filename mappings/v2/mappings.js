@@ -19,31 +19,31 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'c': 19,    //abc  1+9 = 10; 1+0=1
-    'x': 13,    //def  1+3 = 4 
-    'z': 7,     //ghi  7   = 7
-    'shift': 17,    //jkl  1+7 = 8 
-    'a': 11,            //mno  1+1 = 2
-    's': 3,             //pqrs 3   = 3 
-    'd': 5,             //tuv  5   = 5
-    'f': 23,           //wxyz  2x3 = 6 
+    'v': 19,    //abc  1+9 = 10; 1+0=1
+    'c': 13,    //def  1+3 = 4 
+    'x': 7,     //ghi  7   = 7
+    'z': 17,    //jkl  1+7 = 8 
+    's': 11,            //mno  1+1 = 2
+    'd': 3,             //pqrs 3   = 3 
+    'f': 5,             //tuv  5   = 5
+    'g': 23,           //wxyz  2x3 = 6 
     // Left: squared key doubles middle row keys 
-    'g': 29,
+  //'a': 29,
 
     // Right: doubled primes
-    'm': 38,  //abc 
-    ',': 26,  //def
-    '.': 14,  //ghi
-    '/': 34,  //jkl 
-    ';': 22,
-    'l': 6,
-    'k': 10,
-    'j': 46,
+    'n': 38,  //abc 
+    'm': 26,  //def
+    ',': 14,  //ghi
+    '.': 34,  //jkl 
+    'l': 22,
+    'k': 6,
+    'j': 10,
+    'h': 46,
     // right: squared key doubles middle row keys
-     'h': 58,
+   //';': 58,
     
-     't': 59,
-     'y': 61,
+//   't': 59,
+//   'y': 61,
      'backspace': 97,
      'enter': 71,
   //honorary thumb rejects word options for reserves
@@ -81,10 +81,10 @@ const productMap = {
  [  3  *   11]       : '91', 
  [  3  *    5]       : '92', 
 
- [ 11  * 19]        : '96', 
- [ 19  *  3]        : '94', 
+ [ 11  * 23]        : '96', 
+ [ 23  *  3]        : '94', 
  [ 11  *  5]        : '93', 
- [  5  * 19]        : '97', 
+ [  5  * 23]        : '97', 
 
 
 
@@ -119,7 +119,7 @@ const NON_ALPHA_CHORDS = {
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
-  '96': ' ⟑ ' ,
+  '96': ' ' ,
   '97': ' ⟐ ' ,
 };
 

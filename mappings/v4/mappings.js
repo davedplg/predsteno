@@ -18,31 +18,33 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'q': 19,  'c': 19,  //abc  1+9 = 10; 1+0=1
-    'w': 13,  'x': 13,  //def  1+3 = 4 
-    'e': 7,   'z':  7,  //ghi  7   = 7
-    'r': 17,  'shift': 17,  //jkl  1+7 = 8 
-    'a': 11,            //mno  1+1 = 2
-    's': 3,             //pqrs 3   = 3 
-    'd': 5,             //tuv  5   = 5
-    'f': 23,           //wxyz  2x3 = 6 
+    'w': 19,  'v': 19,  //abc  1+9 = 10; 1+0=1
+    'e': 13,  'c': 13,  //def  1+3 = 4 
+    'r': 7,   'x':  7,  //ghi  7   = 7
+    't': 17,  'z': 17,  //jkl  1+7 = 8 
+    's': 11,            //mno  1+1 = 2
+    'd': 3,             //pqrs 3   = 3 
+    'f': 5,             //tuv  5   = 5
+    'g': 23,           //wxyz  2x3 = 6 
     // Left: squared key doubles middle row keys 
-    'g': 29,
+    'a': 29,
 
     // Right: doubled primes
-    'p': 38,  'm':38, //abc 
-    'o': 26, ',':26, //def
-    'i': 14, '.':14, //ghi
-    'u': 34, '/':34, //jkl 
-    ';': 22,
-    'l': 6,
-    'k': 10,
-    'j': 46,
+    'o': 38,  'n':38, //abc 
+    'i': 26, 'm':26, //def
+    'u': 14, ',':14, //ghi
+    'y': 34, '.':34, //jkl 
+    'l': 22,
+    'k': 6,
+    'j': 10,
+    'h': 46,
     // right: squared key doubles middle row keys
-     'h': 58,
+     ';': 58,
     
-     't': 59,
-     'y': 61,
+     'q': 118,
+//    'z': 61,
+     'p': 61,
+//   '.': 61,
      'backspace': 97,
      'enter':  71,
   //honorary thumb rejects word options for reserves
@@ -53,7 +55,7 @@ const primeMap = {
     ' ' : 62,       //spacebar1
     'control': 86,  //spacebar3
     'b': 86,        //spacebar3
-    'n': 29,        //spacebar3
+//  'n': 29,        //spacebar3
 
 };
 
@@ -76,6 +78,7 @@ const productMap = {
     17: '8',  // s or l
     19: '1',  // d or k
     23: '6',  // c or m
+    29: '9',  // c or m
 
  [19  *  19]       : '11',
  [19  *  11]       : '12',
@@ -132,15 +135,8 @@ const productMap = {
  [29  *  19]      : '11',
 
  // period, comma, space, enter, delete, case toggle 
- [ 23  *  5 *  3 ]       : '91', 
- [ 23  *  5 *  11]       : '92', 
- [ 23  * 3  *  11]       : '96', 
- [  5 *  3  *  11]       : '94', 
- [ 29  * 3  *   5]       : '93', 
- [ 23  *  5 *  29]       : '97', 
- [ 11  * 13 *   7]       : '97', 
- [ 29 * 29 ]             : '97', 
-
+  
+ [ 29 ]              : '99', 
 
  //comma, stop, delete
 
@@ -172,8 +168,18 @@ const NON_ALPHA_CHORDS = {
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
-  '96': ' ⟑ ' ,
   '97': ' ⟐ ' ,
+
+  '99'  : 'D' ,
+  '9999'  : '\'' ,
+  '599' : ' ⟐ ' ,
+  '995' : ' ⟐ ' ,
+  '299' : '+.  ' ,
+  '992' : '+.  ' ,
+  '993' : '+,  ' ,
+  '399' : '+,  ' ,
+  '996' : '\n' ,
+  '699' : '\n' ,
 };
 
 

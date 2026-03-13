@@ -46,18 +46,19 @@ const validKeys = new Set(Object.keys(primeMap));
 
 //to select from hyphenated reserve words on 2nd pass
 const keyMap2ndPass = {
-  'u': 7,
-  'i': 8,
-  'o': 9,
-  'p': 10,
-  'h': 11,
+  'y': 7,
+  'u': 8,
+  'i': 9,
+  'o': 10,
+  'a': 11,
+  ';': 11,
   'b': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
   ' ': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
-  'j': 3,
-  'k': 4,
+  'h': 3,
+  'j': 4,
   'alt': 2,
-  'l': 5,
-  ';': 6
+  'k': 5,
+  'l': 6
 };
 const optionKeys = Object.keys(keyMap2ndPass);
 
@@ -96,7 +97,8 @@ function calcPrimeProducts() {
     // p is prime
     const p = primeMap[key]; 
     if (p % 2 === 0 ) {
-      if(p > 58){     
+//    if(p > 58){     
+      if(p > 61){     
       //thumb product 
       tp *= p / 2  
       } else {
@@ -347,7 +349,8 @@ function nonAlphabetic() {
  
   let special = NON_ALPHA_CHORDS[chord];
     // may fall over with n > 8 in future variants
-  if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) 
+//if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) 
+  if (special  && 38 > lProduct > rProduct || chord?.match('9') ) 
   {
     //  delete or special charac.
     if (special !== 'D')  return addSpecialChar(special); 
