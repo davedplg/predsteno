@@ -475,45 +475,67 @@ function caps2underlineLcase(str) {
  * @returns {void}
  */
 function processBiChord() {
+    ({ lp: lProduct, 
+      rp: rProduct, 
+      tp: thumbProduct } = calcPrimeProducts());
+   
+     ( { ldigits: left, 
+          rdigits: right } = mapChordToDigits(lProduct, rProduct));
 
-({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
-  ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
-  chord         = left+right;     
-  thumbChord    = productMap[thumbProduct] || '';
+     chord = left + right;     
+     thumbChord = productMap[thumbProduct] || '';
 
-  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
- 
-  setMd(removeCursor(md()));
- 
-  if (nonAlphabetic()){
-    presdKeys.clear();   
-    renderMarkdown();
-    // paragraph triggers 2nd parse
-    if (mdMatch(/\n\n\u275A$/))  {
-    reParseParagraph();                         
+    updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
+    setMd(removeCursor(md()));
+    // Handle different scenarios
+    whenInputNonAlpha();
+    whenInputWordFrag(chord, frag, left, right);
+
+    let append='';
+    whenInputIsWordOptionSelection(thumbChord);
+    underlineOptionsToCurrentFragLength(frag);
+}
+
+// Function to handle non-alphabetic cases
+function whenInputNonAlpha() {
+    if (nonAlphabetic()) {
+        presdKeys.clear();   
+        renderMarkdown();
+        if (mdMatch(/\n\n\u275A$/)) {
+            reParseParagraph();                         
+        }
+        return true; // Early return for alignment
     }
-  return true;
-  }
-  
-  if (chord) {
-  //appends chord and/or rejects ambig chord
-    if(!(frag=appendChord_recursive(frag,left,right))){
-  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord - even after odd?');
-        } 
-  } else console.warn('No valid chord generated, skipping appendChord');
- 
-  let append='';
- 
- 
-if (thumbChord) {
-  firstParse();
-  presdKeys.clear();
-  return;  // ← "We're done here. Word committed. Move on."
+    return false; // Optional: indicates normal flow continues
 }
-  let capsOpts =underlineFirstNLtrs(frag,caps);   
-  tidyWordOptions(capsOpts);
-  presdKeys.clear();
+
+// Function to process the input word fragment
+function whenInputWordFrag(chord, frg, lft, rt) {
+    if (chord) {
+      if(!(frag=appendChord_recursive(frg,lft,rt))){
+            updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambiguous chord - even after odd?');
+        }
+    } else {
+        console.warn('No valid chord generated, skipping appendChord');
+    }
 }
+
+// Function to handle word option selection
+function whenInputIsWordOptionSelection(thc) {
+    if (thc) {
+        firstParse();
+        presdKeys.clear();
+        return; // "We're done here. Word committed. Move on."
+    }
+}
+
+// Function to underline options based on current fragment length
+function underlineOptionsToCurrentFragLength(frag) {
+    const capsOpts = underlineFirstNLtrs(frag, caps);   
+    tidyWordOptions(capsOpts);
+    presdKeys.clear();
+}
+
   function evenString(frag){String(frag).length % 2 == 0?true:false}
 
 //function setWordOptions(frag){
