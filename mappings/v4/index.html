@@ -11,9 +11,16 @@
    <summary style="font-size:130%">Menu (Enter to Start)</summary>
    <details>
      <summary>file</summary>
-     <a id="md_download" href='#' onclick="exportMD();">SAVE</a> 
-     <a id="TO_md_download" href='#' onclick="exportHTML();" hidden>md</a>
-     <a id="html_download" href='#' onclick="exportHTML();" hidden>md</a>
+      <div class="file-controls" style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+        <button id="btn-save-as">Save as…</button>
+        <button id="btn-load">Load Markdown…</button>
+        <button id="btn-clear">Clear</button>
+  
+        <!-- Optional fallback quick-save for very old browsers -->
+        <a id="legacy-download" href="#" style="font-size: 0.9em; color: #666; align-self: center;" hidden>
+          Quick save (old method)
+        </a>
+     </div>
    </details>
    <details>
      <summary>instructions</summary>
@@ -86,7 +93,6 @@
       <td> Thumbs: <span id="debugThumbs">-</span></td>
     </tr>
   </table>
-  <!-- </div> -->
 
  </details>
    <details open>
@@ -138,8 +144,8 @@
       <tr class="strong_digit">
         <td><key>A</key></td>
         <td> &rarr;</td>
-        <td>backspace</td>
-        <td>backspace</td>
+        <td>bkspace</td>
+        <td>bkspace</td>
         <td> &larr;</td>
         <td><key>:</key></td>
       </tr>
@@ -174,14 +180,23 @@
         <td><kiy>L5</kiy>➕<key>:</key></td>
       </tr>
 
-     
-      <tr class="strong_digit">
+       <tr class="strong_digit">
         <td><key>A</key>➕<kiy>R6</kiy></td>
         <td> &rarr;</td>
-        <td>periodenter</td>
-        <td>periodenter</td>
+        <td>enter</td>
+        <td>enter</td>
         <td> &larr;</td>
         <td><kiy>L6</kiy>➕<key>:</key></td>
+      </tr>
+
+    
+      <tr class="strong_digit">
+        <td><key>enter</key></td>
+        <td> &rarr;</td>
+        <td>enter</td>
+        <td>backspace</td>
+        <td> &larr;</td>
+        <td><key>backspace</key></td>
       </tr>
 
   </table>

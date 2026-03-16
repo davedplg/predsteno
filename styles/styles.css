@@ -63,6 +63,14 @@ textarea#output {
   max-width: 800px; /* Prevent it from becoming too wide */
 }
 
+button {
+
+  padding: 6px;
+  border: 2px solid #ccc;
+  background-color: #c9c9f9;
+  font-size: 1.5rem; /* Match #textArea for consistency */
+}
+
 h5 {
   font-family: 'Courier New', Courier, monospace;
   font-size: 130%; /* Match table font-size */

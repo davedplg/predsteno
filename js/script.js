@@ -598,6 +598,15 @@ function on2ndPass(key){
 
 document.addEventListener('keydown', (event) => {
  const key = event.key.toLowerCase();
+
+ const active = document.activeElement;
+ if (active.tagName === 'INPUT' ||
+//   active.tagName === 'TEXTAREA' ||
+     active.isContentEditable ||
+     active.closest('dialog')) {
+   return;   // ← browser handles the key normally
+ }
+
  if (mdMatch(spanRegEx)) {
    event.preventDefault();
    removeWordOptions();

@@ -361,3 +361,157 @@ async function exportHTML() {
 
   setTimeout(() => downloadingHTML = false, 1000);  // ← 1s cooldown
 }
+
+
+// ───────────────────────────────────────────────
+// Simple modal helper (using native <dialog> when possible)
+function showSimpleModal(title, innerHTML, onConfirm) {
+  const dialog = document.createElement('dialog');
+  dialog.innerHTML = `
+    <h4 style="margin-top:0;">${title}</h4>
+    ${innerHTML}
+    <div style="margin-top:1.2em; text-align:right;">
+      <button type="button" id="modal-cancel">Cancel</button>
+      <button type="button" id="modal-confirm" style="margin-left:0.8em;">OK</button>
+    </div>
+  `;
+  document.body.appendChild(dialog);
+
+  dialog.querySelector('#modal-confirm').onclick = () => {
+    onConfirm(dialog);
+    dialog.close();
+  };
+  dialog.querySelector('#modal-cancel').onclick = () => dialog.close();
+
+  dialog.addEventListener('close', () => dialog.remove());
+  dialog.showModal();
+// ← ADD THIS (runs after the modal opens)
+  requestAnimationFrame(() => {
+    const fnameInput = dialog.querySelector('#save-fname');
+    if (fnameInput) {
+      fnameInput.focus();
+      fnameInput.select();   // ← everything highlighted, ready to overwrite
+    }
+  });
+}
+
+// ───────────────────────────────────────────────
+// Save as… dialog + logic
+async function handleSaveAs() {
+  const now = new Date().toISOString().slice(0,16).replace(/[:T-]/g, '');
+  const firstLine = (md() || '').split('\n')[0]
+    .replace(/^\s*#+\s*|\s*[-*_]+\s*$/g, '')
+    .trim()
+    .slice(0, 35) || 'chorded-notes';
+  
+  const suggestedName = `${firstLine || 'notes'}-${now}`;
+
+  const content = `
+    <label style="display:block; margin:0.8em 0;">
+      Filename:
+      <input type="text" id="save-fname" value="${suggestedName}" style="width:100%; padding:0.4em; margin-top:0.3em;">
+    </label>
+    
+    <label style="display:block; margin:0.8em 0;">
+      Format:
+      <select id="save-format" style="width:100%; padding:0.4em;">
+        <option value="md">Markdown (with phonetics / diacritics)</option>
+        <option value="md-clean">Markdown (clean / ASCII only)</option>
+        <option value="html">HTML (rendered + styles)</option>
+      </select>
+    </label>
+  `;
+
+  showSimpleModal("Save As…", content, async (dlg) => {
+    const fname = (dlg.querySelector('#save-fname').value || 'notes').trim();
+    const format = dlg.querySelector('#save-format').value;
+
+    let finalName, finalContent, mimeType;
+
+    if (format === 'md') {
+      finalName = fname + '.md';
+      finalContent = md();
+      mimeType = 'text/markdown; charset=utf-8';
+    } else if (format === 'md-clean') {
+      finalName = fname + '.md';
+      finalContent = removeDiacritics(md());
+      mimeType = 'text/markdown; charset=utf-8';
+    } else if (format === 'html') {
+      finalName = fname + '.html';
+      finalContent = await makeHTML();
+      mimeType = 'text/html; charset=utf-8';
+    }
+
+    // Try modern File System Access API first
+    if ('showSaveFilePicker' in window) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: finalName,
+          types: [{
+            description: format === 'html' ? 'HTML Files' : 'Markdown Files',
+            accept: format === 'html' 
+              ? { 'text/html': ['.html'] } 
+              : { 'text/markdown': ['.md'], 'text/plain': ['.txt'] }
+          }]
+        });
+
+        const writable = await handle.createWritable();
+        await writable.write(finalContent);
+        await writable.close();
+        return; // success — no need for fallback
+      } catch (err) {
+        if (err.name === 'AbortError') return; // user canceled
+        console.warn('Native save failed, falling back →', err);
+      }
+    }
+
+    // Fallback: old-school download
+    const blob = new Blob(['\uFEFF' + finalContent], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = finalName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+
+}
+
+// ───────────────────────────────────────────────
+// Load Markdown file
+function handleLoadMarkdown() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.md,.markdown,.txt';
+  input.onchange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      setMd(text);
+      renderMarkdown();
+      // Optional: show brief feedback
+      // alert(`Loaded ${file.name}`);
+    } catch (err) {
+      console.error('Load failed:', err);
+      alert('Could not read the file.');
+    }
+  };
+  input.click();
+}
+
+// ───────────────────────────────────────────────
+// Wire everything up (run once on page load)
+function initFileControls() {
+  document.getElementById('btn-save-as')?.addEventListener('click', handleSaveAs);
+  document.getElementById('btn-load')?.addEventListener('click', handleLoadMarkdown);
+  document.getElementById('btn-clear')?.addEventListener('click', () => {
+      setMd(' ');
+      renderMarkdown();
+    });
+ }
+
+window.addEventListener('DOMContentLoaded', initFileControls);

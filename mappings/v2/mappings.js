@@ -86,6 +86,10 @@ const productMap = {
  [ 11  *  5]        : '93', 
  [  5  * 23]        : '97', 
 
+  /* some cheeky spacebars*/
+ [ 13  * 19 *  7]        : '62', 
+ [  7  * 17 * 13]        : '74', 
+ [ 13  * 19 * 17]        : '86', 
 
 
 //comma, stop, delete
