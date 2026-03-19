@@ -18,32 +18,32 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 // export \
  const primeMap = {
     // Left:  primes
-    's': 11,          //def
-    'd':  3,          //ghi
-    'f':  5,          //mon
-    'g': 23,          //prz 
-    'v': 19,          //ab
+    'q': 11,          //def
+    'w':  3,          //ghi
+    'e':  5,          //mon
+    'r': 23,          //prz 
+    'f': 17,          //ab
+   
+    't': 29,  // left: function key
 
     // Right: doubled primes
-    'l': 22,         //def
-    'k':  6,         //ghi
-    'j': 10,         //mon
-    'h': 46,         //prz
-     'n': 38,        //ab 
-    // other functions
- //    'q':  7,
- //    'w': 17, 	
- //    't': 59,
- //    'y': 61,
+    'u': 34,         //wys
+    'i': 14,         //tuv
+    'o': 26,         //jkl
+    'p': 38,         //ab
+     'j': 46,        //prz 
+        
+    'y': 58,  // right: function key
+    
      'backspace': 97,
      'enter': 71,
-  //honorary thumb rejects word options for reserves
-    '\\': 146,
-//   'meta': 146, for full-sized keyboards
-    'alt': 74,      //spacebar2
-    ' '  : 62,      //spacebar1
-    'control': 86,  //spacebar3
-    'b': 86,        //spacebar3
+
+    ' ': 86, //reserves
+    'c': 106,    //spacebar4
+    'n': 94,     //spacebar3
+    'v': 74,     //spacebar2
+    'b' : 62,    //spacebar1
+
 };
 
 
@@ -62,41 +62,46 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
      5: '5',   
     23: '6',   
     19: '1',   
+    13: '4',   
+     7: '7',   
+    17: '8',   
 
- [23  *  11]       : '8', 
- [23  *   3]       : '7', 
- [23  *   5]       : '4', 
+ [23  *  11]       : '1', 
+ [23  *   3]       : '4', 
+ [23  *   5]       : '7', 
 
- [  3  *   11]       : '91', 
- [  3  *    5]       : '92', 
+ [17  *   7]       : '5', 
+ [17  *  13]       : '3', 
+ [17  *  19]       : '2', 
 
- [ 11  * 19]        : '96', 
- [ 19  *  3]        : '94', 
- [ 11  *  5]        : '93', 
- [  5  * 19]        : '97', 
+ [ 29  * 11]        : '97', 
+ [ 29  *  3]        : '93', 
+ [ 29  *  5]        : '94', 
+// [ 29  * 23]        : '96', 
+// [ 29  * 17]        : '96', 
+ [ 29  *  7]        : '94', 
+ [ 29  * 13]        : '93', 
+ [ 29  * 19]        : '97', 
 
-//comma, stop, delete
 
-  59:'91',   //,
-  61:'92',   //.
+
+ //comma, stop, delete
+
+  59                : '91',   //,
+ [ 29]              : '91', 
+  61                : '92',   //.
+ [ 29  * 17]        : '92', 
+ [ 29  * 23]        : '92', 
   97:'93',   //delete
   71:'94',   //enter
-//73:'95',   //missed
 
-
-//  7: '96',  // sdf upper-case-marker
-//  17: '97', //  asd title-case-marker
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
-    [43 * 31]: 'wd4', //  /        selct 4th word
-    [43 * 37]: 'wd4', //  /        selct 4th word
-    [31 * 37]: 'wd3', //  <space>/ select 3rd word
+    53       : 'wd4', //  /        selct 4th word
+    47       : 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
-    73       : 'missed', // this is now letter b
- // [37 * 41]: '6', // actual independent space
-
 
 };
 

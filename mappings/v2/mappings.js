@@ -19,45 +19,39 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'v': 19,    //abc  1+9 = 10; 1+0=1
-    'c': 13,    //def  1+3 = 4 
-    'x': 7,     //ghi  7   = 7
-    'z': 17,    //jkl  1+7 = 8 
-    's': 11,            //mno  1+1 = 2
-    'd': 3,             //pqrs 3   = 3 
-    'f': 5,             //tuv  5   = 5
-    'g': 23,           //wxyz  2x3 = 6 
-    // Left: squared key doubles middle row keys 
-  //'a': 29,
+    'a': 11,            //def  1+1 = 2
+    's': 3,             //ghi  3   = 3 
+    'd': 5,             //mon  5   = 5
+    'f': 23,            //pqrs 2x3 = 6 
+    'q': 19,            //abc  1+9 = 1+0 = 1
+    'w': 13,            //jkl  1+3 = 4
+    'e':  7,            //tuv  7   = 7
+    'r': 17,            //wxyz 1+7 = 8  
+    
+    'g': 29,  // Left: function key
 
     // Right: doubled primes
-    'n': 38,  //abc 
-    'm': 26,  //def
-    ',': 14,  //ghi
-    '.': 34,  //jkl 
-    'l': 22,
-    'k': 6,
-    'j': 10,
-    'h': 46,
-    // right: squared key doubles middle row keys
-   //';': 58,
+    ';': 22,            //def  
+    'l': 6,             //ghi  
+    'k': 10,             //mon  
+    'j': 46,            //pqrs 
+    'u': 34,            //abc 
+    'i': 14,            //jkl
+    'o': 26,            //tuv
+    'p': 38,            //wxyz 
+       
+    'h': 58,  // right: function key
     
-//   't': 59,
-//   'y': 61,
      'backspace': 97,
      'enter': 71,
-  //honorary thumb rejects word options for reserves
-     'meta': 146, 
 
-//  '/': 74,   I think these were candidates for more
-//  '[': 74,   complete full-size keyboards
-    '\\': 146,
-    'alt': 74,      //spacebar2
-    'control': 86,  //spacebar3
-    'b': 86,        //spacebar3
-    ' ' : 62        //spacebar1
+    ' ': 86, //reserves
+    'c': 106,    //spacebar4
+    'n': 94,     //spacebar3
+    'v': 74,     //spacebar2
+    'b' : 62,    //spacebar1
+
 };
-
 
 
 /* key primes and prime products are used to identify the
@@ -78,41 +72,26 @@ const productMap = {
     19: '1',  // d or k
     23: '6',  // c or m
 
- [  3  *   11]       : '91', 
- [  3  *    5]       : '92', 
 
- [ 11  * 23]        : '96', 
- [ 23  *  3]        : '94', 
- [ 11  *  5]        : '93', 
- [  5  * 23]        : '97', 
-
-  /* some cheeky spacebars*/
- [ 13  * 19 *  7]        : '62', 
- [  7  * 17 * 13]        : '74', 
- [ 13  * 19 * 17]        : '86', 
+ [ 11  * 29]        : '97', 
+ [ 29  *  3]        : '93', 
+ [ 29  *  5]        : '94', 
+ [ 29  * 23]        : '92', 
 
 
 //comma, stop, delete
   59:'91',   //,
+  29:'91',   //,
   61:'92',   //.
   97:'93',   //delete
   71:'94',   //enter
-//73:'95',   //missed
-
-
-    [13 *  7 * 17]: '96',  // sdf upper-case-marker
-    [7 * 19 * 13]: '97', //  asd title-case-marker
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
-    [43 * 31]: 'wd4', //  /        selct 4th word
-    [43 * 37]: 'wd4', //  /        selct 4th word
-    [31 * 37]: 'wd3', //  <space>/ select 3rd word
+    53       : 'wd4', //  /        selct 4th word
+    47       : 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
-    73       : 'missed', // this is now letter b
- // [37 * 41]: '6', // actual independent space
-
 
 };
 

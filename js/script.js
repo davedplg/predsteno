@@ -46,19 +46,19 @@ const validKeys = new Set(Object.keys(primeMap));
 
 //to select from hyphenated reserve words on 2nd pass
 const keyMap2ndPass = {
-  'y': 7,
-  'u': 8,
-  'i': 9,
-  'o': 10,
-  'a': 11,
-  ';': 11,
+  'u': 7,
+  'i': 8,
+  'o': 9,
+  'p': 10,
+  'g': 11,
+  'h': 11,
   'b': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
   ' ': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
-  'h': 3,
-  'j': 4,
-  'alt': 2,
-  'k': 5,
-  'l': 6
+  'j': 3,
+  'k': 4,
+  'v': 2,
+  'l': 5,
+  ';': 6
 };
 const optionKeys = Object.keys(keyMap2ndPass);
 
@@ -467,6 +467,46 @@ function caps2underlineLcase(str) {
     return underlineed.toUpperCase();
 }
 
+function processBiChord() {
+
+({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
+  ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
+  chord         = left+right;     
+  thumbChord    = productMap[thumbProduct] || '';
+
+  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
+ 
+  setMd(removeCursor(md()));
+ 
+  if (nonAlphabetic()){
+    presdKeys.clear();   
+    renderMarkdown();
+    // paragraph triggers 2nd parse
+    if (mdMatch(/\n\n\u275A$/))  {
+    reParseParagraph();                         
+    }
+  return true;
+  }
+  
+  if (chord) {
+  //appends chord and/or rejects ambig chord
+    if(!(frag=appendChord_recursive(frag,left,right))){
+  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord - even after odd?');
+        } 
+  } else console.warn('No valid chord generated, skipping appendChord');
+ 
+  let append='';
+ 
+ 
+if (thumbChord) {
+  firstParse();
+  presdKeys.clear();
+  return;  // ← "We're done here. Word committed. Move on."
+}
+  let capsOpts =underlineFirstNLtrs(frag,caps);   
+  tidyWordOptions(capsOpts);
+  presdKeys.clear();
+}
 //handle both hands chords
 /**
  * Processes a chord input by calculating prime products
@@ -474,7 +514,7 @@ function caps2underlineLcase(str) {
  * @param {void}
  * @returns {void}
  */
-function processBiChord() {
+function processBiChord_new() {
     ({ lp: lProduct, 
       rp: rProduct, 
       tp: thumbProduct } = calcPrimeProducts());

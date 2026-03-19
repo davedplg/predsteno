@@ -18,33 +18,29 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    's': 11,            //def  1+1 = 2
-    'd': 3,             //ghi 3   = 3 
-    'f': 5,             //mon  5   = 5
-    'g': 23,           //pqrs  2x3 = 6 
+    'q': 11,            //def  1+1 = 2
+    'w': 3,             //ghi 3   = 3 
+    'e': 5,             //mon  5   = 5
+    'r': 23,           //pqrs  2x3 = 6 
     // Left: squared key doubles middle row keys 
-   // 'a': 29,
+    't': 29,
 
     // Right: doubled primes
-    '.': 34,  //abc 
-    ',': 14,  //jkl
-    'm': 26,  //tuv
-    'n': 38,  //wxyz 
+    'u': 34,  //abc 
+    'i': 14,  //jkl
+    'o': 26,  //tuv
+    'p': 38,  //wxyz 
        // right: squared key doubles middle row keys
-    // ':': 58,
+     'y': 58,
     
-     't': 59,
-     'y': 61,
      'backspace': 97,
      'enter': 71,
-  //honorary thumb rejects word options for reserves
-     'meta': 146, 
 
-    'b': 86,  //spacebar3
-    'control': 86,  //spacebar3
-    'alt': 74,      //spacebar2
-    ' ' : 62,       //spacebar1
-    '\\': 146,
+    ' ': 86, //reserves
+    'c': 106,    //spacebar4
+    'n': 94,     //spacebar3
+    'v': 74,     //spacebar2
+    'b' : 62,    //spacebar1
 };
 
 
@@ -67,49 +63,35 @@ const productMap = {
     19: '1',  // d or k
     23: '6',  // c or m
 
- [23  *  11]       : '1', 
- [23  *   3]       : '4', 
- [23  *   5]       : '7', 
 
- [  3  *   11]       : '91', 
- [  3  *    5]       : '92', 
- [  7  *   17]       : '91', 
- [ 13  *    7]       : '92', 
+ [ 11  * 29]        : '97', 
+ [ 29  *  3]        : '93', 
+ [ 29  *  5]        : '94', 
+// [ 29  * 23]        : '96', 
+// [ 29  * 17]        : '96', 
+ [ 29  *  7]        : '94', 
+ [ 29  * 13]        : '93', 
+ [ 29  * 19]        : '97', 
 
- [ 11  * 23]        : '96', 
- [ 23  *  3]        : '94', 
- [ 11  *  5]        : '93', 
- [  5  * 23]        : '97', 
- [ 19  * 17]        : '96', 
- [ 19  *  7]        : '94', 
- [ 17  * 13]        : '93', 
- [ 13  * 19]        : '97', 
-
-  /* some cheeky spacebars*/
- [ 13  * 19 *  7]        : '62', 
- [  7  * 17 * 13]        : '74', 
- [ 13  * 19 * 17]        : '86', 
 
 
  //comma, stop, delete
 
-  59:'91',   //,
-  61:'92',   //.
+  59                : '91',   //,
+ [ 29]              : '91', 
+  61                : '92',   //.
+ [ 29  * 17]        : '92', 
+ [ 29  * 23]        : '92', 
   97:'93',   //delete
   71:'94',   //enter
-//73:'95',   //missed
 
 
     31       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
-    [43 * 31]: 'wd4', //  /        selct 4th word
-    [43 * 37]: 'wd4', //  /        selct 4th word
-    [31 * 37]: 'wd3', //  <space>/ select 3rd word
+    53       : 'wd4', //  /        selct 4th word
+    47       : 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
-    73       : 'missed', // this is now letter b
-    [37 * 71]: 'wd3',
- // [37 * 41]: '6', // actual independent space
 
 
 };
