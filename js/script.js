@@ -98,7 +98,7 @@ function calcPrimeProducts() {
     const p = primeMap[key]; 
     if (p % 2 === 0 ) {
 //    if(p > 58){     
-      if(p > 61){     
+      if(p > 62){     
       //thumb product 
       tp *= p / 2  
       } else {
@@ -419,7 +419,7 @@ function firstParse() {
           ? reserves[frag].replace(new RegExp(sep1,'g'), sep2)
                           .replace(/\+/g,"")
                           
-       : reserves[frag].replace(/GT/g,"&gt;")
+       : (reserves[frag] || '').replace(/GT/g,"&gt;")
                        .replace(/LT/g,"&lt;")
       ;
       break;

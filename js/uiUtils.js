@@ -236,10 +236,11 @@ function format_augmented_words(t,style){
   t=t.replace(/ẇ/g,'w');  t=t.replace(/Ẇ/g,'W');
   t=t.replace(/ġ/g,'g');  t=t.replace(/Ġ/g,'G');
   t=t.replace(/ḩ/g,'h');  t=t.replace(/Ḩ/g,'H');
+  t=t.replace(/υ/g,'u');  t=t.replace(/Υ/g,'U');
   //merge similar tags for debugging clarity 
   t=t.replace(/<\/v><v>|<\/x><x>|<\/vc><vc>/gi,'');
   //style="color"
-  console.log(style);
+//  console.log(style);
 //if(style!='color') {
   if(!style.includes('color')) {
   t=t.replace(/\<(\/)*(v|vc|x)\>/g,"")

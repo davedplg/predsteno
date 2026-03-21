@@ -133,7 +133,7 @@
 ,"take":{"a":"tâkè","f":"124"}
 ,"own":{"a":"ôw0n","f":"125"}
 ,"too":{"a":"töò","f":"126"}
-,"off":{"a":"o#ff","f":"127"}
+,"off":{"a":"off","f":"127"}
 ,"here":{"a":"hėŕè","f":"128"}
 ,"come":{"a":"cőmè","f":"129"}
 ,"both":{"a":"bôπħ","f":"130"}
@@ -744,7 +744,6 @@
 ,"model":{"a":"modél","f":"717"}
 ,"chance":{"a":"ĉħançè","f":"718"}
 ,"boy":{"a":"bσy0","f":"719"}
-,"boylike":{"a":"bσy0lîkè","f":"719"}
 ,"agreement":{"a":"ágrêèmént","f":"720"}
 ,"received":{"a":"rėçêìvèd","f":"721"}
 ,"stood":{"a":"stōòd","f":"722"}
@@ -2146,7 +2145,7 @@
 ,"teeth":{"a":"têèπħ","f":"2082"}
 ,"explanation":{"a":"explánâţìòn","f":"2083"}
 ,"iron":{"a":"îŕòn","f":"2084"}
-,"falling":{"a":"fālliñg0","f":"2085"}
+,"falling":{"a":"fålliñg0","f":"2085"}
 ,"thick":{"a":"πħick0","f":"2086"}
 ,"kill":{"a":"kill","f":"2087"}
 ,"governments":{"a":"gővèŕn0ménts","f":"2088"}
@@ -2490,7 +2489,7 @@
 ,"glad":{"a":"glad","f":"2418"}
 ,"gladness":{"a":"gladness","f":"2418"}
 ,"arranged":{"a":"árrânĝèd","f":"2419"}
-,"fallen":{"a":"fāllén","f":"2420"}
+,"fallen":{"a":"fållén","f":"2420"}
 ,"deputy":{"a":"depûtý","f":"2421"}
 ,"agricultural":{"a":"agrículťúrál","f":"2422"}
 ,"artist":{"a":"ār#tist","f":"2423"}
@@ -7182,7 +7181,7 @@
 ,"colonies":{"a":"colónìêś","f":"6988"}
 ,"bucket":{"a":"buck0ėt","f":"6989"}
 ,"associates":{"a":"ássôćïâtès","f":"6990"}
-,"jacques":{"a":"j0àcqùès0","f":"6991"}
+,"jacques":{"a":"jacq0ùès0","f":"6991"}
 ,"bankruptcy":{"a":"bañkruptçý","f":"6992"}
 ,"tubes":{"a":"tübèś","f":"6993"}
 ,"infrastructure":{"a":"infrástrucťùŕè","f":"6994"}
@@ -19769,6 +19768,7 @@
 ,"beanstalk":{"a":"bêànstål0k","f":"20000"}
 ,"blacking":{"a":"black0iñg0","f":"20000"}
 ,"blessedly":{"a":"blessedlý","f":"20000"}
+,"boylike":{"a":"bσy0lîkè","f":"20000"}
 ,"breadcrumbs":{"a":"breàdcrumb0ś","f":"20000"}
 ,"broil":{"a":"brσìl","f":"20000"}
 ,"bulldogs":{"a":"būlldogś","f":"20000"}
@@ -35094,7 +35094,7 @@
 ,"culvert":{"a":"culvèŕt","f":"42855"}
 ,"cranky":{"a":"crañký","f":"42857"}
 ,"moron":{"a":"møron","f":"42859"}
-,"befallen":{"a":"béfāllén","f":"42862"}
+,"befallen":{"a":"béfållén","f":"42862"}
 ,"buoys":{"a":"büòýś","f":"42864"}
 ,"poseidon":{"a":"pósèîdón","f":"42865"}
 ,"excavator":{"a":"excávâtòŕ","f":"42867"}
@@ -36874,7 +36874,7 @@
 ,"sardine":{"a":"sār#dïnè","f":"45778"}
 ,"intrauterine":{"a":"intráûtérinè","f":"45779"}
 ,"sava":{"a":"sāvá","f":"45782"}
-,"snowfall":{"a":"snôw0fāll","f":"45785"}
+,"snowfall":{"a":"snôw0fåll","f":"45785"}
 ,"radley":{"a":"radlêy0","f":"45788"}
 ,"exonerated":{"a":"ėxonérâtėd","f":"45791"}
 ,"exacerbating":{"a":"ėxaçèŕbâtiñg0","f":"45793"}
@@ -45510,7 +45510,7 @@
 ,"enchant":{"a":"enĉħant","f":"68617"}
 ,"legalities":{"a":"lėgalitìêś","f":"68619"}
 ,"prosecutorial":{"a":"prosėcûtørïál","f":"68621"}
-,"snowfalls":{"a":"snôw0fāllś","f":"68624"}
+,"snowfalls":{"a":"snôw0fållś","f":"68624"}
 ,"fungible":{"a":"funĝiblè","f":"68634"}
 ,"quizzing":{"a":"qυizziñg0","f":"68636"}
 ,"zircon":{"a":"zìŕcón","f":"68637"}
@@ -46974,7 +46974,6 @@
 ,"popularizing":{"a":"popûlárîziñg0","f":"73647"}
 ,"scalpels":{"a":"scalpélś","f":"73648"}
 ,"isuzu":{"a":"isüzü","f":"73650"}
-,"ack":{"a":"ack0","f":"73652"}
 ,"catty":{"a":"cattý","f":"73658"}
 ,"hollander":{"a":"hollándèŕ","f":"73659"}
 ,"mauer":{"a":"máυèŕ","f":"73661"}

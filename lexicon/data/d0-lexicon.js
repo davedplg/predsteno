@@ -143,7 +143,7 @@
 ,"take":{"a":"tâkè","f":"124"}
 ,"own":{"a":"ôw0n","f":"125"}
 ,"too":{"a":"töò","f":"126"}
-,"off":{"a":"o#ff","f":"127"}
+,"off":{"a":"off","f":"127"}
 ,"here":{"a":"hėŕè","f":"128"}
 ,"come":{"a":"cőmè","f":"129"}
 ,"both":{"a":"bôπħ","f":"130"}
@@ -7113,7 +7113,7 @@
 ,"colonies":{"a":"colónìêś","f":"6988"}
 ,"bucket":{"a":"buck0ėt","f":"6989"}
 ,"associates":{"a":"ássôćïâtès","f":"6990"}
-,"jacques":{"a":"j0àcqùès0","f":"6991"}
+,"jacques":{"a":"jacq0ùès0","f":"6991"}
 ,"bankruptcy":{"a":"bañkruptçý","f":"6992"}
 ,"tubes":{"a":"tübèś","f":"6993"}
 ,"infrastructure":{"a":"infrástrucťùŕè","f":"6994"}
@@ -46382,7 +46382,6 @@
 ,"popularizing":{"a":"popûlárîziñg0","f":"73647"}
 ,"scalpels":{"a":"scalpélś","f":"73648"}
 ,"isuzu":{"a":"isüzü","f":"73650"}
-,"ack":{"a":"ack0","f":"73652"}
 ,"catty":{"a":"cattý","f":"73658"}
 ,"hollander":{"a":"hollándèŕ","f":"73659"}
 ,"mauer":{"a":"máυèŕ","f":"73661"}
