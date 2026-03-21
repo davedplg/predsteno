@@ -41,7 +41,7 @@ const primeMap = {
     'x': 94,     //spacebar3
     'v': 74,     //spacebar2
     'm': 74,     //spacebar2
-    'b' : 62,    //spacebar1
+    'b' : 106,    //spacebar1
 };
 
 
@@ -87,10 +87,10 @@ const productMap = {
   71:'94',   //enter
 
 
-    31       : 'wd1',  // <space>  selct 1st word
+    53       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
-    53       : 'wd4', //  /        selct 4th word
+//  53       : 'wd4', //  /        selct 4th word
     47       : 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
 

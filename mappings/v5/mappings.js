@@ -7,7 +7,6 @@ const pairwise_reordered_dic = false;
 //These keys will register in the text area as is
 
 // export \
-//const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','/','?','|','<','>']);
 
 const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>',',','.','/','\'']);
 
@@ -45,7 +44,7 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
     'x': 94,     //spacebar3
     'v': 74,     //spacebar2
     'm': 74,     //spacebar2
-    'b' : 62,    //spacebar1
+    'b' : 106,    //spacebar1
 
 };
 
@@ -99,10 +98,10 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
   71:'94',   //enter
 
 
-    31       : 'wd1',  // <space>  selct 1st word
+    53       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
-    53       : 'wd4', //  /        selct 4th word
+//  53       : 'wd4', //  /        selct 4th word
     47       : 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
 
