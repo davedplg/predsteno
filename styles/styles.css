@@ -69,6 +69,7 @@ button {
   border: 2px solid #ccc;
   background-color: #c9c9f9;
   font-size: 1.5rem; /* Match #textArea for consistency */
+  border-radius: 0.5rem;
 }
 
 h5 {

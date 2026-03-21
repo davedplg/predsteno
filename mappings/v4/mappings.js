@@ -7,8 +7,9 @@ const pairwise_reordered_dic = true;
 //These keys will register in the text area as is
 
 //export  \
-const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>']);
+//const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>']);
 
+const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>',',','.','/','\'']);
 
 /* These prime mappings, map the keys to prime numbers, 
  * enter, delete, comma, and period. The right hand keys 
@@ -18,44 +19,41 @@ const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'w': 19,  'v': 19,  //abc  1+9 = 10; 1+0=1
-    'e': 13,  'c': 13,  //def  1+3 = 4 
-    'r': 7,   'x':  7,  //ghi  7   = 7
-    't': 17,  'z': 17,  //jkl  1+7 = 8 
-    's': 11,            //mno  1+1 = 2
-    'd': 3,             //pqrs 3   = 3 
-    'f': 5,             //tuv  5   = 5
-    'g': 23,           //wxyz  2x3 = 6 
+    'q': 19,            //abc  1+9 = 10; 1+0=1
+    'w': 13,            //def  1+3 = 4 
+    'e': 7,             //ghi  7   = 7
+    'r': 17,            //jkl  1+7 = 8 
+    'a': 11,            //mno  1+1 = 2
+    's': 3,             //pqrs 3   = 3 
+    'd': 5,             //tuv  5   = 5
+    'f': 23,           //wxyz  2x3 = 6 
     // Left: squared key doubles middle row keys 
-    'a': 29,
+    'g': 29,
+    't': 59,
 
     // Right: doubled primes
-    'o': 38,  'n':38, //abc 
-    'i': 26, 'm':26, //def
-    'u': 14, ',':14, //ghi
-    'y': 34, '.':34, //jkl 
-    'l': 22,
-    'k': 6,
-    'j': 10,
-    'h': 46,
+    'p': 38,            //abc 
+    'o': 26,            //def
+    'i': 14,            //ghi
+    'u': 34,            //jkl 
+    ';': 22,
+    'l': 6,
+    'k': 10,
+    'j': 46,
     // right: squared key doubles middle row keys
-     ';': 58,
+     'h': 58,
+     'y': 118,
     
-     'q': 118,
-//    'z': 61,
-     'p': 61,
-//   '.': 61,
-     'backspace': 97,
-     'enter':  71,
-  //honorary thumb rejects word options for reserves
-      '\\': 146, 
-//   'meta': 146,  for some full-size keyboards
+    'backspace': 97,
+    'enter':  71,
 
-   'alt': 74,      //spacebar2
-    ' ' : 62,       //spacebar1
-    'control': 86,  //spacebar3
-    'b': 86,        //spacebar3
-//  'n': 29,        //spacebar3
+     ' ': 86,     //reserves
+    'c': 106,    //spacebar4
+    'n': 94,     //spacebar3
+    'x': 94,     //spacebar3
+    'v': 74,     //spacebar2
+    'm': 74,     //spacebar2
+    'b' : 106,    //spacebar1
 
 };
 
@@ -82,6 +80,7 @@ const productMap = {
 
  [19  *  19]       : '11',
  [19  *  11]       : '12',
+ [ 3  *  5  *  23] : '12', //stacked
  [19  *  3 ]       : '13', 
  [19  *  13]       : '14', 
  [19  *  5 ]       : '15', 
@@ -97,32 +96,35 @@ const productMap = {
  [11  *   7]       : '27', 
  [11  *  17]       : '28', 
   
- [3  *  3 ]       : '33', 
- [3  *  13]       : '34', 
- [3  *   5]       : '35', 
- [3  *  23]       : '36', 
- [3  *   7]       : '37', 
- [3  *  17]       : '38', 
+ [3  *  3 ]        : '33', 
+ [3  *  13]        : '34', 
+ [11  *   5  * 23] : '34', //stacked
+ [3  *   5]        : '35', 
+ [3  *  23]        : '36', 
+ [3  *   7]        : '37', 
+ [3  *  17]        : '38', 
 
- [13  *  13]      : '44', 
- [13  *   5]      : '45', 
- [13  *  23]      : '46', 
- [13  *   7]      : '47', 
- [13  *  17]      : '48', 
+ [13  *  13]       : '44', 
+ [13  *   5]       : '45', 
+ [13  *  23]       : '46', 
+ [13  *   7]       : '47', 
+ [13  *  17]       : '48', 
    
- [ 5  *   5]      : '55', 
- [ 5  *  23]      : '56', 
- [ 5  *   7]      : '57', 
- [ 5  *  17]      : '58', 
+ [ 5  *   5]       : '55', 
+ [ 5  *  23]       : '56', 
+ [ 5  *   7]       : '57', 
+ [11  *   3  * 23] : '57', //stacked
+ [ 5  *  17]       : '58', 
     
- [23  *  23]      : '66', 
- [23  *   7]      : '67', 
- [23  *  17]      : '68', 
+ [23  *  23]       : '66', 
+ [23  *   7]       : '67', 
+ [23  *  17]       : '68', 
+ [11  *   3  * 5]  : '68', //stacked
  
- [ 7  *   7]      : '77', 
- [ 7  *  17]      : '78', 
+ [ 7  *   7]       : '77', 
+ [ 7  *  17]       : '78', 
 
- [17  *  17]      : '88',
+ [17  *  17]       : '88',
 
  //single handed doubles. h and g keys mapped to p=29
  [29  *  17]      : '88', 
@@ -134,35 +136,34 @@ const productMap = {
  [29  *  11]      : '22',
  [29  *  19]      : '11',
 
- // period, comma, space, enter, delete, case toggle 
-  
- [ 29 ]              : '99', 
+[ 11  * 59]        : '97', 
+ [ 59  *  3]        : '93', 
+ [ 59  *  5]        : '94', 
+// [ 59  * 23]        : '96', 
+// [ 59  * 17]        : '96', 
+ [ 59  *  7]        : '94', 
+ [ 59  * 13]        : '93', 
+ [ 59  * 19]        : '97', 
 
-  /* some cheeky spacebars*/
- [ 13  * 19 *  7]        : '62', 
- [  7  * 17 * 13]        : '74', 
- [ 13  * 19 * 17]        : '86', 
 
 
  //comma, stop, delete
 
-  59:'91',   //,
-  61:'92',   //.
+  59                : '91',   //,
+  61                : '92',   //.
+ [ 59  * 17]        : '92', 
+ [ 59  * 23]        : '92', 
   97:'93',   //delete
   71:'94',   //enter
-//73:'95',   //missed
 
 
-
-    31       : 'wd1',  // <space>  selct 1st word
+    53       : 'wd1',  // <space>  selct 1st word
     37       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
-    [43 * 31]: 'wd4', //  /        selct 4th word
-    [43 * 37]: 'wd4', //  /        selct 4th word
-    [31 * 37]: 'wd3', //  <space>/ select 3rd word
+//  53       : 'wd4', //  /        selct 4th word
+    47       : 'wd3', //  <space>/ select 3rd word
     41       : 'space', //  \        space character
-    73       : 'missed', // this is now letter /
- // [37 * 41]: '6', // actual independent space
+
 
 
 };

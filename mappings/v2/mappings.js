@@ -7,9 +7,9 @@ const pairwise_reordered_dic = false;
 //These keys will register in the text area as is
 
 //export  \
-const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>']);
-//const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','/','?','|','<','>']);
+//const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>']);
 
+const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>',',','.','/','\'']);
 
 /* These prime mappings, map the keys to prime numbers, 
  * enter, delete, comma, and period. The right hand keys 
@@ -45,10 +45,12 @@ const primeMap = {
      'backspace': 97,
      'enter': 71,
 
-    ' ': 86, //reserves
+    ' ': 86,     //reserves
     'c': 106,    //spacebar4
     'n': 94,     //spacebar3
+    'x': 94,     //spacebar3
     'v': 74,     //spacebar2
+    'm': 74,     //spacebar2
     'b' : 62,    //spacebar1
 
 };
