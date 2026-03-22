@@ -662,7 +662,8 @@ document.addEventListener('keydown', (event) => {
  const key = event.key.toLowerCase();
 
  const active = document.activeElement;
- if (active.tagName === 'INPUT' ||
+ if ((active.tagName === 'INPUT' && 
+   !active.classList?.contains('missing-word')) ||
 //   active.tagName === 'TEXTAREA' ||
      active.isContentEditable ||
      active.closest('dialog')) {
