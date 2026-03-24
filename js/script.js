@@ -328,7 +328,8 @@ function reParseParagraph(){
 function nonAlphabetic() {
   function addSpecialChar(special){
     clearFrag();
-    setMd(md() + special);
+//  setMd(md() + special);
+    insertWord(special);
  // wdOpts.innerHTML = '';
     return true;
    }
@@ -476,7 +477,7 @@ function processBiChord() {
 
   updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
  
-  setMd(removeCursor(md()));
+//setMd(removeCursor(md()));
  
   if (nonAlphabetic()){
     presdKeys.clear();   
@@ -596,7 +597,8 @@ function underlineOptionsToCurrentFragLength(frag) {
     if(flen>2){ oldBwords+= underlineFirstNLtrs(oldfrag,caps); }
     bwords+=    underlineFirstNLtrs(frag,caps);
 //  wdOpts.innerHTML = oldBwords +"</span>";
-    setMd(md() + bwords + "</span>");
+//    setMd(md() + bwords + "</span>");
+    insertWord( bwords + "</span>");
    }
 
 
@@ -614,7 +616,8 @@ function tidyWordOptions(capsOpts)
         frag=frag.slice(0,-2) || '';
 //      wdOpts.innerHTML = oldOpts; 
    }
-  setMd(  md()   + opts);
+  insertWord(opts);
+//setMd(  md()   + opts);
   renderMarkdown();
 }  
 
@@ -670,6 +673,19 @@ document.addEventListener('keydown', (event) => {
    return;   // ← browser handles the key normally
  }
 
+ if (key.includes("arrow")) {
+   event.preventDefault();
+ 
+   switch (key) {
+     case "arrowleft":  doc.dCol(-1); break;
+     case "arrowright": doc.dCol(1);  break;
+     case "arrowup":    doc.dRow(-1); break;
+     case "arrowdown":  doc.dRow(1);  break;
+   }
+  
+    updateDisplay();
+  }
+
  if (mdMatch(spanRegEx)) {
    event.preventDefault();
    removeWordOptions();
@@ -688,7 +704,8 @@ document.addEventListener('keydown', (event) => {
 // punctuation and digits
  if (passThroughKeys.has(key)) {
    event.preventDefault();
-   setMd(md()+key);
+// setMd(md()+key);
+   insertWord(key);
    renderMarkdown();
    return;
   }
@@ -710,4 +727,3 @@ document.addEventListener('keyup', (event) => {
     updtDebugInfo(presdKeys, '-', '-', '-', frag);
   }
 });
-

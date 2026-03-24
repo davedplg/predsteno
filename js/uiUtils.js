@@ -47,6 +47,74 @@ const dbgWd = document.getElementById('debugWord');
 
 const CHORD_TIMEOUT = 80;
 //const CHORD_TIMEOUT = 110;
+// ==================== DOCUMENT MODEL ====================
+const doc = {
+  lines: [""],
+  row: 0,
+  col: 0,
+
+  dRow(n) {
+    const candidate = this.row + n;
+    this.row = Math.max(0, Math.min(candidate, this.lines.length - 1));
+    this.col = Math.min(this.col, this.lines[this.row].length);
+  },
+
+  dCol(n) {
+    let candidate = this.col + n;
+    const sRow = this.row;
+    const line_length = this.lines[sRow].length;
+
+    if (candidate >= 0 && candidate <= line_length) {
+      this.col = candidate;
+      return;
+    }
+
+    if (candidate < 0) {
+      this.dRow(-1);
+      this.col = this.lines[this.row].length;
+      return this.dCol(candidate);
+    }
+
+    this.dRow(1);
+    this.col = 0;
+    return this.dCol(candidate - line_length);
+  }
+};
+
+// ==================== SYNC FROM TEXTAREA ====================
+function syncFromMarkdown() {
+  const text = md().replace(cursor, '');   // remove any old cursor symbol
+  doc.lines = text ? text.split('\n') : [""];
+  doc.row = doc.lines.length - 1;
+  doc.col = doc.lines[doc.row].length;
+}
+
+// ==================== UPDATE DISPLAY WITH CURSOR ====================
+function updateDisplay() {
+  // Build clean text
+  let text = doc.lines.join('\n');
+
+  // Insert visible cursor symbol at current position
+  const currentLine = doc.lines[doc.row];
+  const before = currentLine.slice(0, doc.col);
+  const after = currentLine.slice(doc.col);
+
+  // Temporarily insert cursor for display
+  doc.lines[doc.row] = before + cursor + after;
+
+  const displayText = doc.lines.join('\n');
+
+  setMd(displayText);        // update textarea
+  renderMarkdown();          // update HTML preview
+
+  // Remove cursor symbol from model again (keep data clean)
+  doc.lines[doc.row] = currentLine;
+
+  requestAnimationFrame(() => {
+    outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
+  });
+}
+
 
 function clearFrag(){
    frag='';
@@ -59,7 +127,41 @@ function clearFrag(){
  * Replaces firstParse() word insertion, second-parse insertion, singleton reserves, everything.
  */
 
+// Initialize document model from current textarea content
+function initDocument() {
+  syncFromMarkdown();
+  updateDisplay();
+}
+
+// Load new markdown content (e.g. from file)
+function loadMarkdown_new(newText) {
+  setMd(newText);                    // put the new text into the textarea
+  syncFromMarkdown();                // parse it into doc.lines + set row/col
+  updateDisplay();                   // render with cursor
+}
+
 function insertWord(word, addSpace = true) {
+  removeWordOptions();
+
+  // Insert at current cursor position
+  const currentLine = doc.lines[doc.row];
+  
+  let toInsert = word;
+  if (addSpace) toInsert += ' ';
+
+  // Splice the word into the current line at col
+  doc.lines[doc.row] = 
+    currentLine.slice(0, doc.col) + 
+    toInsert + 
+    currentLine.slice(doc.col);
+
+  // Move cursor forward by the length of what we inserted
+  doc.col += toInsert.length;
+
+  updateDisplay();
+}
+
+function insertWord_old(word, addSpace = true) {
   removeWordOptions();
 
   let text = removeCursor(md());
@@ -138,6 +240,7 @@ function updtDebugInfo(keys, lProduct, rProduct, thumbChord, chord, wd) {
 
 // function to word options and containing span tags
 function removeWordOptions() {
+//  mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
   mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
   let firstParseSpan = outpt2.querySelector('#firstParse');
   lastDecidingSpan = firstParseSpan ? firstParseSpan.innerHTML : '';
@@ -188,9 +291,6 @@ const obj = {
   "σì":'oi'    , "σy(0)*":'oÿ', "õù":'ou'    , "âì" :'ai'   , 
   "êè":'ee'    , "êà":'ea'    , "öò":'oo'    , "åw(0)*":'aẇ',
   "ey":'ey'     , "ãÿ":'aÿ'    , 
-  
-
-
 
 }
  
@@ -516,3 +616,4 @@ function initFileControls() {
  }
 
 window.addEventListener('DOMContentLoaded', initFileControls);
+initDocument();
