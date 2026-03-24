@@ -617,6 +617,7 @@ function tidyWordOptions(capsOpts)
 //      wdOpts.innerHTML = oldOpts; 
    }
   insertWord(opts);
+  doc.dCol(-opts.length);
 //setMd(  md()   + opts);
   renderMarkdown();
 }  

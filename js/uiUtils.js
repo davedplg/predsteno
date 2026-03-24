@@ -85,8 +85,6 @@ const doc = {
 function syncFromMarkdown() {
   const text = md().replace(cursor, '');   // remove any old cursor symbol
   doc.lines = text ? text.split('\n') : [""];
-  doc.row = doc.lines.length - 1;
-  doc.col = doc.lines[doc.row].length;
 }
 
 // ==================== UPDATE DISPLAY WITH CURSOR ====================
@@ -130,6 +128,9 @@ function clearFrag(){
 // Initialize document model from current textarea content
 function initDocument() {
   syncFromMarkdown();
+//doc.row = doc.lines.length - 1;
+  doc.row = 0;
+  doc.col = doc.lines[doc.row].length;
   updateDisplay();
 }
 
@@ -142,7 +143,7 @@ function loadMarkdown_new(newText) {
 
 function insertWord(word, addSpace = true) {
   removeWordOptions();
-
+  syncFromMarkdown();
   // Insert at current cursor position
   const currentLine = doc.lines[doc.row];
   
@@ -242,12 +243,12 @@ function updtDebugInfo(keys, lProduct, rProduct, thumbChord, chord, wd) {
 function removeWordOptions() {
 //  mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
   mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
-  let firstParseSpan = outpt2.querySelector('#firstParse');
-  lastDecidingSpan = firstParseSpan ? firstParseSpan.innerHTML : '';
-  if (firstParseSpan) { 
-  firstParseSpan.remove()
+//  let firstParseSpan = outpt2.querySelector('#firstParse');
+//  lastDecidingSpan = firstParseSpan ? firstParseSpan.innerHTML : '';
+//  if (firstParseSpan) { 
+//  firstParseSpan.remove()
   renderMarkdown();
-  }
+//}
 }
 
 function titleCase(word){
