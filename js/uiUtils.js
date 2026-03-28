@@ -187,6 +187,9 @@ function renderMarkdown() {
 
   // 3. NOW update the markdown — ONCE
   setMd(text);
+  requestAnimationFrame(() => {
+    syncFromMarkdown();
+  });
 
   // 4. Add exactly ONE cursor at the end
   if (!text.endsWith(cursor))  text += cursor; 
@@ -282,7 +285,7 @@ function caseReplace(text, match,replace){
 function loopReplace(t){
 
 const obj = { 
-  "πħ":'th', "ŝħ":'sh', "ĉħ":'ch', "þħ":'ph',
+  "τħ":'th',"πħ":'th', "ŝħ":'sh', "ĉħ":'ch', "þħ":'ph',
   //funky eye sound
   "îg0ħ":'iġḩ',
   //ing is treated as lexical/trigraph
@@ -313,9 +316,7 @@ function format_augmented_words(t,style){
   //ie dont treat h as silent its a digraph
   t=loopReplace(t);
 
-// t=t.replace(/τħ/gi,'<vc>th</vc>');
   t=caseReplace(t,'τħ','<vc>th</vc>');
-//  t=t.replace(/èŕ/gi,'eř');
   t=caseReplace(t,'èŕ','eř');
   t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
   //non doubled silents
@@ -325,7 +326,6 @@ function format_augmented_words(t,style){
   t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
-//t=t.replace(/τħ/gi,'<vc>th</vc>');
   //remaing doubled letters remove silent marking
   t=t.replace(/([a-zA-Z])0/gi,'$1');
   t=t.replace(/ñ/g,'n');

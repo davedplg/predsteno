@@ -1,224 +1,210 @@
-:root { 
-font-size: clamp(14px, 2.5–3.2vw + 0.4–0.6rem, 18–21px); 
+
+
+/* NEW - just drop this in */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Montserrat:wght@400;600;700&family=EB+Garamond:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+  /* Modern fluid base font size */
+  font-size: clamp(15px, 0.9vw + 0.6rem, 18px);
 }
 
 body {
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: center;
   align-items: flex-start;
-  min-height: 100vh; /* Changed from height to min-height to allow content to expand */
-  margin: 1 rem;
-  margin-left : 1 rem;
+  min-height: 100vh;
+  margin: 1rem;
   background-color: #eee;
-  padding: 20px; /* Added padding to prevent content from touching edges */
+  padding: 20px;
   box-sizing: border-box;
+  line-height: 1.2;
 }
+
+/* ====================== MODERN REM-BASED HEADING SCALE ====================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1rem 0 1rem 0;
+  line-height: 1;
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight: 700;
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.85rem; }
+h4 { font-size: 1.85rem; }
+h5 { font-size: 1.45rem; }
+h6 { font-size: 1.45rem; }
+
+/* Underline on odd levels (your preference) */
+h1, h3, h5 {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 3px;
+  text-decoration-color: #333;
+}
+
+/* ====================== REST OF YOUR STYLES (cleaned) ====================== */
 
 details {
-  width: 100%;          /* ← important: prevents flex from shrinking it */
-  max-width: 600px;     /* or whatever max width you want */
-  margin: 0.5em 0;      /* optional – nicer spacing */
+  width: 100%;
+  max-width: 600px;
+  margin: 0.75em 0;
 }
 
-
 #instructions {
-  margin-top: 20px;
+  margin-top: 2rem;
   text-align: center;
-  width: 100%; /* Ensure it takes full width for centering */
+  width: 100%;
 }
 
 div#outpt2 {
-  background-color:#fff;
-  width:150vw;
-  overflow-x: scroll;
-  height:60vh;
-  max-height:72vh;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1.4rem;
-  margin-top: 10px;
-  margin : 1rem;
-  margin-left : 1rem;
-  font-weight: 700; /* Bold for better readability */
-  border:2px solid #aaa;
+  background-color: #fff;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  min-height: 60vh;
+  max-height: 72vh;
+  font-size: 1.25rem;
+  padding: 1.5rem;
+  font-weight: 500;
+  border: 2px solid #aaa;
   column-width: 38rem;
-  column-gap: 2rem;
+  column-gap: 2.5rem;
   column-rule: 2px solid #ccc;
   column-fill: auto;
 }
+
+* NEW - subtle monospace serif */
+div#outpt2,
+textarea#output,
+table,
+body,
+#debug,
+.textarea {
+  font-family: 'Courier Prime', 'IBM Plex Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, "Courier New", monospace;
+ font-size:1.25rem;
+}
 textarea#output {
   height: auto;
-  min-height: 6em;
-  line-height: 1.25;
-  resize: vertical;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1.5rem; /* Match #textArea for consistency */
-  font-weight: 700; /* Bold for better readability */
+  min-height: 7em;
+  line-height: 1.4;
+  font-size: 1.25rem;
+  font-weight: 700;
   box-sizing: border-box;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
-  margin: 3%;
-  padding: 10px;
-  width: 90%; /* Responsive width instead of fixed 300px */
-  max-width: 800px; /* Prevent it from becoming too wide */
+  margin: 1.5rem auto;
+  padding: 1rem;
+  width: 90%;
+  max-width: 820px;
+  display: block;
+  resize: vertical;
 }
 
 button {
-
-  padding: 6px;
-  border: 2px solid #ccc;
+  padding: 10px 18px;
+  border: 2px solid #bbb;
   background-color: #c9c9f9;
-  font-size: 1.5rem; /* Match #textArea for consistency */
+  font-size: 1.35rem;
   border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-h5 {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 130%; /* Match table font-size */
-  margin: 3% 3% 1%;
-  color: #333;
-  font-weight: 700;
-  text-align: center; /* Align with tables */
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  line-height: 1.25;
-}
 table {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 100%;
-  margin: 3% auto;
-  border-collapse: separate;
-  border-spacing: 4px;
-  width: 100%; /* Responsive width */
-  max-width: 800px; /* Consistent with textarea */
+  margin: 2rem auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 820px;
 }
 
-table td,th {
-  padding: 5px;
-  text-align:center;
-  margin: 3% auto;
-  font-size: 1.2rem;
+table td, table th {
+  padding: 10px 12px;
+  text-align: center;
+  border: 1px solid #ddd;
 }
 
-table.striped, .striped table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 3% auto;
-    font-family: Arial, sans-serif;
-    border: 2px solid #ccc;
+/* Striped tables */
+table.striped th,
+.striped table th {
+  background-color: navy;
+  color: white;
 }
 
-table.striped th, table.striped td, .striped table th, .striped table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+table.striped tr:nth-child(even),
+.striped table tr:nth-child(even) {
+  background-color: #eef;
 }
 
-/* Alternate row colors */
-table.striped tr:nth-child(even),  .striped table tr:nth-child(even){
-    background-color: #eef;
-}
-table.striped tr:nth-child(odd),  .striped table tr:nth-child(odd) {
-    background-color: #fff;
-}
-
-/* First row (header) styling */
-table.striped th, .striped table th {
-    background-color: navy;
-    color: white;
-    font-weight: bold;
+/* Tables inside #outpt2 */
+#outpt2 table {
+  width: auto !important;
+  margin: 1.5rem 8% !important;
+  border: 1px solid #777;
 }
 
+#outpt2 table th {
+  background-color: #ddd;
+  color: black;
+  font-size: 1.25rem;
+  padding: 12px;
+  border-bottom: 2px solid #777;
+}
+
+
+/* Other elements */
 summary {
-font-size: 110%;
-}
-
-s {
- font-size: 120%;*/
-vertical-align: super;
-text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 #debug {
-  font-family: 'Courier New', Courier, monospace;
- /* font-size: 13px;*/
-  margin: 3% 3% 5px;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  margin: 1.5rem 0;
   border: 1px solid #ccc;
-  padding: 3px;
-  text-align: left; /* Override #instructions text-align for debug */
-  width: 70%;
-  max-width: 800px;
+  padding: 1rem;
+  background: #f9f9f9;
+  max-width: 820px;
 }
 
 .SecondParse {
-background-color: #fdd;
-font-size:90%;
+  background-color: #fdd;
+  font-size: 1.25rem;
 }
 
- key, kiy {
-    font-family: 'Courier New', Courier, monospace; /* Monospaced font for keyboard aesthetic */
-    color: #fff; /* White text */
-    background-color: #1c2526; /* Dark background, resembling a key */
-    padding: 6px 9px; /* Padding to mimic key size */
-    border-radius: 6px 9px; /* Rounded corners */
-    border: 1px solid #3a3a3a; /* Subtle border for definition */
-    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.5), /* Inner shadow for left/bottom */
-                2px 2px 4px rgba(0, 0, 0, 0.3); /* Outer shadow for depth */
-    display: inline-block; /* Inline-block for key-like appearance */
-    text-align: center; /* Center text like on a key */
-  /* font-size: 13px; /* Adjust font size as needed */
-    font-weight: bold; /* Bold for better readability */
-    text-transform: uppercase; /* Uppercase for keyboard key vibe */
-    margin-right: 0.2em;
+key, kiy {
+  color: #fff;
+  background-color: #1c2526;
+  padding: 4px 9px;
+  border-radius: 6px 9px;
+  border: 1px solid #3a3a3a;
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5),
+              2px 2px 4px rgba(0,0,0,0.3);
+  display: inline-block;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 0.35em;
 }
 
- kiy {
-    background-color: #fff; /* Black text */
-    color: #1c2526; /* Light background, resembling a key */
- }
-
-.textarea
-{
-  background-color:#fff;
-  width:80%;
-  height:40%;
-  font-family: 'Courier New', Courier, monospace;
- /* font-size: 22px;*/
-  margin-top: 10px;
-  color: #d00;
-  font-weight: 700; /* Bold for better readability */
+kiy {
+  background-color: #fff;
+  color: #1c2526;
+  border-color: #ccc;
 }
 
-.strong_digit  {
-font-weight: 700;
-}
-
-v {
-    color: #d00;
-    font-weight: 700; /* Bold for better readability */
-}
-
-vc {
-    color: #00d;
-    font-weight: 700; /* Bold for better readability */
-}
-
-x {
-    color: #999;
-    font-weight: 700; /* Bold for better readability */
-} 
+v { color: #e80000; font-weight: 700; }
+vc { color: #00d; font-weight: 700; }
+x { color: #999; font-weight: 700; }
 
 z {
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 2.5px;
   text-decoration-color: #d00;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
 }
-label {
 
+label {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;

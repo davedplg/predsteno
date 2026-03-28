@@ -138,8 +138,9 @@ function select2ndPassWd(key) {
 // for neobets where n > 8..
   if (choice === 11)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
 // swap hyphenated word options with selected word
-    insertWord(selectedWord);
     mdRepl(spanRegEx, '');
+    doc.col+= -(wds.length || 0)
+    insertWord(selectedWord);
     requestAnimationFrame(() => outputMarkdown.focus());
     clearFrag();
   }
@@ -274,20 +275,55 @@ t = t.replace(/(?<prefix>[A-Z']+)\+ /g, (m, p) => p.toLowerCase() + "'");
 
 }
 
-//The user must put these markers (⟑,⟐) before text to modify case
 function parseCaseMarking(text) {
-// early return when options still in md()  
-  if (text.includes('⟐') || text.includes('⟑')){
-    if (text.includes(sep2)){
-  return text;
-    }
-  }
+  let t = text;
+  if (!text.includes('⟐')) return text; 
+
+  let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     // lower → Title
+  let lCâs = /([\p{Ll}])([\p{Ll}]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
+  let uCâs = /([\p{Lu}0][\p{Lu}]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
+
+  t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
+  console.log('after first:', t);
+
+  t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
+  console.log('after second:', t);
+
+  t = t.replace(uCâs, (_,frodo) => frodo.toLowerCase());
+  console.log('after third:', t);
+
+  setMd(t); 
+requestAnimationFrame(() => {
+    syncFromMarkdown();
+    doc.col+= -3;
+});
+  return t;
+}
+
+//The user must put these markers (⟑,⟐) before text to modify case
+function parseCaseMarking_old(text) {
   let t=text;
-  let uCâs=/⟐\s*⟐\s*([\p{L}][\p{L}0]*)/gu
-  let tCâs=/⟐\s*([\p{L}])([\p{L}]*)/gu
+// early return when options still in md()  
+  if (!text.includes('⟐') ) return text; 
+
+  let tCâs=/([\p{Lu}][\p{Ll}0]*\s*) ⟐ /gu
+  let lCâs=/([\p{Ll}])([\p{Ll}]*\s*) ⟐ /gu
+  let uCâs=/([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu
   
-  t = t.replace(uCâs, (_,FRODO) => FRODO.toUpperCase()) ;
-  t = t.replace(tCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
+  
+  t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase()) ;
+  console.log(t); 
+  t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
+  console.log(t); 
+//  if(t.match(uCâs)) doc.col+= -5;
+  t = t.replace(uCâs, (_,frodo) => frodo.toLowerCase()) ;
+  setMd(t); 
+
+  syncFromMarkdown();
+  console.log(t); 
+  doc.col+= -2;
+  syncFromMarkdown();
+//  console.log('end'+doc.col+'\n'+doc.lines[doc.row]); 
   return t;
 }
 
@@ -329,7 +365,7 @@ function nonAlphabetic() {
   function addSpecialChar(special){
     clearFrag();
 //  setMd(md() + special);
-    insertWord(special);
+    insertWord(special,false);
  // wdOpts.innerHTML = '';
     return true;
    }
@@ -634,7 +670,10 @@ function on3rdPass(key) {
     if (input) {
       event.preventDefault();
       const value = input.value.trim() || '???';
-      mdRepl(inputRegex, value);
+//    mdRepl(inputRegex, value);
+      mdRepl(inputRegex, '');
+      doc.col+=-missingRegEx.source.length;
+      insertWord(value);
       renderMarkdown();
       requestAnimationFrame(() => outputMarkdown.focus()); // back to source
       // Check for next missing word
