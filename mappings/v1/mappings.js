@@ -6,7 +6,7 @@ const pairwise_reordered_dic = false;
 //These keys will register in the text area as is
 
 //export  \
-const passThroughKeys = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>',',','.','/','\'']);
+const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+','?','|','[',']','"','{','}','?','|','<','>',',','.','/','\'']);
 
 
 /* These prime mappings, map the keys to prime numbers, 

@@ -146,7 +146,7 @@ function insertWord(word, addSpace = true) {
   syncFromMarkdown();
   // Insert at current cursor position
   const currentLine = doc.lines[doc.row];
-  
+  if(word.includes('-')) addSpace = false;  
   let toInsert = word;
   if (addSpace) toInsert += ' ';
 
@@ -225,6 +225,8 @@ function renderMarkdown() {
     outputMarkdown.setSelectionRange(text.length, text.length);
     outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
   });
+  //10. update display for cursor
+//  updateDisplay();
 }
 // Utility to remove emoji cursor
 function removeCursor(text) {

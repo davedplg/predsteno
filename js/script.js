@@ -71,7 +71,12 @@ const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 //      (letters, numbers, punctuation) 
 //     separated by at least one ↔ arrow
 // \p{P} catches commas, periods, quotes, brackets, dashes, etc. automatically
-const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
+//const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
+//const reserveRegEx = /[\p{L}\p{N}'xx+0-9]+(?:[\u{2194}][\p{L}\p{N}xx'+0-9]+)+/u;
+
+const reserveRegEx = /[\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+(?:[\u{2194}][\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+)+/u;
+const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~";
+// Safe symbol list for empty reserves slots (punctuation injection)
 const missingRegEx = new RegExp(sep3 + sep3 + 'MissingWord' + sep3 + sep3);
 
 /** calcProducts: calculate prime (p) products
@@ -130,9 +135,9 @@ function select2ndPassWd(key) {
   if (!choice || frag=='') return;
 //hyphenated reserve word options are inside span tags
   const wds = mdMatch(spanRegEx)[1]; 
+  let symbol = false;
   const wdList = reserves[frag].split(sep1) || [];
   let selectedWord = wdList[choice - 1] || wdList[0] || '';
-
 // user selects h (9) if 3rd pass is needed for qwerty 
 // MissingWord used as place holder. May need to change
 // for neobets where n > 8..
@@ -140,8 +145,12 @@ function select2ndPassWd(key) {
 // swap hyphenated word options with selected word
     mdRepl(spanRegEx, '');
     doc.col+= -(wds.length || 0)
-    insertWord(selectedWord);
-    requestAnimationFrame(() => outputMarkdown.focus());
+    insertWord(selectedWord,!symbol);
+    requestAnimationFrame(() =>{ 
+      outputMarkdown.focus();
+      updateDisplay();
+    }
+    );
     clearFrag();
   }
 
@@ -265,7 +274,8 @@ function parseAffixes(text){
  let t=text;                
      
 t = t.replace(
-  /(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
+///(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
+/([ \t]*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
  (_,SPAN,GAP,SUFX) => SUFX.toLowerCase()
 );
 
@@ -364,8 +374,12 @@ function reParseParagraph(){
 function nonAlphabetic() {
   function addSpecialChar(special){
     clearFrag();
-//  setMd(md() + special);
     insertWord(special,false);
+    requestAnimationFrame(() => {
+      syncFromMarkdown();
+      if(special == "\n") doc.dRow(1);doc.col=0;
+  });
+    updateDisplay();
  // wdOpts.innerHTML = '';
     return true;
    }
@@ -379,6 +393,7 @@ function nonAlphabetic() {
     setMd(cleaned);
 //  wdOpts.innerHTML = '---';
     renderMarkdown();
+    updateDisplay();
     return true;
   }
 
@@ -745,7 +760,7 @@ document.addEventListener('keydown', (event) => {
  if (passThroughKeys.has(key)) {
    event.preventDefault();
 // setMd(md()+key);
-   insertWord(key);
+   insertWord(key,false);
    renderMarkdown();
    return;
   }
