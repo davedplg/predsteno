@@ -719,6 +719,8 @@ function on2ndPass(key){
 document.addEventListener('keydown', (event) => {
  const key = event.key.toLowerCase();
 
+ if(key.match(/tab|ctrl|esc/)) return;
+
  const active = document.activeElement;
  if ((active.tagName === 'INPUT' && 
    !active.classList?.contains('missing-word')) ||
@@ -780,5 +782,21 @@ document.addEventListener('keyup', (event) => {
   if (validKeys.has(key)) {
   presdKeys.delete(key);
     updtDebugInfo(presdKeys, '-', '-', '-', frag);
+  }
+});
+
+// Close all other when one is opened
+document.addEventListener('click', function(e) {
+  const summary = e.target.closest('summary');
+  
+  if (summary) {
+    const details = summary.parentElement;   // the tag
+
+    // Close all other tags
+    document.querySelectorAll('details').forEach(otherDetails => {
+      if (otherDetails !== details) {
+        otherDetails.open = false;
+      }
+    });
   }
 });

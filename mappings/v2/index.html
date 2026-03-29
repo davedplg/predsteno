@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
- <details>
-   <summary style="font-size:130%">Menu (Enter to Start)</summary>
-   <details>
+  <div>
+   <details accesskey="1" > 
      <summary>file</summary>
-      <div class="file-controls" style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+      <dialog class="file-controls" style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+      
         <button id="btn-save-as">Save as…</button>
         <button id="btn-load">Load Markdown…</button>
         <button id="btn-clear">Clear</button>
@@ -20,28 +20,58 @@
         <a id="legacy-download" href="#" style="font-size: 0.9em; color: #666; align-self: center;" hidden>
           Quick save (old method)
         </a>
-     </div>
+     </dialog>
    </details>
-   <details>
-     <summary>instructions</summary>
+   <details > 
+     <summary>help</summary>
+     <dialog open>
      <ul>
-       <li>e.161 <a href="../../index.html#e161">numpad</a>: letter -> digit mapping</li>
-       <li> <a href="#chords">chords</a></li>
-       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
-       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
        <li>Enter Twice to Start!</li>
        <li>Mirrored-hands Text-Input</li>
+       <li>e.161 
+         <a href="../../index.html#e161">numpad
+         </a>
+         : letter -> digit mapping</li>
+       <l:i> <a href="#chords">chords</a></li>
+       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
+       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
      </ul>
+     </dialog>
    </details>
-   <details>
+   <details > 
      <summary>context</summary>
+     <dialog open>
      <ul> 
        <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
        <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
      </ul>
+     </dialog>
    </details>    
- <details open>
-   <summary>See Markdown</summary>  
+<!--  <details > 
+     <summary>format</summary>
+     <dialog open>-->
+     <label>
+       <input type="checkbox" id="markLetters" checked>
+         Marks
+     </label>
+      
+     <label>
+       <input type="checkbox" id="colorVowels" checked>
+         Colors
+     </label>
+<!--     </dialog>
+</details>  -->
+   <details > 
+     <summary>about</summary>
+     <dialog open>
+     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
+     </dialog>
+   </details>
+  </div>
+<div> 
+  <details > 
+   <summary>Code</summary>  
+     <div open>
 <textarea id="output" rows="9" cols="80" readonly>
 Mārkdõw0n Enâblèd 
 - 'spâçè' + 'spâçè' entèŕ = nëw0 lînè 
@@ -61,10 +91,14 @@ Fār0 ábővè τħé clõùdś sô hîg0ħ
 ##### H5 Humptý Dumptý sat on a wål0l  
 Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn 
     </textarea>
+     </div>
   </details>
+</div>
 
- <details>
-   <summary> Debug Info</summary> 
+ <!--    <details > 
+<div>
+   <summary>Debug</summary> 
+     <div open>
   <table style="display: none;">
   <table>
     <tr>
@@ -81,25 +115,10 @@ Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn
     </tr>
   </table>
 
- </details>
-   <details open>
-     <summary>formatting</summary>
-     <label>
-       <input type="checkbox" id="markLetters" checked>
-         Marks
-     </label>
-      
-     <label>
-       <input type="checkbox" id="colorVowels" checked>
-         Colors
-     </label>
+     </div>
    </details>  
-   <details>
-     <summary>about</summary>
-     <h4> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</h4>
-   </details>
- </details>
-  <div id="outpt2" > </div>
+  </div> -->
+ <div id="outpt2" > </div>
 
   <div id="instructions">
     <a id="numpad">

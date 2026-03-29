@@ -47,10 +47,20 @@ h1, h3, h5 {
 /* ====================== REST OF YOUR STYLES (cleaned) ====================== */
 
 details {
-  width: 100%;
-  max-width: 600px;
-  margin: 0.75em 0;
+  display:inline-block; 
+  margin-right:15px; 
+  vertical-align:top;
 }
+details summary {
+  list-style: none;           /* removes the caret */
+  list-style-type: none;      /* for extra safety */
+}
+
+/* Optional: If the above doesn't work in some browsers */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
 
 #instructions {
   margin-top: 2rem;
@@ -209,4 +219,8 @@ label {
   align-items: center;
   gap: 0.5rem;
   margin-right: 1.5rem;
+}
+
+dialog, textarea {
+  background-color: rgba(255, 255, 255, 0.7);
 }
