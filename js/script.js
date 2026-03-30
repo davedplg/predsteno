@@ -384,7 +384,127 @@ function nonAlphabetic() {
     return true;
    }
 
-  function deleteWord(){
+/**
+ * deleteWord — deletes the last complete word BEFORE the cursor.
+ * Fully respects the document model (doc.lines + doc.col).
+ * When at column 0, it joins with the previous line (standard editor behavior).
+ */
+function deleteWord() {
+  syncFromMarkdown();
+
+  const row = doc.row;
+  let line = doc.lines[row];
+
+  // ────── CASE 1: Cursor at start of line → join with previous line ──────
+  if (doc.col === 0  && row === 0) return true;
+
+  if (doc.col === 0) {
+    // Join previous line + current line
+    const prevLine = doc.lines[row - 1];
+    const currentLine = doc.lines[row];
+
+    // Remove trailing newline from previous line (it's implicit in the array)
+    doc.lines[row - 1] = prevLine + currentLine;
+    // Remove the now-empty current line
+    doc.lines.splice(row, 1);
+
+    // Move cursor to the end of what was the previous line
+    doc.row = row - 1;
+    doc.col = prevLine.length;
+
+    updateDisplay();
+    return true;
+  }
+
+  // ────── CASE 2: Normal word deletion inside the line ──────
+  const beforeCursor = line.slice(0, doc.col);
+
+  // Match the last sequence of non-whitespace characters before cursor
+  const wordMatch = beforeCursor.match(/(\S+)\s*$/);
+
+  if (!wordMatch) {
+    // No word found → just delete trailing space(s) if present
+    if (beforeCursor.endsWith(' ')) {
+      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
+      doc.col = Math.max(0, doc.col - 1);
+    }
+    updateDisplay();
+    return true;
+  }
+
+  const wordToDelete = wordMatch[1];
+  const startOfWord = beforeCursor.lastIndexOf(wordToDelete);
+
+  // Rebuild line: everything before the word + everything after cursor
+  let newBefore = beforeCursor.slice(0, startOfWord).replace(/\s+$/, ''); // collapse spaces
+  const after = line.slice(doc.col);
+
+  doc.lines[row] = newBefore + after;
+
+  // Place cursor where the deleted word began
+  doc.col = newBefore.length;
+
+  // Final cleanup: collapse any double spaces that might remain
+  if (doc.lines[row].includes('  ')) {
+    doc.lines[row] = doc.lines[row].replace(/\s{2,}/g, ' ');
+  }
+
+  updateDisplay();
+  return true;
+}
+/**
+ * deleteWord — deletes the last "word" BEFORE the cursor on the current line
+ * (cursor-aware, respects doc.lines + doc.col)
+ */
+function deleteWord_old2() {
+  syncFromMarkdown();  // make sure doc.lines is up-to-date
+
+  // if we are at start of the line treat delete as left arrow
+  if(doc.col==0){
+  doc.dCol(-1);
+  return;
+  }
+  const row = doc.row;
+  let line = doc.lines[row];
+  if (!line) return true;
+
+  // Find the position of the last "word" before the cursor
+  const beforeCursor = line.slice(0, doc.col);
+
+  // Match the last sequence of non-whitespace characters before cursor
+  const wordMatch = beforeCursor.match(/(\S+)\s*$/);
+
+  if (!wordMatch) {
+    // No word to delete → just delete one space or do nothing
+    if (beforeCursor.endsWith(' ')) {
+      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
+      doc.col = Math.max(0, doc.col - 1);
+    }
+    updateDisplay();
+    return true;
+  }
+
+  const wordToDelete = wordMatch[1];
+  const startOfWord = beforeCursor.lastIndexOf(wordToDelete);
+
+  // Rebuild the line without that word (but keep the trailing space if it existed)
+  const newBefore = beforeCursor.slice(0, startOfWord).replace(/\s+$/, ''); // collapse spaces
+  const after = line.slice(doc.col);
+
+  doc.lines[row] = newBefore + after;
+
+  // Move cursor to where the word used to start (now the new end of the prefix)
+  doc.col = newBefore.length;
+
+  // Clean up any double spaces that might have been left
+  if (doc.lines[row].includes('  ')) {
+    doc.lines[row] = doc.lines[row].replace(/\s{2,}/g, ' ');
+  }
+
+  updateDisplay();
+  return true;
+}
+  function deleteWord_old(){
     const cleaned = md()
 // collapse trailing spaces → one space
     .replace(/\s+$/, ' ')    
@@ -543,7 +663,7 @@ function processBiChord() {
   if (chord) {
   //appends chord and/or rejects ambig chord
     if(!(frag=appendChord_recursive(frag,left,right))){
-  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord - even after odd?');
+  //updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord - even after odd?');
         } 
   } else console.warn('No valid chord generated, skipping appendChord');
  
@@ -577,7 +697,7 @@ function processBiChord_new() {
      chord = left + right;     
      thumbChord = productMap[thumbProduct] || '';
 
-    updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
+ // updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
     setMd(removeCursor(md()));
     // Handle different scenarios
     whenInputNonAlpha();
@@ -605,7 +725,7 @@ function whenInputNonAlpha() {
 function whenInputWordFrag(chord, frg, lft, rt) {
     if (chord) {
       if(!(frag=appendChord_recursive(frg,lft,rt))){
-            updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambiguous chord - even after odd?');
+            alert(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambiguous chord - even after odd?');
         }
     } else {
         console.warn('No valid chord generated, skipping appendChord');
@@ -781,7 +901,7 @@ document.addEventListener('keyup', (event) => {
   const key = event.key.toLowerCase();
   if (validKeys.has(key)) {
   presdKeys.delete(key);
-    updtDebugInfo(presdKeys, '-', '-', '-', frag);
+    //updtDebugInfo(presdKeys, '-', '-', '-', frag);
   }
 });
 
