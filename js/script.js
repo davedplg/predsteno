@@ -526,7 +526,7 @@ function processBiChord() {
   chord         = left+right;     
   thumbChord    = productMap[thumbProduct] || '';
 
-  updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
+//updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
  
 //setMd(removeCursor(md()));
  
