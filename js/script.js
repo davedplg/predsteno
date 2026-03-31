@@ -32,7 +32,7 @@ sep2 = '\u2194'
 sep3 = '\u2014';
 
 // cursor character
-cursor = '\u275A';
+cursor = '\u2758';
 
 
 //key list for - current chord
@@ -294,7 +294,7 @@ function parseCaseMarking(text) {
   let uCâs = /([\p{Lu}0][\p{Lu}]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
 
   t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
-  console.log('after first:', t);
+  console.log('after first:', t, "col: ", doc.col);
 
   t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
   console.log('after second:', t);
@@ -374,12 +374,22 @@ function reParseParagraph(){
 function nonAlphabetic() {
   function addSpecialChar(special){
     clearFrag();
+    let enter = (special == "\n") 
+    //ensure  enter is space space enter so html shows newline
+    if(!(doc.col==0) && enter) 
+    {
+     //most words have a space already 
+     special=' '+special;
+     //for cases when no space ahead 
+     if(doc.lines[doc.row].substr[doc.col-1,1]!==' ') special=' '+special;
+    }
     insertWord(special,false);
     requestAnimationFrame(() => {
       syncFromMarkdown();
-      if(special == "\n") doc.dRow(1);doc.col=0;
+      //enter key
+      if(enter) { doc.dRow(1);doc.col=0;}
   });
-    updateDisplay();
+ // updateDisplay();
  // wdOpts.innerHTML = '';
     return true;
    }
@@ -650,16 +660,18 @@ function processBiChord() {
  
 //setMd(removeCursor(md()));
  
-  if (nonAlphabetic()){
-    presdKeys.clear();   
-    renderMarkdown();
-    // paragraph triggers 2nd parse
-    if (mdMatch(/\n\n\u275A$/))  {
-    reParseParagraph();                         
-    }
-  return true;
+if (nonAlphabetic()) {
+  presdKeys.clear();   
+  renderMarkdown();
+
+  // Trigger 2nd parse after double Enter (new paragraph)
+  if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
+    reParseParagraph();
   }
-  
+
+  return true;
+}
+ 
   if (chord) {
   //appends chord and/or rejects ambig chord
     if(!(frag=appendChord_recursive(frag,left,right))){
@@ -698,7 +710,8 @@ function processBiChord_new() {
      thumbChord = productMap[thumbProduct] || '';
 
  // updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
-    setMd(removeCursor(md()));
+//  setMd(removeCursor(md()));
+    setMd(md());
     // Handle different scenarios
     whenInputNonAlpha();
     whenInputWordFrag(chord, frag, left, right);
@@ -713,10 +726,11 @@ function whenInputNonAlpha() {
     if (nonAlphabetic()) {
         presdKeys.clear();   
         renderMarkdown();
-        if (mdMatch(/\n\n\u275A$/)) {
-            reParseParagraph();                         
+        if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
+          reParseParagraph();
         }
-        return true; // Early return for alignment
+
+       return true; // Early return for alignment
     }
     return false; // Optional: indicates normal flow continues
 }
@@ -754,6 +768,9 @@ function underlineOptionsToCurrentFragLength(frag) {
   function setWordOptions(){
    	removeWordOptions();
     console.log('setWordOptions');    
+
+    if (!dic[frag]) return;
+
     // odd frags red to warn next chord must b singleton
     // or double to avoid ambiguity
     bwords="<span id='firstParse' style='color:black'>" 
@@ -776,6 +793,9 @@ function underlineOptionsToCurrentFragLength(frag) {
 function tidyWordOptions(capsOpts)
 {  
  	removeWordOptions();
+
+  if (!dic[frag]) return;
+
   let CueOpts =`<span id='firstParse'>${capsOpts}</span>`; 
   oldOpts=opts;// old
   opts=`<span id='firstParse'>${capsOpts}</span>`; 

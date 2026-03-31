@@ -83,6 +83,7 @@ const doc = {
 
 // ==================== SYNC FROM TEXTAREA ====================
 function syncFromMarkdown() {
+  //delete below?
   const text = md().replace(cursor, '');   // remove any old cursor symbol
   doc.lines = text ? text.split('\n') : [""];
 }
@@ -146,7 +147,6 @@ function insertWord(word, addSpace = true) {
   syncFromMarkdown();
   // Insert at current cursor position
   const currentLine = doc.lines[doc.row];
-  if(word.includes('-')) addSpace = false;  
   let toInsert = word;
   if (addSpace) toInsert += ' ';
 
@@ -162,21 +162,10 @@ function insertWord(word, addSpace = true) {
   updateDisplay();
 }
 
-function insertWord_old(word, addSpace = true) {
-  removeWordOptions();
-
-  let text = removeCursor(md());
-  text += word;
-  if (addSpace) text += ' ';
-  text += cursor;
-
-  setMd(text);
-  renderMarkdown();
-}
-
 function renderMarkdown() {
   let text = md();
 
+console.trace("renderMarkdown called from:");
   // 1. Remove any old cursor first
   text = removeCursor(text);
 
@@ -192,15 +181,16 @@ function renderMarkdown() {
   });
 
   // 4. Add exactly ONE cursor at the end
-  if (!text.endsWith(cursor))  text += cursor; 
+//  if (!text.endsWith(cursor))  text += cursor; 
 
   // 5. Render to HTML
   let htm = marked.parse(text);
 
   // 6. Double-space → long cursor (your visual style)
-  htm = htm.replace(/ + \u275A/g, '\uFE4E\uFE4E' + cursor);
+//htm = htm.replace(/ + \u2758/g, '\uFE4E\uFE4E' + cursor);
+  htm = htm.replace(/  $/g, '\uFE4E\uFE4E');
 
-  // 7. Apply phonetic formatting
+  // 7. Apply p+honetic formatting
   
   let state = (markLetters.checked ? "marks " : "") +
               (colorVowels.checked ? "color" : "");
@@ -225,12 +215,10 @@ function renderMarkdown() {
     outputMarkdown.setSelectionRange(text.length, text.length);
     outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
   });
-  //10. update display for cursor
-//  updateDisplay();
 }
 // Utility to remove emoji cursor
 function removeCursor(text) {
-    return text.replace(/\u275A+$/, '');
+    return text.replace(/\u2758+$/, '');
 }
 
 
@@ -246,8 +234,8 @@ function updtDebugInfo(keys, lProduct, rProduct, thumbChord, chord, wd) {
 
 // function to word options and containing span tags
 function removeWordOptions() {
-//  mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
-  mdRepl(/<span id='firstParse'.*?<\/span>|\u275A+/g, '');
+    mdRepl(/<span id='firstParse'.*?<\/span>|\u2758+/g, '');
+//mdRepl(/<span id='firstParse'.*?<\/span> |\u2758+/g, '');
 //  let firstParseSpan = outpt2.querySelector('#firstParse');
 //  lastDecidingSpan = firstParseSpan ? firstParseSpan.innerHTML : '';
 //  if (firstParseSpan) { 
