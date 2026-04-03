@@ -129,30 +129,42 @@ function mapChordToDigits(lProduct, rProduct) {
 }
 
 // pick from inserted reserves
+
 function select2ndPassWd(key) { 
   console.log(` 2nd pass frag:${frag}`);
   const choice = keyMap2ndPass[key];
-  if (!choice || frag=='') return;
-//hyphenated reserve word options are inside span tags
-  const wds = mdMatch(spanRegEx)[1]; 
-  let symbol = false;
+  if (!choice || frag === '') return;
+
+  const wds = mdMatch(spanRegEx)?.[1] || '';
   const wdList = reserves[frag].split(sep1) || [];
   let selectedWord = wdList[choice - 1] || wdList[0] || '';
-// user selects h (9) if 3rd pass is needed for qwerty 
-// MissingWord used as place holder. May need to change
-// for neobets where n > 8..
-  if (choice === 11)  selectedWord = "\u2014\u2014MissingWord\u2014\u2014";  
-// swap hyphenated word options with selected word
-    mdRepl(spanRegEx, '');
-    doc.col+= -(wds.length || 0)
-    insertWord(selectedWord,!symbol);
-    requestAnimationFrame(() =>{ 
+
+  const isThirdPass = (choice === 11);
+  
+  if (isThirdPass) {
+    selectedWord = "\u2014\u2014MissingWord\u2014\u2014";
+  }
+
+  mdRepl(spanRegEx, '');
+  doc.col -= (wds.length || 0);
+
+  insertWord(selectedWord, false);   // no extra space
+  clearFrag();
+// No RAF for the decision — do it immediately
+  if (isThirdPass) {
+    console.trace("Calling mark3rdPassWds from select2ndPassWd");
+    need3rdPass=1;
+    mark3rdPassWds();           // ← call directly, same as working path
+    reParseParagraph();
+  } else {
+    requestAnimationFrame(() => {
+      renderMarkdown();
       outputMarkdown.focus();
       updateDisplay();
-    }
-    );
-    clearFrag();
+    });
   }
+  console.log('=== select2ndPassWd END ===');
+}
 
 //highlight hypenated reserve.js words with css highlight
 function hŷlŷt_2nd_pās_opts() {
@@ -161,6 +173,7 @@ function hŷlŷt_2nd_pās_opts() {
 }
 
 function mark3rdPassWds() {
+  console.trace("=== mark3rdPassWds CALLED FROM ===");
   const placeholder = mdMatch(missingRegEx);
   if (!placeholder) {
     need3rdPass = 0;
@@ -311,31 +324,7 @@ requestAnimationFrame(() => {
 }
 
 //The user must put these markers (⟑,⟐) before text to modify case
-function parseCaseMarking_old(text) {
-  let t=text;
-// early return when options still in md()  
-  if (!text.includes('⟐') ) return text; 
 
-  let tCâs=/([\p{Lu}][\p{Ll}0]*\s*) ⟐ /gu
-  let lCâs=/([\p{Ll}])([\p{Ll}]*\s*) ⟐ /gu
-  let uCâs=/([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu
-  
-  
-  t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase()) ;
-  console.log(t); 
-  t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
-  console.log(t); 
-//  if(t.match(uCâs)) doc.col+= -5;
-  t = t.replace(uCâs, (_,frodo) => frodo.toLowerCase()) ;
-  setMd(t); 
-
-  syncFromMarkdown();
-  console.log(t); 
-  doc.col+= -2;
-  syncFromMarkdown();
-//  console.log('end'+doc.col+'\n'+doc.lines[doc.row]); 
-  return t;
-}
 
 /*
  *  2nd pass: user chooses from reserve.js options (b was pressed
@@ -466,66 +455,55 @@ function deleteWord() {
  * deleteWord — deletes the last "word" BEFORE the cursor on the current line
  * (cursor-aware, respects doc.lines + doc.col)
  */
-function deleteWord_old2() {
-  syncFromMarkdown();  // make sure doc.lines is up-to-date
+//function deleteWord_old2() {
+//  syncFromMarkdown();  // make sure doc.lines is up-to-date
+//
+//  // if we are at start of the line treat delete as left arrow
+//  if(doc.col==0){
+//  doc.dCol(-1);
+//  return;
+//  }
+//  const row = doc.row;
+//  let line = doc.lines[row];
+//  if (!line) return true;
+//
+//  // Find the position of the last "word" before the cursor
+//  const beforeCursor = line.slice(0, doc.col);
+//
+//  // Match the last sequence of non-whitespace characters before cursor
+//  const wordMatch = beforeCursor.match(/(\S+)\s*$/);
+//
+//  if (!wordMatch) {
+//    // No word to delete → just delete one space or do nothing
+//    if (beforeCursor.endsWith(' ')) {
+//      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
+//      doc.col = Math.max(0, doc.col - 1);
+//    }
+//    updateDisplay();
+//    return true;
+//  }
+//
+//  const wordToDelete = wordMatch[1];
+//  const startOfWord = beforeCursor.lastIndexOf(wordToDelete);
+//
+//  // Rebuild the line without that word (but keep the trailing space if it existed)
+//  const newBefore = beforeCursor.slice(0, startOfWord).replace(/\s+$/, ''); // collapse spaces
+//  const after = line.slice(doc.col);
+//
+//  doc.lines[row] = newBefore + after;
+//
+//  // Move cursor to where the word used to start (now the new end of the prefix)
+//  doc.col = newBefore.length;
+//
+//  // Clean up any double spaces that might have been left
+//  if (doc.lines[row].includes('  ')) {
+//    doc.lines[row] = doc.lines[row].replace(/\s{2,}/g, ' ');
+//  }
+//
+//  updateDisplay();
+//  return true;
+//}
 
-  // if we are at start of the line treat delete as left arrow
-  if(doc.col==0){
-  doc.dCol(-1);
-  return;
-  }
-  const row = doc.row;
-  let line = doc.lines[row];
-  if (!line) return true;
-
-  // Find the position of the last "word" before the cursor
-  const beforeCursor = line.slice(0, doc.col);
-
-  // Match the last sequence of non-whitespace characters before cursor
-  const wordMatch = beforeCursor.match(/(\S+)\s*$/);
-
-  if (!wordMatch) {
-    // No word to delete → just delete one space or do nothing
-    if (beforeCursor.endsWith(' ')) {
-      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
-      doc.col = Math.max(0, doc.col - 1);
-    }
-    updateDisplay();
-    return true;
-  }
-
-  const wordToDelete = wordMatch[1];
-  const startOfWord = beforeCursor.lastIndexOf(wordToDelete);
-
-  // Rebuild the line without that word (but keep the trailing space if it existed)
-  const newBefore = beforeCursor.slice(0, startOfWord).replace(/\s+$/, ''); // collapse spaces
-  const after = line.slice(doc.col);
-
-  doc.lines[row] = newBefore + after;
-
-  // Move cursor to where the word used to start (now the new end of the prefix)
-  doc.col = newBefore.length;
-
-  // Clean up any double spaces that might have been left
-  if (doc.lines[row].includes('  ')) {
-    doc.lines[row] = doc.lines[row].replace(/\s{2,}/g, ' ');
-  }
-
-  updateDisplay();
-  return true;
-}
-  function deleteWord_old(){
-    const cleaned = md()
-// collapse trailing spaces → one space
-    .replace(/\s+$/, ' ')    
-    .replace(/[^\s]+(?=\s*$)/, '')
-
-    setMd(cleaned);
-//  wdOpts.innerHTML = '---';
-    renderMarkdown();
-    updateDisplay();
-    return true;
-  }
 
 	removeWordOptions();
  

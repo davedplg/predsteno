@@ -165,7 +165,7 @@ function insertWord(word, addSpace = true) {
 function renderMarkdown() {
   let text = md();
 
-console.trace("renderMarkdown called from:");
+  //console.trace("renderMarkdown called from:");
   // 1. Remove any old cursor first
   text = removeCursor(text);
 
@@ -304,23 +304,25 @@ function format_augmented_words(t,style){
   // that won't match coloring
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
+
+  t = t.replace(/([τΤ])([ħĦ])/gi, '<vc>$1$2</vc>');
   t=loopReplace(t);
 
   t=caseReplace(t,'τħ','<vc>th</vc>');
   t=caseReplace(t,'èŕ','eř');
   t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
   //non doubled silents
-  t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
-//  t=t.replace(/([a-zA-Z])(0)(?!\1)/gi, '<x>$1</x>');  
+//  t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
+    t=t.replace(/([a-zA-Z])(0)*(\1)(0)*/gi, '$1$1');  
   //tag vowels <v>
   t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
   //remaing doubled letters remove silent marking
-  t=t.replace(/([a-zA-Z])0/gi,'$1');
+  t=t.replace(/([a-zA-Z])0/gi,'<x>$1</x>');
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
-  //tag voiced consonants <vc>
+  //tag voiced consonants <vc> ḩḨ
   t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
   t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
