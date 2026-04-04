@@ -186,15 +186,24 @@ function mark3rdPassWds() {
   renderMarkdown();
 
   // THIS IS THE KEY: focus the actual <input> in the preview, not the textarea. May supply option for multi-tap 3rd parse entry later.
-  requestAnimationFrame(() => {
-    const input = outpt2.querySelector('input.missing-word');
-    if (input) {
-      input.focus();
-      input.select(); // nice UX: select all so user can overtype instantly
-    } else {
-      outputMarkdown.focus(); // fallback
-    }
-  });
+//  requestAnimationFrame(() => {
+//    const input = outpt2.querySelector('input.missing-word');
+//    if (input) {
+//      input.focus();
+//      input.select(); // nice UX: select all so user can overtype instantly
+//    } else {
+//      outputMarkdown.focus(); // fallback
+//    }
+//});
+// requestAnimationFrame(() => {
+//    const input = outpt2.querySelector('input.missing-word');
+//    if (input) {
+//      input.focus();
+//      input.select(); // nice UX: select all so user can overtype instantly
+//    } else {
+//      outputMarkdown.focus(); // fallback
+//    }
+//);
 }
 
 /**
@@ -893,6 +902,11 @@ document.addEventListener('keydown', (event) => {
 
   if (timeoutId) clearTimeout(timeoutId);
   timeoutId = setTimeout(processBiChord, CHORD_TIMEOUT);
+//  timeoutId = setTimeout(() =>{
+//    processBiChord();
+//    renderMarkdown()
+//    }
+//    , CHORD_TIMEOUT);
 });
 
 document.addEventListener('keyup', (event) => {

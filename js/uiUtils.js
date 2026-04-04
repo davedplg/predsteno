@@ -211,10 +211,16 @@ function renderMarkdown() {
 
   // 9. Focus and scroll
   requestAnimationFrame(() => {
-    outputMarkdown.focus();
-    outputMarkdown.setSelectionRange(text.length, text.length);
-    outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
-  });
+    const input = outpt2.querySelector('input.missing-word');
+    if (input) {
+      input.focus();
+      input.select(); // nice UX: select all so user can overtype instantly
+    } else {
+      outputMarkdown.focus(); // fallback
+      outputMarkdown.setSelectionRange(text.length, text.length);
+      outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
+    }
+});
 }
 // Utility to remove emoji cursor
 function removeCursor(text) {
