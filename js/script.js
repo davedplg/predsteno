@@ -312,8 +312,8 @@ function parseCaseMarking(text) {
   if (!text.includes('⟐')) return text; 
 
   let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     // lower → Title
-  let lCâs = /([\p{Ll}])([\p{Ll}]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
-  let uCâs = /([\p{Lu}0][\p{Lu}]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
+  let lCâs = /([\p{Ll}])([\p{Ll}0]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
+  let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
 
   t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
   console.log('after first:', t, "col: ", doc.col);
@@ -460,60 +460,6 @@ function deleteWord() {
   updateDisplay();
   return true;
 }
-/**
- * deleteWord — deletes the last "word" BEFORE the cursor on the current line
- * (cursor-aware, respects doc.lines + doc.col)
- */
-//function deleteWord_old2() {
-//  syncFromMarkdown();  // make sure doc.lines is up-to-date
-//
-//  // if we are at start of the line treat delete as left arrow
-//  if(doc.col==0){
-//  doc.dCol(-1);
-//  return;
-//  }
-//  const row = doc.row;
-//  let line = doc.lines[row];
-//  if (!line) return true;
-//
-//  // Find the position of the last "word" before the cursor
-//  const beforeCursor = line.slice(0, doc.col);
-//
-//  // Match the last sequence of non-whitespace characters before cursor
-//  const wordMatch = beforeCursor.match(/(\S+)\s*$/);
-//
-//  if (!wordMatch) {
-//    // No word to delete → just delete one space or do nothing
-//    if (beforeCursor.endsWith(' ')) {
-//      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
-//      doc.col = Math.max(0, doc.col - 1);
-//    }
-//    updateDisplay();
-//    return true;
-//  }
-//
-//  const wordToDelete = wordMatch[1];
-//  const startOfWord = beforeCursor.lastIndexOf(wordToDelete);
-//
-//  // Rebuild the line without that word (but keep the trailing space if it existed)
-//  const newBefore = beforeCursor.slice(0, startOfWord).replace(/\s+$/, ''); // collapse spaces
-//  const after = line.slice(doc.col);
-//
-//  doc.lines[row] = newBefore + after;
-//
-//  // Move cursor to where the word used to start (now the new end of the prefix)
-//  doc.col = newBefore.length;
-//
-//  // Clean up any double spaces that might have been left
-//  if (doc.lines[row].includes('  ')) {
-//    doc.lines[row] = doc.lines[row].replace(/\s{2,}/g, ' ');
-//  }
-//
-//  updateDisplay();
-//  return true;
-//}
-
-
 	removeWordOptions();
  
   let special = NON_ALPHA_CHORDS[chord];
@@ -572,12 +518,7 @@ function firstParse() {
   switch (thumbChord) {
     case 'wd1'  : wd = wdList[0] || ''; break;
     case 'wd2'  : wd = wdList[1] || ''; break;
-// below wants to be changed to wdList[2]
-// and wdList[3]  
-//  case 'wd3'  : wd = wdListR[0] || ''; break;
-//  case 'wd4'  : wd = wdListR[1] || ''; break;
     case 'wd3':  wd = wdList[2] ?? wdListR[0] ?? ''; break;
-//  case 'wd4':  wd = wdList[3] ?? (wdList[2]? wdListR[0] : wdList[1]) ?? ''; break;
     case 'wd4':  wd = wdList[3] ??  (
                  wdList[2] ? wdListR[0] : wdListR[1] 
             ) ?? '';
@@ -589,8 +530,8 @@ function firstParse() {
                           .replace(/\+/g,"")
                           
        : (reserves[frag] || '').replace(/GT/g,"&gt;")
-                       .replace(/LT/g,"&lt;")
-      ;
+                       .replace(/LT/g,"&lt;") ;
+      wd= ' '+wd
       break;
 
     default:
@@ -794,7 +735,7 @@ function tidyWordOptions(capsOpts)
         frag=frag.slice(0,-2) || '';
 //      wdOpts.innerHTML = oldOpts; 
    }
-  insertWord(opts);
+  insertWord(opts,false);
   doc.dCol(-opts.length);
 //setMd(  md()   + opts);
   renderMarkdown();
