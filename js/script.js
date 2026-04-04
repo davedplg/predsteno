@@ -397,7 +397,7 @@ function nonAlphabetic() {
  * Fully respects the document model (doc.lines + doc.col).
  * When at column 0, it joins with the previous line (standard editor behavior).
  */
-function deleteWord() {
+function del_old(size) {
   syncFromMarkdown();
 
   const row = doc.row;
@@ -429,7 +429,11 @@ function deleteWord() {
 
   // Match the last sequence of non-whitespace characters before cursor
   const wordMatch = beforeCursor.match(/(\S+)\s*$/);
-
+//  if(size=='char'){
+//    const wordMatch = beforeCursor.match(/(.)$/);
+//    } else {
+//      const wordMatch = beforeCursor.match(/(\S+)\s*$/);
+//    }
   if (!wordMatch) {
     // No word found → just delete trailing space(s) if present
     if (beforeCursor.endsWith(' ')) {
@@ -460,18 +464,79 @@ function deleteWord() {
   updateDisplay();
   return true;
 }
+function del(size) {
+  syncFromMarkdown();
+
+  const row = doc.row;
+  let line = doc.lines[row];
+
+  // ────── CASE 1: Cursor at start of line → join with previous line ──────
+  if (doc.col === 0  && row === 0) return true;
+
+  if (doc.col === 0) {
+    // Join previous line + current line
+    const prevLine = doc.lines[row - 1];
+    const currentLine = doc.lines[row];
+
+    // Remove trailing newline from previous line (it's implicit in the array)
+    doc.lines[row - 1] = prevLine + currentLine;
+    // Remove the now-empty current line
+    doc.lines.splice(row, 1);
+
+    // Move cursor to the end of what was the previous line
+    doc.row = row - 1;
+    doc.col = prevLine.length;
+
+    updateDisplay();
+    return true;
+  }
+
+  // ────── CASE 2: Normal word deletion inside the line ──────
+  const beforeCursor = line.slice(0, doc.col);
+
+  // Match the last sequence of non-whitespace characters before cursor
+  const wordMatch = beforeCursor.match(/\S+\s*$/);
+//  if (!wordMatch) {
+//    // No word found → just delete trailing space(s) if present
+//    if (beforeCursor.endsWith(' ')) {
+//      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
+//      doc.col = Math.max(0, doc.col - wordMatch[0].length);
+//    }
+//    updateDisplay();
+//    return true;
+//}
+
+
+  // Rebuild line: everything before the word + everything after cursor
+  if(size=='char'){
+    newBefore = beforeCursor.slice(0, -1);
+  } else newBefore = beforeCursor.slice(0, -wordMatch[0].length);
+  const after = line.slice(doc.col);
+
+  doc.lines[row] = newBefore + after;
+
+  // Place cursor where the deleted word began
+  doc.col = newBefore.length;
+
+  updateDisplay();
+  return true;
+}
 	removeWordOptions();
- 
+  let size='char';
+
   let special = NON_ALPHA_CHORDS[chord];
     // may fall over with n > 8 in future variants
 //if (special  && 38 > lProduct > rProduct || chord?.[0] === '9' ) 
   if (special  && 38 > lProduct > rProduct || chord?.match('9') ) 
   {
     //  delete or special charac.
-    if (special !== 'D')  return addSpecialChar(special); 
+    if (special !== 'X' && special !== 'D')  return addSpecialChar(special); 
+//  if (special !== 'D')  return addSpecialChar(special); 
     
+    if(special == 'X') size = 'word';
+
     // delete entire word
-    if (frag === '')  return deleteWord();
+    if (frag === '')  return del(size);
     
     // delete to even string
     if(evenString(frag)) frag = frag.replace(/.$/, '');

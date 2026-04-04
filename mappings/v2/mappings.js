@@ -43,6 +43,7 @@ const primeMap = {
     'h': 58,  // right: function key
     
      'backspace': 97,
+     'delete': 101,
      'enter': 71,
 
     ' ': 86,     //reserves
@@ -85,7 +86,8 @@ const productMap = {
   59:'91',   //,
   29:'91',   //,
   61:'92',   //.
-  97:'93',   //delete
+  97:'93',   //backspace
+ 101:'95',   //delete
   71:'94',   //enter
 
     53       : 'wd1',  // <space>  selct 1st word
@@ -104,6 +106,7 @@ const NON_ALPHA_CHORDS = {
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
+  '95': 'X' ,
   '96': ' ' ,
   '97': ' ⟐ ' ,
 };
