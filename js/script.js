@@ -641,7 +641,7 @@ function underlineFirstNLtrs(frg,dict) {
 //frag length is number of keys pressed so far for word
 function caps2underlineLcase(str) {
     let underlineed=str
-        .replace(/[a-z]+/g, '<z>$&</z>') // lcase ltrs in <b> tags
+        .replace(/[a-zřẇġḩυ]+/g, '<z>$&</z>') // lcase ltrs in <b> tags
     return underlineed.toUpperCase();
 }
 

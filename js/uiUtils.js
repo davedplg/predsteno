@@ -317,7 +317,10 @@ function format_augmented_words(t,style){
   t=caseReplace(t,'τħ','<vc>th</vc>');
   t=caseReplace(t,'èŕ','eř');
   t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
-  //non doubled silents
+  //non doubled silents  ř ẇ ġ ḩ υ
+  
+  
+  
 //  t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
     t=t.replace(/([a-zA-Z])(0)*(\1)(0)*/gi, '$1$1');  
   //tag vowels <v>

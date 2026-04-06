@@ -8,8 +8,11 @@ binmode STDOUT, ':utf8';
 while (<>) {
     chomp;
      s/[ÀÈÌÒÙĦ]|[A-Z]0//g;
-     s/ØÙ?Ò?R?#?|Å/AW/g;
-#    s/ØÙ?Ò?R?#?|Å/OR/g;
+#    s/ØÙ?Ò?R?#?|Å/AW/g;
+     s/ØÙ?Ò?R?#?|Å/AẆ/g;
+#    s/ØÙ?Ò?R?#?|Å/OR/g;ř ẇ ġ ḩ υ Ř Ẇ ĠḨ Υ
+
+
 #    s/ØÙ?Ò?R?#?|Å/AU/g;
      s/([A-Z])\1/$1/g;
 #    s/Ö|Ü|Ë/EW/g;
@@ -17,7 +20,8 @@ while (<>) {
      s/U~/Õ/g;
      s/U=/Ô/g;
 #    s/Õ/OU/g;
-     s/Õ/OW/g;
+#    s/Õ/OW/g;
+     s/Õ/OẆ/g;
 #    s/Σ/OY/g;
      s/Σ/OI/g;
      s/O#/O/g;
@@ -44,7 +48,8 @@ while (<>) {
      s/NGG/NG/g;
 #    s/Ŕ,/A,/g;
 #    s/Ŕ/IR/g;
-     s/ĀR?#?/AR/g;
+#     s/ĀR?#?/AR/g;
+     s/ĀR?#?/AŘ/g;
      s/[ŜĆŢ]/SH/g;
      s/C/K/g;
      s/[ĈŤ]|CH/KH/g;
@@ -55,11 +60,12 @@ while (<>) {
 #    s/([^,]{2})Ŕ(Ś)*\b/$1A$2/g;
      s/([^,]{2})Ŕ\b/$1A/g;
      s/([^,]{2})ŔŚ\b/$1AZ/g;
-     s/Ŕ/UR/g;
+#     s/Ŕ/UR/g;
+     s/Ŕ/UŘ/g;
 #    s/Ŕ/ER/g;
 #    s/Ŕ/IR/g;
-     s/ĀR?#?/AR/g;
-     s/ĀR?#?/AR/g;
+#     s/ĀR?#?/AR/g;
+     s/ĀR?#?/AŘ/g;
      s/[A-Z]0//g;
      s/X/KS/g;
     tr/ÁÉÍÓÚ\
@@ -69,8 +75,10 @@ while (<>) {
     tr/ĜΜĖẎÞÇQĴĨŚŐΥÐ\
       /JIIIFSKYYZUWT/;
      s/WW/W/g;
-     s/UUR/AW/g;
-     s/DUERING/DAWING/g;
+#    s/UUR/AW/g;
+     s/UUR/AẆ/g;
+#    s/DUERING/DAWING/g;
+     s/DUERING/DAẆING/g;
      s/YY/Y/g;
 #      /jjjjeiifaeiouszkyyzuaeiouw/;
     print "$_\n";

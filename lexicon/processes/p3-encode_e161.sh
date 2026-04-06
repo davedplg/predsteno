@@ -27,11 +27,42 @@ echo
 
 echo "translate uppercase to e.161-ish (e.161 - 1)"
 echo 
-mapping=${LETTERMAP:-'ABDEFGHIJKLMNOPRSTUVWYZ'}
-#mapping='ABCJEZGHDIKLMWOXQRSTUVNPYF' 
-echo "tr $mapping 1122233344455A666777888" | tee >> reserves.txt
+#mapping=${LETTERMAP:-'ABDEFGHIJKLMNOPRSTUVWYZ'}
+mapping=${LETTERMAP:-'ABDEFGHĠḨIJKLMNOPRŘSTUVWẆYΥZ'}
+#mapping='ABCJEZGHDIKLMWOXQRSTUVNPYF'Ř Ẇ ĠḨ Υ 
+echo "tr $mapping 1122233333444555666677788888" | tee >> reserves.txt
 
-tr $mapping '11222333444555666777888' < data/d4-e161.csv > temp
+# New: Perl tr/// with UTF-8 enabled
+
+echo "translate uppercase to e.161-ish (e.161 - 1) — using hash map"
+echo 
+
+perl -CS -pe '
+    use utf8;
+    my %map = (
+        A => "1", B => "1",
+        D => "2", E => "2", F => "2", 
+        G => "3", H => "3",
+        Ġ => "3", Ḩ => "3",  # ←  new vowel-marked G and H
+        I => "3", 
+        J => "4", K => "4", L => "4",
+        M => "5", N => "5", O => "5",
+        P => "6", R => "6",
+        Ř => "6",           # ←  new vowel-marked R
+        S => "6",
+        T => "7", U => "7",
+        Υ => "7",
+        V => "7",
+        W => "8",
+        Ẇ => "8",           # ←  new vowel-marked W
+        Y => "8", 
+        Z => "8"
+        # Add any other letters/digits you need here
+    );
+
+    s/(.)/ exists $map{$1} ? $map{$1} : $1 /ge;
+' < data/d4-e161.csv > temp
+#tr $mapping '1122233333444555666677788888' < data/d4-e161.csv > temp
 #tr $mapping '11122233344455566667888888' < data/d4-e161.csv > temp
 #sed 's/[1-8]*!//;' temp > d4-e161.csv
 mv temp data/d4-e161.csv
