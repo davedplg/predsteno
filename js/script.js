@@ -310,7 +310,10 @@ t = t.replace(/(?<prefix>[A-Z']+)\+ /g, (m, p) => p.toLowerCase() + "'");
 function parseCaseMarking(text) {
   let t = text;
   if (!text.includes('⟐')) return text; 
-
+//uppercase singleton
+  t=t.replace(/([^\p{L}|^])([\p{Lu}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toLowerCase());
+//lowercase singleton
+  t=t.replace(/([^\p{L}|^])([\p{Ll}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toUpperCase());
   let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     // lower → Title
   let lCâs = /([\p{Ll}])([\p{Ll}0]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
   let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
