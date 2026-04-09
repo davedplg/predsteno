@@ -36,6 +36,7 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
     'y': 58,  // right: function key
     
      'backspace': 97,
+     'delete': 101,
      'enter': 71,
 
     ' ': 86,     //reserves
@@ -96,6 +97,7 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
  [ 29  * 23]        : '92', 
   97:'93',   //delete
   71:'94',   //enter
+  101:'95',
 
 
     53       : 'wd1',  // <space>  selct 1st word
@@ -114,6 +116,7 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
+  '95': 'X' ,
   '96': ' ',
   '97': ' ⟐ ' ,
 };

@@ -2,7 +2,7 @@
 
 echo
 echo "# p6-concatenate.sh #"
-echo "merge two most frequent words of each frag"
+echo "merge three most frequent words of each frag"
 echo " This may have long hyphenated lists as I"
 echo " Work out how to do this"
 echo

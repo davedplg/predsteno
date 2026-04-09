@@ -65,7 +65,7 @@ const optionKeys = Object.keys(keyMap2ndPass);
 // spanRegEx detects the first group of hyphenated
 // reserve (2nd parse) words after it has been highlighted
 // in a span with class="SecondParse"
-const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
+const spanRegEx    = /<span[^<]*>([^<]*)<\/span> /;
 // reserveRegEx detects unhighlighted raw groups
 //    Matches word-like tokens 
 //      (letters, numbers, punctuation) 
@@ -74,10 +74,31 @@ const spanRegEx    = /<span[^<]*>([^<]*)<\/span>/;
 //const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
 //const reserveRegEx = /[\p{L}\p{N}'xx+0-9]+(?:[\u{2194}][\p{L}\p{N}xx'+0-9]+)+/u;
 
-const reserveRegEx = /[\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+(?:[\u{2194}][\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+)+/u;
-const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~";
+//const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`\~";
+//
+////const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~";
+//const reserveRegEx = /␣[\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+(?:[\u{2194}][\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+)+/u;
 // Safe symbol list for empty reserves slots (punctuation injection)
-const missingRegEx = new RegExp(sep3 + sep3 + 'MissingWord' + sep3 + sep3);
+ 
+const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~";
+
+// escape regex-special chars in punctuation for safe insertion
+const escapeForRegex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const punct = escapeForRegex(KEYBOARD_PUNCTUATION) + '0-9';
+// character class body: letters, numbers, punctuation (escaped)
+const charClass = `\\p{L}\\p{N}'${punct}`;
+
+// build pattern string
+const pattern = `${sep1}[${charClass}]+(?:${sep2}[${charClass}]+)+`;
+
+// final RegExp with Unicode flag
+const reserveRegEx = new RegExp(pattern, 'u');
+
+// result
+console.log(reserveRegEx);
+
+const missingRegEx = new RegExp(sep3 + sep3 + 'MissingWord' + sep3 + sep3 + ' ');
 
 /** calcProducts: calculate prime (p) products
  * there will be 1-6 keys pressed simultaneously
@@ -146,9 +167,16 @@ function select2ndPassWd(key) {
   }
 
   mdRepl(spanRegEx, '');
-  doc.col -= (wds.length || 0);
-
-  insertWord(selectedWord, false);   // no extra space
+  doc.col -= (wds.length+1 || 0);
+  
+  addspace=true;
+   
+  if(selectedWord.includes("^")){
+    selectedWord=selectedWord.replace(/\^/,"");
+    addspace=false;
+  }
+  
+  insertWord(selectedWord, addspace);   // no extra space
   clearFrag();
 // No RAF for the decision — do it immediately
   if (isThirdPass) {
@@ -594,12 +622,13 @@ function firstParse() {
 
     case 'missed': 
         wd = (reserves[frag] || '').includes(sep1) 
-          ? reserves[frag].replace(new RegExp(sep1,'g'), sep2)
+          ? sep1+reserves[frag].replace(new RegExp(sep1,'g'), sep2)
                           .replace(/\+/g,"")
                           
        : (reserves[frag] || '').replace(/GT/g,"&gt;")
                        .replace(/LT/g,"&lt;") ;
-      wd= ' '+wd
+//  wd= sep1 +wd
+//  wd= ' ' +wd
       break;
 
     default:

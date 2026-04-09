@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
- <details>
-   <summary style="font-size:130%">Menu (Enter to Start)</summary>
-   <details>
+  <div>
+   <details  > 
      <summary>file</summary>
-      <div class="file-controls" style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+      <dialog class="file-controls" style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+      
         <button id="btn-save-as">Save as…</button>
         <button id="btn-load">Load Markdown…</button>
         <button id="btn-clear">Clear</button>
@@ -20,29 +20,51 @@
         <a id="legacy-download" href="#" style="font-size: 0.9em; color: #666; align-self: center;" hidden>
           Quick save (old method)
         </a>
-     </div>
-     </details>
-   <details>
-     <summary>instructions</summary>
+     </dialog>
+   </details>
+   <details > 
+     <summary>help</summary>
+     <dialog open>
      <ul>
-       <li>e.161 <a href="../../index.html#e161">numpad</a>: letter -> digit mapping</li>
-       <li> <a href="#chords">chords</a></li>
-       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
-       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
        <li>Enter Twice to Start!</li>
        <li>Mirrored-hands Text-Input</li>
+       <li>e.161 
+         <a href="../../index.html#e161">numpad
+         </a>
+         : letter -> digit mapping</li>
+       <l:i> <a href="#chords">chords</a></li>
+       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
+       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
      </ul>
+     </dialog>
    </details>
-   <details>
-     <summary>context</summary>
-     <ul> 
+<!--     </dialog>
+</details>  -->
+   <details > 
+     <summary>about</summary>
+     <dialog open>
+     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
+      <ul> 
        <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
        <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
      </ul>
-   </details>    
- <details open>
-   <summary>See Markdown</summary>  
-<textarea id="output" rows="9" cols="80" readonly>
+     </dialog>
+   </details>
+      <label>
+       <input type="checkbox" id="markLetters" checked>
+         Marks
+     </label>
+      
+     <label>
+       <input type="checkbox" id="colorVowels" checked>
+         Colors
+     </label>
+     <!-- <div> -->
+  <!--  <details > -->
+  <details> 
+   <summary>Code</summary>  
+    <div >
+<textarea id="output" rows="9" cols="80" readonly class="striped-div">
  ## Mārkdõw0n Enâblèd 
 - 'spâçè' 'spâçè' entèŕ = nëw0 lînè 
 - entèŕ entèŕ = parágraph
@@ -61,62 +83,27 @@
 ### Humptý  Dumptý  sat on  a wål0l  
 
 Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn 
-     </textarea>
+    </textarea>
+      <!--     </div> -->
   </details>
-
- <details>
-   <summary> Debug Info</summary> 
-  <table style="display: none;">
-  <table>
-    <tr>
-      <td> Pressed Keys: <span id="debugKeys">-</span></td>
-      <td> Chord: <span id="debugChord">-</span></td>
-    </tr>
-    <tr>
-      <td> Left Product: <span id="debugLeftProduct">-</span></td>
-      <td> Right Product: <span id="debugRightProduct">-</span></td>
-    </tr>
-    <tr>
-      <td> Current Word: <span id="debugWord">-</span></td>
-      <td> Thumbs: <span id="debugThumbs">-</span></td>
-    </tr>
-  </table>
-
- </details>
-   <details open>
-     <summary>formatting</summary>
-     <label>
-       <input type="checkbox" id="markLetters" checked>
-         Marks
-     </label>
-      
-     <label>
-       <input type="checkbox" id="colorVowels" checked>
-         Colors
-     </label>
-   </details>  
-   <details>
-     <summary>about</summary>
-     <h4> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</h4>
-   </details>
- </details>
+</div>
 <div id="outpt2" > </div>
 
 <div id="instructions">
   <a id="numpad">
     <table >
   <tr class="strong_digit">
-      <td><key>Q</key><key>W</key><key>E</key><key>R</key>;<key>F</key></td>
+    <td><key>Q</key><key>W</key><key>E</key><key>R</key>;<br/><key>F</key></td>
       <td> &rarr;</td>
-      <td> 2,3,5,6,1</td>
-      <td>6,8,7,4,1</td>
+      <td> 2,3,5,6;<br/>8</td>
+      <td>;8,7,4,1<br/>6</td>
       <td> &larr;</td>
-      <td> <key>J</key>;<key>U</key><key>I</key><key>O</key><key>P</key></td>
+      <td> ;<key>U</key><key>I</key><key>O</key><key>P</key><br/><key>J</key></td>
     </tr>
  <tr class="strong_digit">
       <td><key>Q</key><key>W</key><key>E</key>➕<key>R</key></td>
       <td> &rarr;</td>
-      <td> 8,7,4</td>
+      <td> 1,4,7</td>
       <td>5,3,2</td>
       <td> &larr;</td>
       <td> <key>U</key>➕<key>I</key><key>O</key><key>P</key></td>

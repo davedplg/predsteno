@@ -33,6 +33,7 @@ const primeMap = {
      'y': 58,
     
      'backspace': 97,
+     'delete': 101,
      'enter': 71,
 
     ' ': 86,     //reserves
@@ -84,6 +85,7 @@ const productMap = {
  [ 29  * 17]        : '92', 
  [ 29  * 23]        : '92', 
   97:'93',   //delete
+ 101:'95', 
   71:'94',   //enter
 
 
@@ -104,6 +106,7 @@ const NON_ALPHA_CHORDS = {
   '92': '+, ' ,
   '93': 'D' ,
   '94': '\n' ,
+  '95': 'X' ,
   '96': ' ' ,
   '97': ' ⟐ ' ,
 };

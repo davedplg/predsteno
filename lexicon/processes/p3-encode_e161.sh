@@ -49,14 +49,14 @@ perl -CS -pe '
         M => "5", N => "5", O => "5",
         P => "6", R => "6",
         Ř => "6",           # ←  new vowel-marked R
-        S => "6",
+        S => "8",
         T => "7", U => "7",
         Υ => "7",
         V => "7",
         W => "8",
         Ẇ => "8",           # ←  new vowel-marked W
         Y => "8", 
-        Z => "8"
+        Z => "6"
         # Add any other letters/digits you need here
     );
 

@@ -87,7 +87,7 @@ const productMap = {
   29:'91',   //,
   61:'92',   //.
   97:'93',   //backspace
- 101:'95',   //delete
+ 101:'95',   //delete 'delete': 101,
   71:'94',   //enter
 
     53       : 'wd1',  // <space>  selct 1st word
@@ -100,7 +100,7 @@ const productMap = {
 };
 
 // includes codes corresponding to non alphabetic input
-//export \
+//export \ 101:'95',    'delete': 101, '95': 'X' ,
 const NON_ALPHA_CHORDS = {
   '91': '+.  ' ,
   '92': '+, ' ,
