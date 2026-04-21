@@ -54,30 +54,35 @@ const doc = {
   col: 0,
 
   dRow(n) {
-    const candidate = this.row + n;
-    this.row = Math.max(0, Math.min(candidate, this.lines.length - 1));
-    this.col = Math.min(this.col, this.lines[this.row].length);
+    const candidate = doc.row + n;
+    doc.row = Math.max(0, Math.min(candidate, doc.lines.length - 1));
+    doc.col = Math.min(doc.col, doc.lines[doc.row].length);
   },
 
   dCol(n) {
-    let candidate = this.col + n;
-    const sRow = this.row;
-    const line_length = this.lines[sRow].length;
+    let candidate = doc.col + n;
+    const sRow = doc.row;
+    const line_length = doc.lines[sRow].length;
 
     if (candidate >= 0 && candidate <= line_length) {
-      this.col = candidate;
+      doc.col = candidate;
       return;
     }
 
     if (candidate < 0) {
-      this.dRow(-1);
-      this.col = this.lines[this.row].length;
-      return this.dCol(candidate);
+      doc.dRow(-1);
+      doc.col = doc.lines[doc.row].length;
+      return doc.dCol(candidate);
     }
-
-    this.dRow(1);
-    this.col = 0;
-    return this.dCol(candidate - line_length);
+//below is a hack why did this mess up after a deletion
+// deletion messed up the first inequality fooling this function
+// to do a late return  so ive blocked it with frag logic
+// below and tested cursor still skips to previous of next line when
+// reaching start and ends of a line. perhaps this is lame.
+//  if(!frag) doc.dRow(1);
+    doc.dRow(1);
+    doc.col = 0;
+    return doc.dCol(candidate - line_length);
   }
 };
 
@@ -140,6 +145,7 @@ function loadMarkdown_new(newText) {
   setMd(newText);                    // put the new text into the textarea
   syncFromMarkdown();                // parse it into doc.lines + set row/col
   updateDisplay();                   // render with cursor
+  document.getElementById('file-dialog').close();
 }
 
 function insertWord(word, addSpace = true) {
@@ -596,6 +602,7 @@ function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
+     document.getElementById('file-dialog').close();
       // Optional: show brief feedback
       // alert(`Loaded ${file.name}`);
     } catch (err) {

@@ -21,7 +21,7 @@ let pendingHfnGps = [];
 let groupIndex = 0;
 let bwords = '';
 let opts = '';
-let oldOpts = '';
+//let oldOpts = '';
 
 let lastDecidingSpan="";
 
@@ -339,11 +339,13 @@ function parseCaseMarking(text) {
   let t = text;
   if (!text.includes('⟐')) return text; 
 //uppercase singleton
-  t=t.replace(/([^\p{L}|^])([\p{Lu}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toLowerCase());
+  t=t.replace(/([^\p{L}^0|^])([\p{Lu}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toLowerCase());
+  console.log('after uppercase singleton:', t, "col: ", doc.col);
 //lowercase singleton
-  t=t.replace(/([^\p{L}|^])([\p{Ll}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toUpperCase());
+  t=t.replace(/([^\p{L}^0|^])([\p{Ll}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toUpperCase());
+  console.log('after lowercase singleton:', t, "col: ", doc.col);
   let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     // lower → Title
-  let lCâs = /([\p{Ll}])([\p{Ll}0]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
+  let lCâs = /([\p{Ll}0])([\p{Ll}0]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
   let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
 
   t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
@@ -793,6 +795,7 @@ function underlineOptionsToCurrentFragLength(frag) {
   function setWordOptions(){
    	removeWordOptions();
     console.log('setWordOptions');    
+    console.log('col:' + doc.col);    
 
     if (!dic[frag]) return;
 
@@ -808,33 +811,47 @@ function underlineOptionsToCurrentFragLength(frag) {
     flen=frag.length;
     let oldfrag = frag.substr(0,flen-2);  
     if(flen>2){ oldBwords+= underlineFirstNLtrs(oldfrag,caps); }
-    bwords+=    underlineFirstNLtrs(frag,caps);
+/// bwords+=    underlineFirstNLtrs(frag,caps);
+    bwords+=    underlineFirstNLtrs(frag,caps) + "</span>";
 //  wdOpts.innerHTML = oldBwords +"</span>";
 //    setMd(md() + bwords + "</span>");
-    insertWord( bwords + "</span>");
+///    insertWord( bwords + "</span>");
+    insertWord( bwords);
+    doc.dCol(-bwords.length)
    }
 
-
 function tidyWordOptions(capsOpts)
+{  
+  console.log('tidyWordOptions');    
+  console.log('col:' + doc.col);    
+ 	removeWordOptions();
+
+  if (!dic[frag]) return;
+
+  opts=`<span id='firstParse'>${capsOpts}</span>`; 
+  //renderMarkdown();
+  insertWord(opts,false);
+  doc.dCol(-opts.length);
+  renderMarkdown();
+}  
+
+
+
+function tidyWordOptions_old(capsOpts)
 {  
  	removeWordOptions();
 
   if (!dic[frag]) return;
 
-  let CueOpts =`<span id='firstParse'>${capsOpts}</span>`; 
-  oldOpts=opts;// old
   opts=`<span id='firstParse'>${capsOpts}</span>`; 
   
     if (dic[frag]) { 
-//  wdOpts.innerHTML = CueOpts + (CueOpts.match(/style=/)?' single letter needed after odd':'');
     renderMarkdown();
     } else { // if word finished delete suggestions
         frag=frag.slice(0,-2) || '';
-//      wdOpts.innerHTML = oldOpts; 
    }
   insertWord(opts,false);
   doc.dCol(-opts.length);
-//setMd(  md()   + opts);
   renderMarkdown();
 }  
 
