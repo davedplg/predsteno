@@ -141,12 +141,6 @@ function initDocument() {
 }
 
 // Load new markdown content (e.g. from file)
-function loadMarkdown_new(newText) {
-  setMd(newText);           // put the new text into the textarea
-  syncFromMarkdown();       // parse it into doc.lines + set row/col
-  updateDisplay();          // render with cursor
-//  document.getElementById('file-dialog').close();
-}
 
 function insertWord(word, addSpace = true) {
   removeWordOptions();
@@ -163,7 +157,7 @@ function insertWord(word, addSpace = true) {
     currentLine.slice(doc.col);
 
   // Move cursor forward by the length of what we inserted
-  doc.col += toInsert.length;
+  doc.col += toInsert.replace(/[+]/g,'').length;
 
   updateDisplay();
 }
@@ -504,143 +498,6 @@ function showSimpleModal(title, innerHTML, onConfirm) {
   });
 }
 
-// ───────────────────────────────────────────────
-// Persistent last directory helpers (add these near the top with downloadContent)
-let lastDirHandle = null;
-
-async function saveLastDir(handle) {
-  return new Promise((resolve) => {
-    const req = indexedDB.open('chord-input-db', 1);
-    req.onupgradeneeded = e => e.target.result.createObjectStore('dirs');
-    req.onsuccess = () => {
-      const db = req.result;
-      const tx = db.transaction('dirs', 'readwrite');
-      tx.objectStore('dirs').put(handle, 'lastDir');
-      tx.oncomplete = () => resolve(true);
-    };
-  });
-}
-
-async function loadLastDir() {
-  return new Promise((resolve) => {
-    const req = indexedDB.open('chord-input-db', 1);
-    req.onupgradeneeded = e => e.target.result.createObjectStore('dirs');
-    req.onsuccess = () => {
-      const db = req.result;
-      const tx = db.transaction('dirs', 'readonly');
-      const getReq = tx.objectStore('dirs').get('lastDir');
-      getReq.onsuccess = () => resolve(getReq.result || null);
-    };
-  });
-}
-
-// Restore on startup — add this inside initFileControls() or DOMContentLoaded
-// loadLastDir().then(h => { if (h) lastDirHandle = h; });
-
-// ───────────────────────────────────────────────
-// UPDATED handleSaveAs (this is the main change)
-async function handleSaveAs_new() {
-  const now = new Date().toISOString().slice(0,16).replace(/[:T-]/g, '');
-  const firstLine = (md() || '').split('\n')[0]
-    .replace(/^\s*#+\s*|\s*[-*_]+\s*$/g, '')
-    .trim()
-    .slice(0, 35) || 'chorded-notes';
-  
-  const suggestedName = `${firstLine || 'notes'}-${now}`;
-
-  const content = `
-    <label style="display:block; margin:0.8em 0;">
-      Filename:
-      <input type="text" id="save-fname" value="${suggestedName}" style="width:100%; padding:0.4em; margin-top:0.3em;">
-    </label>
-    
-    <label style="display:block; margin:0.8em 0;">
-      Format:
-      <select id="save-format" style="width:100%; padding:0.4em;">
-        <option value="md">Markdown (with phonetics / diacritics)</option>
-        <option value="md-clean">Markdown (clean / ASCII only)</option>
-        <option value="html">HTML (rendered + styles)</option>
-      </select>
-    </label>
-  `;
-
-  showSimpleModal("Save As…", content, async (dlg) => {
-    const fnameInput = dlg.querySelector('#save-fname');
-    const formatSelect = dlg.querySelector('#save-format');
-    
-    const baseName = (fnameInput.value || 'notes').trim();
-    const format = formatSelect.value;
-
-    let finalName, finalContent, mimeType;
-
-    if (format === 'md') {
-      finalName = baseName + '.md';
-      finalContent = md();
-      mimeType = 'text/markdown; charset=utf-8';
-    } else if (format === 'md-clean') {
-      finalName = baseName + '.md';
-      finalContent = removeDiacritics(md());
-      mimeType = 'text/markdown; charset=utf-8';
-    } else if (format === 'html') {
-      finalName = baseName + '.html';
-      finalContent = await makeHTML();
-      mimeType = 'text/html; charset=utf-8';
-    }
-
-    // === NEW: Try to save into the persisted last directory first ===
-    let saved = false;
-    if (lastDirHandle && 'showDirectoryPicker' in window) {
-      try {
-        const fileHandle = await lastDirHandle.getFileHandle(finalName, { create: true });
-        const writable = await fileHandle.createWritable();
-        await writable.write(finalContent);
-        await writable.close();
-        saved = true;
-        console.log(`✅ Saved to last directory: ${finalName}`);
-      } catch (err) {
-        console.warn('Directory save failed, falling back:', err);
-      }
-    }
-
-    // === Fallback to your original download logic ===
-    if (!saved) {
-      if ('showSaveFilePicker' in window) {
-        try {
-          const handle = await window.showSaveFilePicker({
-            suggestedName: finalName,
-            types: [{
-              description: format === 'html' ? 'HTML Files' : 'Markdown Files',
-              accept: format === 'html' 
-                ? { 'text/html': ['.html'] } 
-                : { 'text/markdown': ['.md'], 'text/plain': ['.txt'] }
-            }],
-           startIn: 'documents'
-          });
-          const writable = await handle.createWritable();
-          await writable.write(finalContent);
-          await writable.close();
-          return;
-        } catch (err) {
-          if (err.name === 'AbortError') return;
-          console.warn('Native save failed, falling back to download', err);
-        }
-      }
-
-      // Old-school download fallback
-      downloadContent({ 
-        content: finalContent, 
-        filename: finalName, 
-        type: mimeType, 
-        linkId: format === 'html' ? 'html_download' : 'md_download' 
-      });
-    }
-
-    // Optional: close the file dialog if you still use it
-    document.getElementById('file-dialog').open = false;
-  });
-}
-// ───────────────────────────────────────────────
-// Save as… dialog + logic
 async function handleSaveAs() {
   const now = new Date().toISOString().slice(0,16).replace(/[:T-]/g, '');
   const firstLine = (md() || '').split('\n')[0]
@@ -789,9 +646,9 @@ function initFileControls() {
       renderMarkdown();
     });
 
-loadLastDir().then(handle => {
-  if (handle) lastDirHandle = handle;
-});
+//loadLastDir().then(handle => {
+//  if (handle) lastDirHandle = handle;
+//});
  }
 
 window.addEventListener('DOMContentLoaded', initFileControls);

@@ -430,73 +430,6 @@ function nonAlphabetic() {
  * Fully respects the document model (doc.lines + doc.col).
  * When at column 0, it joins with the previous line (standard editor behavior).
  */
-function del_old(size) {
-  syncFromMarkdown();
-
-  const row = doc.row;
-  let line = doc.lines[row];
-
-  // ────── CASE 1: Cursor at start of line → join with previous line ──────
-  if (doc.col === 0  && row === 0) return true;
-
-  if (doc.col === 0) {
-    // Join previous line + current line
-    const prevLine = doc.lines[row - 1];
-    const currentLine = doc.lines[row];
-
-    // Remove trailing newline from previous line (it's implicit in the array)
-    doc.lines[row - 1] = prevLine + currentLine;
-    // Remove the now-empty current line
-    doc.lines.splice(row, 1);
-
-    // Move cursor to the end of what was the previous line
-    doc.row = row - 1;
-    doc.col = prevLine.length;
-
-    updateDisplay();
-    return true;
-  }
-
-  // ────── CASE 2: Normal word deletion inside the line ──────
-  const beforeCursor = line.slice(0, doc.col);
-
-  // Match the last sequence of non-whitespace characters before cursor
-  const wordMatch = beforeCursor.match(/(\S+)\s*$/);
-//  if(size=='char'){
-//    const wordMatch = beforeCursor.match(/(.)$/);
-//    } else {
-//      const wordMatch = beforeCursor.match(/(\S+)\s*$/);
-//    }
-  if (!wordMatch) {
-    // No word found → just delete trailing space(s) if present
-    if (beforeCursor.endsWith(' ')) {
-      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
-      doc.col = Math.max(0, doc.col - 1);
-    }
-    updateDisplay();
-    return true;
-  }
-
-  const wordToDelete = wordMatch[1];
-  const startOfWord = beforeCursor.lastIndexOf(wordToDelete);
-
-  // Rebuild line: everything before the word + everything after cursor
-  let newBefore = beforeCursor.slice(0, startOfWord).replace(/\s+$/, ''); // collapse spaces
-  const after = line.slice(doc.col);
-
-  doc.lines[row] = newBefore + after;
-
-  // Place cursor where the deleted word began
-  doc.col = newBefore.length;
-
-  // Final cleanup: collapse any double spaces that might remain
-  if (doc.lines[row].includes('  ')) {
-    doc.lines[row] = doc.lines[row].replace(/\s{2,}/g, ' ');
-  }
-
-  updateDisplay();
-  return true;
-}
 function del(size) {
   syncFromMarkdown();
 
@@ -830,26 +763,6 @@ function tidyWordOptions(capsOpts)
 
   opts=`<span id='firstParse'>${capsOpts}</span>`; 
   //renderMarkdown();
-  insertWord(opts,false);
-  doc.dCol(-opts.length);
-  renderMarkdown();
-}  
-
-
-
-function tidyWordOptions_old(capsOpts)
-{  
- 	removeWordOptions();
-
-  if (!dic[frag]) return;
-
-  opts=`<span id='firstParse'>${capsOpts}</span>`; 
-  
-    if (dic[frag]) { 
-    renderMarkdown();
-    } else { // if word finished delete suggestions
-        frag=frag.slice(0,-2) || '';
-   }
   insertWord(opts,false);
   doc.dCol(-opts.length);
   renderMarkdown();
