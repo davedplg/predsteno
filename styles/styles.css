@@ -116,7 +116,7 @@ button {
   padding: 10px 18px;
   border: 2px solid #bbb;
   background-color: #c9c9f9;
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-weight: 600;
@@ -186,15 +186,16 @@ summary {
 key, kiy {
   color: #fff;
   background-color: #1c2526;
-  padding: 4px 9px;
+  padding: 4px 5px;
   border-radius: 6px 9px;
   border: 1px solid #3a3a3a;
   box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5),
               2px 2px 4px rgba(0,0,0,0.3);
   display: inline-block;
   font-weight: bold;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  margin-right: 0.35em;
+  margin-right: 0.00em;
 }
 
 kiy {
@@ -232,7 +233,7 @@ dialog:not([open]) {
 /* Only style the dialog when it is actually open */
 dialog[open],
 dialog:modal {   /* :modal is the modern way for showModal() dialogs */
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.92);
 }
 
 /* Keep your existing hidden rule — it's good */

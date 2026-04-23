@@ -331,7 +331,7 @@ function format_augmented_words(t,style){
   t=t.replace(/([a-zA-Z])0/gi,'<x>$1</x>');
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
-  //tag voiced consonants <vc> ḩḨ
+  //tag voiced consonants <vc> ḩḨẇġḩ
   t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
   t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
