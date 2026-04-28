@@ -45,7 +45,7 @@ const dbgThumbs = document.getElementById('debugThumbs');
 const dbgChord = document.getElementById('debugChord');
 const dbgWd = document.getElementById('debugWord');
 
-const CHORD_TIMEOUT = 80;
+const CHORD_TIMEOUT = 150;
 //const CHORD_TIMEOUT = 110;
 // ==================== DOCUMENT MODEL ====================
 const doc = {
@@ -641,8 +641,9 @@ function initFileControls() {
   document.getElementById('btn-save-as')?.addEventListener('click', handleSaveAs);
   document.getElementById('btn-load')?.addEventListener('click', handleLoadMarkdown);
   document.getElementById('btn-clear')?.addEventListener('click', () => {
-      setMd(' ');
+      setMd('a  \nb');
       document.getElementById('file-dialog').open = false;
+      updateDisplay();
       renderMarkdown();
     });
 

@@ -70,14 +70,6 @@ const spanRegEx    = /<span[^<]*>([^<]*)<\/span> /;
 //    Matches word-like tokens 
 //      (letters, numbers, punctuation) 
 //     separated by at least one ↔ arrow
-// \p{P} catches commas, periods, quotes, brackets, dashes, etc. automatically
-//const reserveRegEx = /[\p{L}\p{N}\p{P}\p{S}'+0-9]+(?:[\u{2194}][\p{L}\p{N}\p{P}'+0-9]+)+/u;
-//const reserveRegEx = /[\p{L}\p{N}'xx+0-9]+(?:[\u{2194}][\p{L}\p{N}xx'+0-9]+)+/u;
-
-//const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`\~";
-//
-////const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~";
-//const reserveRegEx = /␣[\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+(?:[\u{2194}][\p{L}\p{N}'!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~0-9]+)+/u;
 // Safe symbol list for empty reserves slots (punctuation injection)
  
 const KEYBOARD_PUNCTUATION = "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~";
@@ -212,28 +204,7 @@ function mark3rdPassWds() {
 
   mdRepl(missingRegEx, `<input class="missing-word" placeholder="type word" autofocus />`);
   renderMarkdown();
-
-  // THIS IS THE KEY: focus the actual <input> in the preview, not the textarea. May supply option for multi-tap 3rd parse entry later.
-//  requestAnimationFrame(() => {
-//    const input = outpt2.querySelector('input.missing-word');
-//    if (input) {
-//      input.focus();
-//      input.select(); // nice UX: select all so user can overtype instantly
-//    } else {
-//      outputMarkdown.focus(); // fallback
-//    }
-//});
-// requestAnimationFrame(() => {
-//    const input = outpt2.querySelector('input.missing-word');
-//    if (input) {
-//      input.focus();
-//      input.select(); // nice UX: select all so user can overtype instantly
-//    } else {
-//      outputMarkdown.focus(); // fallback
-//    }
-//);
 }
-
 /**
  * Appends left and right chords to the encoded fragment, 
  * chords digit values were reordered (asc) in productMap 
@@ -308,9 +279,6 @@ function appendChord_recursive(ofrag, leftChord, rightChord) {
 return typeof result === 'string' && result.match(/[a-z]/) ? false : ofra + order(g, singleL) + result;
 }
 
-
-
-
 // Orders two characters lexicographically
 function order(m, n) { 
   if (pairwise_reordered_dic == false) return  `${m}${n}`;
@@ -340,22 +308,19 @@ function parseCaseMarking(text) {
   if (!text.includes('⟐')) return text; 
 //uppercase singleton
   t=t.replace(/([^\p{L}^0|^])([\p{Lu}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toLowerCase());
-  console.log('after uppercase singleton:', t, "col: ", doc.col);
 //lowercase singleton
   t=t.replace(/([^\p{L}^0|^])([\p{Ll}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toUpperCase());
-  console.log('after lowercase singleton:', t, "col: ", doc.col);
-  let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     // lower → Title
-  let lCâs = /([\p{Ll}0])([\p{Ll}0]+\s*) ⟐ /gu;    // Title → Upper (or whatever this one does)
-  let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     // ← FIXED: Upper → lower (more forgiving)
+  
+  // Title case word 
+  let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     
+  // Lower case  (initial)(rest) 
+  let lCâs = /([\p{Ll}0])([\p{Ll}0]+\s*) ⟐ /gu;    
+  // Uppercase
+  let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     
 
   t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
-  console.log('after first:', t, "col: ", doc.col);
-
   t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
-  console.log('after second:', t);
-
   t = t.replace(uCâs, (_,frodo) => frodo.toLowerCase());
-  console.log('after third:', t);
 
   setMd(t); 
 requestAnimationFrame(() => {
@@ -436,7 +401,8 @@ function del(size) {
   const row = doc.row;
   let line = doc.lines[row];
 
-  // ────── CASE 1: Cursor at start of line → join with previous line ──────
+  // ────── CASE 1: 
+  // Cursor at start of line → join with previous line ──────
   if (doc.col === 0  && row === 0) return true;
 
   if (doc.col === 0) {
@@ -444,7 +410,8 @@ function del(size) {
     const prevLine = doc.lines[row - 1];
     const currentLine = doc.lines[row];
 
-    // Remove trailing newline from previous line (it's implicit in the array)
+    // Remove trailing newline from previous line 
+    // (it's implicit in the array)
     doc.lines[row - 1] = prevLine + currentLine;
     // Remove the now-empty current line
     doc.lines.splice(row, 1);
@@ -457,21 +424,13 @@ function del(size) {
     return true;
   }
 
-  // ────── CASE 2: Normal word deletion inside the line ──────
+  // ────── CASE 2: 
+  // Normal word deletion inside the line ──────
   const beforeCursor = line.slice(0, doc.col);
 
-  // Match the last sequence of non-whitespace characters before cursor
+  // Match the last sequence of non-whitespace 
+  // characters before cursor
   const wordMatch = beforeCursor.match(/\S+\s*$/);
-//  if (!wordMatch) {
-//    // No word found → just delete trailing space(s) if present
-//    if (beforeCursor.endsWith(' ')) {
-//      doc.lines[row] = beforeCursor.replace(/\s+$/, '') + line.slice(doc.col);
-//      doc.col = Math.max(0, doc.col - wordMatch[0].length);
-//    }
-//    updateDisplay();
-//    return true;
-//}
-
 
   // Rebuild line: everything before the word + everything after cursor
   if(size=='char'){
@@ -487,6 +446,7 @@ function del(size) {
   updateDisplay();
   return true;
 }
+//start of parent function 
 	removeWordOptions();
   let size='char';
 
@@ -508,7 +468,8 @@ function del(size) {
     if(evenString(frag)) frag = frag.replace(/.$/, '');
     frag = frag.replace(/.$/, '');
   
-    if(dic[frag]) setWordOptions(); 
+    let capsOpts =underlineFirstNLtrs(frag,caps);   
+    if(dic[frag]) setWordOptions(capsOpts); 
     
     return true;
  }
@@ -609,48 +570,7 @@ function caps2underlineLcase(str) {
     return underlineed.toUpperCase();
 }
 
-function processBiChord() {
 
-({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
-  ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
-  chord         = left+right;     
-  thumbChord    = productMap[thumbProduct] || '';
-
-//updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
- 
-//setMd(removeCursor(md()));
- 
-if (nonAlphabetic()) {
-  presdKeys.clear();   
-  renderMarkdown();
-
-  // Trigger 2nd parse after double Enter (new paragraph)
-  if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
-    reParseParagraph();
-  }
-
-  return true;
-}
- 
-  if (chord) {
-  //appends chord and/or rejects ambig chord
-    if(!(frag=appendChord_recursive(frag,left,right))){
-  //updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambig chord - even after odd?');
-        } 
-  } else console.warn('No valid chord generated, skipping appendChord');
- 
-  let append='';
- 
- 
-if (thumbChord) {
-  firstParse();
-  presdKeys.clear();
-  return;  // ← "We're done here. Word committed. Move on."
-}
-  let capsOpts =underlineFirstNLtrs(frag,caps);   
-  tidyWordOptions(capsOpts);
-  presdKeys.clear();
-}
 //handle both hands chords
 /**
  * Processes a chord input by calculating prime products
@@ -658,27 +578,35 @@ if (thumbChord) {
  * @param {void}
  * @returns {void}
  */
-function processBiChord_new() {
-    ({ lp: lProduct, 
-      rp: rProduct, 
-      tp: thumbProduct } = calcPrimeProducts());
-   
-     ( { ldigits: left, 
-          rdigits: right } = mapChordToDigits(lProduct, rProduct));
 
-     chord = left + right;     
-     thumbChord = productMap[thumbProduct] || '';
+function processBiChord()
+{
 
- // updtDebugInfo(presdKeys, lProduct, rProduct, thumbChord, chord, frag);
-//  setMd(removeCursor(md()));
-    setMd(md());
-    // Handle different scenarios
-    whenInputNonAlpha();
-    whenInputWordFrag(chord, frag, left, right);
+({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
+  ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
+  chord         = left+right;     
+  thumbChord    = productMap[thumbProduct] || '';
 
-    let append='';
-    whenInputIsWordOptionSelection(thumbChord);
-    underlineOptionsToCurrentFragLength(frag);
+  if(whenInputNonAlpha()) return;
+
+  let pfrag=frag; 
+  //appends chord and/or rejects ambig chord
+  if (chord) {
+   frag=appendChord_recursive(frag,left,right)
+   console.log('dic[frag], frag, left, right',!dic[frag],frag,left,right); 
+   if(!(frag)) {
+     console.warn('ambigous chord frag, left, right',frag,left,right); 
+      }} else console.warn('invalid chord, skips appendChord');
+  if(!dic[frag]) frag=pfrag;
+
+  let append='';
+ 
+  if(whenInputIsWordOptionSelection(thumbChord)) return; 
+
+  let capsOpts =underlineFirstNLtrs(frag,caps);   
+//tidyWordOptions(capsOpts);
+   setWordOptions(capsOpts);
+  presdKeys.clear();
 }
 
 // Function to handle non-alphabetic cases
@@ -695,68 +623,30 @@ function whenInputNonAlpha() {
     return false; // Optional: indicates normal flow continues
 }
 
-// Function to process the input word fragment
-function whenInputWordFrag(chord, frg, lft, rt) {
-    if (chord) {
-      if(!(frag=appendChord_recursive(frg,lft,rt))){
-            alert(presdKeys, lProduct, rProduct, thumbChord, chord, 'ambiguous chord - even after odd?');
-        }
-    } else {
-        console.warn('No valid chord generated, skipping appendChord');
-    }
-}
-
 // Function to handle word option selection
-function whenInputIsWordOptionSelection(thc) {
-    if (thc) {
+function whenInputIsWordOptionSelection(thC) {
+    if (thC) {
         firstParse();
         presdKeys.clear();
-        return; // "We're done here. Word committed. Move on."
+        return true; // "We're done here. Word committed. Move on."
     }
+  return false;
 }
 
 // Function to underline options based on current fragment length
 function underlineOptionsToCurrentFragLength(frag) {
     const capsOpts = underlineFirstNLtrs(frag, caps);   
-    tidyWordOptions(capsOpts);
+//  tidyWordOptions(capsOpts);
+    setWordOptions(capsOpts);
     presdKeys.clear();
 }
 
-  function evenString(frag){String(frag).length % 2 == 0?true:false}
+function evenString(frag){String(frag).length % 2 == 0?true:false}
 
-//function setWordOptions(frag){
-  function setWordOptions(){
-   	removeWordOptions();
-    console.log('setWordOptions');    
-    console.log('col:' + doc.col);    
-
-    if (!dic[frag]) return;
-
-    // odd frags red to warn next chord must b singleton
-    // or double to avoid ambiguity
-    bwords="<span id='firstParse' style='color:black'>" 
-    // remove warning if even frag
-    if(evenString(frag) ) bwords="<span id='firstParse'>" 
-    // old words to remind user what last options
-    // were to notice overshootig common abbreviated
-    // words and give wdOpts purpose
-    let oldBwords=bwords;
-    flen=frag.length;
-    let oldfrag = frag.substr(0,flen-2);  
-    if(flen>2){ oldBwords+= underlineFirstNLtrs(oldfrag,caps); }
-/// bwords+=    underlineFirstNLtrs(frag,caps);
-    bwords+=    underlineFirstNLtrs(frag,caps) + "</span>";
-//  wdOpts.innerHTML = oldBwords +"</span>";
-//    setMd(md() + bwords + "</span>");
-///    insertWord( bwords + "</span>");
-    insertWord( bwords);
-    doc.dCol(-bwords.length)
-   }
-
-function tidyWordOptions(capsOpts)
+function setWordOptions(capsOpts)
 {  
-  console.log('tidyWordOptions');    
-  console.log('col:' + doc.col);    
+//  console.log('tidyWordOptions');    
+//console.log('col:' + doc.col);    
  	removeWordOptions();
 
   if (!dic[frag]) return;
@@ -780,7 +670,6 @@ function on3rdPass(key) {
     if (input) {
       event.preventDefault();
       const value = input.value.trim() || '???';
-//    mdRepl(inputRegex, value);
       mdRepl(inputRegex, '');
       doc.col+=-missingRegEx.source.length;
       insertWord(value);
@@ -870,18 +759,12 @@ document.addEventListener('keydown', (event) => {
 
   if (timeoutId) clearTimeout(timeoutId);
   timeoutId = setTimeout(processBiChord, CHORD_TIMEOUT);
-//  timeoutId = setTimeout(() =>{
-//    processBiChord();
-//    renderMarkdown()
-//    }
-//    , CHORD_TIMEOUT);
 });
 
 document.addEventListener('keyup', (event) => {
   const key = event.key.toLowerCase();
   if (validKeys.has(key)) {
   presdKeys.delete(key);
-    //updtDebugInfo(presdKeys, '-', '-', '-', frag);
   }
 });
 
