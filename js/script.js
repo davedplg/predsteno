@@ -705,7 +705,11 @@ function on2ndPass(key){
 }
 
 document.addEventListener('keydown', (event) => {
- const key = event.key.toLowerCase();
+
+ const editor = document.getElementById('outpt2');
+ if (!editor.matches(':focus')) return;
+
+  const key = event.key.toLowerCase();
 
  if(key.match(/tab|ctrl|esc/)) return;
 
