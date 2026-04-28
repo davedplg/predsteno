@@ -89,7 +89,10 @@ const doc = {
 // ==================== SYNC FROM TEXTAREA ====================
 function syncFromMarkdown() {
   //delete below?
-  const text = md().replace(cursor, '');   // remove any old cursor symbol
+//const text = md().replace(cursor, '');   // remove any old cursor symbol
+  let p = cursor + '|' + cursor2 + '|' + cursor3 + '|' + cursor4;
+  // remove any old cursor symbol
+  const text = md().replace(new RegExp(p,'g'), '');   
   doc.lines = text ? text.split('\n') : [""];
 }
 
@@ -97,14 +100,22 @@ function syncFromMarkdown() {
 function updateDisplay() {
   // Build clean text
   let text = doc.lines.join('\n');
+ 
+  // default cursor
+  let cur = cursor;
 
   // Insert visible cursor symbol at current position
   const currentLine = doc.lines[doc.row];
   const before = currentLine.slice(0, doc.col);
   const after = currentLine.slice(doc.col);
+  
+  // cursor thickens as preceeding spaces accumulate
+  if(before.substr(-1) == ' '  ) cur = cursor2;
+  if(before.substr(-2) == '  ' ) cur = cursor3;
+  if(before.substr(-3) == '   ') cur = cursor4;
 
   // Temporarily insert cursor for display
-  doc.lines[doc.row] = before + cursor + after;
+  doc.lines[doc.row] = before + cur + after;
 
   const displayText = doc.lines.join('\n');
 
@@ -643,7 +654,7 @@ function initFileControls() {
   document.getElementById('btn-clear')?.addEventListener('click', () => {
       setMd('a  \nb');
       document.getElementById('file-dialog').open = false;
-      updateDisplay();
+//      updateDisplay();
       renderMarkdown();
     });
 

@@ -31,8 +31,11 @@ sep1 = '\u2423'
 sep2 = '\u2194'
 sep3 = '\u2014';
 
-// cursor character
-cursor = '\u2758';
+// cursor characters increasing thickness
+cursor  = '\u2758';
+cursor2 = '\u2503';
+cursor3 = '\u2759';
+cursor4 = '\u275A';
 
 
 //key list for - current chord
@@ -293,8 +296,9 @@ function parseAffixes(text){
      
 t = t.replace(
 ///(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
-/([ \t]*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
- (_,SPAN,GAP,SUFX) => SUFX.toLowerCase()
+///([ \t]*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
+/([ \t]*<span[^<]*<\/span>)*( *\+)(['A-Z]*)/g,
+ (_,SPAN,GAP,SUFX) => (SUFX + ' ').toLowerCase()
 );
 
 // prefix version (example)
