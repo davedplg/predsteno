@@ -69,7 +69,6 @@ details summary::-webkit-details-marker {
 }
 
 div#outpt2 {
-  background-color: #fff;
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
@@ -245,17 +244,26 @@ font-size: 1.5rem;
 width:16%
 }
 
-/* When #output (textarea) gets focus → change #outpt2 background */
+/* When #output (textarea) gets focus → change #outpt2 background 
 #output:focus \~ #outpt2,
 #output:focus-within \~ #outpt2 {
   background: #eeffff !important;
 }
 
+ */
 /* Smooth transition for nice effect */
 #outpt2 {
   transition: background 0.4s ease;
   
   /* Optional: make sure it has a default background */
-  background: #ffffff;
 }
 
+#outpt2 {
+  background-color: #e3f2fd;           /* normal state */
+  transition: background-color 0.2s ease;
+}
+
+#outpt2:focus {
+  background-color: #f8f9fa;  /* focused state - light blue */
+  outline: none;        /* remove default blue border if you want */
+}
