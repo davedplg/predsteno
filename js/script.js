@@ -40,6 +40,7 @@ cursor4 = '\u275A';
 
 //key list for - current chord
 let presdKeys = new Set();   
+let keysDown  = 0;
 
 //timeout - needed to register keypresses
 let timeoutId = null;        
@@ -182,7 +183,8 @@ function select2ndPassWd(key) {
   } else {
     requestAnimationFrame(() => {
       renderMarkdown();
-      outputMarkdown.focus();
+//    outputMarkdown.focus();
+      outputHTML.focus();
       updateDisplay();
     });
   }
@@ -201,7 +203,8 @@ function mark3rdPassWds() {
   if (!placeholder) {
     need3rdPass = 0;
     renderMarkdown();
-    requestAnimationFrame(() => outputMarkdown.focus());
+//  requestAnimationFrame(() => outputMarkdown.focus());
+    requestAnimationFrame(() => outputHTML.focus());
     return;
   }
 
@@ -586,6 +589,9 @@ function caps2underlineLcase(str) {
 function processBiChord()
 {
 
+  console.trace("processBiChord WAS CALLED FROM:");   // ← shows exact call stack
+  console.log("  Current presdKeys:", Array.from(presdKeys));
+
 ({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
   ({ldigits: left, rdigits: right}  = mapChordToDigits(lProduct, rProduct));
   chord         = left+right;     
@@ -601,9 +607,12 @@ function processBiChord()
    if(!(frag)) {
      console.warn('ambigous chord frag, left, right',frag,left,right); 
       }} else console.warn('invalid chord, skips appendChord');
-  if(!dic[frag]) frag=pfrag;
+  if(!dic[frag]) 
+  {
+    frag=pfrag;
+  }
 
-  let append='';
+//  let append='';
  
   if(whenInputIsWordOptionSelection(thumbChord)) return; 
 
@@ -611,12 +620,14 @@ function processBiChord()
 //tidyWordOptions(capsOpts);
    setWordOptions(capsOpts);
   presdKeys.clear();
+  keysDown=0;
 }
 
 // Function to handle non-alphabetic cases
 function whenInputNonAlpha() {
     if (nonAlphabetic()) {
         presdKeys.clear();   
+        keysDown=0;
         renderMarkdown();
         if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
           reParseParagraph();
@@ -632,6 +643,7 @@ function whenInputIsWordOptionSelection(thC) {
     if (thC) {
         firstParse();
         presdKeys.clear();
+        keysDown=0;
         return true; // "We're done here. Word committed. Move on."
     }
   return false;
@@ -643,6 +655,7 @@ function underlineOptionsToCurrentFragLength(frag) {
 //  tidyWordOptions(capsOpts);
     setWordOptions(capsOpts);
     presdKeys.clear();
+    keysDown=0;
 }
 
 function evenString(frag){String(frag).length % 2 == 0?true:false}
@@ -678,7 +691,8 @@ function on3rdPass(key) {
       doc.col+=-missingRegEx.source.length;
       insertWord(value);
       renderMarkdown();
-      requestAnimationFrame(() => outputMarkdown.focus()); // back to source
+//    requestAnimationFrame(() => outputMarkdown.focus()); // back to source
+      requestAnimationFrame(() => outputHTML.focus()); // back to source
       // Check for next missing word
       if (mdMatch(missingRegEx)) {
         mark3rdPassWds();
@@ -706,23 +720,37 @@ function on2ndPass(key){
 
 document.addEventListener('keydown', (event) => {
 
- const editor = document.getElementById('outpt2');
- if (!editor.matches(':focus')) return;
-
-  const key = event.key.toLowerCase();
-
+ const key = event.key.toLowerCase();
  if(key.match(/tab|ctrl|esc/)) return;
+
+  console.log(`[KEYDOWN START] key=\( ${event.key}  repeat= \)${event.repeat}  code=${event.code}`);
+ if (event.repeat && validKeys.has(key)) {
+   console.log(`[REPEAT IGNORED] ${key}`);   // temporary debug
+   return;
+ }
+ 
+ if(presdKeys.has(key)) {
+   console.log('repeated keydown');
+   return;
+ } 
+ 
+  const editor = document.getElementById('outpt2');
+ if (!editor.matches(':focus')) return;
 
  const active = document.activeElement;
  if ((active.tagName === 'INPUT' && 
    !active.classList?.contains('missing-word')) ||
+// !active.id.includes('outpt2') ||
 //   active.tagName === 'TEXTAREA' ||
      active.isContentEditable ||
      active.closest('dialog')) {
    return;   // ← browser handles the key normally
  }
 
- if (key.includes("arrow")) {
+
+ //######### arrow keys ############ 
+
+  if (key.includes("arrow")) {
    event.preventDefault();
  
    switch (key) {
@@ -731,11 +759,13 @@ document.addEventListener('keydown', (event) => {
      case "arrowup":    doc.dRow(-1); break;
      case "arrowdown":  doc.dRow(1);  break;
    }
-  
     updateDisplay();
   }
 
- if (mdMatch(spanRegEx)) {
+
+//########## second parse ############
+
+  if (mdMatch(spanRegEx)) {
    event.preventDefault();
    removeWordOptions();
    if (optionKeys.includes(key)) {
@@ -743,14 +773,18 @@ document.addEventListener('keydown', (event) => {
    }
    return;
  }
- if (need3rdPass) {
+
+
+//######### third parse ##############
+
+  if (need3rdPass) {
    on3rdPass(key); 
    return;
  }
 
-// first pass continues through
 
-// punctuation and digits
+
+//######## punctuation and digits ########
  if (passThroughKeys.has(key)) {
    event.preventDefault();
 // setMd(md()+key);
@@ -762,20 +796,58 @@ document.addEventListener('keydown', (event) => {
 // encoded digit keys, delete and enter  
   if (!validKeys.has(key)) return;
 
+
+//####### first pass continues through ####
+
   event.preventDefault();
   presdKeys.add(key);
+//if(!presdKeys.includes(key)) keysDown++;
+  keysDown++;
 
-  if (timeoutId) clearTimeout(timeoutId);
-  timeoutId = setTimeout(processBiChord, CHORD_TIMEOUT);
+  console.log('down,keys,key,count',presdKeys,key,keysDown);
+
+//  if (timeoutId) clearTimeout(timeoutId);
+//  timeoutId = setTimeout(processBiChord, CHORD_TIMEOUT);
 });
+
+//document.addEventListener('keyup', (event) => {
+//  const key = event.key.toLowerCase();
+//  if (validKeys.has(key)) {
+//  presdKeys.delete(key);
+//  }
+//});
 
 document.addEventListener('keyup', (event) => {
   const key = event.key.toLowerCase();
-  if (validKeys.has(key)) {
-  presdKeys.delete(key);
+  //early return for when outside editor or 
+  //3rd parse enter is keyed
+//  let active3rdParse = (document.activeElement.tagName == 'INPUT'); 
+  //active.classList?.contains('missing-word')
+  let active3rdParse = (document.activeElement.classList?.contains('missing-word'))
+  console.log(active3rdParse);
+  let inEditor=outputHTML.matches(':focus');
+  if (!inEditor && !active3rdParse) return; 
+  if (key !="enter" &&  active3rdParse) return;
+  if (key =="enter" &&  active3rdParse) {
+    on3rdPass(key); 
+    return;
+  }
+
+//if(key.match(/tab|ctrl|esc/)){
+  if(!validKeys.has(key)){
+    keysDown=0;
+    return;
+  } 
+
+//  if(!presdKeys.includes(key)) keysDown--;
+  keysDown--;
+    if(keysDown<0)keysDown=0;
+  console.log('up,keys,key,count',presdKeys,key,keysDown);
+  // Last key of the chord was just released → process it now
+  if (keysDown === 0) {
+    processBiChord();
   }
 });
-
 // Close all other when one is opened
 document.addEventListener('click', function(e) {
   const summary = e.target.closest('summary');

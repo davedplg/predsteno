@@ -126,7 +126,8 @@ function updateDisplay() {
   doc.lines[doc.row] = currentLine;
 
   requestAnimationFrame(() => {
-    outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
+    let cursordepth=doc.row/doc.length;
+    outputMarkdown.scrollTop = cursordepth*outputMarkdown.scrollHeight;
   });
 }
 
