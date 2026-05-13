@@ -208,8 +208,17 @@ function mark3rdPassWds() {
     return;
   }
 
-  mdRepl(missingRegEx, `<input class="missing-word" placeholder="type word" autofocus />`);
+  mdRepl(missingRegEx, `<input class="missing-word" value="|" />`);
   renderMarkdown();
+  //unselect the pipe (select the character after the pipe?)
+  //this allow immediate entrance to the commmand language
+  requestAnimationFrame(() => {
+      const input = document.querySelector('.missing-word');
+      if (input) {
+          input.focus();
+          input.setSelectionRange(1, 1);        // place cursor after |
+      }
+  });
 }
 /**
  * Appends left and right chords to the encoded fragment, 
@@ -686,10 +695,16 @@ function on3rdPass(key) {
     const input = outpt2.querySelector('input.missing-word');
     if (input) {
       event.preventDefault();
-      const value = input.value.trim() || '???';
+      const value = input.value.trim() ;
       mdRepl(inputRegex, '');
       doc.col+=-missingRegEx.source.length;
-      insertWord(value);
+      syncFromMarkdown();
+//      if(typeof input.value =='string' && input.value.startsWith('|')){
+//      vimLein(input.value)} else {
+      if(typeof value =='string' && value.startsWith('|')){
+      vimLein(value)} else {
+      insertWord(value)  
+      }
       renderMarkdown();
 //    requestAnimationFrame(() => outputMarkdown.focus()); // back to source
       requestAnimationFrame(() => outputHTML.focus()); // back to source
@@ -863,3 +878,13 @@ document.addEventListener('click', function(e) {
     });
   }
 });
+
+
+// Button to go full screen
+function goFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen({ navigationUI: "hide" });
+  } else {
+    document.exitFullscreen();
+  }
+}

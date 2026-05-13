@@ -13,7 +13,18 @@ echo
 : ${RES_SLOTS:=7}      # reserve rows per fragment
 : ${SHORT_FRAG_MULT:=1}  # optional: how much to multiply n for short frags (1=keep same, 2=double, etc.)
 
-awk -F"," -v OFS="," '{$3 = int($3*10.5/$4); print $0}' data/d6* | \
+#awk -F"," -v OFS="," '{$3 = int($3*10.5/$4); print $0}' data/d6* | \
+
+# Short-word bias (n): higher n = stronger preference for short words
+# Tune this per chord system. Start with 1.0
+SHORT_WORD_BIAS=${SHORT_WORD_BIAS:-0.0}
+
+awk -F"," -v n="$SHORT_WORD_BIAS" -v OFS="," '
+    {
+        $3 = int( $3 * 105 / ($4 + n) );
+        print $0
+    }
+' data/d6* | \
 #sort -t"," -k2,2n -k3,3n data/d6* | \
 sort -t"," -k2,2n -k3,3n  | \
 #awk -F"," -v OFS="," '

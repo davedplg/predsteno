@@ -9,14 +9,24 @@ CONFIG_FILE="${CONFIG_FILE:-./config-uni-8.sh}"
 echo "=== REDUCED KEYBOARD CONFIG ==="
 cat "$CONFIG_FILE"
 echo "================="
+# pause between steps
+pressAnyKey() {
+   if [ "$WATCH" = '1' ]; then 
+   read -n 1 -s -r -p "Press any key "; clear
+   fi 
+ }
+
+
 # shellcheck source=config.sh
 printenv | grep -v PATH
-   read -n 1 -s -r -p "Press any key "; clear
+#   read -n 1 -s -r -p "Press any key "; clear
+pressAnyKey
 
 #source "$CONFIG_FILE"
 source "$CONFIG_FILE"
 
-   read -n 1 -s -r -p "Press any key "; clear
+pressAnyKey
+#   read -n 1 -s -r -p "Press any key "; clear
 #log the intermediate files md5sum 
 
 log() {
@@ -24,12 +34,12 @@ log() {
 }
 #log() { md5sum "$1" | awk '{printf "%-35s %s\n", "'"$1"'", $1}' >> data/pipeline-md5.log; }
 
-# pause between steps
-pressAnyKey() {
-   if [ "$WATCH" = '1' ]; then 
-   read -n 1 -s -r -p "Press any key "; clear
-   fi 
- }
+## pause between steps
+#pressAnyKey() {
+#   if [ "$WATCH" = '1' ]; then 
+#   read -n 1 -s -r -p "Press any key "; clear
+#   fi 
+# }
 
 
  # use most common n word subsets for 15K optimisation
@@ -73,8 +83,20 @@ log data/o*.csv
  
 wc -l data/o*
 wc -l data/o-reserves.csv
+echo 2-3 letter frag
+grep -w -e [0-9][0-9] -e [0-9][0-9][0-9] $maj/js/$DICNAME/reserves.js | wc -l
+
+echo
+echo 4-5 letter frag
+grep -w -e [0-9][0-9][0-9][0-9] -e [0-9][0-9][0-9][0-9][0-9] $maj/js/$DICNAME/reserves.js | wc -l
+
 #pressAnyKey
 
 #sort -t"," -k3,3n data/o-rej* | head -50
 
+mkdir -p ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS
+
+cp ../js/$DICNAME/reserves.js ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/reserves.js
+cp ../js/$DICNAME/toptxts.js  ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/toptxts.js
+cp ../js/$DICNAME/caps.js     ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/caps.js
 

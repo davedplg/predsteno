@@ -68,7 +68,7 @@ details summary::-webkit-details-marker {
   width: 100%;
 }
 
-div#outpt2 {
+div#outpt3 {
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
@@ -78,12 +78,32 @@ div#outpt2 {
   padding: 1.5rem;
   font-weight: 500;
   border: 2px solid #aaa;
-  column-width: 38rem;
+  column-width: 65vw;
   column-gap: 2.5rem;
   column-rule: 2px solid #ccc;
   column-fill: auto;
 }
 
+div#outpt2 {
+  /* Make container narrower so paging is obvious */
+  width: 92vw;           /* or 70vw — this is key */
+  margin: 0 auto;        /* centers it nicely */
+
+  overflow-x: auto;
+
+  height: 82vh;
+
+  font-size: 1.25rem;
+  padding: 1.5rem;
+  font-weight: 500;
+  border: 2px solid #aaa;
+
+  /* Column settings */
+  column-gap: 2.5rem;
+  column-rule: 2px solid #ccc;
+  column-fill: auto;
+  column-count: 2;
+}
 * NEW - subtle monospace serif */
 div#outpt2,
 textarea#output,

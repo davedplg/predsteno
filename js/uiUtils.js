@@ -52,7 +52,7 @@ const doc = {
   lines: [""],
   row: 0,
   col: 0,
-
+  yankBuffer: [], //simple buffer
   dRow(n) {
     const candidate = doc.row + n;
     doc.row = Math.max(0, Math.min(candidate, doc.lines.length - 1));
@@ -179,7 +179,7 @@ function renderMarkdown() {
 
   //console.trace("renderMarkdown called from:");
   // 1. Remove any old cursor first
-  text = removeCursor(text);
+//  text = removeCursor(text);
 
   // 2. Apply affixes and case marking in memory (NO setMd!)
   text = parseAffixes(text);
@@ -664,5 +664,86 @@ function initFileControls() {
 //});
  }
 
+document.getElementById('toggle-fullscreen').addEventListener('change', function() {
+    if (this.checked) {
+        // Call your existing fullscreen function
+        goFullScreen();           // or whatever you named it
+    } else {
+        document.exitFullscreen?.();
+    }
+});
+ 
+
+const keymap = document.getElementById('instructions');
+const keymapToggle = document.getElementById('show-keymap');
+
+keymapToggle.addEventListener('change', function() {
+    keymap.style.display = this.checked ? 'block' : 'none';
+});
+
+
+//if (input.startsWith('|'))
+function vimLein(input){
+    let cmd = input.slice(1).trim();
+
+    // === Normalize ===
+    if (cmd === 'G')  cmd = doc.lines.length + 'g';
+    if (cmd === 'gg') cmd = '1g';
+    if (cmd === 'dd') cmd = '1d';
+    if (cmd === 'yy') cmd = '1y';
+
+    // === Core handlers ===
+    if (/^\d+d$/.test(cmd)) {                    // delete
+        const n = parseInt(cmd);
+        
+        doc.yankBuffer = doc.lines               // delete to yank buffer
+            .slice(doc.row, doc.row + n)
+            .map(line => line.replace(/<input[^>]*class="missing-word"[^>]*>/g, ''));
+        
+        doc.lines.splice(doc.row, Math.max(1, n));
+    }
+
+    else if (/^\d+y$/.test(cmd)) {               // yank
+    const n = parseInt(cmd);
+    doc.yankBuffer = doc.lines
+        .slice(doc.row, doc.row + n)
+        .map(line => line.replace(/<input[^>]*class="missing-word"[^>]*>/g, ''));
+    }
+    else if (/^\d+g$/.test(cmd)) {                    // go to line
+        const n = parseInt(cmd);
+        doc.row = Math.max(0, Math.min(n - 1, doc.lines.length - 1));
+    }
+    else if (cmd === 'p' || cmd === 'P') {           // paste
+        if (doc.yankBuffer) {
+            const insertPos = (cmd === 'P') ? doc.row : doc.row + 1;
+            doc.lines.splice(insertPos, 0, ...doc.yankBuffer);
+            doc.row = insertPos + doc.yankBuffer.length;   // move cursor to end of pasted content
+            doc.col = 0
+        }
+    }
+
+    // cleanup
+    doc.row = Math.max(0, Math.min(doc.row, doc.lines.length - 1));
+    doc.col = Math.min(doc.col, (doc.lines[doc.row] || "").length);
+
+    updateDisplay();
+    return;
+}
+
 window.addEventListener('DOMContentLoaded', initFileControls);
 initDocument();
+outputHTML.addEventListener('keydown', function(e) {
+    const key = e.key.toLowerCase();
+
+    if (key.includes('page')) {
+        e.preventDefault();
+
+        const amount = 700;
+
+        if (key === 'pagedown') {
+            outputHTML.scrollLeft += amount;      // scroll right
+        } else if (key === 'pageup') {
+            outputHTML.scrollLeft -= amount;      // scroll left
+        }
+    }
+});
