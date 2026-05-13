@@ -682,8 +682,64 @@ keymapToggle.addEventListener('change', function() {
 });
 
 
-//if (input.startsWith('|'))
-function vimLein(input){
+const MISSING_WORD_REGEX = /<input[^>]*class="missing-word"[^>]*>/g;
+
+function yankLines(start, count = 1) {
+    return doc.lines
+        .slice(start, start + count)
+        .map(line => line.replace(MISSING_WORD_REGEX, ''));
+}
+
+
+function vimLein(input) {
+    if (typeof input !== 'string' || !input.startsWith('|')) return;
+
+    let cmd = input.slice(1).trim();
+
+    // === Normalize ===
+    if (cmd === 'G')    cmd = doc.lines.length + 'g';
+    if (cmd === 'gg')   cmd = '1g';
+    if (cmd === 'dd')   cmd = '1d';
+    if (cmd === 'yy')   cmd = '1y';
+    if (cmd === 'dG')   cmd = (doc.lines.length - doc.row) + 'd';
+
+    // === Special case ===
+    if (cmd === 'dgg') {
+        doc.yankBuffer = yankLines(0, doc.row + 1);
+        doc.lines.splice(0, doc.row + 1);
+        doc.row = 0;
+    }
+    // === Core handlers ===
+    else if (/^\d+d$/.test(cmd)) {
+        const n = parseInt(cmd);
+        doc.yankBuffer = yankLines(doc.row, n);
+        doc.lines.splice(doc.row, Math.max(1, n));
+    }
+    else if (/^\d+y$/.test(cmd)) {
+        const n = parseInt(cmd);
+        doc.yankBuffer = yankLines(doc.row, n);
+    }
+    else if (/^\d+g$/.test(cmd)) {
+        const n = parseInt(cmd);
+        doc.row = Math.max(0, Math.min(n - 1, doc.lines.length - 1));
+    }
+    else if (cmd === 'p' || cmd === 'P') {
+        if (doc.yankBuffer && doc.yankBuffer.length > 0) {
+            const insertPos = (cmd === 'P') ? doc.row : doc.row + 1;
+            doc.lines.splice(insertPos, 0, ...doc.yankBuffer);
+            doc.row = insertPos + doc.yankBuffer.length;
+            doc.col = 0;
+        }
+    }
+
+    // cleanup
+    doc.row = Math.max(0, Math.min(doc.row, doc.lines.length - 1));
+    doc.col = Math.min(doc.col, (doc.lines[doc.row] || "").length);
+
+    updateDisplay();
+}
+
+function vimLein_old(input){
     let cmd = input.slice(1).trim();
 
     // === Normalize ===
