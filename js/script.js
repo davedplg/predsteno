@@ -32,10 +32,10 @@ sep2 = '\u2194'
 sep3 = '\u2014';
 
 // cursor characters increasing thickness
-cursor  = '\u2758';
+cursor4 = '\u2758';
 cursor2 = '\u2503';
 cursor3 = '\u2759';
-cursor4 = '\u275A';
+cursor = '\u275A';
 
 
 //key list for - current chord
@@ -208,7 +208,7 @@ function mark3rdPassWds() {
     return;
   }
 
-  mdRepl(missingRegEx, `<input class="missing-word" value="|" />`);
+  mdRepl(missingRegEx, `<input class="missing-word" value=":" />`);
   renderMarkdown();
   //unselect the pipe (select the character after the pipe?)
   //this allow immediate entrance to the commmand language
@@ -699,9 +699,8 @@ function on3rdPass(key) {
       mdRepl(inputRegex, '');
       doc.col+=-missingRegEx.source.length;
       syncFromMarkdown();
-//      if(typeof input.value =='string' && input.value.startsWith('|')){
 //      vimLein(input.value)} else {
-      if(typeof value =='string' && value.startsWith('|')){
+      if(typeof value =='string' && value.startsWith(':')){
       vimLein(value)} else {
       insertWord(value)  
       }
@@ -821,16 +820,6 @@ document.addEventListener('keydown', (event) => {
 
   console.log('down,keys,key,count',presdKeys,key,keysDown);
 
-//  if (timeoutId) clearTimeout(timeoutId);
-//  timeoutId = setTimeout(processBiChord, CHORD_TIMEOUT);
-});
-
-//document.addEventListener('keyup', (event) => {
-//  const key = event.key.toLowerCase();
-//  if (validKeys.has(key)) {
-//  presdKeys.delete(key);
-//  }
-//});
 
 document.addEventListener('keyup', (event) => {
   const key = event.key.toLowerCase();
@@ -879,6 +868,17 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// Close menus when they lose focus
+document.querySelectorAll('details').forEach(detail => {
+    detail.addEventListener('focusout', function () {
+        // Small delay so clicking inside dialog doesn't close it immediately
+        setTimeout(() => {
+            if (!detail.contains(document.activeElement)) {
+                detail.open = false;
+            }
+        }, 10);
+    });
+});
 
 // Button to go full screen
 function goFullScreen() {

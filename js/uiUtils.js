@@ -96,8 +96,105 @@ function syncFromMarkdown() {
   doc.lines = text ? text.split('\n') : [""];
 }
 
+
+
+// Cache the toggle once
+const invisibleToggle = document.getElementById('show-invisible');
+
+// Helper
+
+function getDisplayText() {
+    let text = doc.lines.join('\n');
+
+//  text = text.replace(/¶.*$/gm, '');   // clean old markers
+
+//    if (invisibleToggle.checked) {
+//        text = text.replace(/^\s*$/gm, '¶  ');           // only on blank lines
+//    }
+
+    return text;
+}
+
+function getDisplayText_oldish() {
+    let text = doc.lines.join('\n');
+    
+    text = text.replace(/¶  /gm, '');
+
+    if (invisibleToggle.checked) {
+      text = text.replace(/(?<!¶)$/gm, '¶  ');
+    } 
+    
+    return text;
+}
+
+
+function getDisplayText_old() {
+    let text = doc.lines.join('\n');
+    
+    if (invisibleToggle.checked) {
+//    text = text.replace(/^\s*$/gm, '¶');
+      text = text.replace(/(?<!¶)$/gm, '¶');
+    } else {
+      text = text.replace(/¶/gm, '');
+    }
+    
+    return text;
+}
+
+// Listen for changes
+invisibleToggle.addEventListener('change', () => {
+    updateDisplay();
+});
+
+// Initial render
+//updateDisplay();
+
+function getDisplayText_old() {
+    let text = doc.lines.join('\n');
+    
+    if (document.getElementById('show-invisible').checked) {
+        text = text.replace(/^\s*$/gm, '¶');           // blank lines → ¶
+    }
+    
+    return text;
+}
+
 // ==================== UPDATE DISPLAY WITH CURSOR ====================
+
 function updateDisplay() {
+  // default cursor
+  let cur = cursor;
+
+  // Insert visible cursor symbol at current position
+  const currentLine = doc.lines[doc.row];
+  const before = currentLine.slice(0, doc.col);
+  const after = currentLine.slice(doc.col);
+  
+  // cursor thickens as preceeding spaces accumulate
+  if(before.substr(-1) == ' '  ) cur = cursor2;
+  if(before.substr(-2) == '  ' ) cur = cursor3;
+  if(before.substr(-3) == '   ') cur = cursor4;
+
+  // Temporarily insert cursor for display
+  doc.lines[doc.row] = before + cur + after;
+//const displayText = doc.lines.join('\n');
+  const displayText = getDisplayText(); 
+
+  setMd(displayText);        // update textarea
+  renderMarkdown();          // update HTML preview
+
+  // Remove cursor symbol from model again (keep data clean)
+  doc.lines[doc.row] = currentLine;
+
+  requestAnimationFrame(() => {
+    let cursordepth=doc.row/doc.length;
+    outputMarkdown.scrollTop = cursordepth*outputMarkdown.scrollHeight;
+  });
+}
+
+
+
+function updateDisplay_old() {
   // Build clean text
   let text = doc.lines.join('\n');
  
@@ -195,6 +292,12 @@ function renderMarkdown() {
   // 4. Add exactly ONE cursor at the end
 //  if (!text.endsWith(cursor))  text += cursor; 
 
+  // 4b. Add paragraph markers if checked
+    if (invisibleToggle.checked) {
+      console.log(text)
+      text = text.replace(/^\s*$/gm,"  \n¶  ")
+      console.log(text)
+    }  
   // 5. Render to HTML
   let htm = marked.parse(text);
 
@@ -207,17 +310,12 @@ function renderMarkdown() {
   let state = (markLetters.checked ? "marks " : "") +
               (colorVowels.checked ? "color" : "");
 
-//  let state =
-//  (document.getElementById("markLetters").checked ? "marks " : "") +
-//  (document.getElementById("colorVowels").checked ? "color" : "");
-  
   htm = format_augmented_words(htm,state);
   // 7b. Unescape common entities you care about
   htm = htm.replace(/&lt;/g, '<')
            .replace(/&gt;/g, '>')
            .replace(/&amp;/g, '&')
            .replace(/&quot;/g, '"');
-
   // 8. Update preview
   setHtml(htm);
 
@@ -692,7 +790,7 @@ function yankLines(start, count = 1) {
 
 
 function vimLein(input) {
-    if (typeof input !== 'string' || !input.startsWith('|')) return;
+    if (typeof input !== 'string' || !input.startsWith(':')) return;
 
     let cmd = input.slice(1).trim();
 
@@ -708,6 +806,7 @@ function vimLein(input) {
         doc.yankBuffer = yankLines(0, doc.row + 1);
         doc.lines.splice(0, doc.row + 1);
         doc.row = 0;
+        doc.col = 1;
     }
     // === Core handlers ===
     else if (/^\d+d$/.test(cmd)) {
@@ -720,8 +819,9 @@ function vimLein(input) {
         doc.yankBuffer = yankLines(doc.row, n);
     }
     else if (/^\d+g$/.test(cmd)) {
-        const n = parseInt(cmd);
-        doc.row = Math.max(0, Math.min(n - 1, doc.lines.length - 1));
+        const n = parseInt(cmd)-1;
+        doc.row = Math.max(0, Math.min(n, doc.lines.length));
+        doc.col = 1;
     }
     else if (cmd === 'p' || cmd === 'P') {
         if (doc.yankBuffer && doc.yankBuffer.length > 0) {

@@ -10,7 +10,7 @@
 <body>
   <div>
    <details  id="file-dialog"> 
-     <summary>File</summary>
+     <summary accesskey="f">File</summary>
       <dialog open  style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
       
         <button id="btn-save-as">Save as…</button>
@@ -24,7 +24,7 @@
      </dialog>
    </details>
    <details > 
-     <summary>Help</summary>
+     <summary accesskey="h">Help</summary>
      <dialog open>
      <ul>
        <li>Enter Twice to Start!</li>
@@ -42,7 +42,7 @@
 <!--     </dialog>
 </details>  -->
    <details > 
-     <summary>About</summary>
+     <summary accesskey="a"><u>A</u>bout</summary>
      <dialog open>
      <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
       <ul> 
@@ -52,32 +52,32 @@
      </dialog>
    </details>
       <label>
-       <input type="checkbox" id="markLetters" checked>
+       <input accesskey="m" type="checkbox" id="markLetters" checked>
          Marks
      </label>
       
      <label>
-       <input type="checkbox" id="colorVowels" checked>
+       <input accesskey="l" type="checkbox" id="colorVowels" checked>
          Colors
      </label>
 
   <!-- ==================== VIEW SUBMENU ==================== -->
   <details> 
-   <summary>View</summary>  
+   <summary accesskey="v">View</summary>  
  
    <!--    <dialog open style="margin: 1em 0; display: flex; flex-direction: column; gap: 0.8em; padding: 1em;"> -->
    <dialog open >
       <label>
-        <input type="checkbox" id="toggle-fullscreen">
+        <input accesskey="t" type="checkbox" id="toggle-fullscreen">
         Fullscreen
       </label>
       <br/> 
       <label>
-        <input type="checkbox" id="show-keymap" >
+        <input accesskey="k" type="checkbox" id="show-keymap" >
         KeyMap
       </label>
       <label>
-        <input type="checkbox" id="show-invisible" checked>
+        <input accesskey="i" type="checkbox" id="show-invisible" >
         Show Invisible Lines
       </label>
       <!-- Future controls can go here easily -->
@@ -86,7 +86,7 @@
   <!-- ======================================================== -->
 
   <details> 
-   <summary>Code</summary>  
+   <summary accesskey="c">Code</summary>  
     <div >
 <textarea id="output" rows="9" cols="80" readonly class="striped-div">
  ## Mārkdõw0n Enâblèd 
