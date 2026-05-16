@@ -747,7 +747,22 @@ document.addEventListener('keydown', (event) => {
    console.log('repeated keydown');
    return;
  } 
- 
+
+// === NEW: Alt + Key menu shortcuts ===
+  if (event.altKey) {
+//    if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+
+      switch (key) {
+          case 'i': toggleMenu('file-dialog'); break;
+          case 'v': toggleMenu('view-menu'); break;
+          case 'h': toggleMenu('help-menu'); break;
+          case 'a': toggleMenu('about-menu'); break;
+          case 'c': toggleMenu('code-menu'); break;
+       // case 'c': document.getElementById('btn-clear')?.click(); break;
+      }
+      return;                    // optional: stop further processing
+  }
+
   const editor = document.getElementById('outpt2');
  if (!editor.matches(':focus')) return;
 
@@ -761,10 +776,9 @@ document.addEventListener('keydown', (event) => {
    return;   // ← browser handles the key normally
  }
 
-
  //######### arrow keys ############ 
 
-  if (key.includes("arrow")) {
+  if (key.startsWith("arrow")||["home","end"].includes(key)) {
    event.preventDefault();
  
    switch (key) {
@@ -772,6 +786,8 @@ document.addEventListener('keydown', (event) => {
      case "arrowright": doc.dCol(1);  break;
      case "arrowup":    doc.dRow(-1); break;
      case "arrowdown":  doc.dRow(1);  break;
+     case "home":       doc.col=0;  break;
+     case "end":        doc.col=doc.lines[doc.row].length-1;  break;
    }
     updateDisplay();
   }
@@ -819,7 +835,7 @@ document.addEventListener('keydown', (event) => {
   keysDown++;
 
   console.log('down,keys,key,count',presdKeys,key,keysDown);
-
+});
 
 document.addEventListener('keyup', (event) => {
   const key = event.key.toLowerCase();

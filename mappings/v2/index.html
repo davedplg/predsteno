@@ -10,7 +10,7 @@
 <body>
   <div>
    <details  id="file-dialog"> 
-     <summary accesskey="f">File</summary>
+     <summary accesskey="i">F<u>i</u>le</summary>
       <dialog open  style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
       
         <button id="btn-save-as">Save as…</button>
@@ -23,8 +23,8 @@
         </a>
      </dialog>
    </details>
-   <details > 
-     <summary accesskey="h">Help</summary>
+   <details id="help-menu"> 
+     <summary accesskey="h"><u>H</u>elp</summary>
      <dialog open>
      <ul>
        <li>Enter Twice to Start!</li>
@@ -41,7 +41,7 @@
    </details>
 <!--     </dialog>
 </details>  -->
-   <details > 
+   <details id="about-menu"> 
      <summary accesskey="a"><u>A</u>bout</summary>
      <dialog open>
      <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
@@ -62,8 +62,8 @@
      </label>
 
   <!-- ==================== VIEW SUBMENU ==================== -->
-  <details> 
-   <summary accesskey="v">View</summary>  
+  <details id="view-menu"> 
+   <summary accesskey="v"><u>V</u>iew</summary>  
  
    <!--    <dialog open style="margin: 1em 0; display: flex; flex-direction: column; gap: 0.8em; padding: 1em;"> -->
    <dialog open >
@@ -85,8 +85,8 @@
   </details> 
   <!-- ======================================================== -->
 
-  <details> 
-   <summary accesskey="c">Code</summary>  
+  <details id="code-menu"> 
+   <summary accesskey="c"><u>C</u>ode</summary>  
     <div >
 <textarea id="output" rows="9" cols="80" readonly class="striped-div">
  ## Mārkdõw0n Enâblèd 

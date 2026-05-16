@@ -575,6 +575,22 @@ async function exportHTML() {
   setTimeout(() => downloadingHTML = false, 1000);  // ← 1s cooldown
 }
 
+//helper function to allow mobile browsers to get to menbar with alt keys
+function toggleMenu(id) {
+    const details = document.getElementById(id);
+    if (!details) return;
+
+    // Close others
+    document.querySelectorAll('details').forEach(d => {
+        if (d.id !== id) d.open = false;
+    });
+
+    details.open = !details.open;
+    const summary = details.querySelector('summary');
+    if (summary) {
+        summary.focus();
+    }
+}
 
 // ───────────────────────────────────────────────
 // Simple modal helper (using native <dialog> when possible)
