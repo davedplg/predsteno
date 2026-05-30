@@ -102,7 +102,20 @@ div#outpt2 {
   column-gap: 2.5rem;
   column-rule: 2px solid #ccc;
   column-fill: auto;
-  column-count: 2;
+}
+
+/* Portrait → 1 column */
+@media (orientation: portrait) {
+  div#outpt2 {
+    column-count: 1;
+  }
+}
+
+/* Landscape → 2 columns */
+@media (orientation: landscape) {
+  div#outpt2 {
+    column-count: 2;
+  }
 }
 * NEW - subtle monospace serif */
 div#outpt2,
