@@ -7,9 +7,11 @@ const outputMarkdown = document.getElementById("output");
 const outputHTML     = document.getElementById("outpt2");
 const markLetters    = document.getElementById("markLetters")
 const colorVowels    = document.getElementById("colorVowels")
+const typepseudo     = document.getElementById("type")
    
 colorVowels.addEventListener('change', renderMarkdown);
 markLetters.addEventListener('change', renderMarkdown);
+typepseudo.addEventListener('onclick',function() {outputHTML.focus()});
 
 const md = () => {
   if (!outputMarkdown || !outputMarkdown.value) throw new error("outputMarkdown is undEFined or lacks a value property");
@@ -159,6 +161,29 @@ function getDisplayText_old() {
     return text;
 }
 
+// ==================== GET COLUMN WIDTH ====================
+function getActualColumnWidth() {
+//  const container = outputHTML;                    // or outputMarkdown if that's your main one
+
+//  const style = getComputedStyle(container);
+    const style = getComputedStyle(outputHTML);
+    
+    // Get the computed column-width (handles vw, rem, px, etc.)
+    let colWidth = parseFloat(style.width/2);
+    
+    // Fallback if browser ignores column-width
+    if (!colWidth || isNaN(colWidth) || colWidth === 0) {
+        colWidth = outputHTML.width * 0.65;     // your desired \~2/3 width
+    }
+
+    const gap = parseFloat(style.columnGap) || 40;
+
+    return {
+        width: colWidth,
+        gap: gap,
+        fullStep: colWidth + gap          // ← this is what you want for scrolling
+    };
+}
 // ==================== UPDATE DISPLAY WITH CURSOR ====================
 
 function updateDisplay() {
@@ -903,19 +928,22 @@ function vimLein_old(input){
 }
 
 window.addEventListener('DOMContentLoaded', initFileControls);
-initDocument();
-outputHTML.addEventListener('keydown', function(e) {
-    const key = e.key.toLowerCase();
+  initDocument();
+  outputHTML.addEventListener('keydown', function(e) {
+  const key = e.key.toLowerCase();
 
-    if (key.includes('page')) {
-        e.preventDefault();
+  if (key.includes('page')) {
+      e.preventDefault();
 
-        const amount = 700;
+//const col = getActualColumnWidth();
+  const amount = 700;
+//const amount = col.fullStep;
+//const amount = col.width;
 
-        if (key === 'pagedown') {
-            outputHTML.scrollLeft += amount;      // scroll right
-        } else if (key === 'pageup') {
-            outputHTML.scrollLeft -= amount;      // scroll left
-        }
-    }
+  if (key === 'pagedown') {
+      outputHTML.scrollLeft += amount;      // scroll right
+  } else if (key === 'pageup') {
+      outputHTML.scrollLeft -= amount;      // scroll left
+      }
+  }
 });

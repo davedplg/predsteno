@@ -737,9 +737,9 @@ document.addEventListener('keydown', (event) => {
  const key = event.key.toLowerCase();
  if(key.match(/tab|ctrl|esc/)) return;
 
-  console.log(`[KEYDOWN START] key=\( ${event.key}  repeat= \)${event.repeat}  code=${event.code}`);
+//  console.log(`[KEYDOWN START] key=\( ${event.key}  repeat= \)${event.repeat}  code=${event.code}`);
  if (event.repeat && validKeys.has(key)) {
-   console.log(`[REPEAT IGNORED] ${key}`);   // temporary debug
+//   console.log(`[REPEAT IGNORED] ${key}`);   // temporary debug
    return;
  }
  
@@ -754,10 +754,12 @@ document.addEventListener('keydown', (event) => {
 
       switch (key) {
           case 'i': toggleMenu('file-dialog'); break;
+//          case 't': outputHTML.focus(); break;
           case 'v': toggleMenu('view-menu'); break;
           case 'h': toggleMenu('help-menu'); break;
           case 'a': toggleMenu('about-menu'); break;
-          case 'c': toggleMenu('code-menu'); break;
+          case 'c': toggleMenu('code-menu'); outputMarkdown.focus(); break;
+          case 't': toggleMenu('editor-menu'); outputHTML.focus();break;
        // case 'c': document.getElementById('btn-clear')?.click(); break;
       }
       return;                    // optional: stop further processing
@@ -797,8 +799,9 @@ document.addEventListener('keydown', (event) => {
 
   if (mdMatch(spanRegEx)) {
    event.preventDefault();
-   removeWordOptions();
+//   removeWordOptions();
    if (optionKeys.includes(key)) {
+     removeWordOptions();
      on2ndPass(key);
    }
    return;

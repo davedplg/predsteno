@@ -607,7 +607,7 @@
 ,"needed":{"a":"nêèdėd","f":"571"}
 ,"university":{"a":"ûnívèŕsítý","f":"572"}
 ,"lord":{"a":"lør#d","f":"573"}
-,"lordly":{"a":"lør#dlý","f":"573"}
+,"lordly":{"a":"lør#dlý","f":"9573"}
 ,"club":{"a":"club","f":"574"}
 ,"issue":{"a":"isŝüè","f":"575"}
 ,"required":{"a":"rėqυîŕèd","f":"576"}
@@ -1066,7 +1066,7 @@
 ,"close":{"a":"clôsè--HETERONYM--clôśè","f":"1014"}
 ,"closexx":{"a":"clôśè","f":"1014"}
 ,"closeyy":{"a":"clôsè","f":"1014"}
-,"traditional":{"a":"trádiţìònál","f":"1015"}
+,"traditional":{"a":"trádiţìònál","f":"4015"}
 ,"easily":{"a":"êàśílý","f":"1016"}
 ,"leaving":{"a":"lêàviñg0","f":"1017"}
 ,"statement":{"a":"stâtèmént","f":"1018"}
@@ -1160,7 +1160,7 @@
 ,"sale":{"a":"sâlè","f":"1106"}
 ,"surface":{"a":"sùŕfáçè","f":"1107"}
 ,"teaching":{"a":"têàĉħiñg0","f":"1108"}
-,"division":{"a":"diviŝìón","f":"1109"}
+,"division":{"a":"diviŝìón","f":"7109"}
 ,"remain":{"a":"rėmâìn","f":"1110"}
 ,"fear":{"a":"fėàŕ","f":"1111"}
 ,"wants":{"a":"wants!wonts","f":"1112"}
@@ -1220,7 +1220,7 @@
 ,"brown":{"a":"brõwn","f":"1170"}
 ,"tea":{"a":"têà","f":"1171"}
 ,"placed":{"a":"plâçèð","f":"1172"}
-,"fum":{"a":"fum","f":"1173"}
+,"fum":{"a":"fum","f":"41173"}
 ,"mum":{"a":"mum","f":"1173"}
 ,"safety":{"a":"sâfètý","f":"1174"}
 ,"aid":{"a":"âìd","f":"1175"}
@@ -1246,7 +1246,7 @@
 ,"environmental":{"a":"ėnvîrónmentál","f":"1195"}
 ,"damage":{"a":"damáĝè","f":"1196"}
 ,"proposed":{"a":"própôśèd","f":"1197"}
-,"william":{"a":"willĩám","f":"1198"}
+,"william":{"a":"willĩám","f":"8198"}
 ,"february":{"a":"febr0ûárý","f":"1199"}
 ,"senior":{"a":"sênĩòŕ","f":"1200"}
 ,"condition":{"a":"cóndiţìòn","f":"1201"}
@@ -3337,7 +3337,7 @@
 ,"collect":{"a":"cóllect","f":"3249"}
 ,"pitch":{"a":"pitĉħ","f":"3250"}
 ,"delighted":{"a":"dėlîg0ħtėd","f":"3251"}
-,"delightedly":{"a":"dėlîg0ħtėdlý","f":"3251"}
+,"delightedly":{"a":"dėlîg0ħtėdlý","f":"9251"}
 ,"disaster":{"a":"diśastèŕ","f":"3252"}
 ,"approximately":{"a":"ápproxímátèlý","f":"3253"}
 ,"discovery":{"a":"discővèrý","f":"3254"}
@@ -3679,7 +3679,7 @@
 ,"premier":{"a":"premièŕ","f":"3581"}
 ,"adopt":{"a":"ádopt","f":"3582"}
 ,"deals":{"a":"dêàlś","f":"3583"}
-,"liquid":{"a":"liqυid","f":"3584"}
+,"liquid":{"a":"liqυid","f":"6584"}
 ,"colleges":{"a":"collėĝėś","f":"3585"}
 ,"loud":{"a":"lõùd","f":"3586"}
 ,"angle":{"a":"añglè","f":"3587"}
@@ -3842,7 +3842,7 @@
 ,"rational":{"a":"raţìònál","f":"3739"}
 ,"indication":{"a":"indícâţìòn","f":"3740"}
 ,"slip":{"a":"slip","f":"3741"}
-,"earl":{"a":"èàŕl","f":"3742"}
+,"earl":{"a":"èàŕl","f":"13742"}
 ,"professionals":{"a":"prófeŝŝìònálś","f":"3743"}
 ,"alarm":{"a":"álār#m","f":"3744"}
 ,"alarum":{"a":"álār#um","f":"3744"}
