@@ -281,8 +281,17 @@ function insertWord(word, addSpace = true) {
   syncFromMarkdown();
   // Insert at current cursor position
   const currentLine = doc.lines[doc.row];
+
+
+console.log("=== INSERTWORD DEBUG ===");
+  console.log("Word:", JSON.stringify(word));
+  console.log("addSpace param:", addSpace);
+  console.log("Current line before:", JSON.stringify(doc.lines[doc.row]));
+  console.log("Cursor col:", doc.col);
+
   let toInsert = word;
-  if (addSpace) toInsert += ' ';
+//  if (addSpace) toInsert += ' ';
+  if (addSpace === true) toInsert += ' ';
 
   // Splice the word into the current line at col
   doc.lines[doc.row] = 
@@ -602,16 +611,20 @@ async function exportHTML() {
 
 //helper function to allow mobile browsers to get to menbar with alt keys
 function toggleMenu(id) {
-    const details = document.getElementById(id);
-    if (!details) return;
+    const menuEl = document.getElementById(id);
+    if (!menuEl) return;
 
     // Close others
-    document.querySelectorAll('details').forEach(d => {
-        if (d.id !== id) d.open = false;
+    document.querySelectorAll('details, input').forEach(el => {
+        if (el.id !== id) el.open = false;
     });
 
-    details.open = !details.open;
-    const summary = details.querySelector('summary');
+    menuEl.open = !menuEl.open;
+    if(menuEl.tagName == 'INPUT'){
+      menuEl.focus();
+      return;
+    }
+    const summary = menuEl.querySelector('summary');
     if (summary) {
         summary.focus();
     }

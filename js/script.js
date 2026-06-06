@@ -309,7 +309,7 @@ function parseAffixes(text){
 t = t.replace(
 ///(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
 ///([ \t]*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
-/([ \t]*<span[^<]*<\/span>)*( *\+)(['A-Z]*)/g,
+/([ \t]*<span[^<]*<\/span>)*( *\+)(['A-Z.,]*)/g,
  (_,SPAN,GAP,SUFX) => (SUFX + ' ').toLowerCase()
 );
 
@@ -638,8 +638,9 @@ function whenInputNonAlpha() {
         presdKeys.clear();   
         keysDown=0;
         renderMarkdown();
-        if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
+        if (true || mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
           reParseParagraph();
+          console.log("reparsing")
         }
 
        return true; // Early return for alignment
@@ -757,6 +758,8 @@ document.addEventListener('keydown', (event) => {
 //          case 't': outputHTML.focus(); break;
           case 'v': toggleMenu('view-menu'); break;
           case 'h': toggleMenu('help-menu'); break;
+          case 'c': toggleMenu('colorVowels'); break;
+          case 'k': toggleMenu('markLetters'); break;
           case 'a': toggleMenu('about-menu'); break;
           case 'm': toggleMenu('code-menu'); outputMarkdown.focus(); break;
           case 'o': toggleMenu('editor-menu'); outputHTML.focus();break;

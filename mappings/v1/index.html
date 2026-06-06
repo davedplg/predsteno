@@ -8,7 +8,12 @@
 </head>
 <body>
   <div>
-   <details  id="file-dialog"> 
+
+
+<body>
+  <div id="menu-container"></div>
+  <script src="../menu.js"></script>
+<!--   <details  id="file-dialog"> 
      <summary>file</summary>
       <dialog open  style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
       
@@ -16,7 +21,11 @@
         <button id="btn-load">Load Markdown…</button>
         <button id="btn-clear">Clear</button>
   
-        <!-- Optional fallback quick-save for very old browsers -->
+        <!-- 
+          Optional fallback quick-save for very old browsers 
+        -->
+
+        <!-- 
         <a id="legacy-download" href="#" style="font-size: 0.9em; color: #666; align-self: center;" hidden>
           Quick save (old method)
         </a>
@@ -40,6 +49,7 @@
    </details>
 <!--     </dialog>
 </details>  -->
+<!-- 
    <details > 
      <summary>about</summary>
      <dialog open>
@@ -60,8 +70,8 @@
          Colors
      </label>
      <!-- <div> -->
-  <!--  <details > -->
-  <details> 
+    <!--  <details > -->
+ <!--  <details> 
    <summary>Code</summary>  
     <div >
 <textarea id="output" rows="9" cols="80" readonly class="striped-div">
@@ -85,11 +95,22 @@
 Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn 
     </textarea>
       <!--     </div> -->
-  </details>
+      <!--  </details> -->
 </div>
-  <div id="outpt2" autofocus tabindex="0"> </div>
+<!--  <div id="outpt2" autofocus tabindex="0"> </div>-->
+<!-- <div>
+   <details open id="editor-menu" acceskey="o">
+     <summary id="type">Edit<u>o</u>r</summary>
+ 
+    <div id="outpt2" autofocus tabindex="0"> </div>
 
- <div id="instructions">
+   </details>  
+  </div>
+-->  
+  <!--  <script src="../../js/uni-8-select-3-homos/reservecaps.js"></script> -->
+  </div>
+
+ <div id="instructions" style="display: none;overflow: hidden; ">
     <a id="numpad">
       <table >
       <tr class="strong_digit">
@@ -177,6 +198,15 @@ Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn
    </div> 
     <a id="top8">
   </div>
+ <div>
+   <details open id="editor-menu" acceskey="o">
+     <summary id="type">Edit<u>o</u>r</summary>
+ 
+    <div id="outpt2" autofocus tabindex="0"> </div>
+
+   </details>  
+  </div>
+ 
   <!--  <script src="../../js/uni-8-select-3-homos/reservecaps.js"></script> -->
   <script src="../../js/uni-8-select-3-homos/caps.js"></script>
   <script src="../../js/uni-8-select-3-homos/toptxts.js"></script>
