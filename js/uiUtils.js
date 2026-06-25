@@ -616,10 +616,13 @@ function toggleMenu(id) {
 
     // Close others
     document.querySelectorAll('details, input').forEach(el => {
-        if (el.id !== id) el.open = false;
+        if (el.id !== id && el.id !== 'editor-menu') el.open = false;
     });
+ 
 
     menuEl.open = !menuEl.open;
+
+
     if(menuEl.tagName == 'INPUT'){
       menuEl.focus();
       return;
@@ -725,6 +728,7 @@ async function handleSaveAs() {
         await writable.write(finalContent);
         await writable.close();
         document.getElementById('file-dialog').open = false;
+        outputHTML.focus();
         return; 
         // success — no need for fallback
       } catch (err) {

@@ -883,7 +883,7 @@ document.addEventListener('click', function(e) {
 
     // Close all other tags
     document.querySelectorAll('details').forEach(otherDetails => {
-      if (otherDetails !== details) {
+      if (otherDetails !== details || otherDetails.id !== 'editor-menu' ) {
         otherDetails.open = false;
       }
     });
@@ -892,12 +892,21 @@ document.addEventListener('click', function(e) {
 
 // Close menus when they lose focus
 document.querySelectorAll('details').forEach(detail => {
-    detail.addEventListener('focusout', function () {
+  
+  detail.addEventListener('focusout', function () {
         // Small delay so clicking inside dialog doesn't close it immediately
         setTimeout(() => {
-            if (!detail.contains(document.activeElement)) {
+            if (!detail.contains(document.activeElement) && detail.id !== 'editor-menu') {
                 detail.open = false;
             }
+        }, 10);
+    });
+  
+  detail.addEventListener('focusin', function () {
+        // Small delay 
+        setTimeout(() => {
+          detail.open = true;
+          if(detail.id == 'editor-menu'){outputHTML.focus()}
         }, 10);
     });
 });
