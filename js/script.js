@@ -638,8 +638,7 @@ function whenInputNonAlpha() {
         presdKeys.clear();   
         keysDown=0;
         renderMarkdown();
- //     if (true || mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
-        if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
+        if (true || mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
           reParseParagraph();
           console.log("reparsing")
         }
@@ -903,9 +902,12 @@ document.querySelectorAll('details').forEach(detail => {
         }, 10);
     });
   
-  detail.addEventListener('focusin', function () {
+  detail.addEventListener('focusin', function (e) {
         // Small delay 
         setTimeout(() => {
+          //below ignores focusin from 3rd parse input element insertion
+          //and subsequent focusin that bubbles
+          if(e.target.closest('.missing-word'))return;
           detail.open = true;
           if(detail.id == 'editor-menu'){outputHTML.focus()}
         }, 10);

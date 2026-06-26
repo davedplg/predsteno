@@ -8,8 +8,7 @@ const outputHTML     = document.getElementById("outpt2");
 const markLetters    = document.getElementById("markLetters")
 const colorVowels    = document.getElementById("colorVowels")
 const typepseudo     = document.getElementById("type")
-const fileMenu       = document.getElementById('file-dialog');
-
+   
 colorVowels.addEventListener('change', renderMarkdown);
 markLetters.addEventListener('change', renderMarkdown);
 typepseudo.addEventListener('onclick',function() {outputHTML.focus()});
@@ -728,14 +727,14 @@ async function handleSaveAs() {
         const writable = await handle.createWritable();
         await writable.write(finalContent);
         await writable.close();
-        fileMenu.open = false;
+        document.getElementById('file-dialog').open = false;
         outputHTML.focus();
         return; 
         // success — no need for fallback
       } catch (err) {
         if (err.name === 'AbortError') return; // user canceled
         console.warn('Native save failed, falling back →', err);
-        fileMenu.open = false;
+        document.getElementById('file-dialog').open = false;
       }
     }
 
@@ -750,7 +749,7 @@ async function handleSaveAs() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   });
-      fileMenu.open = false;
+      document.getElementById('file-dialog').open = false;
 
 }
 
@@ -775,12 +774,12 @@ async function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
-      fileMenu.open = false;
+      document.getElementById('file-dialog').open = false;
       return;
     } catch (err) {
       if (err.name === 'AbortError') return;
       console.warn('Modern open picker failed, falling back to old input', err);
-      fileMenu.open = false;
+      document.getElementById('file-dialog').open = false;
     }
   const input = document.createElement('input');
   input.type = 'file';
@@ -793,7 +792,7 @@ async function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
-      fileMenu.open = false;
+      document.getElementById('file-dialog').open = false;
       // Optional: show brief feedback
       // alert(`Loaded ${file.name}`);
     } catch (err) {
@@ -811,7 +810,7 @@ function initFileControls() {
   document.getElementById('btn-load')?.addEventListener('click', handleLoadMarkdown);
   document.getElementById('btn-clear')?.addEventListener('click', () => {
       setMd('a  \nb');
-      fileMenu.open = false;
+      document.getElementById('file-dialog').open = false;
 //      updateDisplay();
       renderMarkdown();
     });
