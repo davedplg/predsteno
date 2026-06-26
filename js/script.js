@@ -638,7 +638,8 @@ function whenInputNonAlpha() {
         presdKeys.clear();   
         keysDown=0;
         renderMarkdown();
-        if (true || mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
+ //     if (true || mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
+        if (mdMatch(new RegExp(`\\n\\n${cursor}$`))) {
           reParseParagraph();
           console.log("reparsing")
         }
