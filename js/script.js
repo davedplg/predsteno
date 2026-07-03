@@ -923,3 +923,39 @@ function goFullScreen() {
     document.exitFullscreen();
   }
 }
+
+//convert entire document to augmented
+function convertToAugmented() {
+  if (!confirm("Convert the entire current document to Augmented format?\n\nThis action cannot be easily undone.")) {
+    return;
+  }
+
+  const original = md();
+  const converted = augmentWords(original);
+
+  setMd(converted);
+  renderMarkdown();        // or debouncedRender() if you prefer
+
+  console.log(`✅ Converted document to Augmented format (${original.length} → ${converted.length} characters)`);
+}
+
+
+let aug = {};   // declare it globally
+
+async function loadAugDictionary() {
+  try {
+    console.log("Loading augmentation dictionary...");
+
+    const response = await fetch('../../js/d0-lexicon.json');
+    if (!response.ok) throw new Error("Failed to fetch dictionary");
+
+    aug = await response.json();
+
+    console.log(`✅ Dictionary loaded successfully - ${Object.keys(aug).length} entries`);
+  } catch (err) {
+    console.error("❌ Failed to load dictionary:", err);
+  }
+}
+
+// Start loading as soon as possible
+window.addEventListener('DOMContentLoaded', loadAugDictionary);
