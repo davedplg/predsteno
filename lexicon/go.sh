@@ -99,4 +99,9 @@ mkdir -p ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS
 cp ../js/$DICNAME/reserves.js ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/reserves.js
 cp ../js/$DICNAME/toptxts.js  ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/toptxts.js
 cp ../js/$DICNAME/caps.js     ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/caps.js
+#make the TO->AUG transformation dic
+echo '{' > ../js/d0-lexicon.json
+echo ' "dumbtoby":{"a":"toby","f":"0"} ' >> ../js/d0-lexicon.json
+sed 's/#/0/g;s/o0/o/g;' data/d0-lexicon.js >> ../js/d0-lexicon.json
+echo '}' >> ../js/d0-lexicon.json
 

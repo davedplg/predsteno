@@ -211,10 +211,10 @@ function updateDisplay() {
   // Remove cursor symbol from model again (keep data clean)
   doc.lines[doc.row] = currentLine;
 
-  requestAnimationFrame(() => {
-    let cursordepth=doc.row/doc.length;
-    outputMarkdown.scrollTop = cursordepth*outputMarkdown.scrollHeight;
-  });
+//  requestAnimationFrame(() => {
+//    let cursordepth=doc.row/doc.length;
+//    outputMarkdown.scrollTop = cursordepth*outputMarkdown.scrollHeight;
+//  });
 }
 
 
@@ -283,11 +283,11 @@ function insertWord(word, addSpace = true) {
   const currentLine = doc.lines[doc.row];
 
 
-console.log("=== INSERTWORD DEBUG ===");
-  console.log("Word:", JSON.stringify(word));
-  console.log("addSpace param:", addSpace);
-  console.log("Current line before:", JSON.stringify(doc.lines[doc.row]));
-  console.log("Cursor col:", doc.col);
+//console.log("=== INSERTWORD DEBUG ===");
+//  console.log("Word:", JSON.stringify(word));
+//  console.log("addSpace param:", addSpace);
+//  console.log("Current line before:", JSON.stringify(doc.lines[doc.row]));
+//  console.log("Cursor col:", doc.col);
 
   let toInsert = word;
 //  if (addSpace) toInsert += ' ';
@@ -305,7 +305,75 @@ console.log("=== INSERTWORD DEBUG ===");
   updateDisplay();
 }
 
+
+let renderTimeout = null;
+
 function renderMarkdown() {
+  clearTimeout(renderTimeout);
+  
+  renderTimeout = setTimeout(() => {
+    renderMarkdown_old();   // the real heavy work
+  }, 25);   // 25ms debounce - feels responsive, cuts excessive calls
+}
+
+function renderMarkdown_old() {
+  let text = md();
+
+  // 1. Remove old cursor
+  // text = removeCursor(text);
+
+  // 2. Apply affixes and case marking
+  text = parseAffixes(text);
+  text = parseCaseMarking(text);
+  text = text.replace(/^ {4}/gm, '\u00A0\u00A0\u00A0\u00A0');
+
+  // 3. Update markdown source once
+  setMd(text);
+  requestAnimationFrame(() => {
+    syncFromMarkdown();
+  });
+
+  // 4. Invisible paragraph markers
+  if (invisibleToggle.checked) {
+    text = text.replace(/^\s*$/gm, "  \n¶  ");
+  }
+
+  // === NEW: Do phonetic tagging on RAW MARKDOWN (much faster & safer) ===
+  let state = (markLetters.checked ? "marks " : "") +
+              (colorVowels.checked ? "color" : "");
+
+  text = format_augmented_words(text, state);   // ← now works on markdown
+
+  // 5. Render to HTML
+  let htm = marked.parse(text);
+
+  // 6. Minor HTML post-processing (cursor, etc.)
+  htm = htm.replace(/  $/g, '\uFE4E\uFE4E');
+
+  // 7. Unescape entities
+  htm = htm.replace(/&lt;/g, '<')
+           .replace(/&gt;/g, '>')
+           .replace(/&amp;/g, '&')
+           .replace(/&quot;/g, '"');
+
+  // 8. Update preview
+  setHtml(htm);
+
+  // 9. Focus / scroll
+  requestAnimationFrame(() => {
+    const input = outpt2.querySelector('input.missing-word');
+    if (input) {
+      input.focus();
+      input.select();
+    } else {
+      outputMarkdown.focus();
+      outputMarkdown.setSelectionRange(text.length, text.length);
+      outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
+    }
+  });
+}
+
+function renderMarkdown_old() {
   let text = md();
 
   //console.trace("renderMarkdown called from:");
@@ -446,6 +514,66 @@ Object.keys(obj).forEach(key => {
   return t;
 }
 
+function augmentWords(text) {
+  if (!text || typeof text !== 'string') return text;
+
+  return text.replace(/[a-zA-Z]+/g, (word) => {
+    const lower = word.toLowerCase();
+
+    const entry = aug[lower];
+    
+    // Safe guard against missing words
+    if (!entry || typeof entry.a !== 'string') {
+      return word;                    // ← return original word if not found
+    }
+    const augWord = entry.a;
+    if (!augWord) return word;
+
+    if (word === word.toUpperCase()) return augWord.toUpperCase();
+    if (word[0] === word[0].toUpperCase()) return augWord.charAt(0).toUpperCase() + augWord.slice(1);
+    
+    return augWord;                    // normal lowercase
+  });
+}
+
+
+function format_augmented_words_new(t, style) {
+  const times = {};
+  const mark = (label) => {
+    const now = performance.now();
+    if (times.last) times[label] = (now - times.last).toFixed(2);
+    times.last = now;
+  };
+
+  mark("start");
+  t = t.replace(/([τΤ])([ħĦ])/gi, '<vc>$1$2</vc>');
+  mark("digraph");
+
+  t = loopReplace(t);
+  mark("loopReplace");
+
+  t = caseReplace(t, 'τħ', '<vc>th</vc>');
+  t = caseReplace(t, 'èŕ', 'eř');
+  mark("caseReplace");
+
+  t = t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');
+  mark("silent");
+
+  t = t.replace(/([a-zA-Z])(0)*(\1)(0)*/gi, '$1$1');
+  mark("doubles1");
+
+// New (much faster)
+//t = t.replace(/\b[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+\b/gi, '<v>$&</v>');
+// previous vowel replace
+ t = t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi, '<v>$&</v>');
+ t = t.replace(/[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi, '<v>$&</v>');
+  mark("vowels");   // ← very likely the worst
+
+  // ... rest of function, add mark("label") after each major replace
+
+  console.table(times);
+  return t;
+}
 //function format_augmented_words(t){
 function format_augmented_words(t,style){
   // Step 1: Protect sequences that look like HTML entities
@@ -468,7 +596,9 @@ function format_augmented_words(t,style){
 //  t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
     t=t.replace(/([a-zA-Z])(0)*(\1)(0)*/gi, '$1$1');  
   //tag vowels <v>
+  if(style.includes('color')) {
   t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
+  }
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
   //remaing doubled letters remove silent marking
@@ -476,7 +606,9 @@ function format_augmented_words(t,style){
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
   //tag voiced consonants <vc> ḩḨẇġḩ
-  t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
+  if(style.includes('color')) {
+t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
+  }
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
   t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
   t=t.replace(/ẇ/g,'w');  t=t.replace(/Ẇ/g,'W');
