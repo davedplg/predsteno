@@ -1,13 +1,14 @@
 //for DOM related stuff
-const outpt = document.getElementById('output');
-const outpt2 = document.getElementById('outpt2');
-const wdOpts = document.getElementById('wdOpts');
+const outpt          = document.getElementById('output');
+const outpt2         = document.getElementById('outpt2');
+const wdOpts         = document.getElementById('wdOpts');
 
 const outputMarkdown = document.getElementById("output");
 const outputHTML     = document.getElementById("outpt2");
 const markLetters    = document.getElementById("markLetters")
 const colorVowels    = document.getElementById("colorVowels")
 const typepseudo     = document.getElementById("type")
+const fileDialog     = document.getElementById("file-dialog")
    
 colorVowels.addEventListener('change', renderMarkdown);
 markLetters.addEventListener('change', renderMarkdown);
@@ -88,6 +89,11 @@ const doc = {
   }
 };
 
+//========= give the input window focus================
+function focusEditor(){
+    requestAnimationFrame(() => outputHTML.focus());
+}
+
 // ==================== SYNC FROM TEXTAREA ====================
 function syncFromMarkdown() {
   //delete below?
@@ -117,31 +123,6 @@ function getDisplayText() {
     return text;
 }
 
-function getDisplayText_oldish() {
-    let text = doc.lines.join('\n');
-    
-    text = text.replace(/¶  /gm, '');
-
-    if (invisibleToggle.checked) {
-      text = text.replace(/(?<!¶)$/gm, '¶  ');
-    } 
-    
-    return text;
-}
-
-
-function getDisplayText_old() {
-    let text = doc.lines.join('\n');
-    
-    if (invisibleToggle.checked) {
-//    text = text.replace(/^\s*$/gm, '¶');
-      text = text.replace(/(?<!¶)$/gm, '¶');
-    } else {
-      text = text.replace(/¶/gm, '');
-    }
-    
-    return text;
-}
 
 // Listen for changes
 invisibleToggle.addEventListener('change', () => {
@@ -151,15 +132,6 @@ invisibleToggle.addEventListener('change', () => {
 // Initial render
 //updateDisplay();
 
-function getDisplayText_old() {
-    let text = doc.lines.join('\n');
-    
-    if (document.getElementById('show-invisible').checked) {
-        text = text.replace(/^\s*$/gm, '¶');           // blank lines → ¶
-    }
-    
-    return text;
-}
 
 // ==================== GET COLUMN WIDTH ====================
 function getActualColumnWidth() {
@@ -218,42 +190,6 @@ function updateDisplay() {
 }
 
 
-
-function updateDisplay_old() {
-  // Build clean text
-  let text = doc.lines.join('\n');
- 
-  // default cursor
-  let cur = cursor;
-
-  // Insert visible cursor symbol at current position
-  const currentLine = doc.lines[doc.row];
-  const before = currentLine.slice(0, doc.col);
-  const after = currentLine.slice(doc.col);
-  
-  // cursor thickens as preceeding spaces accumulate
-  if(before.substr(-1) == ' '  ) cur = cursor2;
-  if(before.substr(-2) == '  ' ) cur = cursor3;
-  if(before.substr(-3) == '   ') cur = cursor4;
-
-  // Temporarily insert cursor for display
-  doc.lines[doc.row] = before + cur + after;
-
-  const displayText = doc.lines.join('\n');
-
-  setMd(displayText);        // update textarea
-  renderMarkdown();          // update HTML preview
-
-  // Remove cursor symbol from model again (keep data clean)
-  doc.lines[doc.row] = currentLine;
-
-  requestAnimationFrame(() => {
-    let cursordepth=doc.row/doc.length;
-    outputMarkdown.scrollTop = cursordepth*outputMarkdown.scrollHeight;
-  });
-}
-
-
 function clearFrag(){
    frag='';
    removeWordOptions();
@@ -272,6 +208,8 @@ function initDocument() {
   doc.row = 0;
   doc.col = doc.lines[doc.row].length;
   updateDisplay();
+    outputHTML.focus();
+//x focusEditor();
 }
 
 // Load new markdown content (e.g. from file)
@@ -312,11 +250,11 @@ function renderMarkdown() {
   clearTimeout(renderTimeout);
   
   renderTimeout = setTimeout(() => {
-    renderMarkdown_old();   // the real heavy work
+    renderMarkdownHelper();   // the real heavy work
   }, 25);   // 25ms debounce - feels responsive, cuts excessive calls
 }
 
-function renderMarkdown_old() {
+function renderMarkdownHelper() {
   let text = md();
 
   // 1. Remove old cursor
@@ -537,43 +475,6 @@ function augmentWords(text) {
 }
 
 
-function format_augmented_words_new(t, style) {
-  const times = {};
-  const mark = (label) => {
-    const now = performance.now();
-    if (times.last) times[label] = (now - times.last).toFixed(2);
-    times.last = now;
-  };
-
-  mark("start");
-  t = t.replace(/([τΤ])([ħĦ])/gi, '<vc>$1$2</vc>');
-  mark("digraph");
-
-  t = loopReplace(t);
-  mark("loopReplace");
-
-  t = caseReplace(t, 'τħ', '<vc>th</vc>');
-  t = caseReplace(t, 'èŕ', 'eř');
-  mark("caseReplace");
-
-  t = t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');
-  mark("silent");
-
-  t = t.replace(/([a-zA-Z])(0)*(\1)(0)*/gi, '$1$1');
-  mark("doubles1");
-
-// New (much faster)
-//t = t.replace(/\b[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+\b/gi, '<v>$&</v>');
-// previous vowel replace
- t = t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi, '<v>$&</v>');
- t = t.replace(/[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi, '<v>$&</v>');
-  mark("vowels");   // ← very likely the worst
-
-  // ... rest of function, add mark("label") after each major replace
-
-  console.table(times);
-  return t;
-}
 //function format_augmented_words(t){
 function format_augmented_words(t,style){
   // Step 1: Protect sequences that look like HTML entities
@@ -757,6 +658,13 @@ function toggleMenu(id) {
 
     if(menuEl.tagName == 'INPUT'){
       menuEl.focus();
+      if(menuEl.checked == true) {
+        menuEl.checked = false;
+      }else {
+        menuEl.checked= true
+      }
+      outputHTML.focus();
+//x    focusEditor();
       return;
     }
     const summary = menuEl.querySelector('summary');
@@ -859,14 +767,15 @@ async function handleSaveAs() {
         const writable = await handle.createWritable();
         await writable.write(finalContent);
         await writable.close();
-        document.getElementById('file-dialog').open = false;
+        fileDialog.open = false;
         outputHTML.focus();
+//x     focusEditor();
         return; 
         // success — no need for fallback
       } catch (err) {
         if (err.name === 'AbortError') return; // user canceled
         console.warn('Native save failed, falling back →', err);
-        document.getElementById('file-dialog').open = false;
+        fileDialog.open = false;
       }
     }
 
@@ -881,7 +790,7 @@ async function handleSaveAs() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   });
-      document.getElementById('file-dialog').open = false;
+      fileDialog.open = false;
 
 }
 
@@ -892,6 +801,8 @@ async function handleSaveAs() {
 
 // Temporary test version of handleLoadMarkdown
 async function handleLoadMarkdown() {
+  fileDialog.open = false;
+
   if ('showOpenFilePicker' in window) 
     try {
       const [fileHandle] = await window.showOpenFilePicker({
@@ -906,13 +817,14 @@ async function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
-      document.getElementById('file-dialog').open = false;
+//    fileDialog.open = false;
       return;
     } catch (err) {
       if (err.name === 'AbortError') return;
       console.warn('Modern open picker failed, falling back to old input', err);
-      document.getElementById('file-dialog').open = false;
+//    fileDialog.open = false;
     }
+ 
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.md,.markdown,.txt';
@@ -924,7 +836,7 @@ async function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
-      document.getElementById('file-dialog').open = false;
+//    fileDialog.open = false;
       // Optional: show brief feedback
       // alert(`Loaded ${file.name}`);
     } catch (err) {
@@ -933,6 +845,8 @@ async function handleLoadMarkdown() {
     }
   };
   input.click();
+  outputHTML.focus();
+//x focusEditor();
 }
 
 // ───────────────────────────────────────────────
@@ -942,7 +856,7 @@ function initFileControls() {
   document.getElementById('btn-load')?.addEventListener('click', handleLoadMarkdown);
   document.getElementById('btn-clear')?.addEventListener('click', () => {
       setMd('a  \nb');
-      document.getElementById('file-dialog').open = false;
+      fileDialog.open = false;
 //      updateDisplay();
       renderMarkdown();
     });
@@ -1027,53 +941,6 @@ function vimLein(input) {
     doc.col = Math.min(doc.col, (doc.lines[doc.row] || "").length);
 
     updateDisplay();
-}
-
-function vimLein_old(input){
-    let cmd = input.slice(1).trim();
-
-    // === Normalize ===
-    if (cmd === 'G')  cmd = doc.lines.length + 'g';
-    if (cmd === 'gg') cmd = '1g';
-    if (cmd === 'dd') cmd = '1d';
-    if (cmd === 'yy') cmd = '1y';
-
-    // === Core handlers ===
-    if (/^\d+d$/.test(cmd)) {                    // delete
-        const n = parseInt(cmd);
-        
-        doc.yankBuffer = doc.lines               // delete to yank buffer
-            .slice(doc.row, doc.row + n)
-            .map(line => line.replace(/<input[^>]*class="missing-word"[^>]*>/g, ''));
-        
-        doc.lines.splice(doc.row, Math.max(1, n));
-    }
-
-    else if (/^\d+y$/.test(cmd)) {               // yank
-    const n = parseInt(cmd);
-    doc.yankBuffer = doc.lines
-        .slice(doc.row, doc.row + n)
-        .map(line => line.replace(/<input[^>]*class="missing-word"[^>]*>/g, ''));
-    }
-    else if (/^\d+g$/.test(cmd)) {                    // go to line
-        const n = parseInt(cmd);
-        doc.row = Math.max(0, Math.min(n - 1, doc.lines.length - 1));
-    }
-    else if (cmd === 'p' || cmd === 'P') {           // paste
-        if (doc.yankBuffer) {
-            const insertPos = (cmd === 'P') ? doc.row : doc.row + 1;
-            doc.lines.splice(insertPos, 0, ...doc.yankBuffer);
-            doc.row = insertPos + doc.yankBuffer.length;   // move cursor to end of pasted content
-            doc.col = 0
-        }
-    }
-
-    // cleanup
-    doc.row = Math.max(0, Math.min(doc.row, doc.lines.length - 1));
-    doc.col = Math.min(doc.col, (doc.lines[doc.row] || "").length);
-
-    updateDisplay();
-    return;
 }
 
 window.addEventListener('DOMContentLoaded', initFileControls);

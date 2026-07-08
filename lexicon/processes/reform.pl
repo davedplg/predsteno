@@ -22,6 +22,7 @@ while (<>) {
 #    s/Õ/OU/g;
 #    s/Õ/OW/g;
      s/Õ/OẆ/g;
+     s/ẆW/Ẇ/g;
 #    s/Σ/OY/g;
      s/Σ/OI/g;
      s/O#/O/g;

@@ -1,6 +1,4 @@
 
-
-/* NEW - just drop this in */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Montserrat:wght@400;600;700&family=EB+Garamond:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap');
 
 :root {
@@ -120,6 +118,13 @@ table,
  font-size:1.25rem;
 }
 
+/* Justified paragraphs */
+#outpt2 p,
+#outpt2 {
+  text-align: justify;
+  hyphens: auto;           /* optional but recommended for better justification */
+  text-justify: inter-word; /* helps with spacing */
+}
 /* Portrait → 1 column */
 @media (orientation: portrait) {
   div#outpt2 {
@@ -306,7 +311,8 @@ width:16%
 }
 
 #outpt2 {
-  background-color: #e3f2fd;           /* normal state */
+  background-color: #c5d9f0;           /* normal state */
+
   transition: background-color 0.2s ease;
 }
 

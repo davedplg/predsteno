@@ -37,12 +37,11 @@ const primeMap = {
      'enter': 71,
 
     ' ': 86,     //reserves
-    'c': 106,    //spacebar4
-    'n': 94,     //spacebar3
-    'x': 94,     //spacebar3
+    'c': 94,    //spacebar3
+    'n': 74,     //spacebar2
     'v': 74,     //spacebar2
-    'm': 74,     //spacebar2
-    'b' : 106,    //spacebar1
+    'm': 94,     //spacebar3
+    'b': 106,    //spacebar1
 };
 
 
