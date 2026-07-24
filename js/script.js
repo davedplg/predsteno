@@ -24,6 +24,7 @@ let opts = '';
 //let oldOpts = '';
 
 let lastDecidingSpan="";
+let superscripts = true;
 
 // first and second parse separators
 // sep1=␣ sep2=↔ (double ended arrow)
@@ -184,6 +185,7 @@ function select2ndPassWd(key) {
   } else {
     requestAnimationFrame(() => {
       renderMarkdown();
+//    outputMarkdown.focus();
       outputHTML.focus();
       updateDisplay();
     });
@@ -203,8 +205,8 @@ function mark3rdPassWds() {
   if (!placeholder) {
     need3rdPass = 0;
     renderMarkdown();
+//  requestAnimationFrame(() => outputMarkdown.focus());
     requestAnimationFrame(() => outputHTML.focus());
-//    focusEditor();
     return;
   }
 
@@ -707,8 +709,8 @@ function on3rdPass(key) {
       insertWord(value)  
       }
       renderMarkdown();
+//    requestAnimationFrame(() => outputMarkdown.focus()); // back to source
       requestAnimationFrame(() => outputHTML.focus()); // back to source
-//    focusEditor();
       // Check for next missing word
       if (mdMatch(missingRegEx)) {
         mark3rdPassWds();
@@ -756,6 +758,7 @@ document.addEventListener('keydown', (event) => {
 
       switch (key) {
           case 'i': toggleMenu('file-dialog'); break;
+//          case 't': outputHTML.focus(); break;
           case 'v': toggleMenu('view-menu'); break;
           case 'h': toggleMenu('help-menu'); break;
           case 'c': toggleMenu('colorVowels'); break;
@@ -849,13 +852,11 @@ document.addEventListener('keyup', (event) => {
   //3rd parse enter is keyed
 //  let active3rdParse = (document.activeElement.tagName == 'INPUT'); 
   //active.classList?.contains('missing-word')
+  if(mdMatch(spanRegEx))return;
   let active3rdParse = (document.activeElement.classList?.contains('missing-word'))
   console.log(active3rdParse);
   let inEditor=outputHTML.matches(':focus');
-  //ignore if 2ndParse
-  if (mdMatch(spanRegEx)) return; 
-  //
-  if (!inEditor && (!active3rdParse || mdMatch(spanRegEx))) return; 
+  if (!inEditor && !active3rdParse) return; 
   if (key !="enter" &&  active3rdParse) return;
   if (key =="enter" &&  active3rdParse) {
     on3rdPass(key); 
@@ -899,7 +900,7 @@ document.querySelectorAll('details').forEach(detail => {
   detail.addEventListener('focusout', function () {
         // Small delay so clicking inside dialog doesn't close it immediately
         setTimeout(() => {
-            if (!detail.contains(document.activeElement) && detail.id !== 'editor-menu') {
+            if (!detail.contains(document.activeElement) && (detail.id !== 'editor-menu' || detail.id !== 'code-menu')) {
                 detail.open = false;
             }
         }, 10);
@@ -912,10 +913,7 @@ document.querySelectorAll('details').forEach(detail => {
           //and subsequent focusin that bubbles
           if(e.target.closest('.missing-word'))return;
           detail.open = true;
-        if(detail.id == 'editor-menu'){outputHTML.focus()}
-//          if(detail.id == 'editor-menu'){
-//            focusEditor();
-//          }
+          if(detail.id == 'editor-menu'){outputHTML.focus()}
         }, 10);
     });
 });
@@ -930,6 +928,27 @@ function goFullScreen() {
 }
 
 //convert entire document to augmented
+function convertToAugmented_old() {
+  if (!confirm("Convert the entire current document to Augmented format?\n\nThis action cannot be easily undone.")) {
+    return;
+  }
+
+  const original = md();
+  requestAnimationFrame(() => {
+  const converted = augmentWords(original);
+
+  setMd(converted);
+  renderMarkdown();        // or debouncedRender() if you prefer
+
+  console.log(`✅ Converted document to Augmented format (${original.length} → ${converted.length} characters)`);
+  fileDialog.open = false;
+  });
+  requestAnimationFrame(() => {
+    outputHTML.focus();
+  //alert('should be in editor focus')
+  });
+}
+
 function convertToAugmented() {
   if (!confirm("Convert the entire current document to Augmented format?\n\nThis action cannot be easily undone.")) {
     return;
@@ -939,23 +958,17 @@ function convertToAugmented() {
   const converted = augmentWords(original);
 
   setMd(converted);
-  renderMarkdown();        // or debouncedRender() if you prefer
+  renderMarkdown();
 
   console.log(`✅ Converted document to Augmented format (${original.length} → ${converted.length} characters)`);
 
-  // Close the file menu cleanly
-    if (fileDialog) {
-        fileDialog.removeAttribute('open');
-    }
+  // Single cleanup + focus block
+  fileDialog.open = false;
 
-    // Give the browser a moment to process the close before moving focus
-    setTimeout(() => {
-        const editor = document.getElementById('editor-menu');
-        if (editor) editor.open = true;           // ensure editor stays open
-        outputHTML.focus();
-    }, 30);   // 30ms is often enough
+  setTimeout(() => {
+    outputHTML.focus();
+  }, 1000);
 }
-
 
 let aug = {};   // declare it globally
 
@@ -969,6 +982,8 @@ async function loadAugDictionary() {
     aug = await response.json();
 
     console.log(`✅ Dictionary loaded successfully - ${Object.keys(aug).length} entries`);
+    outputHTML.focus();
+
   } catch (err) {
     console.error("❌ Failed to load dictionary:", err);
   }

@@ -30,7 +30,7 @@
    </details>
 
   <!-- ==================== MARKS AND COLORS================= -->
-         <label>
+     <label>
        <input accesskey="k" type="checkbox" id="markLetters" checked>
        <span>Mar<z>k</z>s</span>
      </label>
@@ -56,33 +56,54 @@
       </label>
       <br/> 
       <label>
-        <input accesskey="k" type="checkbox" id="show-keymap" >
-        KeyMap
-      </label>
-      <br/> 
-      <label>
        <input accesskey="h" type="checkbox" id="show-superscripts" >
         Gloss&nbsp;odd&nbsp;words
       </label>
       <br/> 
+      <!--
      <label>
         <input accesskey="z" type="checkbox" id="show-markdown" >
         Show&nbsp;Markdown
       </label>
       <br/> 
+      -->
   <!--     Future controls can go here easily -->
     </dialog>
   </details> 
-
-  <!-- =================== MARKDOWN =========================== -->
-  <details id="code-menu"> 
-    <summary accesskey="m">
-  <!--  
-    <u>M</u>arkdown
-  -->
-    </summary>  
-    <div >
-<textarea id="output" rows="9" cols="80" readonly class="striped-div">
+<!--     </dialog>
+</details>  -->
+  <!-- =================== ABOUT MENU ======================== -->
+   <details id="about-menu"> 
+     <summary accesskey="a"><u>A</u>bout</summary>
+     <dialog open>
+     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
+      <ul> 
+       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
+       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
+       <li><a href='../new-key-maps/[[ID]]-keymap.html'>keymap</a></li>
+     </ul>
+     </dialog>
+   </details>
+  <!-- =================== HELP MENU =========================== -->
+  <details id="help-menu"> 
+     <summary accesskey="h"><u>H</u>elp</summary>
+     <dialog open>
+     <ul>
+       <li>Enter Twice to Start!</li>
+       <li>Mirrored-hands Text-Input</li>
+       <li>e.161 
+         <a href="../../index.html#e161">numpad
+         </a>
+         : letter -> digit mapping</li>
+       <l:i> <a href="#chords">chords</a></li>
+       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
+       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
+     </ul>
+     </dialog>
+   </details>
+<!-- =================== MARKDOWN =========================== -->
+   <div id='code-menu' hidden>
+     <textarea id="output" rows="9" cols="80" readonly class="striped-div">
  ## Mārkdõw0n Enâblèd 
 - 'spâçè' 'spâçè' entèŕ = nëw0 lînè 
 - entèŕ entèŕ = parágraph
@@ -103,38 +124,40 @@
 Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn 
     </textarea>
         </div> 
+ <!--
   </details>
-
-  <!-- =================== HELP MENU =========================== -->
-  <details id="help-menu"> 
-     <summary accesskey="h"><u>H</u>elp</summary>
-     <dialog open>
-     <ul>
-       <li>Enter Twice to Start!</li>
-       <li>Mirrored-hands Text-Input</li>
-       <li>e.161 
-         <a href="../../index.html#e161">numpad
-         </a>
-         : letter -> digit mapping</li>
-       <l:i> <a href="#chords">chords</a></li>
-       <li> <a href="../../index.html#3-pass">Multi-Pass Input</a></li>
-       <li><a href="../../index.html#phonetic-spellings">phonetic</a> examples </li>
-     </ul>
-     </dialog>
-   </details>
-<!--     </dialog>
-</details>  -->
-  <!-- =================== ABOUT MENU ======================== -->
-   <details id="about-menu"> 
-     <summary accesskey="a"><u>A</u>bout</summary>
-     <dialog open>
-     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
-      <ul> 
-       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
-       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
-     </ul>
-     </dialog>
-   </details>
+ -->
 
   <!--</div> -->
 
+  <div id='editor-menu'>
+  <!--
+   <details open id="editor-menu" acceskey="o">
+    <summary id="type">Edit<u>o</u>r</summary>
+  <summary id="type"></summary>
+  -->
+ 
+    <div id="outpt2" autofocus tabindex="0"> </div>
+
+  <!--
+   </details>  
+
+  -->
+  </div>
+  </div>
+  <script src="../../js/[[DICTIONARY]]/caps.js"></script>
+  <script src="../../js/[[DICTIONARY]]/toptxts.js"></script>
+  <script src="../../js/[[DICTIONARY]]/reserves.js"></script>
+  <script src="mappings.js"></script>
+  <script  src="../../js/script.js"></script>
+  <script src="../../lib/marked.min.js" > </script>
+  <script>
+  const markdownElements = document.querySelectorAll('.markdown');
+  markdownElements.forEach(element => {
+    element.innerHTML = marked.parse(element.innerHTML);
+  });
+  </script>
+  <script src="../../js/uiUtils.js"></script>
+
+  </body>
+</html>

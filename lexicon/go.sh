@@ -102,6 +102,7 @@ cp ../js/$DICNAME/caps.js     ../js/$DICNAME/SHORT_WORD_BIAS_$SHORT_WORD_BIAS/ca
 #make the TO->AUG transformation dic
 echo '{' > ../js/d0-lexicon.json
 echo ' "dumbtoby":{"a":"toby","f":"0"} ' >> ../js/d0-lexicon.json
-sed 's/#/0/g;s/o0/o/g;' data/d0-lexicon.js >> ../js/d0-lexicon.json
+#sed 's/#/0/g;s/o0/o/g;' data/d0-lexicon.js >> ../js/d0-lexicon.json
+sed 's/#/0/g;s/o0/o/g;s/!\([^"]*\)/«\1»/g' data/d0-lexicon.js >> ../js/d0-lexicon.json
 echo '}' >> ../js/d0-lexicon.json
 

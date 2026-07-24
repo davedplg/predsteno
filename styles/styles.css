@@ -157,8 +157,10 @@ textarea#output {
   background-color: #f9f9f9;
   margin: 1.5rem auto;
   padding: 1rem;
-  width: 90%;
+  width: 94%;
+  height: 82svh;
   max-width: 820px;
+  max-width: 94%;
   display: block;
   resize: vertical;
 }
@@ -215,7 +217,7 @@ table.striped tr:nth-child(even),
 
 
 /* Other elements */
-summary, label {
+summary, label, select {
   font-size: 1.15rem;
   font-weight: 600;
 }
@@ -266,7 +268,7 @@ z {
   text-underline-offset: 3px;
 }
 
-label {
+label, select {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -291,7 +293,7 @@ dialog:modal {   /* :modal is the modern way for showModal() dialogs */
 dialog:not([open]) {
   display: none !important;
 }
-input {
+input,option {
 font-size: 1.5rem;
 width:16%
 }
@@ -319,4 +321,22 @@ width:16%
 #outpt2:focus {
   background-color: #f8f9fa;  /* focused state - light blue */
   outline: none;        /* remove default blue border if you want */
+}
+
+
+.view-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 24px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.view-dialog label, select {
+    margin-bottom: 12px;
+    cursor: pointer;
 }

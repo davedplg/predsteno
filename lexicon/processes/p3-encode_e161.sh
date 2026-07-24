@@ -66,8 +66,14 @@ perl -CS -pe '
 #tr $mapping '11122233344455566667888888' < data/d4-e161.csv > temp
 #sed 's/[1-8]*!//;' temp > d4-e161.csv
 mv temp data/d4-e161.csv
-sed 's/[1-8A]*!//;s/![^,]*//;s/[^,]*!//' data/d4-e161.csv > temp
-mv temp data/d4-e161.csv
+#sed 's/[1-8A]*!//;s/![^,]*//;s/[^,]*!//' data/d4-e161.csv > temp
+#sed 's/[1-8A]*!/AAA/;s/![^,]*/BBB/;s/[^,]*!\(.*$\)/CCC\1/' data/d4-e161.csv > temp
+#sed 's/[1-8A]*!/AAA/;s/[^,]*!\([^!]*$\)/CCC\1/' data/d4-e161.csv > temp
+sed 's/[1-8A]*!//;s/[^,]*!\([^!]*$\)/\1/' data/d4-e161.csv > temp
+sed 's/!\([^,]*\)/«\1»/' temp  > temp2
+#sed 's/[1-8A]*!//;s/[^,]*\(![^!]*,\)/«\1»/' data/d4-e161.csv > temp
+#sed 's/[1-8A]*!/AAA/;s/[^,]*!/CCC/' data/d4-e161.csv > temp
+mv temp2 data/d4-e161.csv
 head -${HEADLINES:-${HEADLINES:-2000}} data/d4-e161.csv | tail -${TAILLINES:-10}
 echo 
  echo "#lines  $(wc -l data/d4*)"

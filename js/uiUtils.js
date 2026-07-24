@@ -1,18 +1,20 @@
 //for DOM related stuff
-const outpt          = document.getElementById('output');
-const outpt2         = document.getElementById('outpt2');
-const wdOpts         = document.getElementById('wdOpts');
+const outpt = document.getElementById('output');
+const outpt2 = document.getElementById('outpt2');
+const wdOpts = document.getElementById('wdOpts');
 
 const outputMarkdown = document.getElementById("output");
+const dtlsMarkdown   = document.getElementById("code-menu")
 const outputHTML     = document.getElementById("outpt2");
+
 const markLetters    = document.getElementById("markLetters")
 const colorVowels    = document.getElementById("colorVowels")
-const typepseudo     = document.getElementById("type")
+//const typepseudo     = document.getElementById("type")
 const fileDialog     = document.getElementById("file-dialog")
    
 colorVowels.addEventListener('change', renderMarkdown);
 markLetters.addEventListener('change', renderMarkdown);
-typepseudo.addEventListener('onclick',function() {outputHTML.focus()});
+//typepseudo.addEventListener('onclick',function() {outputHTML.focus()});
 
 const md = () => {
   if (!outputMarkdown || !outputMarkdown.value) throw new error("outputMarkdown is undEFined or lacks a value property");
@@ -89,11 +91,6 @@ const doc = {
   }
 };
 
-//========= give the input window focus================
-function focusEditor(){
-    requestAnimationFrame(() => outputHTML.focus());
-}
-
 // ==================== SYNC FROM TEXTAREA ====================
 function syncFromMarkdown() {
   //delete below?
@@ -156,6 +153,7 @@ function getActualColumnWidth() {
         fullStep: colWidth + gap          // ← this is what you want for scrolling
     };
 }
+
 // ==================== UPDATE DISPLAY WITH CURSOR ====================
 
 function updateDisplay() {
@@ -208,8 +206,6 @@ function initDocument() {
   doc.row = 0;
   doc.col = doc.lines[doc.row].length;
   updateDisplay();
-    outputHTML.focus();
-//x focusEditor();
 }
 
 // Load new markdown content (e.g. from file)
@@ -250,65 +246,8 @@ function renderMarkdown() {
   clearTimeout(renderTimeout);
   
   renderTimeout = setTimeout(() => {
-    renderMarkdownHelper();   // the real heavy work
+    renderMarkdown_old();   // the real heavy work
   }, 25);   // 25ms debounce - feels responsive, cuts excessive calls
-}
-
-function renderMarkdownHelper() {
-  let text = md();
-
-  // 1. Remove old cursor
-  // text = removeCursor(text);
-
-  // 2. Apply affixes and case marking
-  text = parseAffixes(text);
-  text = parseCaseMarking(text);
-  text = text.replace(/^ {4}/gm, '\u00A0\u00A0\u00A0\u00A0');
-
-  // 3. Update markdown source once
-  setMd(text);
-  requestAnimationFrame(() => {
-    syncFromMarkdown();
-  });
-
-  // 4. Invisible paragraph markers
-  if (invisibleToggle.checked) {
-    text = text.replace(/^\s*$/gm, "  \n¶  ");
-  }
-
-  // === NEW: Do phonetic tagging on RAW MARKDOWN (much faster & safer) ===
-  let state = (markLetters.checked ? "marks " : "") +
-              (colorVowels.checked ? "color" : "");
-
-  text = format_augmented_words(text, state);   // ← now works on markdown
-
-  // 5. Render to HTML
-  let htm = marked.parse(text);
-
-  // 6. Minor HTML post-processing (cursor, etc.)
-  htm = htm.replace(/  $/g, '\uFE4E\uFE4E');
-
-  // 7. Unescape entities
-  htm = htm.replace(/&lt;/g, '<')
-           .replace(/&gt;/g, '>')
-           .replace(/&amp;/g, '&')
-           .replace(/&quot;/g, '"');
-
-  // 8. Update preview
-  setHtml(htm);
-
-  // 9. Focus / scroll
-  requestAnimationFrame(() => {
-    const input = outpt2.querySelector('input.missing-word');
-    if (input) {
-      input.focus();
-      input.select();
-    } else {
-      outputMarkdown.focus();
-      outputMarkdown.setSelectionRange(text.length, text.length);
-      outputMarkdown.scrollTop = outputMarkdown.scrollHeight;
-    }
-  });
 }
 
 function renderMarkdown_old() {
@@ -355,7 +294,13 @@ function renderMarkdown_old() {
   htm = htm.replace(/&lt;/g, '<')
            .replace(/&gt;/g, '>')
            .replace(/&amp;/g, '&')
-           .replace(/&quot;/g, '"');
+           .replace(/&quot;/g, '"')
+  if(superscripts){
+    htm = htm.replace(/«/g, '<sup>')
+             .replace(/»/g, '</sup>')
+  } else {
+    htm = htm.replace(/«[^»]*»/g, '')
+  }
   // 8. Update preview
   setHtml(htm);
 
@@ -475,7 +420,6 @@ function augmentWords(text) {
 }
 
 
-//function format_augmented_words(t){
 function format_augmented_words(t,style){
   // Step 1: Protect sequences that look like HTML entities
   // We use a negative lookahead to skip coloring if & is followed by entity-like content
@@ -649,22 +593,19 @@ function toggleMenu(id) {
 
     // Close others
     document.querySelectorAll('details, input').forEach(el => {
-        if (el.id !== id && el.id !== 'editor-menu') el.open = false;
+        if (el.id !== id && (el.id !== 'editor-menu' && el.id !== 'code-menu')) el.open = false;
     });
- 
 
     menuEl.open = !menuEl.open;
 
-
     if(menuEl.tagName == 'INPUT'){
       menuEl.focus();
-      if(menuEl.checked == true) {
-        menuEl.checked = false;
-      }else {
-        menuEl.checked= true
-      }
-      outputHTML.focus();
-//x    focusEditor();
+      if(menuEl.checked==true){
+        menuEl.checked=false}
+        else{
+          menuEl.checked=true
+        }
+//      outputHTML.focus()
       return;
     }
     const summary = menuEl.querySelector('summary');
@@ -769,7 +710,6 @@ async function handleSaveAs() {
         await writable.close();
         fileDialog.open = false;
         outputHTML.focus();
-//x     focusEditor();
         return; 
         // success — no need for fallback
       } catch (err) {
@@ -796,13 +736,8 @@ async function handleSaveAs() {
 
 // ───────────────────────────────────────────────
 // Load Markdown file
-//function handleLoadMarkdown() {
-
-
 // Temporary test version of handleLoadMarkdown
 async function handleLoadMarkdown() {
-  fileDialog.open = false;
-
   if ('showOpenFilePicker' in window) 
     try {
       const [fileHandle] = await window.showOpenFilePicker({
@@ -817,14 +752,18 @@ async function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
-//    fileDialog.open = false;
+      fileDialog.open = false;
+
+      setTimeout(() => {
+        outputHTML.focus();
+       }, 800);      
+      
       return;
     } catch (err) {
       if (err.name === 'AbortError') return;
       console.warn('Modern open picker failed, falling back to old input', err);
-//    fileDialog.open = false;
+      fileDialog.open = false;
     }
- 
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.md,.markdown,.txt';
@@ -836,7 +775,7 @@ async function handleLoadMarkdown() {
       const text = await file.text();
       setMd(text);
       renderMarkdown();
-//    fileDialog.open = false;
+      fileDialog.open = false;
       // Optional: show brief feedback
       // alert(`Loaded ${file.name}`);
     } catch (err) {
@@ -845,8 +784,6 @@ async function handleLoadMarkdown() {
     }
   };
   input.click();
-  outputHTML.focus();
-//x focusEditor();
 }
 
 // ───────────────────────────────────────────────
@@ -860,6 +797,7 @@ function initFileControls() {
 //      updateDisplay();
       renderMarkdown();
     });
+  document.getElementById('btn-augment')?.addEventListener('click', convertToAugmented);
 
 //loadLastDir().then(handle => {
 //  if (handle) lastDirHandle = handle;
@@ -876,12 +814,33 @@ document.getElementById('toggle-fullscreen').addEventListener('change', function
 });
  
 
-const keymap = document.getElementById('instructions');
-const keymapToggle = document.getElementById('show-keymap');
+//const keymap = document.getElementById('instructions');
+//const keymapToggle = document.getElementById('show-keymap');
+//
+//keymapToggle.addEventListener('change', function() {
+//    keymap.style.display = this.checked ? 'block' : 'none';
+//});
 
-keymapToggle.addEventListener('change', function() {
-    keymap.style.display = this.checked ? 'block' : 'none';
+const superscriptsToggle = document.getElementById('show-superscripts');
+
+superscriptsToggle.addEventListener('change', function() {
+     this.checked ? superscripts = false : superscripts = true;
+     renderMarkdown();
 });
+
+//const markdownToggle = document.getElementById('show-markdown');
+const editorMenu     = document.getElementById('editor-menu');
+
+//markdownToggle.addEventListener('change', function() {
+//     let tv = false;
+//     this.checked ? outputMarkdown.focus(): outputHTML.focus();
+//     this.checked ? tv = true : tv=false;
+//     dtlsMarkdown.open = tv;
+//     editorMenu.open = !tv;
+//     
+//});
+
+
 
 
 const MISSING_WORD_REGEX = /<input[^>]*class="missing-word"[^>]*>/g;
@@ -942,6 +901,8 @@ function vimLein(input) {
 
     updateDisplay();
 }
+
+
 
 window.addEventListener('DOMContentLoaded', initFileControls);
   initDocument();
