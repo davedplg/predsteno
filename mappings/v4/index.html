@@ -3,18 +3,24 @@
   <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chorded Keypress to Digit Mapper</title>
+    <title>Chorded Keypress to Digit Mapper Variant 4</title>
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
   <div>
+    
+  <!-- ==================== FILE DIALOG ================= -->
    <details  id="file-dialog"> 
-     <summary>file</summary>
-      <dialog open style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+     <summary accesskey="i">F<u>i</u>le</summary>
+<!--
+  <dialog open  style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+-->
+   <dialog open class='view-dialog'>
       
-        <button id="btn-save-as">Save as…</button>
-        <button id="btn-load">Load Markdown…</button>
-        <button id="btn-clear">Clear</button>
+        <button id="btn-save-as">Save as…</button><br/>
+        <button id="btn-load">Load Markdown…</button><br/>
+        <button id="btn-clear">Clear</button><br/>
+        <button id="btn-augment">Add Marks</button><br/>
   
         <!-- Optional fallback quick-save for very old browsers -->
         <a id="legacy-download" href="#" style="font-size: 0.9em; color: #666; align-self: center;" hidden>
@@ -22,8 +28,70 @@
         </a>
      </dialog>
    </details>
-   <details > 
-     <summary>help</summary>
+
+  <!-- ==================== MARKS AND COLORS================= -->
+   <label>
+     <input accesskey="k" type="checkbox" tabindex='-1'
+            id="markLetters" checked>
+     <span>Mar<z>k</z>s</span>
+   </label>
+    
+   <label>
+     <input accesskey="c" type="checkbox" tabindex='-1'
+            id="colorVowels" checked>
+     <span><z>C</z>olors</span>
+   </label>
+   <label>
+     <input accesskey="g" type="checkbox" tabindex='-1'
+            id="show-superscripts" checked>
+     <span>
+       <z>G</z>loss
+     </span>
+   </label>
+
+  <!-- ==================== VIEW SUBMENU ==================== -->
+  <details id="view-menu"> 
+   <summary accesskey="v"><u>V</u>iew</summary>  
+ 
+   <dialog open class="view-dialog">
+      <label>
+        <input accesskey="t" type="checkbox" id="toggle-fullscreen">
+        Fullscreen
+      </label>
+      <br/> 
+     <label>
+        <input accesskey="i" type="checkbox" id="show-invisible" >
+        Show&nbsp;Invisible&nbsp;Lines
+      </label>
+      <br/> 
+      <br/> 
+      <!--
+     <label>
+        <input accesskey="z" type="checkbox" id="show-markdown" >
+        Show&nbsp;Markdown
+      </label>
+      <br/> 
+      -->
+  <!--     Future controls can go here easily -->
+    </dialog>
+  </details> 
+<!--     </dialog>
+</details>  -->
+  <!-- =================== ABOUT MENU ======================== -->
+   <details id="about-menu"> 
+     <summary accesskey="a"><u>A</u>bout</summary>
+     <dialog open>
+     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
+      <ul> 
+       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
+       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
+       <li><a href='../new-key-maps/v4-keymap.html'>keymap</a></li>
+     </ul>
+     </dialog>
+   </details>
+  <!-- =================== HELP MENU =========================== -->
+  <details id="help-menu"> 
+     <summary accesskey="h"><u>H</u>elp</summary>
      <dialog open>
      <ul>
        <li>Enter Twice to Start!</li>
@@ -38,40 +106,16 @@
      </ul>
      </dialog>
    </details>
-<!--     </dialog>
-</details>  -->
-   <details > 
-     <summary>about</summary>
-     <dialog open>
-     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
-      <ul> 
-       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
-       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
-     </ul>
-     </dialog>
-   </details>
-      <label>
-       <input type="checkbox" id="markLetters" checked>
-         Marks
-     </label>
-      
-     <label>
-       <input type="checkbox" id="colorVowels" checked>
-         Colors
-     </label>
-     <!-- <div> -->
-  <!--  <details > -->
-  <details> 
-   <summary>Code</summary>  
-    <div >
-<textarea id="output" rows="9" cols="80" readonly class="striped-div">
+<!-- =================== MARKDOWN =========================== -->
+   <div id='code-menu' hidden>
+     <textarea id="output" rows="9" cols="80" readonly class="striped-div">
  ## Mārkdõw0n Enâblèd 
 - 'spâçè' 'spâçè' entèŕ = nëw0 lînè 
 - entèŕ entèŕ = parágraph
 
 ### Twinklè twinklè *littlè* stār       
 - Hõw0  î  wőndèŕ 
-- wħåt yöù ār0è  
+- wħåt yöù ār0è or wáś«woz» 
 
 ### Fār0 ábővè τħé clõùdś sô hîg0ħ 
 |Lîkè  |a   |dîàmónd |  
@@ -84,125 +128,41 @@
 
 Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn 
     </textarea>
-      <!--     </div> -->
+        </div> 
+ <!--
   </details>
-</div>
-  <div id="outpt2" autofocus tabindex="0"> </div>
-  <div id="instructions">
-    <a id="chords">
-      <table >
-      <tr class="strong_digit">
-        <td><key>Q</key><key>W</key><key>E</key><key>R</key></td>
-        <td> &rarr;</td>
-        <td> 1,4,7,8</td>
-        <td>8,7,4,1</td>
-        <td> &larr;</td>
-        <td><key>U</key><key>I</key><key>O</key><key>P</key></td>
-      </tr>
+ -->
 
-      <tr class="strong_digit">
-        <td><key>A</key><key>S</key><key>D</key><key>F</key></td>
-        <td> &rarr;</td>
-        <td> 2,3,5,6</td>
-        <td>6,5,3,2</td>
-        <td> &larr;</td>
-        <td><key>J</key><key>K</key><key>L</key><key>;</key></td>
-      </tr>
+  <!--</div> -->
+
+  <div id='editor-menu'>
+  <!--
+   <details open id="editor-menu" acceskey="o">
+    <summary id="type">Edit<u>o</u>r</summary>
+  <summary id="type"></summary>
+  -->
  
-      <tr class="strong_digit">
-        <td><kiy>1-4</kiy>➕<key>G/H</key></td>
-        <td> &rarr;</td>
-        <td>11,22,<br/>33,44</td>
-        <td>55,66,<br/>77,88</td>
-        <td> &larr;</td>
-        <td><key>G/H</key>➕<kiy>5-8</kiy></td>
-     </tr>
-   
-     <tr class="strong_digit">
-        <td><kiy>+3</kiy>➕<kiy>5</kiy>➕<kiy>6</kiy></td>
-        <td> &rarr;</td>
-        <td>12</td>
-        <td>34</td>
-        <td> &larr;</td>
-        <td><kiy>2</kiy>+<kiy>5</kiy>➕<kiy>6</kiy></td>
-     </tr>
+    <div id="outpt2" autofocus tabindex="0"> </div>
 
-     <tr class="strong_digit">
-        <td><kiy>2</kiy>➕<kiy>3</kiy>+<kiy>6</kiy></td>
-        <td> &rarr;</td>
-        <td>57</td>
-        <td>68</td>
-        <td> &larr;</td>
-        <td><kiy>2</kiy>➕<kiy>3</kiy>➕<kiy>5+</kiy></td>
-     </tr>
- 
-    <tr class="strong_digit">
-      <td><key>T</key>&nbsp;❟&nbsp;<key>Y</key></td>
-      <td>&rarr;</td>
-      <td>period</td>
-      <td>space</td>
-      <td>&larr;</td>
-      <td><key>B</key></td>
-    </tr>
+  <!--
+   </details>  
 
-    <tr class="strong_digit">
-      <td><key>.</key></td>
-      <td>&rarr;</td>
-      <td>period</td>
-      <td>backspace</td>
-      <td>&larr;</td>
-      <td><key>backspace</key></td>
-    </tr>
-
-    <tr class="strong_digit">
-      <td><key>enter</key></td>
-      <td>&rarr;</td>
-      <td>enter</td>
-      <td>comma</td>
-      <td>&larr;</td>
-      <td><key>❟</key></td>
-    </tr>
-
- <tr class="strong_digit">
-      <td><kiy>8</kiy>➕<key>T</key>/<key>Y</key></td>
-      <td>&rarr;</td>
-      <td>comma</td>
-      <td>enter</td>
-      <td>&larr;</td>
-      <td><kiy>7</kiy>➕<key>T</key>/<key>Y</key></td>
-    </tr>
-
-    <tr class="strong_digit">
-      <td><kiy>4</kiy>➕<key>T</key>/<key>Y</key></td>
-      <td>&rarr;</td>
-      <td>case</td>
-      <td>bspace</td>
-      <td>&larr;</td>
-      <td><kiy>1</kiy>➕<key>T</key>/<key>Y</key></td>
-    </tr>
-
-         
-  </table>
-    
-   </div> 
-    <a id="top8">
-   <div class="markdown striped">
+  -->
   </div>
-  <!--  <script src="../../js/di-36-select-3-homos/reservecaps.js"></script>-->
+  </div>
   <script src="../../js/di-36-select-3-homos/caps.js"></script>
   <script src="../../js/di-36-select-3-homos/toptxts.js"></script>
   <script src="../../js/di-36-select-3-homos/reserves.js"></script>
   <script src="mappings.js"></script>
   <script  src="../../js/script.js"></script>
-  <script src="../../lib/marked.min.js" >
-  </script>
-<script>
+  <script src="../../lib/marked.min.js" > </script>
+  <script>
   const markdownElements = document.querySelectorAll('.markdown');
   markdownElements.forEach(element => {
     element.innerHTML = marked.parse(element.innerHTML);
   });
-</script>
- 
+  </script>
   <script src="../../js/uiUtils.js"></script>
-</body>
+
+  </body>
 </html>

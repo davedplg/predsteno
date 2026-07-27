@@ -30,15 +30,24 @@
    </details>
 
   <!-- ==================== MARKS AND COLORS================= -->
-     <label>
-       <input accesskey="k" type="checkbox" id="markLetters" checked>
-       <span>Mar<z>k</z>s</span>
-     </label>
-      
-     <label>
-       <input accesskey="c" type="checkbox" id="colorVowels" checked>
-       <span><z>C</z>olors</span>
-     </label>
+   <label>
+     <input accesskey="k" type="checkbox" tabindex='-1'
+            id="markLetters" checked>
+     <span>Mar<z>k</z>s</span>
+   </label>
+    
+   <label>
+     <input accesskey="c" type="checkbox" tabindex='-1'
+            id="colorVowels" checked>
+     <span><z>C</z>olors</span>
+   </label>
+   <label>
+     <input accesskey="g" type="checkbox" tabindex='-1'
+            id="show-superscripts" checked>
+     <span>
+       <z>G</z>loss
+     </span>
+   </label>
 
   <!-- ==================== VIEW SUBMENU ==================== -->
   <details id="view-menu"> 
@@ -55,10 +64,6 @@
         Show&nbsp;Invisible&nbsp;Lines
       </label>
       <br/> 
-      <label>
-       <input accesskey="h" type="checkbox" id="show-superscripts" >
-        Gloss&nbsp;odd&nbsp;words
-      </label>
       <br/> 
       <!--
      <label>

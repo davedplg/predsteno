@@ -761,11 +761,12 @@ document.addEventListener('keydown', (event) => {
 //          case 't': outputHTML.focus(); break;
           case 'v': toggleMenu('view-menu'); break;
           case 'h': toggleMenu('help-menu'); break;
-          case 'c': toggleMenu('colorVowels'); break;
           case 'k': toggleMenu('markLetters'); break;
+          case 'c': toggleMenu('colorVowels'); break;
+          case 'g': toggleMenu('show-superscripts'); break;
           case 'a': toggleMenu('about-menu'); break;
-          case 'm': toggleMenu('code-menu'); outputMarkdown.focus(); break;
-          case 'o': toggleMenu('editor-menu'); outputHTML.focus();break;
+//          case 'm': toggleMenu('code-menu'); outputMarkdown.focus(); break;
+ //         case 'o': toggleMenu('editor-menu'); outputHTML.focus();break;
        // case 'c': document.getElementById('btn-clear')?.click(); break;
       }
       return;                    // optional: stop further processing

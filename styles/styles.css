@@ -271,8 +271,8 @@ z {
 label, select {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-right: 1.5rem;
+  gap: 0.1rem;
+  margin-right: 0.1rem;
 }
 
 /*

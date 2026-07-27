@@ -9,12 +9,33 @@ const outputHTML     = document.getElementById("outpt2");
 
 const markLetters    = document.getElementById("markLetters")
 const colorVowels    = document.getElementById("colorVowels")
+const glossWords     = document.getElementById("show-superscripts")
 //const typepseudo     = document.getElementById("type")
 const fileDialog     = document.getElementById("file-dialog")
-   
-colorVowels.addEventListener('change', renderMarkdown);
-markLetters.addEventListener('change', renderMarkdown);
-//typepseudo.addEventListener('onclick',function() {outputHTML.focus()});
+
+//glossWords.addEventListener('focusin', renderFocus);
+glossWords.addEventListener('focusin',function (){
+  renderMarkdown();
+  outputHTML.focus();
+}
+);
+
+
+colorVowels.addEventListener('focusin', function (){
+  renderMarkdown();
+  outputHTML.focus();
+}
+);
+markLetters.addEventListener('focusin', function (){
+  renderMarkdown();
+  outputHTML.focus();
+}
+);
+ 
+function renderFocus(){
+  renderMarkdown();
+  outputHTML.focus();
+}
 
 const md = () => {
   if (!outputMarkdown || !outputMarkdown.value) throw new error("outputMarkdown is undEFined or lacks a value property");
@@ -295,6 +316,9 @@ function renderMarkdown_old() {
            .replace(/&gt;/g, '>')
            .replace(/&amp;/g, '&')
            .replace(/&quot;/g, '"')
+  
+  glossWords.checked ? superscripts = true: superscripts = false;
+
   if(superscripts){
     htm = htm.replace(/«/g, '<sup>')
              .replace(/»/g, '</sup>')
@@ -592,11 +616,14 @@ function toggleMenu(id) {
     if (!menuEl) return;
 
     // Close others
-    document.querySelectorAll('details, input').forEach(el => {
-        if (el.id !== id && (el.id !== 'editor-menu' && el.id !== 'code-menu')) el.open = false;
-    });
+//    document.querySelectorAll('details, input').forEach(el => {
+//        if (el.id !== id && (el.id !== 'editor-menu' && el.id !== 'code-menu')) el.open = false;
+//    });
 
-    menuEl.open = !menuEl.open;
+    document.querySelectorAll('details').forEach(el => {
+        if (el.id !== id ) el.open = false;
+      });
+//  menuEl.open = !menuEl.open;
 
     if(menuEl.tagName == 'INPUT'){
       menuEl.focus();
@@ -608,6 +635,7 @@ function toggleMenu(id) {
 //      outputHTML.focus()
       return;
     }
+    menuEl.open = !menuEl.open;
     const summary = menuEl.querySelector('summary');
     if (summary) {
         summary.focus();
@@ -821,12 +849,13 @@ document.getElementById('toggle-fullscreen').addEventListener('change', function
 //    keymap.style.display = this.checked ? 'block' : 'none';
 //});
 
-const superscriptsToggle = document.getElementById('show-superscripts');
+//const superscriptsToggle = document.getElementById('show-superscripts');
 
-superscriptsToggle.addEventListener('change', function() {
-     this.checked ? superscripts = false : superscripts = true;
-     renderMarkdown();
-});
+////superscriptsToggle.addEventListener('change', function() {
+//glossWords.addEventListener('change', function() {
+//     this.checked ? superscripts = false : superscripts = true;
+//     renderMarkdown();
+//});
 
 //const markdownToggle = document.getElementById('show-markdown');
 const editorMenu     = document.getElementById('editor-menu');

@@ -1,21 +1,26 @@
-
 <!DOCTYPE html> 
 <html lang="en"> 
   <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chorded Keypress to Digit Mapper</title>
+    <title>Chorded Keypress to Digit Mapper Variant 2</title>
   <link rel="stylesheet" href="../../styles/styles.css">
 </head>
 <body>
   <div>
+    
+  <!-- ==================== FILE DIALOG ================= -->
    <details  id="file-dialog"> 
      <summary accesskey="i">F<u>i</u>le</summary>
-      <dialog open  style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+<!--
+  <dialog open  style="margin: 1em 0; display: flex; gap: 1em; flex-wrap: wrap;">
+-->
+   <dialog open class='view-dialog'>
       
-        <button id="btn-save-as">Save as…</button>
-        <button id="btn-load">Load Markdown…</button>
-        <button id="btn-clear">Clear</button>
+        <button id="btn-save-as">Save as…</button><br/>
+        <button id="btn-load">Load Markdown…</button><br/>
+        <button id="btn-clear">Clear</button><br/>
+        <button id="btn-augment">Add Marks</button><br/>
   
         <!-- Optional fallback quick-save for very old browsers -->
         <a id="legacy-download" href="#" style="font-size: 0.9em; color: #666; align-self: center;" hidden>
@@ -23,7 +28,69 @@
         </a>
      </dialog>
    </details>
-   <details id="help-menu"> 
+
+  <!-- ==================== MARKS AND COLORS================= -->
+   <label>
+     <input accesskey="k" type="checkbox" tabindex='-1'
+            id="markLetters" checked>
+     <span>Mar<z>k</z>s</span>
+   </label>
+    
+   <label>
+     <input accesskey="c" type="checkbox" tabindex='-1'
+            id="colorVowels" checked>
+     <span><z>C</z>olors</span>
+   </label>
+   <label>
+     <input accesskey="g" type="checkbox" tabindex='-1'
+            id="show-superscripts" checked>
+     <span>
+       <z>G</z>loss
+     </span>
+   </label>
+
+  <!-- ==================== VIEW SUBMENU ==================== -->
+  <details id="view-menu"> 
+   <summary accesskey="v"><u>V</u>iew</summary>  
+ 
+   <dialog open class="view-dialog">
+      <label>
+        <input accesskey="t" type="checkbox" id="toggle-fullscreen">
+        Fullscreen
+      </label>
+      <br/> 
+     <label>
+        <input accesskey="i" type="checkbox" id="show-invisible" >
+        Show&nbsp;Invisible&nbsp;Lines
+      </label>
+      <br/> 
+      <br/> 
+      <!--
+     <label>
+        <input accesskey="z" type="checkbox" id="show-markdown" >
+        Show&nbsp;Markdown
+      </label>
+      <br/> 
+      -->
+  <!--     Future controls can go here easily -->
+    </dialog>
+  </details> 
+<!--     </dialog>
+</details>  -->
+  <!-- =================== ABOUT MENU ======================== -->
+   <details id="about-menu"> 
+     <summary accesskey="a"><u>A</u>bout</summary>
+     <dialog open>
+     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
+      <ul> 
+       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
+       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
+       <li><a href='../new-key-maps/v2-keymap.html'>keymap</a></li>
+     </ul>
+     </dialog>
+   </details>
+  <!-- =================== HELP MENU =========================== -->
+  <details id="help-menu"> 
      <summary accesskey="h"><u>H</u>elp</summary>
      <dialog open>
      <ul>
@@ -39,63 +106,16 @@
      </ul>
      </dialog>
    </details>
-<!--     </dialog>
-</details>  -->
-   <details id="about-menu"> 
-     <summary accesskey="a"><u>A</u>bout</summary>
-     <dialog open>
-     <p> single-finger capable, <a href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9</a> chorded input.</p>
-      <ul> 
-       <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
-       <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
-     </ul>
-     </dialog>
-   </details>
-      <label>
-       <input accesskey="k" type="checkbox" id="markLetters" checked>
-       <span>Mar<z>k</z>s</span>
-     </label>
-      
-     <label>
-       <input accesskey="c" type="checkbox" id="colorVowels" checked>
-       <span><z>C</z>olors</span>
-     </label>
-
-  <!-- ==================== VIEW SUBMENU ==================== -->
-  <details id="view-menu"> 
-   <summary accesskey="v"><u>V</u>iew</summary>  
- 
-   <!--    <dialog open style="margin: 1em 0; display: flex; flex-direction: column; gap: 0.8em; padding: 1em;"> -->
-   <dialog open >
-      <label>
-        <input accesskey="t" type="checkbox" id="toggle-fullscreen">
-        Fullscreen
-      </label>
-      <br/> 
-      <label>
-        <input accesskey="k" type="checkbox" id="show-keymap" >
-        KeyMap
-      </label>
-      <label>
-        <input accesskey="i" type="checkbox" id="show-invisible" >
-        Show Invisible Lines
-      </label>
-      <!-- Future controls can go here easily -->
-    </dialog>
-  </details> 
-  <!-- ======================================================== -->
-
-  <details id="code-menu"> 
-   <summary accesskey="m"><u>M</u>arkdown</summary>  
-    <div >
-<textarea id="output" rows="9" cols="80" readonly class="striped-div">
+<!-- =================== MARKDOWN =========================== -->
+   <div id='code-menu' hidden>
+     <textarea id="output" rows="9" cols="80" readonly class="striped-div">
  ## Mārkdõw0n Enâblèd 
 - 'spâçè' 'spâçè' entèŕ = nëw0 lînè 
 - entèŕ entèŕ = parágraph
 
 ### Twinklè twinklè *littlè* stār       
 - Hõw0  î  wőndèŕ 
-- wħåt yöù ār0è  
+- wħåt yöù ār0è or wáś«woz» 
 
 ### Fār0 ábővè τħé clõùdś sô hîg0ħ 
 |Lîkè  |a   |dîàmónd |  
@@ -109,87 +129,26 @@
 Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn 
     </textarea>
         </div> 
+ <!--
   </details>
+ -->
+
   <!--</div> -->
 
-  <div id="instructions" style="display: none;overflow: hidden; " >
-  
-    <a id="numpad">
-      <table >
-      <tr class="strong_digit">
-        <td><key>Q</key><key>W</key><key>E</key><key>R</key> </td>
-        <td>&rarr;</td>
-        <td>1,4,7,8</td>
-        <td>8,7,4,1 </td>
-        <td>&larr;</td>
-        <td><key>U</key><key>I</key><key>O</key><key>P</key></td>
-      </tr>
-       <tr class="strong_digit">
-        <td><key>A</key><key>S</key><key>D</key><key>F</key></td>
-        <td> &rarr; </td>
-        <td>2,3,5,6 </td>
-        <td>6,5,3,2</td>
-        <td>&larr; </td>
-        <td><key>J</key><key>K</key><key>L</key><key>;</key></td>
-      </tr>
- 
-    <tr class="strong_digit">
-      <td><key>enter</key></td>
-      <td>&rarr;</td>
-      <td>enter</td>
-      <td>comma</td>
-      <td>&larr;</td>
-      <td><key>❟</key></td>
-    </tr>
-
-    <tr class="strong_digit">
-      <td><key>T</key></td>
-      <td> &rarr; </td>
-      <td>period</td>
-      <td>period</td>
-      <td>&larr; </td>
-      <td><key>Y</key></td>
-    </tr>
-  
-      <tr class="strong_digit">
-        <td><key>G</key>&nbsp;❟&nbsp;<key>H</key></td>
-        <td> &rarr;</td>
-        <td> period</td>
-        <td>comma</td>
-        <td> &larr;</td>
-        <td> <key>G/H</key>➕<kiy>6</kiy></td>
-      </tr>
-
-     <tr class="strong_digit">
-        <td><kiy>5</kiy>➕<key>G</key></td>
-        <td> &rarr;</td>
-        <td>enter</td>
-        <td>enter</td>
-        <td> &larr;</td>
-        <td><key>H</key>➕<kiy>5</kiy></td>
-      </tr>
-
-     <tr class="strong_digit">
-       <td><kiy>3</kiy>➕<key>G/H</key></td>
-       <td> &rarr;</td>
-       <td>case change(s)</td>
-       <td>bspace</td>
-       <td> &larr;</td>
-       <td> <kiy>2</kiy>➕<key>G/H</key></td>
-      </tr>
-
-   </table>
-    
-   </div> 
-  <div>
+  <div id='editor-menu'>
+  <!--
    <details open id="editor-menu" acceskey="o">
-     <summary id="type">Edit<u>o</u>r</summary>
+    <summary id="type">Edit<u>o</u>r</summary>
+  <summary id="type"></summary>
+  -->
  
     <div id="outpt2" autofocus tabindex="0"> </div>
 
+  <!--
    </details>  
+
+  -->
   </div>
-  <!--  <script src="../../js/uni-8-select-3-homos/reservecaps.js"></script> -->
   </div>
   <script src="../../js/uni-8-select-3-homos/caps.js"></script>
   <script src="../../js/uni-8-select-3-homos/toptxts.js"></script>
