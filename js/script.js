@@ -966,10 +966,45 @@ function convertToAugmented() {
   // Single cleanup + focus block
   fileDialog.open = false;
 
-  setTimeout(() => {
-    outputHTML.focus();
-  }, 1000);
+  focus2HTML();
 }
+
+
+/**
+ * Loads a file specified by the ?file= query parameter.
+ * Path is resolved relative to the current page.
+ * Returns the file text, or null if no file param / error.
+ */
+async function loadFileFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const fileParam = params.get('file');
+
+  if (!fileParam) return null;
+
+  // Basic safety: reject absolute paths and path traversal
+  if (
+    fileParam.includes('..') ||
+    fileParam.startsWith('/') ||
+    fileParam.startsWith('\\') ||
+    fileParam.includes(':')          // blocks http:, file:, etc.
+  ) {
+    console.warn('Blocked unsafe file path:', fileParam);
+    return null;
+  }
+  fullPath = '../../' + fileParam;
+  try {
+    const res = await fetch(fullPath);   // relative to current page
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} – ${res.statusText}`);
+    }
+    return await res.text();
+  } catch (err) {
+    console.error('Failed to load file from query:', fileParam, err);
+    return null;
+  }
+}
+
+
 
 let aug = {};   // declare it globally
 

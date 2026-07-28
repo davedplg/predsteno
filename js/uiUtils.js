@@ -37,6 +37,12 @@ function renderFocus(){
   outputHTML.focus();
 }
 
+function focus2HTML(){
+setTimeout(() => {
+  outputHTML.focus();
+  }, 150);   // 150ms
+}
+
 const md = () => {
   if (!outputMarkdown || !outputMarkdown.value) throw new error("outputMarkdown is undEFined or lacks a value property");
   return outputMarkdown.value;
@@ -222,6 +228,12 @@ function clearFrag(){
 
 // Initialize document model from current textarea content
 function initDocument() {
+  
+const content = await loadFileFromQuery();
+  if (content !== null) {
+    setMd(content);
+    renderMarkdown();
+  }
   syncFromMarkdown();
 //doc.row = doc.lines.length - 1;
   doc.row = 0;
@@ -615,11 +627,6 @@ function toggleMenu(id) {
     const menuEl = document.getElementById(id);
     if (!menuEl) return;
 
-    // Close others
-//    document.querySelectorAll('details, input').forEach(el => {
-//        if (el.id !== id && (el.id !== 'editor-menu' && el.id !== 'code-menu')) el.open = false;
-//    });
-
     document.querySelectorAll('details').forEach(el => {
         if (el.id !== id ) el.open = false;
       });
@@ -738,12 +745,14 @@ async function handleSaveAs() {
         await writable.close();
         fileDialog.open = false;
         outputHTML.focus();
+        focus2HTML();
         return; 
         // success — no need for fallback
       } catch (err) {
         if (err.name === 'AbortError') return; // user canceled
         console.warn('Native save failed, falling back →', err);
         fileDialog.open = false;
+        focus2HTML();
       }
     }
 
@@ -759,7 +768,7 @@ async function handleSaveAs() {
     URL.revokeObjectURL(url);
   });
       fileDialog.open = false;
-
+      focus2HTML();
 }
 
 // ───────────────────────────────────────────────
@@ -782,15 +791,18 @@ async function handleLoadMarkdown() {
       renderMarkdown();
       fileDialog.open = false;
 
-      setTimeout(() => {
-        outputHTML.focus();
-       }, 800);      
+      //setTimeout(() => {
+      //  outputHTML.focus();
+      // }, 800);      
+      
+      focus2HTML();
       
       return;
     } catch (err) {
       if (err.name === 'AbortError') return;
       console.warn('Modern open picker failed, falling back to old input', err);
       fileDialog.open = false;
+      focus2HTML();
     }
   const input = document.createElement('input');
   input.type = 'file';
@@ -804,6 +816,7 @@ async function handleLoadMarkdown() {
       setMd(text);
       renderMarkdown();
       fileDialog.open = false;
+      focus2HTML();
       // Optional: show brief feedback
       // alert(`Loaded ${file.name}`);
     } catch (err) {
@@ -824,6 +837,7 @@ function initFileControls() {
       fileDialog.open = false;
 //      updateDisplay();
       renderMarkdown();
+      focus2HTML();
     });
   document.getElementById('btn-augment')?.addEventListener('click', convertToAugmented);
 
