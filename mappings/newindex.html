@@ -157,6 +157,21 @@ Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn
   <script src="mappings.js"></script>
   <script  src="../../js/script.js"></script>
   <script src="../../lib/marked.min.js" > </script>
+<!--  
+  -->
+  <script>
+
+    (function () {
+      if (!/[\?&]eruda=true\b/i.test(location.search)) return;
+    
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/eruda';
+      s.onload = function () { eruda.init(); };
+      document.body.appendChild(s);
+    })();
+
+ </script>
+
   <script>
   const markdownElements = document.querySelectorAll('.markdown');
   markdownElements.forEach(element => {

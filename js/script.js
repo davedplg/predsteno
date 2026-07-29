@@ -754,20 +754,15 @@ document.addEventListener('keydown', (event) => {
 
 // === NEW: Alt + Key menu shortcuts ===
   if (event.altKey) {
-//    if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
 
       switch (key) {
           case 'i': toggleMenu('file-dialog'); break;
-//          case 't': outputHTML.focus(); break;
           case 'v': toggleMenu('view-menu'); break;
           case 'h': toggleMenu('help-menu'); break;
           case 'k': toggleMenu('markLetters'); break;
           case 'c': toggleMenu('colorVowels'); break;
           case 'g': toggleMenu('show-superscripts'); break;
           case 'a': toggleMenu('about-menu'); break;
-//          case 'm': toggleMenu('code-menu'); outputMarkdown.focus(); break;
- //         case 'o': toggleMenu('editor-menu'); outputHTML.focus();break;
-       // case 'c': document.getElementById('btn-clear')?.click(); break;
       }
       return;                    // optional: stop further processing
   }
@@ -778,8 +773,6 @@ document.addEventListener('keydown', (event) => {
  const active = document.activeElement;
  if ((active.tagName === 'INPUT' && 
    !active.classList?.contains('missing-word')) ||
-// !active.id.includes('outpt2') ||
-//   active.tagName === 'TEXTAREA' ||
      active.isContentEditable ||
      active.closest('dialog')) {
    return;   // ← browser handles the key normally
@@ -965,7 +958,6 @@ function convertToAugmented() {
 
   // Single cleanup + focus block
   fileDialog.open = false;
-
   focus2HTML();
 }
 

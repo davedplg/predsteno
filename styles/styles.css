@@ -186,6 +186,9 @@ table td, table th {
   padding: 10px 12px;
   text-align: center;
   border: 1px solid #ddd;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
 }
 
 /* Striped tables */
@@ -203,6 +206,8 @@ table.striped tr:nth-child(even),
 /* Tables inside #outpt2 */
 #outpt2 table {
   width: auto !important;
+  width: 90% !important;
+  table-layout: fixed;
   margin: 1.5rem 8% !important;
   border: 1px solid #777;
 }

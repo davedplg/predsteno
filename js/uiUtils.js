@@ -157,27 +157,28 @@ invisibleToggle.addEventListener('change', () => {
 //updateDisplay();
 
 
-// ==================== GET COLUMN WIDTH ====================
+// ==================== get column width ====================
 function getActualColumnWidth() {
 //  const container = outputHTML;                    // or outputMarkdown if that's your main one
 
 //  const style = getComputedStyle(container);
     const style = getComputedStyle(outputHTML);
+    const el    = outputHTML;
     
     // Get the computed column-width (handles vw, rem, px, etc.)
-    let colWidth = parseFloat(style.width/2);
-    
-    // Fallback if browser ignores column-width
-    if (!colWidth || isNaN(colWidth) || colWidth === 0) {
-        colWidth = outputHTML.width * 0.65;     // your desired \~2/3 width
-    }
+ 
+    const totalWidth = el.clientWidth;    // actual inner width
+    const gap = parseFloat(style.columnGap) || 0;
+    const count = parseInt(style.columnCount) || 2;  // fallback to 2
 
-    const gap = parseFloat(style.columnGap) || 40;
-
+    // formula: (total - gaps) / number of columns
+    colWidth = (totalWidth - gap * (count - 1)) / count;
+ 
+//    console.log('getActualColumWidth')
     return {
         width: colWidth,
         gap: gap,
-        fullStep: colWidth + gap          // ← this is what you want for scrolling
+        fullStep: colWidth + gap 
     };
 }
 
@@ -227,7 +228,7 @@ function clearFrag(){
  */
 
 // Initialize document model from current textarea content
-function initDocument() {
+async function initDocument() {
   
 const content = await loadFileFromQuery();
   if (content !== null) {
@@ -955,11 +956,11 @@ window.addEventListener('DOMContentLoaded', initFileControls);
   if (key.includes('page')) {
       e.preventDefault();
 
-//const col = getActualColumnWidth();
-  const amount = 700;
+  const col = getActualColumnWidth();
+//  const amount = 700;
 //const amount = col.fullStep;
-//const amount = col.width;
-
+  const amount = col.width;
+  console.log('amount:= ',amount)
   if (key === 'pagedown') {
       outputHTML.scrollLeft += amount;      // scroll right
   } else if (key === 'pageup') {
