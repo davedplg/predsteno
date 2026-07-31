@@ -4,7 +4,6 @@ const outpt2 = document.getElementById('outpt2');
 const wdOpts = document.getElementById('wdOpts');
 
 const outputMarkdown = document.getElementById("output");
-const dtlsMarkdown   = document.getElementById("code-menu")
 const outputHTML     = document.getElementById("outpt2");
 
 const markLetters    = document.getElementById("markLetters")
@@ -159,9 +158,6 @@ invisibleToggle.addEventListener('change', () => {
 
 // ==================== get column width ====================
 function getActualColumnWidth() {
-//  const container = outputHTML;                    // or outputMarkdown if that's your main one
-
-//  const style = getComputedStyle(container);
     const style = getComputedStyle(outputHTML);
     const el    = outputHTML;
     
@@ -470,6 +466,8 @@ function format_augmented_words(t,style){
 
   t=caseReplace(t,'τħ','<vc>th</vc>');
   t=caseReplace(t,'èŕ','eř');
+  t=caseReplace(t,'ìŕ','iř');
+  t=caseReplace(t,'ùŕ','uř');
   t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
   //non doubled silents  ř ẇ ġ ḩ υ
   
@@ -548,7 +546,7 @@ function downloadContent({ content, filename, type, linkId }) {
 
 async function makeHTML(){
 
-  const htmlContent = document.getElementById('outpt2').innerHTML;
+//const htmlContent = document.getElementById('outpt2').innerHTML;
 
   // 1. Fetch the actual CSS file from server
   let css = '';
@@ -562,8 +560,7 @@ async function makeHTML(){
   } catch (err) {
     console.warn('CSS fetch failed', err);
   }
-
-  // 2. Build full HTML with embedded CSS
+ // 2. Build full HTML with embedded CSS
   const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -581,7 +578,7 @@ async function makeHTML(){
   </style>
 </head>
 <body>
-  ${htmlContent}
+  ${outputHTML.innerHTML}
 </body>
 </html>`;
 return fullHTML;
@@ -614,7 +611,7 @@ async function exportHTML() {
   if (downloadingHTML) return;  // ← BLOCK REPEAT
   downloadingHTML = true;
 
-  const htmlContent = document.getElementById('outpt2').innerHTML;
+  const htmlContent = outputHTML.innerHTML;
   
   if (!htmlContent.trim()) return alert('No HTML.');
   const fullHTML = await makeHTML();
@@ -857,34 +854,7 @@ document.getElementById('toggle-fullscreen').addEventListener('change', function
 });
  
 
-//const keymap = document.getElementById('instructions');
-//const keymapToggle = document.getElementById('show-keymap');
-//
-//keymapToggle.addEventListener('change', function() {
-//    keymap.style.display = this.checked ? 'block' : 'none';
-//});
-
-//const superscriptsToggle = document.getElementById('show-superscripts');
-
-////superscriptsToggle.addEventListener('change', function() {
-//glossWords.addEventListener('change', function() {
-//     this.checked ? superscripts = false : superscripts = true;
-//     renderMarkdown();
-//});
-
-//const markdownToggle = document.getElementById('show-markdown');
 const editorMenu     = document.getElementById('editor-menu');
-
-//markdownToggle.addEventListener('change', function() {
-//     let tv = false;
-//     this.checked ? outputMarkdown.focus(): outputHTML.focus();
-//     this.checked ? tv = true : tv=false;
-//     dtlsMarkdown.open = tv;
-//     editorMenu.open = !tv;
-//     
-//});
-
-
 
 
 const MISSING_WORD_REGEX = /<input[^>]*class="missing-word"[^>]*>/g;
@@ -897,7 +867,7 @@ function yankLines(start, count = 1) {
 
 
 function vimLein(input) {
-    if (typeof input !== 'string' || !input.startsWith(':')) return;
+    if (typeof input !== 'string' || !input.startsWith(';')) return;
 
     let cmd = input.slice(1).trim();
 

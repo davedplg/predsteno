@@ -210,7 +210,7 @@ function mark3rdPassWds() {
     return;
   }
 
-  mdRepl(missingRegEx, `<input class="missing-word" value=":" />`);
+  mdRepl(missingRegEx, `<input class="missing-word" value=";" />`);
   renderMarkdown();
   //unselect the pipe (select the character after the pipe?)
   //this allow immediate entrance to the commmand language
@@ -704,7 +704,7 @@ function on3rdPass(key) {
       doc.col+=-missingRegEx.source.length;
       syncFromMarkdown();
 //      vimLein(input.value)} else {
-      if(typeof value =='string' && value.startsWith(':')){
+      if(typeof value =='string' && value.startsWith(';')){
       vimLein(value)} else {
       insertWord(value)  
       }
@@ -767,8 +767,9 @@ document.addEventListener('keydown', (event) => {
       return;                    // optional: stop further processing
   }
 
-  const editor = document.getElementById('outpt2');
- if (!editor.matches(':focus')) return;
+//  const editor = document.getElementById('outpt2');
+//if (!editor.matches(':focus')) return;
+ if (!outputHTML.matches(':focus')) return;
 
  const active = document.activeElement;
  if ((active.tagName === 'INPUT' && 
@@ -1018,4 +1019,4 @@ async function loadAugDictionary() {
 }
 
 // Start loading as soon as possible
-window.addEventListener('DOMContentLoaded', loadAugDictionary);
+document.addEventListener('DOMContentLoaded', loadAugDictionary);
