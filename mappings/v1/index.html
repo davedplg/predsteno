@@ -86,6 +86,7 @@
        <li><a href="https://en.wikipedia.org/wiki/Multi-tap">MultiTap</a></li>
        <li>e.161 <a href="https://en.wikipedia.org/wiki/E.161">numpad</a></li>
        <li><a href='../new-key-maps/v1-keymap.html'>keymap</a></li>
+       <li><a href='../v5/index.html?file=content/README.md'>README.md</a></li>
      </ul>
      </dialog>
    </details>
@@ -156,6 +157,21 @@ Cōùl0dn't pūt Humptý tógeτħèŕ ágãìn
   <script src="mappings.js"></script>
   <script  src="../../js/script.js"></script>
   <script src="../../lib/marked.min.js" > </script>
+<!--  
+  -->
+  <script>
+
+    (function () {
+      if (!/[\?&]eruda=true\b/i.test(location.search)) return;
+    
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/eruda';
+      s.onload = function () { eruda.init(); };
+      document.body.appendChild(s);
+    })();
+
+ </script>
+
   <script>
   const markdownElements = document.querySelectorAll('.markdown');
   markdownElements.forEach(element => {
