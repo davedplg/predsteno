@@ -12,7 +12,9 @@ A proof of concept T9-inspired demo web-app [here on githubpages](https://davedp
 |blind    | 14,35,2|14,35,2            |
 |jamie    | 41,53,2|14,35,2            |
 
-![e.161](/numpad.png)
+![e.161](../../content/numpad.png)
+![e.161](../../content/numpad.png)
+![e.161](../../content/numpad.png)
 ## Features
 - Predictive text with 2-3 word suggestions per chord input.
 
@@ -21,13 +23,13 @@ A proof of concept T9-inspired demo web-app [here on githubpages](https://davedp
 
 |pass   | scr. shot | action | result|
 |-------|-----------|-----------|--------|
-|1st    | ![word options](/blindPressSpace.png)|press space|blind|
-|1st    | ![word options](/blindPressSpace.png)|press /    |jamie|
+|1st    | ![word options](../../content/blindPressSpace.png)|press space|blind|
+|1st    | ![word options](../../content/blindPressSpace.png)|press /    |jamie|
 |||||
-|1st    |![nice needs b](/nicePressB.png)| mice not option: press space| reserve group inserted|
-|2nd    |![mice needs j](/micePressJ.png)| press bvjkl?;uiop h for 32d parse (not-kl;) | mice| 
+|1st    |![nice needs b](../../content/nicePressB.png)| mice not option: press space| reserve group inserted|
+|2nd    |![mice needs j](../../content/micePressJ.png)| press bvjkl?;uiop h for 32d parse (not-kl;) | mice| 
 |||||
-|3rd|![qwerty inputbox](3rd-Pass.jpg)|type in foreign word|strassenbahn|
+|3rd|![qwerty inputbox](../../content/3rd-Pass.jpg)|type in foreign word|strassenbahn|
 - Markdown rendering for formatted output.
 - Debug interface for chord and word tracking.
 
@@ -43,17 +45,17 @@ A proof of concept T9-inspired demo web-app [here on githubpages](https://davedp
 - Press space for reserve words if not in initial options, then J/K/L/; to select.
 - Double Enter triggers a second and/or third parse for reserve selection and/or QWERTY input (in an input field).
 ## Multiple Pass Input
-![more than one pass](/3-Passes.png)
+![more than one pass](../../content/3-Passes.png)
 ## Keyboard Mappings
 
 ### Variant 1
-![keys to digits](/variant1.jpg)
+![keys to digits](../../content/variant1.jpg)
 ### Variant 2
-![keys to digits](/variant2.jpg)
+![keys to digits](../../content/variant2.jpg)
 ### Variant 3
-![keys to digits](/variant3.jpg)
+![keys to digits](../../content/variant3.jpg)
 ### Variant 4
-![keys to digits](/variant4.jpg)
+![keys to digits](../../content/variant4.jpg)
 
 
 ## Dependencies
