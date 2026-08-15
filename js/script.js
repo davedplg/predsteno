@@ -88,7 +88,7 @@ const punct = escapeForRegex(KEYBOARD_PUNCTUATION) + '0-9';
 const charClass = `\\p{L}\\p{N}'${punct}`;
 
 // build pattern string
-const pattern = `${sep1}[${charClass}]+(?:${sep2}[${charClass}]+)+`;
+const pattern = `${sep1}[${charClass}»«]+(?:${sep2}[${charClass}»«]+)+`;
 
 // final RegExp with Unicode flag
 const reserveRegEx = new RegExp(pattern, 'u');
@@ -195,8 +195,17 @@ function select2ndPassWd(key) {
 
 //highlight hypenated reserve.js words with css highlight
 function hŷlŷt_2nd_pās_opts() {
+  // this screws up on glossed reserve entries
+  // so we turn it off before matching for
+  // second parse
+  let superscripts_old=superscripts;
+  superscripts = false;
+  glossWords.checked = false; 
   mdRepl(reserveRegEx, `<span class="SecondParse">$&</span>`);
   renderMarkdown();
+
+  superscripts=superscripts_old;
+  glossWords.checked= superscripts;
 }
 
 function mark3rdPassWds() {
@@ -311,7 +320,7 @@ function parseAffixes(text){
 t = t.replace(
 ///(\s*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
 ///([ \t]*<span[^<]*<\/span>)*( +\+)(['A-Z]*)/g,
-/([ \t]*<span[^<]*<\/span>)*( *\+)(['A-Z.,]*)/g,
+/([ \t]*<span[^<]*<\/span>)*( *\+)(['A-ZŔÈ.,]*)/g,
  (_,SPAN,GAP,SUFX) => (SUFX + ' ').toLowerCase()
 );
 
@@ -521,35 +530,36 @@ function del(size) {
 function firstParse() {
   const wdList =  dic[frag]?.split(sep1) || [];
   const wdListR = reserves[frag]?.split(sep1) ?? [];
-// want to get rid of below once dic and reserves are
-// merged
-  let wd = '';
+
+  let wd  = '';
+  // handle angle brackets
+  let res = reserves[frag] || ''
+  res = res.replace(/GT/g,"&gt;")
+           .replace(/LT/g,"&lt;")
+           .replaceAll("+","");
+  // sep1 needs replacing for reserves to match
+  // and trigger parse 2; better sortedin pipeline
+  res = sep1+ res.replaceAll(sep1,sep2);
+  singleton = res.replaceAll(sep1,"");
+  
+  if(!res.match(sep2)) res = singleton;
 
   switch (thumbChord) {
     case 'wd1'  : wd = wdList[0] || ''; break;
     case 'wd2'  : wd = wdList[1] || ''; break;
-    case 'wd3':  wd = wdList[2] ?? wdListR[0] ?? ''; break;
-    case 'wd4':  wd = wdList[3] ??  (
-                 wdList[2] ? wdListR[0] : wdListR[1] 
-            ) ?? '';
-    case 'space': wd = ' '            ; break;
-
-    case 'missed': 
-        wd = (reserves[frag] || '').includes(sep1) 
-          ? sep1+reserves[frag].replace(new RegExp(sep1,'g'), sep2)
-                          .replace(/\+/g,"")
-                          
-       : (reserves[frag] || '').replace(/GT/g,"&gt;")
-                       .replace(/LT/g,"&lt;") ;
-//  wd= sep1 +wd
-//  wd= ' ' +wd
-      break;
-
+    case 'wd3'  : wd = wdList[2] || ''; break;
+    case 'missed' : 
+        wd = (frag) ? missingRegEx.source : " ";
+        if(wdList[2]){ wd =res; }
+          break;
     default:
       wd = ' ';
   }
   // ────── THIS BLOCK RUNS FOR EVERY SINGLE PATH ──────
-  if(!(wd+' ').includes(sep2)) clearFrag();
+  if(!(wd+' ').includes(sep2)){
+    clearFrag();
+ // wd=wd.replace(sep1,"");
+  }
   insertWord(wd);
   // ────── Only trigger next phase when needed ──────
   if (thumbChord === 'missed' && String(wd).includes(sep2)) {
@@ -584,7 +594,8 @@ function underlineFirstNLtrs(frg,dict) {
 //frag length is number of keys pressed so far for word
 function caps2underlineLcase(str) {
     let underlineed=str
-        .replace(/[a-zřẇġḩυ]+/g, '<z>$&</z>') // lcase ltrs in <b> tags
+        .replace(/[τa-zřẇġḩυĥħə]+/g, '<z>$&</z>') // lcase ltrs in <b> tags
+ 
     return underlineed.toUpperCase();
 }
 
@@ -763,6 +774,7 @@ document.addEventListener('keydown', (event) => {
           case 'c': toggleMenu('colorVowels'); break;
           case 'g': toggleMenu('show-superscripts'); break;
           case 'a': toggleMenu('about-menu'); break;
+          case 't': outputHTML.focus();break;
       }
       return;                    // optional: stop further processing
   }
@@ -779,6 +791,20 @@ document.addEventListener('keydown', (event) => {
    return;   // ← browser handles the key normally
  }
 
+//########## second parse ############
+
+  if (mdMatch(spanRegEx)) {
+   event.preventDefault();
+//   removeWordOptions();
+   if (optionKeys.includes(key)) {
+     removeWordOptions();
+     on2ndPass(key);
+   }
+   return;
+ }
+
+
+
  //######### arrow keys ############ 
 
   if (key.startsWith("arrow")||["home","end"].includes(key)) {
@@ -794,19 +820,6 @@ document.addEventListener('keydown', (event) => {
    }
     updateDisplay();
   }
-
-
-//########## second parse ############
-
-  if (mdMatch(spanRegEx)) {
-   event.preventDefault();
-//   removeWordOptions();
-   if (optionKeys.includes(key)) {
-     removeWordOptions();
-     on2ndPass(key);
-   }
-   return;
- }
 
 
 //######### third parse ##############
@@ -848,6 +861,7 @@ document.addEventListener('keyup', (event) => {
 //  let active3rdParse = (document.activeElement.tagName == 'INPUT'); 
   //active.classList?.contains('missing-word')
   if(mdMatch(spanRegEx))return;
+  
   let active3rdParse = (document.activeElement.classList?.contains('missing-word'))
   console.log(active3rdParse);
   let inEditor=outputHTML.matches(':focus');

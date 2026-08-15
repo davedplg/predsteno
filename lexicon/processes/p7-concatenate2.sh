@@ -18,7 +18,8 @@ cat data/o-reserves.csv |
   > reservetxts.js
 
 # Add reserves prefix/punctuation/affixes content at the top
-sed -i '1r affixes/reserves_punc_numbers_and_affixes.js' reservetxts.js
+ sed -i '1r affixes/reserves_punc_numbers_and_affixes.js' reservetxts.js
+ sed -i '1r affixes/reserves_punc_numbers_and_affixes.js' toptxts.js
 
 # Caps version (uppercase everything)
 cat data/o-concateness.csv |
@@ -27,6 +28,7 @@ cat data/o-concateness.csv |
   sed 's/.*/\U&/g;s/CONST TEXTS=/const caps=/; ' \
   > caps.js
 
+sed -i 's/X/'$(printf '\u018F')'/g' caps.js 
 
 # Create target directory
 mkdir -p "$maj/js/$DICNAME/js"

@@ -26,11 +26,11 @@ echo
 #read -n 1 -s -r -p "Press any key"; clear
 
 echo "translate uppercase to e.161-ish (e.161 - 1)"
-echo 
+echo 7Τ32T
 #mapping=${LETTERMAP:-'ABDEFGHIJKLMNOPRSTUVWYZ'}
-mapping=${LETTERMAP:-'ABDEFGHĠḨIJKLMNOPRŘSTUVWẆYΥZ'}
+mapping=${LETTERMAP:-'ABXDEFGHĠḨIJKLMNOPRŘSΤΠTUVWẆYΥZ'}
 #mapping='ABCJEZGHDIKLMWOXQRSTUVNPYF'Ř Ẇ ĠḨ Υ 
-echo "tr $mapping 1122233333444555666677788888" | tee >> reserves.txt
+echo "tr $mapping 1112223333344455566667777788888" | tee >> reserves.txt
 
 # New: Perl tr/// with UTF-8 enabled
 
@@ -40,9 +40,10 @@ echo
 perl -CS -pe '
     use utf8;
     my %map = (
-        A => "1", B => "1",
+        A => "1", B => "1", X => "1",
         D => "2", E => "2", F => "2", 
         G => "3", H => "3",
+        Ĥ => "3",
         Ġ => "3", Ḩ => "3",  # ←  new vowel-marked G and H
         I => "3", 
         J => "4", K => "4", L => "4",
@@ -51,6 +52,7 @@ perl -CS -pe '
         Ř => "6",           # ←  new vowel-marked R
         S => "8",
         T => "7", U => "7",
+        Τ => "7", Π => "7",
         Υ => "7",
         V => "7",
         W => "8",

@@ -7,80 +7,93 @@ binmode STDOUT, ':utf8';
 
 while (<>) {
     chomp;
-     s/[ÀÈÌÒÙĦ]|[A-Z]0//g;
-#    s/ØÙ?Ò?R?#?|Å/AW/g;
-     s/ØÙ?Ò?R?#?|Å/AẆ/g;
-#    s/ØÙ?Ò?R?#?|Å/OR/g;ř ẇ ġ ḩ υ Ř Ẇ ĠḨ Υ
+
+    #     if(/Å(?!R)/){
+    #         
+    #       my $line=$_;
+    #       my $line2 = $line;
+    #       $line2    =~ s/Å/O/;
+    #       print simplesubs($line), "\n";
+    #       print simplesubs($line2), "\n";
+    #       } else {
+    #       print simplesubs($_), "\n";
+    #       }
 
 
-#    s/ØÙ?Ò?R?#?|Å/AU/g;
-     s/([A-Z])\1/$1/g;
-#    s/Ö|Ü|Ë/EW/g;
-     s/Ö|Ü|Ë/OO/g;
-     s/U~/Õ/g;
-     s/U=/Ô/g;
-#    s/Õ/OU/g;
-#    s/Õ/OW/g;
-     s/Õ/OẆ/g;
-     s/ẆW/Ẇ/g;
-#    s/Σ/OY/g;
-     s/Σ/OI/g;
-     s/O#/O/g;
-     s/Z#/J/g;
-     s/ŌŪ?/UU/g;
-     s/Ū/UU/g;
-#    s/ÃÝ|EĨ/EY/g;
-     s/ÃÝ|EĨ/AE/g;
-     s/Ã#?/E/g;
-     s/[ĔÂ]/AE/g;
-#    s/[ĔÂ]/EY/g;
-     s/[ÊÏÝ]/EE/g;
-#    s/[ÊÏÝ]/IY/g;
-#    s/[ÊÏÝ]/EA/g;
-     s/Ô/OE/g;
-     s/Û/UE/g;
-     s/[ÎŶ]/IE/g;
-#    s/[ÎŶ]/UY/g;
-#    s/[ÎŶ]/II/g;
-#    s/[ÎŶ]/YY/g;
-     s/ÑK/NK/g;
-     s/NGK/NK/g;
-     s/Ñ/NG/g;
-     s/NGG/NG/g;
-#    s/Ŕ,/A,/g;
-#    s/Ŕ/IR/g;
-#     s/ĀR?#?/AR/g;
-     s/ĀR?#?/AŘ/g;
-     s/[ŜĆŢ]/SH/g;
-     s/C/K/g;
-     s/[ĈŤ]|CH/KH/g;
-     s/[ΠΤ]/TH/g;
-#    s/[Τ]/DH/g;
-#     s/[Τ]/ZH/g;
-#     s/[Π]/TH/g;
-#    s/([^,]{2})Ŕ(Ś)*\b/$1A$2/g;
-     s/([^,]{2})Ŕ\b/$1A/g;
-     s/([^,]{2})ŔŚ\b/$1AZ/g;
-#     s/Ŕ/UR/g;
-     s/Ŕ/UŘ/g;
-#    s/Ŕ/ER/g;
-#    s/Ŕ/IR/g;
-#     s/ĀR?#?/AR/g;
-     s/ĀR?#?/AŘ/g;
-     s/[A-Z]0//g;
-     s/X/KS/g;
-    tr/ÁÉÍÓÚ\
-      /AEIOU/;
-#     /X/;
-#     /C/;
-    tr/ĜΜĖẎÞÇQĴĨŚŐΥÐ\
-      /JIIIFSKYYZUWT/;
-     s/WW/W/g;
-#    s/UUR/AW/g;
-     s/UUR/AẆ/g;
-#    s/DUERING/DAWING/g;
-     s/DUERING/DAẆING/g;
-     s/YY/Y/g;
-#      /jjjjeiifaeiouszkyyzuaeiouw/;
-    print "$_\n";
+       my $line=$_;
+       my $line2 = $line;
+       my $two_lines=0;
+
+     if(/Å(?!R)/){
+       $line2    =~ s/Å(?!R)/O/g;
+       $two_lines=1;
+       }
+
+     if(/Ā(?!R)/){
+       $line2    =~ s/Ā(?!R)/A/g;
+       $two_lines=1;
+       }
+
+     if(/Ø(?!R)/){
+       $line2    =~ s/Ø(?!R)/O/g;
+       $two_lines=1;
+       }
+
+     if($two_lines){
+       print simplesubs($line2), "\n";
+       }
+
+       print simplesubs($line), "\n";
+}
+
+
+
+sub simplesubs {
+  my ($text) = @_;
+   $text =~  s/[ÀÈÌÒÙĦ]|[A-Z]0//g;
+   $text =~  s/ØÙ?Ò?R?#?|Å/OŘ/g;
+   $text =~  s/([A-Z])\1/$1/g;
+   $text =~  s/Ö|Ü|Ë/OO/g;
+   $text =~  s/U~/Õ/g;
+   $text =~  s/U=/Ô/g;
+   $text =~  s/Õ/OU/g;
+   $text =~  s/ẆW/Ẇ/g;
+   $text =~  s/Σ/OI/g;
+   $text =~  s/O#/O/g;
+   $text =~  s/Z#/J/g;
+   $text =~  s/ŌŪ?/UU/g;
+   $text =~  s/Ū/UU/g;
+   $text =~  s/ÃÝ|EĨ|EY|[ĔÂ]/AE/g;
+   $text =~  s/Ã#?/E/g;
+   $text =~  s/[ÊÏÝ]/EE/g;
+   $text =~  s/Ô/OẆ/g;
+   $text =~  s/Û/YOO/g;
+   $text =~  s/[ÎŶ]|UY/IE/g;
+   $text =~  s/ÑK/NK/g;
+   $text =~  s/NGK/NK/g;
+   $text =~  s/Ñ/NG/g;
+   $text =~  s/NGG/NG/g;
+   #   $text =~  s/ĀR?#?/AŘ/g;# us/uk split 
+   #   $text =~  s/ĀR?#?/AŘ/g;# us/uk split 
+   $text =~  s/[ŜĆŢ]/SH/g;
+   $text =~  s/C/K/g;
+   $text =~  s/[ĈŤ]|CH/KH/g;
+   $text =~  s/Π/TH/g;
+   $text =~  s/Τ/ΤĤ/g;
+   $text =~  s/X/KS/g;
+   $text =~  s/([^,]{2})Ŕ\b/$1X/g;
+   $text =~  s/([^,]{2})ŔŚ\b/$1XZ/g;
+   $text =~  s/Ŕ/ER/g;
+#  $text =~  s/ĀR/AŘ/g;
+   $text =~  s/ĀR?#?/AŘ/g;
+   $text =~  s/[A-Z]0//g;
+   $text =~  tr/ÁÉÍÓÚ/XXXXX/;
+   $text =~  tr/ĜΜĖẎÞÇQĴĨŚŐΥÐ/JIXIFSKYYZUWT/;
+   $text =~  s/WW/W/g;
+   $text =~  s/UUR/OŘ/g;
+   $text =~  s/DUERING/DOŘING/g;
+   $text =~  s/YY/Y/g;
+ 
+  return $text;
+
 }

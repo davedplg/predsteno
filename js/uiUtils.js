@@ -128,6 +128,21 @@ function syncFromMarkdown() {
 }
 
 
+function showMdCharacters(text){
+   text = text.replace(/^\s*$/gm,"  \n¶  ")
+              .replace(/#/gm,"\u4E95")
+              .replace(/-/gm,"\u2500")
+              .replace(/\|/gm,"\u23D0")
+              .replace(/\*/gm,"\uFF0A")
+              .replace(/`/gm,"\uFF40")
+              .replace(/~/gm,"\uFF5E")
+              .replace(/_/gm,"\u23AF")
+              .replace(/\[/gm,"\u27E6")
+              .replace(/\]/gm,"\u27E7")
+              .replace(/\(/gm,"\u2985")
+              .replace(/\)/gm,"\u2986")
+   return text;
+}
 
 // Cache the toggle once
 const invisibleToggle = document.getElementById('show-invisible');
@@ -265,7 +280,7 @@ function insertWord(word, addSpace = true) {
 
   // Move cursor forward by the length of what we inserted
   doc.col += toInsert.replace(/[+]/g,'').length;
-
+//alert("col:"+doc.col+"\ntoInsert:"+toInsert);
   updateDisplay();
 }
 
@@ -304,7 +319,8 @@ function renderMarkdown_old() {
   // 4b. Add paragraph markers if checked
     if (invisibleToggle.checked) {
       console.log(text)
-      text = text.replace(/^\s*$/gm,"  \n¶  ")
+      text = showMdCharacters(text);
+//    text = text.replace(/^\s*$/gm,"  \n¶  ")
       console.log(text)
     }  
   // 5. Render to HTML
@@ -415,10 +431,11 @@ const obj = {
   //ing is treated as lexical/trigraph
   "iñg0":'ing',
   //complex vowels
-  "ār(0)*":'ař', "ëw(0)*":'eẇ', "ør(0)*":'oř', "õw(0)*":'oẇ',
+  "ār(0)*":'ař', "ëw(0)*":'eẇ', "ør(0)*":'oř', 
+//  "õw(0)*":'oẇ',
   "σì":'oi'    , "σy(0)*":'oÿ', "õù":'ou'    , "âì" :'ai'   , 
   "êè":'ee'    , "êà":'ea'    , "öò":'oo'    , "åw(0)*":'aẇ',
-  "ey":'ey'     , "ãÿ":'aÿ'    , 
+  "ey":'ey'     , "ãÿ":'aÿ'    , "åù":'au', "ôw0":"oẇ"
 
 }
  
@@ -461,10 +478,13 @@ function format_augmented_words(t,style){
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
 
-  t = t.replace(/([τΤ])([ħĦ])/gi, '<vc>$1$2</vc>');
+  t = t.replace(/([τΤ])([ħĦĤĥ])/gi, '<vc>$1$2</vc>');
   t=loopReplace(t);
 
   t=caseReplace(t,'τħ','<vc>th</vc>');
+  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
+  t=caseReplace(t,'Ĥ','<vc>H</vc>');
+  t=caseReplace(t,'Τ','<vc>T</vc>');
   t=caseReplace(t,'èŕ','eř');
   t=caseReplace(t,'ìŕ','iř');
   t=caseReplace(t,'ùŕ','uř');
@@ -475,25 +495,28 @@ function format_augmented_words(t,style){
   
 //  t = t.replace(/([a-zA-Zřẇġḩ])0/gi, '$1');
     t=t.replace(/([a-zA-Z])(0)*(\1)(0)*/gi, '$1$1');  
-  //tag vowels <v>
+  //tag vowels <v>ḩḨẇġḩ
   if(style.includes('color')) {
-  t=t.replace(/(?<![<][^>]*|&[^;]*)[aeŕiouâêîôûáéíóúåãāėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
+  t=t.replace(/(?<![<][^>]*|&[^;]*)[Əaeŕiouâêîôûáéíóúåãāĕėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
+
   }
+
   //forgot what im doing next
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
   //remaing doubled letters remove silent marking
   t=t.replace(/([a-zA-Z])0/gi,'<x>$1</x>');
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
-  //tag voiced consonants <vc> ḩḨẇġḩ
+  //tag voiced consonants <vc>ĥ  
   if(style.includes('color')) {
-t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJLMNRVZYŚbĉdĝjlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
+t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJĤLMNRVZYŚbĉdĝjĥlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   }
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
   t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
   t=t.replace(/ẇ/g,'w');  t=t.replace(/Ẇ/g,'W');
   t=t.replace(/ġ/g,'g');  t=t.replace(/Ġ/g,'G');
   t=t.replace(/ḩ/g,'h');  t=t.replace(/Ḩ/g,'H');
+  t=t.replace(/ĥ/g,'h');  t=t.replace(/Ĥ/g,'H');
   t=t.replace(/υ/g,'u');  t=t.replace(/Υ/g,'U');
   //merge similar tags for debugging clarity 
   t=t.replace(/<\/v><v>|<\/x><x>|<\/vc><vc>/gi,'');
@@ -831,9 +854,9 @@ function initFileControls() {
   document.getElementById('btn-save-as')?.addEventListener('click', handleSaveAs);
   document.getElementById('btn-load')?.addEventListener('click', handleLoadMarkdown);
   document.getElementById('btn-clear')?.addEventListener('click', () => {
-      setMd('a  \nb');
+      setMd('a   \n  \nz');
+      doc.row = 1;
       fileDialog.open = false;
-//      updateDisplay();
       renderMarkdown();
       focus2HTML();
     });
