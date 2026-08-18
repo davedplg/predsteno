@@ -12,24 +12,12 @@ const glossWords     = document.getElementById("show-superscripts")
 //const typepseudo     = document.getElementById("type")
 const fileDialog     = document.getElementById("file-dialog")
 
-//glossWords.addEventListener('focusin', renderFocus);
-glossWords.addEventListener('focusin',function (){
-  renderMarkdown();
-  outputHTML.focus();
-}
-);
+const invisibleToggle = document.getElementById('show-invisible');
 
-
-colorVowels.addEventListener('focusin', function (){
-  renderMarkdown();
-  outputHTML.focus();
-}
-);
-markLetters.addEventListener('focusin', function (){
-  renderMarkdown();
-  outputHTML.focus();
-}
-);
+glossWords.addEventListener('focusin',renderFocus);
+colorVowels.addEventListener('focusin',renderFocus);
+markLetters.addEventListener('focusin',renderFocus);
+invisibleToggle.addEventListener('focusin',renderFocus);
  
 function renderFocus(){
   renderMarkdown();
@@ -144,8 +132,6 @@ function showMdCharacters(text){
    return text;
 }
 
-// Cache the toggle once
-const invisibleToggle = document.getElementById('show-invisible');
 
 // Helper
 
@@ -167,33 +153,56 @@ invisibleToggle.addEventListener('change', () => {
     updateDisplay();
 });
 
-// Initial render
-//updateDisplay();
+//// =============== get column width ==============
+//function getActualColumnWidth() {
+//  const style = getComputedStyle(outputHTML);
+//  const el    = outputHTML;
+//  
+//  // Get the computed column-width 
+//  // (handles vw, rem, px, etc.)
+// 
+//  // actual inner width
+//  const totalWidth = el.clientWidth;    
+//  const gap = parseFloat(style.columnGap) || 0;
+//  const count = parseInt(style.columnCount) || 2;
+//
+//  // formula: (total - gaps) / number of columns
+//  colWidth = (totalWidth - gap * (count - 1)) / count;
+//
+//  return {
+//      width: colWidth,
+//      gap: gap,
+//      fullStep: colWidth + gap 
+//  };
+//}
 
 
-// ==================== get column width ====================
+// =============== get column width ==============
 function getActualColumnWidth() {
-    const style = getComputedStyle(outputHTML);
-    const el    = outputHTML;
-    
-    // Get the computed column-width (handles vw, rem, px, etc.)
+  let style = getComputedStyle(outputHTML);
+  let el    = outputHTML;
+  
+  // Get the computed column-width 
+  // (handles vw, rem, px, etc.)
  
-    const totalWidth = el.clientWidth;    // actual inner width
-    const gap = parseFloat(style.columnGap) || 0;
-    const count = parseInt(style.columnCount) || 2;  // fallback to 2
+  // actual inner width
+  let totalWidth = el.scrollWidth;    
+//let gap = parseFloat(style.columnGap) || 0;
+  let colCount  = parseInt(style.columnCount) || 2;
+  let pages  = Math.round(totalWidth/el.clientWidth);
+  let cols   = pages*colCount;
+  // formula: (total - gaps) / number of columns
+  colWidth = totalWidth  / cols;
 
-    // formula: (total - gaps) / number of columns
-    colWidth = (totalWidth - gap * (count - 1)) / count;
- 
-//    console.log('getActualColumWidth')
-    return {
-        width: colWidth,
-        gap: gap,
-        fullStep: colWidth + gap 
-    };
+  return {
+      width: colWidth,
+//    gap: gap,
+//    fullStep: colWidth + gap 
+      fullStep: colWidth 
+  };
 }
 
-// ==================== UPDATE DISPLAY WITH CURSOR ====================
+// ========== UPDATE DISPLAY WITH CURSOR ===========
 
 function updateDisplay() {
   // default cursor
@@ -253,20 +262,36 @@ const content = await loadFileFromQuery();
   updateDisplay();
 }
 
-// Load new markdown content (e.g. from file)
 
+function autoScroll(columnWidth) {
+  console.log('----autoScroll---');
+  const activeElementNode = document.querySelector("#firstParse,#cursor");
+  if (!activeElementNode) {
+    console.log('early return: autoscroll')
+    return;
+  }
+
+  const nodeLeftPosition = activeElementNode.offsetLeft;
+  const nodeColumn = Math.trunc(nodeLeftPosition/columnWidth) ;
+  const outputHTMLcolumn = Math.trunc(outputHTML.scrollLeft/columnWidth) ;
+  // left of div is more than column width
+  if (Math.abs(nodeColumn - outputHTMLcolumn) > 0) {
+    console.log('  --scrolling--')
+    console.log('nodeLeftPosition: '+nodeLeftPosition);
+    console.log('nodeColumn: '+nodeColumn);
+    outputHTML.scrollTo({
+      left:nodeColumn*columnWidth ,
+      behavior: 'instant'
+    });
+  } else console.log('  --not scrolling--')
+  renderMarkdown();
+}
+ 
 function insertWord(word, addSpace = true) {
   removeWordOptions();
   syncFromMarkdown();
   // Insert at current cursor position
   const currentLine = doc.lines[doc.row];
-
-
-//console.log("=== INSERTWORD DEBUG ===");
-//  console.log("Word:", JSON.stringify(word));
-//  console.log("addSpace param:", addSpace);
-//  console.log("Current line before:", JSON.stringify(doc.lines[doc.row]));
-//  console.log("Cursor col:", doc.col);
 
   let toInsert = word;
 //  if (addSpace) toInsert += ' ';
@@ -278,10 +303,23 @@ function insertWord(word, addSpace = true) {
     toInsert + 
     currentLine.slice(doc.col);
 
-  // Move cursor forward by the length of what we inserted
+  // Move cursor forward by insert length 
   doc.col += toInsert.replace(/[+]/g,'').length;
-//alert("col:"+doc.col+"\ntoInsert:"+toInsert);
   updateDisplay();
+  //scrolls if cursor off screen
+  console.log('====insertWord===\n'+toInsert);
+  setTimeout(() => autoScroll(getActualColumnWidth().width), 60); 
+  
+//  const activeWordNode = document.getElementById('firstParse');
+//
+//  if (activeWordNode) {
+//    // Scroll into view iff column/page crossed
+//    activeWordNode.scrollIntoView({
+//      behavior: 'smooth',
+//      block: 'nearest',   // Prevents layout from bouncing vertically
+//      inline: 'nearest'   // Shifts horizontally just enough to reveal the new word
+//    });
+//  }
 }
 
 
@@ -335,7 +373,8 @@ function renderMarkdown_old() {
   let state = (markLetters.checked ? "marks " : "") +
               (colorVowels.checked ? "color" : "");
 
-  htm = format_augmented_words(htm,state);
+//htm = format_augmented_words(htm,state);
+  htm = applyToTextNodes(htm,format_augmented_words,state);
   // 7b. Unescape common entities you care about
   htm = htm.replace(/&lt;/g, '<')
            .replace(/&gt;/g, '>')
@@ -350,6 +389,9 @@ function renderMarkdown_old() {
   } else {
     htm = htm.replace(/«[^»]*»/g, '')
   }
+  // 7c. wrap cursors for locating during navigation
+  
+  htm = htm.replace(cursorMatch,"<span id='cursor'>$&</span>");
   // 8. Update preview
   setHtml(htm);
 
@@ -469,7 +511,42 @@ function augmentWords(text) {
   });
 }
 
+function applyToTextNodes(htmlString, formattingFunction,format) {
+  // 1. Parse the incoming HTML string into an in-memory DOM object
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
 
+  // 2. Set up a TreeWalker to isolate ONLY raw, visible text nodes
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null, false);
+  let textNode;
+  const nodesToReplace = [];
+
+  // Gather text nodes first so modifying the DOM doesn't disrupt the walker iterator
+  while (textNode = walker.nextNode()) {
+    const parentTag = textNode.parentElement.tagName.toLowerCase();
+    
+    // Safety check: skip text inside literal code blocks or script nodes
+    if (parentTag !== 'script' && parentTag !== 'style' && parentTag !== 'code') {
+      nodesToReplace.push(textNode);
+    }
+  }
+
+  // 3. Pass each text node value through your complex phonics engine
+  nodesToReplace.forEach(node => {
+    // Run your existing function on the plain text fragment
+    const processedText = formattingFunction(node.nodeValue,format);
+
+    // Convert your returned string (containing <v>, <vc>, etc.) into real DOM elements
+    const template = doc.createElement('template');
+    template.innerHTML = processedText;
+
+    // Swap the old raw text node out for your new stylized HTML nodes
+    node.parentNode.replaceChild(template.content, node);
+  });
+
+  // 4. Return the fully transformed, uncorrupted HTML string
+  return doc.body.innerHTML;
+}
 function format_augmented_words(t,style){
   // Step 1: Protect sequences that look like HTML entities
   // We use a negative lookahead to skip coloring if & is followed by entity-like content
@@ -565,11 +642,7 @@ function downloadContent({ content, filename, type, linkId }) {
   }, 100);
 }
 
-
-
 async function makeHTML(){
-
-//const htmlContent = document.getElementById('outpt2').innerHTML;
 
   // 1. Fetch the actual CSS file from server
   let css = '';
@@ -668,6 +741,7 @@ function toggleMenu(id) {
     if (summary) {
         summary.focus();
     }
+    if(!menuEl.open) outputHTML.focus();
 }
 
 // ───────────────────────────────────────────────
@@ -942,22 +1016,36 @@ function vimLein(input) {
 
 
 window.addEventListener('DOMContentLoaded', initFileControls);
-  initDocument();
-  outputHTML.addEventListener('keydown', function(e) {
+
+initDocument();
+//let col = getActualColumnWidth();
+//let column_width = col.width;
+//
+//outputHTML.addEventListener('keydown', function(e) {
+//  const key = e.key.toLowerCase();
+//
+//  if (key.includes('page')) {
+//      e.preventDefault();
+//
+//  if (key === 'pagedown') {
+//      outputHTML.scrollLeft += column_width;      // scroll right
+//  } else if (key === 'pageup') {
+//      outputHTML.scrollLeft -= column_width;      // scroll left
+//      }
+//  }
+//});
+
+outputHTML.addEventListener('keydown', function(e) {
   const key = e.key.toLowerCase();
 
   if (key.includes('page')) {
       e.preventDefault();
 
-  const col = getActualColumnWidth();
-//  const amount = 700;
-//const amount = col.fullStep;
-  const amount = col.width;
-  console.log('amount:= ',amount)
   if (key === 'pagedown') {
-      outputHTML.scrollLeft += amount;      // scroll right
+      outputHTML.scrollLeft += getActualColumnWidth().width;      // scroll right
   } else if (key === 'pageup') {
-      outputHTML.scrollLeft -= amount;      // scroll left
+      outputHTML.scrollLeft -= getActualColumnWidth().width;      // scroll left
       }
   }
 });
+debug=false;

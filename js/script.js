@@ -38,6 +38,9 @@ cursor2 = '\u2503';
 cursor3 = '\u2759';
 cursor = '\u275A';
 
+//finding cursors to wrap later for navigation
+const cursorpat =[cursor,cursor2,cursor3,cursor4].filter(Boolean).join('|');
+const cursorMatch = new RegExp(cursorpat);
 
 //key list for - current chord
 let presdKeys = new Set();   
@@ -611,7 +614,7 @@ function caps2underlineLcase(str) {
 function processBiChord()
 {
 
-  console.trace("processBiChord WAS CALLED FROM:");   // ← shows exact call stack
+//console.trace("processBiChord WAS CALLED FROM:");   // ← shows exact call stack
   console.log("  Current presdKeys:", Array.from(presdKeys));
 
 ({ lp: lProduct, rp: rProduct, tp: thumbProduct } = calcPrimeProducts());
@@ -747,10 +750,48 @@ function on2ndPass(key){
    return;
 }
 
+function setCursorPos(direction) {
+  const text=doc.lines[doc.row];
+
+  if (direction === 'forward') {
+    // Find the next space after the current position
+    const nextSpace = text.indexOf(' ', doc.col+1);
+    
+    // If no space is found,go to next line 
+    if (nextSpace === -1){
+      doc.col=0;
+      doc.dRow(1);
+      return;
+    }
+      doc.col=nextSpace;
+  }
+  
+  if (direction === 'backward') {
+    // If already at the start, go to previous line
+    if (doc.col <= 0){
+      doc.col=0;doc.dCol(-1);
+    } 
+    
+    // Look at the text before the cursor, ignoring a trailing space if the cursor is right after a word
+    const textBefore = text.slice(0, doc.col-1);
+    const prevSpace = textBefore.lastIndexOf(' ');
+    
+    // If no previous space is found, jump to the very start of the string
+    if (prevSpace === -1){
+      doc.col= 0;
+      return;
+    } 
+    
+    // Move past the space to the start of the word
+    doc.col= prevSpace + 1;
+  }
+
+}
+
 document.addEventListener('keydown', (event) => {
 
  const key = event.key.toLowerCase();
- if(key.match(/tab|ctrl|esc/)) return;
+ if(key.match(/tab|esc/)) return;
 
 //  console.log(`[KEYDOWN START] key=\( ${event.key}  repeat= \)${event.repeat}  code=${event.code}`);
  if (event.repeat && validKeys.has(key)) {
@@ -773,8 +814,10 @@ document.addEventListener('keydown', (event) => {
           case 'k': toggleMenu('markLetters'); break;
           case 'c': toggleMenu('colorVowels'); break;
           case 'g': toggleMenu('show-superscripts'); break;
+          case 'm': toggleMenu('show-invisible'); break;
           case 'a': toggleMenu('about-menu'); break;
           case 't': outputHTML.focus();break;
+          case 'r': location.reload();break;
       }
       return;                    // optional: stop further processing
   }
@@ -809,7 +852,14 @@ document.addEventListener('keydown', (event) => {
 
   if (key.startsWith("arrow")||["home","end"].includes(key)) {
    event.preventDefault();
- 
+   if(event.ctrlKey){
+     if(key=='arrowleft') {
+       setCursorPos('backward')}
+     if(key=='arrowright'){
+       setCursorPos('forward')} 
+     updateDisplay();
+     return;
+   } 
    switch (key) {
      case "arrowleft":  doc.dCol(-1); break;
      case "arrowright": doc.dCol(1);  break;
@@ -819,6 +869,7 @@ document.addEventListener('keydown', (event) => {
      case "end":        doc.col=doc.lines[doc.row].length-1;  break;
    }
     updateDisplay();
+    setTimeout(() => autoScroll(getActualColumnWidth().width), 60); 
   }
 
 
@@ -851,7 +902,7 @@ document.addEventListener('keydown', (event) => {
 //if(!presdKeys.includes(key)) keysDown++;
   keysDown++;
 
-  console.log('down,keys,key,count',presdKeys,key,keysDown);
+//console.log('down,keys,key,count',presdKeys,key,keysDown);
 });
 
 document.addEventListener('keyup', (event) => {
@@ -863,7 +914,7 @@ document.addEventListener('keyup', (event) => {
   if(mdMatch(spanRegEx))return;
   
   let active3rdParse = (document.activeElement.classList?.contains('missing-word'))
-  console.log(active3rdParse);
+//console.log(active3rdParse);
   let inEditor=outputHTML.matches(':focus');
   if (!inEditor && !active3rdParse) return; 
   if (key !="enter" &&  active3rdParse) return;
@@ -881,7 +932,7 @@ document.addEventListener('keyup', (event) => {
 //  if(!presdKeys.includes(key)) keysDown--;
   keysDown--;
     if(keysDown<0)keysDown=0;
-  console.log('up,keys,key,count',presdKeys,key,keysDown);
+//console.log('up,keys,key,count',presdKeys,key,keysDown);
   // Last key of the chord was just released → process it now
   if (keysDown === 0) {
     processBiChord();

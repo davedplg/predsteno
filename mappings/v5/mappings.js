@@ -1,7 +1,6 @@
 // this disables the order function that reorders the UI key input
 // when appending to odd fragments
 //export  \
-const pairwise_reordered_dic = false;
 
 
 //These keys will register in the text area as is

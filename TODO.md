@@ -1,8 +1,10 @@
 # Features/Upgrade List
-## inviible characters
-At the moment we can show line breaks perhaps
-pipes and hypens would be good to show then we
-could see the markdown better
+## tidy up
+ - autoscroll_old
+
+#need to freeze input when in markdown view
+the markdown view doesn't like 3rd parse'
+
 
 ## view good behaviour 
 maybe kill view menu when the checkboxes on it 
@@ -40,7 +42,6 @@ shall we double the macron over ou instead of o macron u silent
 fix clear issue
     -  when all is cleared the page is unresponsive till a arrow up or down is input
 #### Schwas
--- have turned schwas to 'u'
 -- incurrect correct c o0 er r ect (current coding dont like)
 
 #### Paging
