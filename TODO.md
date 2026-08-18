@@ -1,4 +1,13 @@
 # Features/Upgrade List
+## arrow up
+at the moment it just goes to the next doc.line
+maybe it would be better doing indexof('.'). 
+
+## autoscroll failing backwards
+
+## cursor
+should we add it as text not node might not add fake linemarkers.
+
 ## tidy up
  - autoscroll_old
 
@@ -6,9 +15,6 @@
 the markdown view doesn't like 3rd parse'
 
 
-## view good behaviour 
-maybe kill view menu when the checkboxes on it 
-are changed, or at least the special characters and fullScreen ones at least
 ##
 change option 1,2,3 to n,v,b
 ## water
@@ -38,14 +44,11 @@ This seemed fairly well coded in the dictonary maybe this willl be fine
 
 shall we double the macron over ou instead of o macron u silent
 
-## clear
-fix clear issue
-    -  when all is cleared the page is unresponsive till a arrow up or down is input
 #### Schwas
 -- incurrect correct c o0 er r ect (current coding dont like)
 
 #### Paging
--- the portrait is good enough
+-- the portrait is almost perfect
 -- the landscape is under-scrolling
 
  **Add a prompt and cookie to set a user defined gap**
@@ -80,7 +83,7 @@ This is problematic if i hard code --MissingWord-- into the reserves.js. Unless 
 
 #### auto generate content links in about menu
 Dont do this it is wanky and initial efforts could
-be deleted
+be deleted. I dunno now looks cool and could add in a little curricula style content as a point of departure.
 
 #### sort the case caret artifact
 -- a) cure?
@@ -97,17 +100,14 @@ be deleted
 
 ####  augmention
 
-############ where
+ - marks check box working no on textnodes
+ - add marks in file menu does everything and cant be fixed with reverse marked.parse doesnt exist. Need some cunning splits on A,)[,B   split A ( discard last element; split B ] discard first element
 
--- md (irreversible)
--- html (not)
 
-############ how?
 
--- non-text content is being mangled
-
-#### show code
--- editable code window eventually?
+## view good behaviour 
+maybe kill view menu when the checkboxes on it 
+are changed, or at least the special characters and fullScreen ones at least
 
 
 #### Long-Term

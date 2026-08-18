@@ -749,8 +749,7 @@ function on2ndPass(key){
    }
    return;
 }
-
-function setCursorPos(direction) {
+function setCursorPos_old(direction) {
   const text=doc.lines[doc.row];
 
   if (direction === 'forward') {
@@ -775,6 +774,43 @@ function setCursorPos(direction) {
     // Look at the text before the cursor, ignoring a trailing space if the cursor is right after a word
     const textBefore = text.slice(0, doc.col-1);
     const prevSpace = textBefore.lastIndexOf(' ');
+    
+    // If no previous space is found, jump to the very start of the string
+    if (prevSpace === -1){
+      doc.col= 0;
+      return;
+    } 
+    
+    // Move past the space to the start of the word
+    doc.col= prevSpace + 1;
+  }
+
+}
+function setCursorPos(direction,divider) {
+  const text=doc.lines[doc.row];
+
+  if (direction === 'forward') {
+    // Find the next space after the current position
+    const nextSpace = text.indexOf(divider, doc.col+1);
+    
+    // If no space is found,go to next line 
+    if (nextSpace === -1){
+      doc.col=0;
+      doc.dRow(1);
+      return;
+    }
+      doc.col=nextSpace;
+  }
+  
+  if (direction === 'backward') {
+    // If already at the start, go to previous line
+    if (doc.col <= 0){
+      doc.col=0;doc.dCol(-1);
+    } 
+    
+    // Look at the text before the cursor, ignoring a trailing space if the cursor is right after a word
+    const textBefore = text.slice(0, doc.col-1);
+    const prevSpace = textBefore.lastIndexOf(divider);
     
     // If no previous space is found, jump to the very start of the string
     if (prevSpace === -1){
@@ -854,17 +890,23 @@ document.addEventListener('keydown', (event) => {
    event.preventDefault();
    if(event.ctrlKey){
      if(key=='arrowleft') {
-       setCursorPos('backward')}
+       setCursorPos('backward',' ')}
      if(key=='arrowright'){
-       setCursorPos('forward')} 
+       setCursorPos('forward',' ')} 
      updateDisplay();
      return;
    } 
    switch (key) {
      case "arrowleft":  doc.dCol(-1); break;
      case "arrowright": doc.dCol(1);  break;
-     case "arrowup":    doc.dRow(-1); break;
-     case "arrowdown":  doc.dRow(1);  break;
+//     case "arrowup":    doc.dRow(-1); break;
+//     case "arrowdown":  doc.dRow(1);  break;
+     case "arrowup": 
+       setCursorPos('backward','.');
+       break;
+     case "arrowdown": 
+       setCursorPos('forward','.');
+       break;
      case "home":       doc.col=0;  break;
      case "end":        doc.col=doc.lines[doc.row].length-1;  break;
    }

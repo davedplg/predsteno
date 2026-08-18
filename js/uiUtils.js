@@ -76,6 +76,12 @@ const doc = {
     const candidate = doc.row + n;
     doc.row = Math.max(0, Math.min(candidate, doc.lines.length - 1));
     doc.col = Math.min(doc.col, doc.lines[doc.row].length);
+    const line = doc.lines[doc.row];
+    //console.log(line);
+    if(line=="" && Math.abs(n)==1){
+      console.log('emptyline')
+      doc.dRow(n)
+    }
   },
 
   dCol(n) {
@@ -928,11 +934,12 @@ function initFileControls() {
   document.getElementById('btn-save-as')?.addEventListener('click', handleSaveAs);
   document.getElementById('btn-load')?.addEventListener('click', handleLoadMarkdown);
   document.getElementById('btn-clear')?.addEventListener('click', () => {
-      setMd('a   \n  \nz');
+      setMd('a   \n  \n  \nz');
       doc.row = 1;
       fileDialog.open = false;
       renderMarkdown();
       focus2HTML();
+      setTimeout(() => updateDisplay(), 60); 
     });
   document.getElementById('btn-augment')?.addEventListener('click', convertToAugmented);
 
