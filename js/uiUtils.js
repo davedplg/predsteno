@@ -851,10 +851,7 @@ async function handleSaveAs() {
 
     if (format === 'md') {
       finalName = fname + '.md';
-      finalContent = md().replace(cursor,'')
-                         .replace(cursor2,'')
-                         .replace(cursor3,'')
-                         .replace(cursor4,'');
+      finalContent = md();
       mimeType = 'text/markdown; charset=utf-8';
     } else if (format === 'md-clean') {
       finalName = fname + '.md';

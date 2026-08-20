@@ -1,15 +1,36 @@
 # Features/Upgrade List
+## exportMD
+i think this is redundant and not called anywhere
+
+## html save
+
+test save in chrome
+
+
+base64 encode images.
+
+turn off blue css background
+
+it would be better if the pagedown and pageup
+events js was also bundled into the output html
+
+
+## spacebar
+steno machines and plover deactivate it to avoid activating it when hitting thumb keys. I should consider doing tithis.
+
+## augmentation
+Both maybe should have the ability to mark missing words
+
 ## arrow up
 at the moment it just goes to the next doc.line
 maybe it would be better doing indexof('.'). 
+Also look for ? and ! sequnetially ':'?
 
 ## autoscroll failing backwards
 
 ## cursor
-should we add it as text not node might not add fake linemarkers.
-
-## tidy up
- - autoscroll_old
+ -should we add it as text not node might not add fake linemarkers.
+ - it sometimes hits non text nodes but is not catastropnic
 
 #need to freeze input when in markdown view
 the markdown view doesn't like 3rd parse'
