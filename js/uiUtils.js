@@ -66,7 +66,7 @@ const dbgWd = document.getElementById('debugWord');
 
 const CHORD_TIMEOUT = 150;
 //const CHORD_TIMEOUT = 110;
-// ==================== DOCUMENT MODEL ====================
+// =============== DOCUMENT MODEL ===============
 const doc = {
   lines: [""],
   row: 0,
@@ -270,7 +270,7 @@ const content = await loadFileFromQuery();
 
 
 function autoScroll(columnWidth) {
-  console.log('----autoScroll---');
+//  console.log('----autoScroll---');
   const activeElementNode = document.querySelector("#firstParse,#cursor");
   if (!activeElementNode) {
     console.log('early return: autoscroll')
@@ -281,15 +281,16 @@ function autoScroll(columnWidth) {
   const nodeColumn = Math.trunc(nodeLeftPosition/columnWidth) ;
   const outputHTMLcolumn = Math.trunc(outputHTML.scrollLeft/columnWidth) ;
   // left of div is more than column width
-  if (Math.abs(nodeColumn - outputHTMLcolumn) > 0) {
-    console.log('  --scrolling--')
-    console.log('nodeLeftPosition: '+nodeLeftPosition);
-    console.log('nodeColumn: '+nodeColumn);
+  const colgap = nodeColumn-outputHTMLcolumn;
+  if (Math.abs(colgap) > 0) {
+    console.log('--autoscrolling--'+nodeColumn+' nodeLeftPosition: '+nodeLeftPosition);
     outputHTML.scrollTo({
       left:nodeColumn*columnWidth ,
       behavior: 'instant'
     });
-  } else console.log('  --not scrolling--')
+  } else{
+      console.log('--NO-autoscroll--'+nodeColumn+' nodeLeftPosition: '+nodeLeftPosition);
+  }
   renderMarkdown();
 }
  
@@ -494,6 +495,28 @@ Object.keys(obj).forEach(key => {
 
   return t;
 }
+function test(){
+const foo='was«woz»';
+  return foo.replaceAll('«','(')
+            .replaceAll('»',')');
+
+}
+function augmentNoTagsOrMdLinks(unaugMd){
+
+const unaugmentedMd = unaugMd
+                              
+console.log(unaugmentedMd);
+const regex = /<[^>]*>|!?\[[^\]]*\]\((?!#)[^)]*\)|\b([a-zA-Z]+)\b/g;
+
+const result = unaugmentedMd.replaceAll(regex, (match, group1) => {
+  // If group1 exists, it's a safe word outside of tags/links
+  return group1 ? augmentWords(group1) : match;
+});
+  console.log(result);
+  return result.replaceAll('«', '-')
+               .replaceAll('»','')
+               
+}
 
 function augmentWords(text) {
   if (!text || typeof text !== 'string') return text;
@@ -514,6 +537,7 @@ function augmentWords(text) {
     if (word[0] === word[0].toUpperCase()) return augWord.charAt(0).toUpperCase() + augWord.slice(1);
     
     return augWord;                    // normal lowercase
+
   });
 }
 
@@ -652,8 +676,14 @@ async function makeHTML(){
 
   // 1. Fetch the actual CSS file from server
   let css = '';
+  let HTMLpage = outputHTML.innerHTML;
+  HTMLpage = HTMLpage.replace(/&lt;span id='cursor'&gt;[^&]*&lt;\/span&gt;/,'')
+                     .replace(cursor,'')
+                     .replace(cursor2,'')
+                     .replace(cursor3,'')
+                     .replace(cursor4,'');
   try {
-    const response = await fetch('../../styles/styles.css');
+    const response = await fetch('../../styles/export-styles.css');
     if (response.ok) {
       css = await response.text();
     } else {
@@ -680,7 +710,9 @@ async function makeHTML(){
   </style>
 </head>
 <body>
-  ${outputHTML.innerHTML}
+  <div id="outpt2">
+  ${HTMLpage}
+  </div>
 </body>
 </html>`;
 return fullHTML;
@@ -694,7 +726,11 @@ function exportMD() {
   if (downloadingMD) return;  // ← BLOCK REPEAT
   downloadingMD = true;
   
-  const md = document.getElementById('output').value;
+//const md = document.getElementById('output').value;
+  const md = md().replace(cursor,'')
+                 .replace(cursor2,'')
+                 .replace(cursor3,'')
+                 .replace(cursor4,'');
   
   if (!md.trim()) return alert('No markdown.');
   downloadContent({ content: md, filename: `notes-${Date.now()}.md`, type: 'text/markdown; charset=utf-8', linkId: 'md_download' });
@@ -815,7 +851,10 @@ async function handleSaveAs() {
 
     if (format === 'md') {
       finalName = fname + '.md';
-      finalContent = md();
+      finalContent = md().replace(cursor,'')
+                         .replace(cursor2,'')
+                         .replace(cursor3,'')
+                         .replace(cursor4,'');
       mimeType = 'text/markdown; charset=utf-8';
     } else if (format === 'md-clean') {
       finalName = fname + '.md';

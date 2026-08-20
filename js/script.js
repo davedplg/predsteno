@@ -749,57 +749,21 @@ function on2ndPass(key){
    }
    return;
 }
-function setCursorPos_old(direction) {
-  const text=doc.lines[doc.row];
-
-  if (direction === 'forward') {
-    // Find the next space after the current position
-    const nextSpace = text.indexOf(' ', doc.col+1);
-    
-    // If no space is found,go to next line 
-    if (nextSpace === -1){
-      doc.col=0;
-      doc.dRow(1);
-      return;
-    }
-      doc.col=nextSpace;
-  }
-  
-  if (direction === 'backward') {
-    // If already at the start, go to previous line
-    if (doc.col <= 0){
-      doc.col=0;doc.dCol(-1);
-    } 
-    
-    // Look at the text before the cursor, ignoring a trailing space if the cursor is right after a word
-    const textBefore = text.slice(0, doc.col-1);
-    const prevSpace = textBefore.lastIndexOf(' ');
-    
-    // If no previous space is found, jump to the very start of the string
-    if (prevSpace === -1){
-      doc.col= 0;
-      return;
-    } 
-    
-    // Move past the space to the start of the word
-    doc.col= prevSpace + 1;
-  }
-
-}
 function setCursorPos(direction,divider) {
   const text=doc.lines[doc.row];
-
+  console.log('line: '+doc.row+'/'+doc.lines.length);
   if (direction === 'forward') {
     // Find the next space after the current position
-    const nextSpace = text.indexOf(divider, doc.col+1);
+    const nextDivider = text.indexOf(divider, doc.col+1);
     
-    // If no space is found,go to next line 
-    if (nextSpace === -1){
+    // If no Divider is found,go to next line 
+    if (nextDivider === -1){
       doc.col=0;
       doc.dRow(1);
+//    setCursorPos('forward',divider)
       return;
     }
-      doc.col=nextSpace;
+      doc.col=nextDivider;
   }
   
   if (direction === 'backward') {
@@ -808,18 +772,19 @@ function setCursorPos(direction,divider) {
       doc.col=0;doc.dCol(-1);
     } 
     
-    // Look at the text before the cursor, ignoring a trailing space if the cursor is right after a word
+    // Look at the text before the cursor, ignoring a trailing Divider if the cursor is right after a word
     const textBefore = text.slice(0, doc.col-1);
-    const prevSpace = textBefore.lastIndexOf(divider);
+    const prevDivider = textBefore.lastIndexOf(divider);
     
-    // If no previous space is found, jump to the very start of the string
-    if (prevSpace === -1){
+    // If no previous Divider is found, jump to the very start of the string
+    if (prevDivider === -1){
       doc.col= 0;
+//    setCursorPos('backward',divider)
       return;
     } 
     
-    // Move past the space to the start of the word
-    doc.col= prevSpace + 1;
+    // Move past the Divider to the start of the word
+    doc.col= prevDivider + 1;
   }
 
 }
@@ -1057,7 +1022,8 @@ function convertToAugmented() {
   }
 
   const original = md();
-  const converted = augmentWords(original);
+//const converted = augmentWords(original);
+  const converted = augmentNoTagsOrMdLinks(original);
 
   setMd(converted);
   renderMarkdown();
