@@ -38,7 +38,7 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
      'delete': 101,
      'enter': 71,
 
-    ' ': 86,     //reserves
+//  ' ': 86,     //reserves
     'c': 94,    //spacebar3
     'n': 74,     //spacebar2
     'v': 74,     //spacebar2
@@ -83,6 +83,8 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
  [ 29  *  7]        : '94', 
  [ 29  * 13]        : '95', 
  [ 29  * 19]        : '97', 
+ [ 37  * 37]        : 'missed', 
+ [ 37  * 53]        : 'wd3', 
 
 
 

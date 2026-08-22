@@ -24,23 +24,51 @@ while (<>) {
        my $line2 = $line;
        my $two_lines=0;
 
-     if(/Å(?!R)/){
+#     if(/Å(?!R)/){
+#       $line2    =~ s/Å(?!R)/O/g;
+#       $two_lines=1;
+#       }
+#
+#     if(/Ā(?!R)/){
+#       $line2    =~ s/Ā(?!R)/A/g;
+#       $two_lines=1;
+#       }
+
+     if(/[ØĀÅ](?!R)/){
+       $line2    =~ s/Ø(?!R)/O/g;
+       $line2    =~ s/Ā(?!R)/A/g;
        $line2    =~ s/Å(?!R)/O/g;
        $two_lines=1;
        }
 
-     if(/Ā(?!R)/){
-       $line2    =~ s/Ā(?!R)/A/g;
+     if(/[TDN]ËW0(?!ŔÈ[Ś]*,)/){
+       $line2    =~ s/([TDN])ËW0/$1Ü/g;
        $two_lines=1;
        }
 
-     if(/Ø(?!R)/){
-       $line2    =~ s/Ø(?!R)/O/g;
+     if(/[TDN]Û(?!ŔÈ[Ś]*,)/){
+       $line2    =~ s/([TDN])Û/$1Ü/g;
+       $two_lines=1;
+       }
+
+#     if(/DÛ/){
+#       $line2    =~ s/DÛ/DOO/g;
+#       $two_lines=1;
+#       
+#
+#     if(/NÛ/){
+#       $line2    =~ s/NÛ/NOO/g;
+#       $two_lines=1;
+#       }
+#
+     if(/SÛM/){
+       $line2    =~ s/SÛM/SOOM/g;
        $two_lines=1;
        }
 
      if($two_lines){
        print simplesubs($line2), "\n";
+#      print $line2, "\n";  # temp test
        }
 
        print simplesubs($line), "\n";
@@ -53,7 +81,7 @@ sub simplesubs {
    $text =~  s/[ÀÈÌÒÙĦ]|[A-Z]0//g;
    $text =~  s/ØÙ?Ò?R?#?|Å/OŘ/g;
    $text =~  s/([A-Z])\1/$1/g;
-   $text =~  s/Ö|Ü|Ë/OO/g;
+   $text =~  s/Ö|Ü/OO/g;
    $text =~  s/U~/Õ/g;
    $text =~  s/U=/Ô/g;
    $text =~  s/Õ/OU/g;
@@ -67,6 +95,8 @@ sub simplesubs {
    $text =~  s/Ã#?/E/g;
    $text =~  s/[ÊÏÝ]/EE/g;
    $text =~  s/Ô/OẆ/g;
+   $text =~  s/([TDN])Ë/$1YOO/g;
+   $text =~  s/([^TDN])Ë/$1OO/g;
    $text =~  s/Û/YOO/g;
    $text =~  s/[ÎŶ]|UY/IE/g;
    $text =~  s/ÑK/NK/g;
@@ -93,6 +123,8 @@ sub simplesubs {
    $text =~  s/UUR/OŘ/g;
    $text =~  s/DUERING/DOŘING/g;
    $text =~  s/YY/Y/g;
+   $text =~  s/YOOX,/YX,/g;
+   $text =~  s/YOOXZ,/YXZ,/g;
  
   return $text;
 

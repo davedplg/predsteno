@@ -341,17 +341,17 @@ function parseCaseMarking(text) {
 //lowercase singleton
   t=t.replace(/([^\p{L}^0|^])([\p{Ll}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toUpperCase());
   
-  // Title case word 
+  // Title case word «»
   let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     
   // Lower case  (initial)(rest) 
-  let lCâs = /([\p{Ll}0])([\p{Ll}0]+\s*) ⟐ /gu;    
+  let lCâs = /([\p{Ll}0])([\p{Ll}0«»]+\s*) ⟐ /gu;    
   // Uppercase
   let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     
 
   t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
   t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
   t = t.replace(uCâs, (_,frodo) => frodo.toLowerCase());
-
+  t = t.replace('⟐','');
   setMd(t); 
 requestAnimationFrame(() => {
     syncFromMarkdown();
@@ -685,7 +685,9 @@ function underlineOptionsToCurrentFragLength(frag) {
     keysDown=0;
 }
 
-function evenString(frag){String(frag).length % 2 == 0?true:false}
+function evenString(frag){
+return  String(frag).length % 2 == 0?true:false
+}
 
 function setWordOptions(capsOpts)
 {  

@@ -311,6 +311,7 @@ function insertWord(word, addSpace = true) {
     currentLine.slice(doc.col);
 
   // Move cursor forward by insert length 
+  console.log('insertWord::toInsert: '+toInsert);
   doc.col += toInsert.replace(/[+]/g,'').length;
   updateDisplay();
   //scrolls if cursor off screen
@@ -672,16 +673,20 @@ function downloadContent({ content, filename, type, linkId }) {
   }, 100);
 }
 
+function removeCursor(text){
+return text.replace(cursor,'')
+           .replace(cursor2,'')
+           .replace(cursor3,'')
+           .replace(cursor4,'');
+}
+
 async function makeHTML(){
 
   // 1. Fetch the actual CSS file from server
   let css = '';
   let HTMLpage = outputHTML.innerHTML;
   HTMLpage = HTMLpage.replace(/&lt;span id='cursor'&gt;[^&]*&lt;\/span&gt;/,'')
-                     .replace(cursor,'')
-                     .replace(cursor2,'')
-                     .replace(cursor3,'')
-                     .replace(cursor4,'');
+  HTMLpage = removeCursor(HTMLpage);
   try {
     const response = await fetch('../../styles/export-styles.css');
     if (response.ok) {
@@ -727,11 +732,11 @@ function exportMD() {
   downloadingMD = true;
   
 //const md = document.getElementById('output').value;
-  const md = md().replace(cursor,'')
-                 .replace(cursor2,'')
-                 .replace(cursor3,'')
-                 .replace(cursor4,'');
-  
+//  const md = md().replace(cursor,'')
+//                 .replace(cursor2,'')
+//                 .replace(cursor3,'')
+//                 .replace(cursor4,'');
+    const md=removeCursor(md());
   if (!md.trim()) return alert('No markdown.');
   downloadContent({ content: md, filename: `notes-${Date.now()}.md`, type: 'text/markdown; charset=utf-8', linkId: 'md_download' });
   downloadContent({ content: removeDiacritics(md), filename: `TO_notes-${Date.now()}.md`, type: 'text/markdown; charset=utf-8', linkId: 'TO_md_download' });
@@ -851,11 +856,12 @@ async function handleSaveAs() {
 
     if (format === 'md') {
       finalName = fname + '.md';
-      finalContent = md();
+      finalContent = removeCursor(md());
       mimeType = 'text/markdown; charset=utf-8';
     } else if (format === 'md-clean') {
       finalName = fname + '.md';
       finalContent = removeDiacritics(md());
+      finalContent = removeCursor(finalContent);
       mimeType = 'text/markdown; charset=utf-8';
     } else if (format === 'html') {
       finalName = fname + '.html';

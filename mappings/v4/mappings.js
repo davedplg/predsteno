@@ -47,7 +47,7 @@ const primeMap = {
     'delete': 101,
     'enter':  71,
 
-    ' ': 86,     //reserves
+//  ' ': 86,     //reserves
     'c': 94,    //spacebar3
     'n': 74,     //spacebar2
     'v': 74,     //spacebar2
@@ -143,6 +143,8 @@ const productMap = {
  [ 31  *  7]        : '94', 
  [ 31  * 13]        : '95', 
  [ 31  * 19]        : '97', 
+ [ 37  * 37]        : 'missed', 
+ [ 37  * 53]        : 'wd3', 
 
 
 

@@ -1,600 +1,218 @@
-//export
-const caps={
-   "1": "AND-A-BEE-AZ",
-   "2": "FOR-D-FROM-DOO",
-   "3": "IN-IT-IZ-IE",
-   "4": "L-KAN-KUUD-LIEK",
-   "5": "ON-NOT-OR-ORL",
-   "6": "SHEE-SOE-SED-SUM",
-   "7": "THE-UV-TOO-THAT",
-   "8": "WOZ-YOO-WITH-WICH",
-   "11": "ABOWT-BAK-ABUV-BAEST",
-   "12": "BEEN-AFTA-BEEING-FAKT",
-   "13": "BIE-HAV-HAD-HAZ",
-   "14": "KAEM-KAES-LAETA-LARJ",
-   "15": "AN-MAED-MAEK-BOETH",
-   "16": "AR-SAEM-PART-AROWND",
-   "17": "AT-BUT-TAEK-TAEKEN",
-   "18": "AWEEE-AWORD-AWEA-WAETING",
-   "22": "EEVEN-DEEE-EECH-DEEEZ",
-   "23": "HEE-IF-DID-DIDN",
-   "24": "LEFT-LES-JENERAL-KEEP",
-   "25": "OENLEE-MEE-OEVA-MEEE",
-   "26": "PEEPL-SEE-SEELAND-REE",
-   "27": "VEREE-DUZ-UEZD-UES",
-   "28": "WEE-WEN-WEL-WEA",
-   "33": "HIZ-HIR-HIM-HIA",
-   "34": "LIEF-LITL-KIEND-LIEKLEE",
-   "35": "HOO-INTOO-MIE-HOW",
-   "36": "SHUUD-IR-RIET-SINS",
-   "37": "THIS-THEY-THEA-THEA2",
-   "38": "WIR-WIL-IZN-WIRK",
-   "44": "KLIA-KLAS-KLUB-KLIIRLEE",
-   "45": "LONG-LOEKAL-LONDON-KORLD",
-   "46": "PLAES-SKOOL-PLEEE-SKOOLZ",
-   "47": "JUST-KUM-LUUK-KUMPANEE",
-   "48": "KWIET-KWESSHN-KWESSHNZ-KWIKLEE",
-   "55": "NOE-MOR-NOW-NOO",
-   "56": "ORLSOE-ORLWEEEZ-SMORL-ORLTHOE",
-   "57": "MUCH-MUST-TOO-UNDA",
-   "58": "WOT-OWT-YOR-OWA",
-   "66": "PROBLEM-PROBLEMZ-PROBABLEE-PROSES",
-   "67": "UP-SUCH-STIL-STILEST",
-   "68": "SWEET-SWITCH-SWIMING-SWEPT",
-   "77": "UTHA-TUUK-UTHAZ-UTHIRWIEZ",
-   "78": "WUUD-WUN-YUNG-WUNS",
-   "88": "ZWIEG",
-   "111": "ABANDOND-ABANDON",
-   "112": "BAES-BAD",
-   "113": "ABILITEE-ACHEEVD",
-   "114": "BALANS-BAKGROWND",
-   "115": "BANK-BANKS",
-   "116": "BAR-ABSOLOOTLEE",
-   "117": "BATL-BATH",
-   "118": "ABZORBD-ABZORPSHN",
-   "121": "AEBL-BEAR",
-   "122": "FAES-DAETA",
-   "123": "BEGON-ADID",
-   "124": "AEJ-FAKTAZ",
-   "125": "FAMILEE-BENEFIT",
-   "126": "BEST-FAR",
-   "127": "BETA-ADVIES",
-   "128": "ADZ-ADZ",
-   "131": "CHAENJ-CHAENJIZ",
-   "132": "BIFOR-AGEN",
-   "133": "CHILDREN-BIG",
-   "134": "BIKORZ-BIKUM",
-   "135": "HAND-AGOE",
-   "136": "HARF-HARD",
-   "137": "BITWEEN-HAVN",
-   "138": "BIZNIS-HAZN",
-   "141": "BLAK-AKCHUEAL",
-   "142": "LAEBA-LAET",
-   "143": "ALIEV-ALIEANS",
-   "144": "LAK-JAK",
-   "145": "LAND-ALONG",
-   "146": "KAR-AKROS",
-   "147": "AKT-AKTUEALEE",
-   "148": "JAZ-AKWEREEUM",
-   "151": "NACHURAL-ANALISIS",
-   "152": "MAEJA-MAEKING",
-   "153": "BOI-BOILIEK",
-   "154": "MAJORITEE-BOKS",
-   "155": "MAN-MANAJMENT",
-   "156": "NASHNAL-MARKIT",
-   "157": "ANUTHA-AMUNG",
-   "158": "OBZIRVD-BOWND",
-   "161": "BRAEK-ARAENJMENTS",
-   "162": "RAENJ-RAET",
-   "163": "BRITISH-BRITAN",
-   "164": "ASKT-ASK",
-   "165": "BRORT-ASOESEEAESHN",
-   "166": "PARTEE-PAST",
-   "167": "ART-SAT",
-   "168": "RAZBEREE-RAZBEREEZ",
-   "171": "AVAELABL-ATAK",
-   "172": "TAEKING-TAEBL",
-   "173": "ATITUED-ATITOODZ",
-   "174": "VALUE-TAKS",
-   "175": "AVOID-ATMOSFIA",
-   "176": "AVRAJ-TASK",
-   "177": "BUUK-BUUKS",
-   "178": "BUZ-BUZING",
-   "181": "AWAEK-AWAETING",
-   "182": "WAELZ-WAET",
-   "183": "WAGON-BYIRROE",
-   "184": "WAKS-ZAK",
-   "185": "AWORDID-AWORDZ",
-   "186": "YARDZ-YARD",
-   "187": "AZTEK-AZTEKS",
-   "188": "YAZMIN-YAZOV",
-   "221": "FEA-FEBUEAREE",
-   "222": "FEEL-FEELD",
-   "223": "EFIRT-FEIRLEE",
-   "224": "FELT-FEL",
-   "225": "DEMOKRATIK-DEMONSTRAETID",
-   "226": "EEST-EESTIRN",
-   "227": "EETHA-EDUEKAESHN",
-   "228": "EEZEE-EEZILEE",
-   "231": "HEA-FIA",
-   "232": "DIFREN-FIEND",
-   "233": "FIGA-FIGAZ",
-   "234": "HELP-HELD",
-   "235": "DIMAND-FINISHT",
-   "236": "FIRST-FIRTHA",
-   "237": "GET-DIVELOPMENT",
-   "238": "IEZ-DIZIEN",
-   "241": "KEA-FLAT",
-   "242": "LEEV-LED",
-   "243": "KEIRFULEE-LEGZ",
-   "244": "LEJISLAESHN-KELEE",
-   "245": "EKONOMIK-JENRALEE",
-   "246": "ELS-KEPT",
-   "247": "LEVEL-LET",
-   "248": "EKWITEE-KEYNZ",
-   "251": "OFA-OFAZ",
-   "252": "ENEE-NEED",
-   "253": "OFIS-ENIRJEE",
-   "254": "OELD-NEKST",
-   "255": "MENEE-OEN",
-   "256": "FORM-OEPEN",
-   "257": "NEVA-OFTEN",
-   "258": "DOWN-FOWND",
-   "261": "FRANS-PEA",
-   "262": "SEEE-REEALEE",
-   "263": "DRIEV-DRINK",
-   "264": "SEKOND-SEKSHN",
-   "265": "SENTA-SENS",
-   "266": "ESPESHIALEE-PERENTS",
-   "267": "SET-SEVRAL",
-   "268": "SEZ-REZOLOOSHN",
-   "271": "EVA-DUBL",
-   "272": "FUECHA-TEEM",
-   "273": "EVIDENS-VEIREE",
-   "274": "TEL-UEK",
-   "275": "DUN-UENIETID",
-   "276": "UESIZ-EVREE",
-   "277": "FUUL-FUULEE",
-   "278": "UEZING-DUZN",
-   "281": "WEA-WEARING",
-   "282": "WEEE-WEEK",
-   "283": "WEIREVA-WEIRBIE",
-   "284": "WELKOM-WELFEA",
-   "285": "WENT-WENZDEEE",
-   "286": "YES-WEST",
-   "287": "YET-WETHA",
-   "288": "WEYT-WEYTS",
-   "331": "HIA-HIARING",
-   "332": "HIE-HIEA",
-   "333": "GIIRD-GIG",
-   "334": "HIL-GILTEE",
-   "335": "HIMSELF-IGNORD",
-   "336": "HIRD-HISTREE",
-   "337": "GIV-GIVEN",
-   "338": "IGWARNAZ-GIZIRD",
-   "341": "GLAS-LIBERAL",
-   "342": "LIEN-LIET",
-   "343": "ILIZABETH-ILIMINAET",
-   "344": "KILD-KIL",
-   "345": "KING-IKONOMEE",
-   "346": "IKSPIREEENS-IKSPEKTID",
-   "347": "LIVING-KITCHEN",
-   "348": "IKWIPMENT-IKWIVALENT",
-   "351": "NIA-IMAJ",
-   "352": "GOE-GOEING",
-   "353": "INGLISH-INGLAND",
-   "354": "INKLOODING-INKREES",
-   "355": "MINISTA-HOOZ",
-   "356": "IMPORTANT-HOSPITAL",
-   "357": "GOT-INUF",
-   "358": "HOWEVA-HOWS",
-   "361": "GRAET-SHAL",
-   "362": "SIED-GREEN",
-   "363": "SIGNIFIKANT-RIGARDID",
-   "364": "IRLEE-IRLEEA",
-   "365": "GROOP-SHOE",
-   "366": "SISTEM-PIRHAPS",
-   "367": "SHUUR-SITEE",
-   "368": "RIZULT-RIZULTS",
-   "371": "THAN-THANK",
-   "372": "THEM-THEN",
-   "373": "THINK-THINGZ",
-   "374": "VILAJ-VIKTOREE",
-   "375": "THOEZ-THORT",
-   "376": "ITS-THROO",
-   "377": "GUUD-GUVIRNMENT",
-   "378": "VIZIT-HUZBAND",
-   "381": "YIAZ-YIA",
-   "382": "WIEL-WIE",
-   "383": "YIIRLEE-WIG",
-   "384": "WILYAM-WILING",
-   "385": "WIMIN-WIND",
-   "386": "WIRLD-WIRKING",
-   "387": "WITHIN-WITHOWT",
-   "388": "WIZDOM-WIZIRD",
-   "441": "KLAEM-KLAEMZ",
-   "442": "KLEEN-KLEENING",
-   "443": "KLIEENT-KLIEENTS",
-   "445": "KLOES-KLOEZD",
-   "447": "KLUBZ-KLUSTA",
-   "451": "JOB-JOBZ",
-   "452": "LOE-LOEWA",
-   "453": "JOIN-JOIND",
-   "454": "KOLIJ-KOLEKSHN",
-   "455": "JON-KONTROEL",
-   "456": "KORT-LOR",
-   "457": "LOT-OKTOEBA",
-   "458": "KOWNSIL-KOZ",
-   "461": "PLAN-PLANING",
-   "462": "PLEEZ-SKEEM",
-   "463": "SKILZ-SLIETLEE",
-   "464": "SKLEROESIS",
-   "465": "SKOTLAND-SKOTISH",
-   "466": "SKREEN-SKREEMING",
-   "467": "PLUS-SKULPCHA",
-   "468": "SKWEA-SKWOD",
-   "471": "KUBIRD-KUBIRDZ",
-   "472": "JUDJ-JUDJMENT",
-   "473": "LUGAJ-JUG",
-   "474": "KULA-KULCHA",
-   "475": "KUNTREE-KUMING",
-   "476": "KURENT-KUPL",
-   "477": "LUUKT-LUUKING",
-   "478": "KUZIN-KUZINZ",
-   "481": "KWAEKA-KWAEKAZ",
-   "482": "KWEEN-KWEENLEE",
-   "483": "KWIEET-KWIK",
-   "485": "KWORTA-KWOETID",
-   "487": "KYUSHOO-KWUFYR",
-   "551": "ONA-ONAZ",
-   "552": "NOE-MOEST",
-   "553": "NOIZ-NOIZD",
-   "554": "NOLEDG-NOKT",
-   "555": "NOO-MOOV",
-   "556": "NORTH-MORNING",
-   "557": "ONTOO-NOVEL",
-   "558": "MOWTH-MOWNTAN",
-   "561": "ROBIRT-ORANJ",
-   "562": "SOESHIAL-ROED",
-   "563": "POINT-ROIAL",
-   "564": "ORLREDEE-ORLMOEST",
-   "565": "ROOM-RONG",
-   "566": "POSIBL-SOR",
-   "567": "ORTHORITEE-ORTHORITEEZ",
-   "568": "ROWND-POWA",
-   "571": "UNAEBL-TOBAKOE",
-   "572": "TOELD-TODEEE",
-   "573": "VOIS-TOGETHA",
-   "574": "UNLES-UNLIEKLEE",
-   "575": "NUMBA-MUNEE",
-   "576": "TOP-TORK",
-   "577": "UNTIL-NUTHING",
-   "578": "TOWORDZ-TOWN",
-   "581": "OWAZ-OWA",
-   "582": "WOE-WOEN",
-   "583": "OWIRSELVZ-YOGUT",
-   "584": "OWL-WOLAS",
-   "585": "WONT-WONTING",
-   "586": "WORTA-WOR",
-   "587": "OWTSIED-WOTEVA",
-   "588": "WOZN-WOWND",
-   "661": "PRAKTIS-SPAES",
-   "662": "SPESHIAL-PREZIDENT",
-   "663": "PRIES-PRIEVAT",
-   "664": "SPLIT-SPLENDID",
-   "665": "PROVIED-PROEGRAM",
-   "666": "SPRED-SPRING",
-   "667": "SPUN-PRUSSHIAN",
-   "671": "STAET-PUBLIK",
-   "672": "STEEE-TREETMENT",
-   "673": "TRIE-TRIEING",
-   "674": "SUKSES-SUJJESTID",
-   "675": "SUMTHING-UPON",
-   "676": "SUPORT-STREET",
-   "677": "PUUT-STUDEE",
-   "678": "UPWIRDZ-PUZLD",
-   "681": "SWANSEE-SWAM",
-   "682": "SWEEDEN-SWEET",
-   "683": "SWITCHT-SWING",
-   "685": "SWOLOED-SWON",
-   "687": "SWUNG-SWUM",
-   "771": "TUCH-TUCHEENES",
-   "772": "TUF-UVEN",
-   "773": "UTIRLEE-TUG",
-   "774": "VULNERABL-TUKT",
-   "775": "TUNG-TUNEL",
-   "776": "TUSKANEE-TUSKAN",
-   "777": "TUUR-TUURIST",
-   "781": "TWAEN-TWANG",
-   "782": "TWENTEEITH-TWELFTH",
-   "783": "TWIES-TWIN",
-   "784": "YUK-ZUKIRMAN",
-   "785": "VYOO-VYOOLES",
-   "786": "WUREE-WUREED",
-   "787": "WUUMAN-WUUDN",
-   "1111": "BABAJ",
-   "1112": "BAEBEE-BAEBEEZ",
-   "1113": "BAGAJ-BACHELA",
-   "1114": "BALANST-BALAE",
-   "1115": "BANBUREE-BANA",
-   "1116": "BARBARA-BARARG2",
-   "1117": "BATCH-BATALYON",
-   "1118": "BAZARA-BABZ",
-   "1122": "ABEE-BAED",
-   "1123": "ACHEEV-ACHEEVMENT",
-   "1124": "BADLEE-BAEKA",
-   "1125": "BAND-BANDZ",
-   "1126": "BAESIS-BAESIK",
-   "1127": "BATEREE-BATEREEZ",
-   "1128": "BAEYOEN-ABEYANS",
-   "1133": "ABIGAEL-BAGING",
-   "1134": "BAKING-ABILITEEZ",
-   "1135": "BANG-BANGA",
-   "1136": "ABIRDEEN-BARGAINING",
-   "1137": "BATHROOM-BATIRD",
-   "1138": "BAGZ-BAZIL",
-   "1144": "BALKONEE-BAKLASH",
-   "1145": "BANKING-ABOLISHN",
-   "1146": "BAKS-BASKET",
-   "1147": "BAKT-BAKTIREEA",
-   "1148": "BAKWIRDZ-BAKWIRD",
-   "1155": "ABNORMAL-ABOO",
-   "1156": "ABRORD-ABSOLOOT",
-   "1157": "ABUNDANS-ABUNDANT",
-   "1158": "ABZORB-ABZORBING",
-   "1166": "BARSILOENA-BARROE",
-   "1167": "ABSTRAKT-BASTIRD",
-   "1168": "BARZ-BARZEL",
-   "1177": "ABUT-ABUTING",
-   "1211": "AFABL-AEBA",
-   "1212": "AFEAZ-BEECH",
-   "1213": "AFGANISTAN-DAGA",
-   "1214": "AEKAZ-ADJAESENT",
-   "1215": "DAMAJ-AENCHENT",
-   "1216": "AFRAED-BEARING",
-   "1217": "ADVANTAJ-ADVANS",
-   "1218": "BEAZ-AEYA",
-   "1222": "BEEE-DADEE",
-   "1223": "BEEINGZ-AEDID",
-   "1224": "FAELD-FAELUEA",
-   "1225": "BENEFITS-FAEMUS",
-   "1226": "ADRES-FAESIZ",
-   "1227": "DAET-DAEVID",
-   "1228": "FAEZ-AEDZ",
-   "1233": "BEGING-ADHIRENS",
-   "1234": "AEJIZ-BELINDA",
-   "1235": "FAMILEEZ-ADMINISTRAESHN",
-   "1236": "AFRIKA-FASILITEEZ",
-   "1237": "AFTIRNOON-AFTIRWIRDZ",
-   "1238": "BEGZ-FAGZ",
-   "1244": "BELJUM-BELJIAN",
-   "1245": "BENJAMIN-AENJEL",
-   "1246": "DARK-DARLINGTON",
-   "1247": "FAKTA-FAKTS",
-   "1248": "BELZ-DAZLING",
-   "1255": "EBONEE-AEMOS",
-   "1256": "FARM-ADOPTED",
-   "1257": "BENT-FANTASEE",
-   "1258": "AEMZ-FANZ",
-   "1266": "AEPRIL-AEPRON",
-   "1267": "FARTHA-FAST",
-   "1268": "DARWIN-DARWINEEAN",
-   "1277": "AFUUT-DATUM",
-   "1312": "CHAENJD-CHEA",
-   "1313": "BIGAN-BIHAEVYA",
-   "1314": "BIKAEM-CHALENJ",
-   "1315": "CHANS-CHANEL",
-   "1316": "CHAPTA-CHARJ",
-   "1317": "BITA-CHAT",
-   "1318": "BIZAR-BIAZ",
-   "1322": "CHEEF-AHED",
-   "1323": "CHIELD-CHEIRMAN",
-   "1324": "BILEEV-BILDING",
-   "1325": "AGENST-HADN",
-   "1326": "AGREED-HAPEND",
-   "1327": "GAEV-GAET",
-   "1328": "BIZE-GAEZ",
-   "1333": "BIHIEND-BIGINING",
-   "1334": "CHIKEN-CHIL",
-   "1335": "CHOIS-HANG",
-   "1336": "CHIRCH-BISIED",
-   "1337": "HAVING-BIGUN",
-   "1338": "HAZIRD-HAZIRDZ",
-   "1344": "HAKKAMOR",
-   "1345": "BILOE-BIKOMZ",
-   "1346": "BIRLIN-BISKITS",
-   "1347": "BILT-BILUVD",
-   "1348": "BILZ-BILYONZ",
-   "1355": "CHOOZ-CHOOZING",
-   "1356": "BIRMINGHAM-HARM",
-   "1357": "CHUNKS-HAVOK",
-   "1358": "BIYOND-BIZNISIZ",
-   "1366": "BIRST-HARSH",
-   "1367": "BIRTH-HART",
-   "1368": "BIRZ-BIRWIK",
-   "1377": "CHUTNEE-IBUULYENS",
-   "1378": "HAVZ-GATWIK",
-   "1388": "HAWZA",
-   "1411": "ALBAENEEA-KABAJ",
-   "1412": "AKADEMIK-BLAEM",
-   "1413": "KABINET-ALBIRT",
-   "1414": "BLAKS-BLAKPOOL",
-   "1415": "ALAN-KANADA",
-   "1416": "JAPAN-JAPANEEZ",
-   "1417": "LATA-KATCH",
-   "1418": "LABZ-AKWATIK",
-   "1422": "LAEDEE-LAED",
-   "1423": "BLIEND-ALIED",
-   "1424": "LAEK-ALEJD",
-   "1425": "ALOEN-JAEMZ",
-   "1426": "KAESIZ-KAREED",
-   "1427": "LAETEST-AKUEZD",
-   "1428": "LAEYA-LADZ",
-   "1433": "LAGING-ALIGAETA",
-   "1434": "ALIKSANDA-KALIFORNYA",
-   "1435": "LANGWAJ-LANGWAJIZ",
-   "1436": "AKSHN-KAPITAL",
-   "1437": "AKTIVITEEZ-AKTIVITEE",
-   "1438": "AKWITAEN-JAGWAR",
-   "1444": "KALKUELAETID-KALKUELAESHNZ",
-   "1445": "BLOK-ALKOHOL",
-   "1446": "LARJA-LARJLEE",
-   "1447": "KATL-LAKT",
-   "1448": "AKKWIEIRD-AKKWIZISHN",
-   "1455": "BLOO-BLOONES",
-   "1456": "KAMPAEN-KANSA",
-   "1457": "JANUEEREE-AKUMPANEED",
-   "1458": "AKOWNT-ALOWD",
-   "1466": "KARPET-KARPETS",
-   "1467": "KASTL-KAPTAN",
-   "1468": "KARZ-JARZ",
-   "1477": "BLUUD-BLUUDEE",
-   "1478": "KAVZ-KATZSH",
-   "1488": "KAZWEL",
-   "1511": "AMACHA-AMBASADA",
-   "1512": "NAECHA-BOBD",
-   "1513": "MAGAZEEN-NACHURALEE",
-   "1514": "ANALIEZD-ANALIEZ",
-   "1515": "MANAJA-MANAJD",
-   "1516": "MARCH-ANSA",
-   "1517": "MATA-MATCH",
-   "1518": "AMAZON-ANWAR",
-   "1522": "BODEE-BODEEZ",
-   "1523": "MAGEE-ANDIRSON",
-   "1524": "MAEKS-MAEL",
-   "1525": "NAEM-MAEN",
-   "1526": "AMERIKAN-BORD",
-   "1527": "OBVEEUSLEE-OBVEEUS",
-   "1528": "MAEYA-BOEWING",
-   "1533": "ANGIEETEEZ-ANGIRD",
-   "1534": "MAJIK-ANGKSUS",
-   "1535": "ANIMALZ-ANIMAL",
-   "1536": "MASHEEN-MARIJ",
-   "1537": "MATIREEAL-MATIREEALZ",
-   "1538": "BOIZ-OBZIRVAESHN",
-   "1544": "MALKOM-ANKL",
-   "1545": "MAKMILAN-MANKIEND",
-   "1546": "MARK-BORL",
-   "1547": "BOTL-BOTLZ",
-   "1548": "BOWLTON-MAZLIN",
-   "1555": "BOOM-ANONIMUS",
-   "1556": "BORN-BOOST",
-   "1557": "BOTOM-AMUNGST",
-   "1558": "AMOWNT-ANOWNST",
-   "1566": "MAPS-MARSHAL",
-   "1567": "BORT-MASTA",
-   "1568": "MARZ-BORZ",
-   "1577": "MATTHEE-MATUERD",
-   "1578": "NATWEST-BOWT",
-   "1588": "BOZWEL-BOWZ",
-   "1611": "ARAB-ARABZ",
-   "1612": "BRAEN-ARAENJD",
-   "1613": "APIA-APIAZ",
-   "1614": "PAKAJ-PALAS",
-   "1615": "BRANCH-BRANCHIZ",
-   "1616": "PASAJ-APART",
-   "1617": "PATCH-SAVAJ",
-   "1618": "BRAZIL-BRAZILYAN",
-   "1622": "PAED-APEEL",
-   "1623": "ARIEVD-BRIDJ",
-   "1624": "PAEJ-SAELZ",
-//export
-const reservecaps={
-   "2": "D",
-   "5": "M",
-   "6": "S",
-   "7": "T-V-U",
-   "12": "AD-AD-EB-EB-AE-DA",
-   "13": "AG",
-   "14": "AL-AK",
-   "15": "AM-AN-AN-AN",
-   "16": "AR-AS-AR-AP-AR-PA",
-   "22": "DE-DE-ED-EE-EE-EE",
-   "23": "IE-EG-ID-HE-IE",
-   "24": "LE-EL-EL-EL-EK-EK",
-   "25": "OF-OE-OD-OE-EN-OE-EM",
-   "26": "ES-ER-ES-ER-ES-ER",
-   "27": "ET-UE-EV-UE",
-   "28": "YE-YE",
-   "34": "IL-IL-IK",
-   "35": "IN-OI-IM-OI-OG-OI",
-   "36": "SH-SH-IR",
-   "37": "HU-UG",
-   "38": "IZ",
-   "44": "KK",
-   "45": "OK",
-   "55": "OO-OO-OO-MM-OO",
-   "56": "MR-OR-OS-OP-OR-OR-OR",
-   "57": "UM-UN-UM-OT-OT",
-   "58": "OZ-OW",
-   "67": "US-UP-SU",
-   "111": "ABA-BAB",
-   "113": "BAG",
-   "114": "BAL",
-   "115": "BAN-BAM-BAN",
-   "116": "BAR-BAR",
-   "117": "BAT-BAT",
-   "118": "ABZ-ABZ-BAZ",
-   "121": "BEA-DAB-FAB-AEB-ADA-BEA",
-   "122": "BED-AED-DAD-BEE-FAE-AED-BEE",
-   "123": "BEG-FAG-FAG-BEG-DAG",
-   "124": "BEL-AEL-BEK-AEK-BEL-DAL-BEL",
-   "125": "AEM-BEN-DAM-FAN-DAN-DAM-BEN",
-   "126": "AES-DAR-AEP-DAS-FAR-DAR-BES",
-   "127": "FAT-BET-AET-AFT-DAT-BEV-BET",
-   "128": "BEY-EBZ",
-   "131": "BIA-BIB-GAB",
-   "132": "BIE-BID-BIE-BIF-BIE-HAE-GAF",
-   "133": "GAG-HAG-ICH",
-   "134": "BIL-HAL-HAK-GAL-BIK-HAK-BIL",
-   "135": "HAM-BIN-IBN-HAN-GAN-HAM-GAN",
-   "136": "GAS-GAP-HAR-BIR-BIR-BIS-HAR",
-   "137": "BIT-HAT-GAT-HAV-HAT",
-   "138": "BIZ-HAW",
-   "141": "KAB-LAB-BLA-JAB-AJA-AKA-AKA",
-   "142": "LAD-KAF-ALF-KAD-LAD",
-   "143": "LAG",
-   "144": "KAL-LAL-LAK-KAK-KAL-JAK",
-   "145": "LAM-JAN-JAM-KAM-LAN-KAN-LAM",
-   "146": "LAR-KAP-LAP-AKS-JAR-KAR-LAS",
-   "147": "KAT-KAT",
-   "148": "ALZ-LAW",
-   "151": "BOB-ANA-ANA-NAB-MAB-AMA",
-   "152": "MAD-BOE-BOE-BOE-BOE-BOE-MAE",
-   "153": "BOG-MAG-NAG-ANG",
-   "154": "MAK-NAK-MAL-MAK-MAJ-BOK-MAK",
-   "155": "BOM-MAN-NAN-BON-NAM-BOO-BON",
-   "156": "NAR-MAS-MAP-BOS-MAR-BOR-AMP",
-   "157": "MAT-MAT-ANT-NAT-MAT-BOT-NAV",
-   "158": "BOW-BOW-BOW-AMZ",
-   "161": "RAB-ARA",
-   "162": "SAD-RAF-PAD-SAE-BRD-RAE-PAE",
-   "163": "ASH-RAG-SAG-ASH-RAG",
-   "164": "PAK-APL-SAK-ARK-RAK-PAL-ARK",
-   "165": "ARM-RAN-SAM-SAN-PAN-RAM-PAM",
-   "166": "PAS-RAR-SAR-PAR-PAR-RAP-ARS",
-   "167": "PAT-RAT-APT-AST",
-   "168": "ASZ-ARZ-RAW-ARZ-RAZ",
-   "171": "TAB",
-   "172": "BUD-TAE-BUF-TAF-BUD-TAD",
-   "173": "TAG-BUG-TAG",
-   "174": "TAK-BUK-VAL-TAK-BUK",
-   "175": "VAN-TAN-BUM-BUN-TAM-BUN-TAM",
-   "176": "BUS-TAR-TAP-TAR-VAS-TAS-BUS",
-   "177": "VAT-BUT-TAT",
-   "178": "VAZ",
-   "181": "AWA",
-   "182": "YAE",
-   "183": "WAG-ZAG",
-   "184": "ZAK-WAK-ZAK-YAK",
-   "185": "WAM-YAN-YAM",
-   "186": "YAR-WAR-YAR-WAR-YAR-ZAP-ZAR",
-   "188": "AWZ",
-   "221": "DEA-FEA-EEA-DEB-FEA",
-   "222": "DED-FEE-DEF-FED-DEE-DEE-EED",
-   "223": "EEG",
-   "224": "EDJ-DEK-DEK-DEL-DEL-EEL-DEL",
-   "225": "FEN-DEN-FEN-FEM",
-   "227": "EET-DET-EEV-EEV-DEV",
-   "228": "EEZ-DEY-FEY-FEZ",
-   "231": "DIA-DIA-DIA",
+441:future,402,FYOOKHX,fûťùŕè
+579:nature,524,NAEKHX,nâťùŕè
+751:structure,694,STRUKTYX,structûŕè
+988:picture,909,PIKKHX,picťùŕè
+1279:culture,1184,KULKHX,culťùŕè
+1744:feature,1608,FEEKHX,fêàťùŕè
+1966:expenditure,1816,XKSPENDXKHX,ėxpendíťùŕè
+2073:literature,1919,LITXRXKHX,litéráťùŕè
+2436:temperature,2256,TEMPRXKHX,tempèráťùŕè
+2731:agriculture,2522,AGRIKULKHX,agriculťùŕè
+2925:furniture,2705,FERNIKHX,fùŕniťùŕè
+3140:mixture,2900,MIKSKHX,mixťùŕè
+3586:architecture,3245,AŘKXTEKKHX,ār#cħítecťùŕè
+4078:venture,3702,VENKHX,venťùŕè
+4162:departure,3783,DXPAŘKHX,dėpār#ťùŕè
+4594:gesture,4192,JESKHX,ĝesťùŕè
+4777:mature,4363,MXKHX,máťùŕè
+4837:lecture,4422,LEKKHX,lecťùŕè
+4872:creature,4454,KREEKHX,crêàťùŕè
+5249:manufacture,4803,MANOOFAKKHX,manûfacťùŕè
+5250:manufacture,4803,MANYOOFAKKHX,manûfacťùŕè
+5654:adventure,5179,XDVENKHX,ádvenťùŕè
+6026:capture,5521,KAPKHX,capťùŕè
+6206:sculpture,5693,SKULPKHX,sculpťùŕè
+7150:signature,6594,SIGNXKHX,signáťùŕè
+7545:infrastructure,6994,INFRXSTRUKKHX,infrástrucťùŕè
+7958:texture,7296,TEKSKHX,texťùŕè
+8329:miniature,7659,MINIKHOŘ,miniàťūrè
+8354:torture,7684,TOŘKHX,tør#ťùŕè
+8654:legislature,7974,LEJXSLAEKHX,leĝíslâťùŕè
+8671:premature,7989,PREEMXKHOŘ,prêmáťūrè
+9462:moisture,8761,MOISKHX,mσìsťùŕè
+10746:pasture,9995,PASKHX,pasťùŕè
+11463:posture,10688,POSKHX,posťùŕè
+13065:fixture,12278,FIKSTYX,fixtûŕè
+13204:curvature,12411,KERVXTYX,cùŕvátûŕè
+13364:immature,12573,IMXTOOR,immátûrè
+13365:immature,12573,IMXTYOOR,immátûrè
+13730:stature,12924,STATYX,statûŕè
+13752:fracture,12948,FRAKKHX,fracťùŕè
+14144:scripture,13346,SKRIPTYX,scriptûŕè
+20311:conjecture,19423,KXNJEKKHX,cónjecťùŕè
+20670:recapture,19800,REEKAPTYX,rêcaptûŕè
+21337:caricature,20481,KARXKXTYX,carícátûŕè
+21525:restructure,20705,REESTRUKTYX,rêstructûŕè
+21880:acupuncture,21121,AKYOOPUNGKTYX,acûpuñctûŕè
+22818:superstructure,22229,SOOPERSTRUKTYX,süpèŕstructûŕè
+22910:nurture,22329,NERTYX,nùŕtûŕè
+22973:juncture,22413,JUNGKTYX,juñctûŕè
+23417:nomenclature,22943,NOẆMXNKLAETYX,nôménclâtûŕè
+23418:overture,22944,OẆVERTYX,ôvèŕtûŕè
+23432:stricture,22959,STRIKTYX,strictûŕè
+23551:aperture,23105,APERTYX,apèŕtûŕè
+23563:debenture,23119,DXBENTYX,débentûŕè
+23639:rupture,23219,RUPTYX,ruptûŕè
+24236:forfeiture,23968,FOŘFEXTYX,før#feítûŕè
+26400:horticulture,26688,HOŘTIKULTYX,hør#ticultûŕè
+27290:vulture,27829,VULTYX,vultûŕè
+28802:rapture,29845,RAPTYX,raptûŕè
+29486:investiture,30666,INVESTXTYX,investítûŕè
+30078:subculture,31434,SUBKULTYX,subcultûŕè
+30278:suture,31717,SOOTYX,sütûŕè
+31128:couture,32993,KOOTOŘ,cöùtūrè
+37189:indenture,42662,INDENTYX,indentûŕè
+37329:musculature,42914,MUSKYOOLXTYX,muscûlátûŕè
+37835:misadventure,43853,MISXDVENTYX,misádventûŕè
+41229:prefecture,49820,PREEFEKTYX,prêfectûŕè
+41967:bonaventure,51322,BONXVENTYX,bonáventûŕè
+44344:tincture,56843,TINGKTYX,tiñctûŕè
+54768:discomfiture,999999,DISKOMFITOŘ,discomfitūrè
+5123:captured,4682,KAPKHERD,capťùŕèd
+5918:structured,5428,STRUKKHERD,strucťùŕèd
+6203:featured,5690,FEEKHERD,fêàťùŕèd
+7311:manufactured,6754,MANOOFAKTOOERD,manûfactûŕèd
+7312:manufactured,6754,MANYOOFAKTYOOERD,manûfactûŕèd
+8997:pictured,8303,PIKTOOERD,pictûŕèd
+8998:pictured,8303,PIKTYOOERD,pictûŕèd
+11862:tortured,11082,TOŘTOOERD,tør#tûŕèd
+11863:tortured,11082,TOŘTYOOERD,tør#tûŕèd
+13374:ventured,12582,VENTOOERD,ventûŕèd
+13375:ventured,12582,VENTYOOERD,ventûŕèd
+13415:gestured,12624,JESTOOERD,ĝestûŕèd
+13416:gestured,12624,JESTYOOERD,ĝestûŕèd
+14930:cultured,14122,KULTOOERD,cultûŕèd
+14931:cultured,14122,KULTYOOERD,cultûŕèd
+15293:fractured,14485,FRAKTOOERD,fractûŕèd
+15294:fractured,14485,FRAKTYOOERD,fractûŕèd
+19837:nurtured,18941,NERTOOERD,nùŕtûŕèd
+19838:nurtured,18941,NERTYOOERD,nùŕtûŕèd
+20312:conjectured,19423,KXNJEKKHERD,cónjecťùŕèd
+21558:matured,20742,MXTOORD,mátûrèd
+21559:matured,20742,MXTYOORD,mátûrèd
+21906:textured,21154,TEKSTOOERD,textûŕèd
+21907:textured,21154,TEKSTYOOERD,textûŕèd
+22232:restructured,21534,REESTRUKTOOERD,rêstructûŕèd
+22233:restructured,21534,REESTRUKTYOOERD,rêstructûŕèd
+22437:lectured,21762,LEKTOOERD,lectûŕèd
+22438:lectured,21762,LEKTYOOERD,lectûŕèd
+24521:recaptured,24344,REEKAPTOOERD,rêcaptûŕèd
+24522:recaptured,24344,REEKAPTYOOERD,rêcaptûŕèd
+25512:unstructured,25551,UNSTRUKSHERD,unstrucţùŕèd
+25513:sculptured,25553,SKULPTOOERD,sculptûŕèd
+25514:sculptured,25553,SKULPTYOOERD,sculptûŕèd
+27339:ruptured,27892,RUPTOOERD,ruptûŕèd
+27340:ruptured,27892,RUPTYOOERD,ruptûŕèd
+28803:raptured,29845,RAPTOOERD,raptûŕèd
+28804:raptured,29845,RAPTYOOERD,raptûŕèd
+40610:natured,48580,NAETOOERD,nâtûŕèd
+40611:natured,48580,NAETYOOERD,nâtûŕèd
+41856:caricatured,51075,KARIKXTOOERD,caricátûŕèd
+41857:caricatured,51075,KARIKXTYOOERD,caricátûŕèd
+42531:enraptured,52647,ENRAPTOOERD,enraptûŕèd
+42532:enraptured,52647,ENRAPTYOOERD,enraptûŕèd
+45502:denatured,59777,DXNAETOOERD,dėnâtûŕèd
+45503:denatured,59777,DXNAETYOOERD,dėnâtûŕèd
+53389:indentured,86121,INDENTOOERD,indentûŕèd
+53390:indentured,86121,INDENTYOOERD,indentûŕèd
+1229:features,1133,FEEKHXZ,fêàťùŕèś
+1970:pictures,1819,PIKKHXZ,picťùŕèś
+2369:structures,2195,STRUKKHXZ,strucťùŕèś
+4517:creatures,4119,KREEKHXZ,crêàťùŕèś
+5359:cultures,4905,KULKHXZ,culťùŕèś
+5697:lectures,5221,LEKKHXZ,lecťùŕèś
+5881:temperatures,5392,TEMPRXKHXZ,tempèráťùŕèś
+5979:futures,5481,FYOOKHXZ,fûťùŕèś
+8908:ventures,8212,VENKHXZ,venťùŕèś
+10050:gestures,9312,JESKHXZ,ĝesťùŕèś
+11251:sculptures,10475,SKULPKHXZ,sculpťùŕèś
+11690:adventures,10912,ADVENKHXZ,advenťùŕèś
+12787:fixtures,12002,FIKSTYXZ,fixtûŕèś
+12859:signatures,12074,SIGNXKHXZ,signáťùŕèś
+13945:departures,13146,DXPAŘTYXZ,dėpār#tûŕèś
+14775:pastures,13968,PASTYXZ,pāstûŕèś
+14776:pastures,13968,PAŘSTYXZ,pāstûŕèś
+16801:scriptures,15850,SKRIPTYXZ,scriptûŕèś
+17226:strictures,16283,STRIKTYXZ,strictûŕèś
+17298:manufactures,16358,MANOOFAKTOOXZ,manûfactûŕèś
+17299:manufactures,16358,MANYOOFAKTYXZ,manûfactûŕèś
+17948:mixtures,17006,MIKSTYXZ,mixtûŕèś
+18110:textures,17165,TEKSTYXZ,textûŕèś
+18981:expenditures,18061,XKSPENDXKHXZ,ėxpendíťùŕèś
+19319:debentures,18400,DXBENTYXZ,débentûŕèś
+19819:captures,18922,KAPTYXZ,captûŕèś
+22123:architectures,21407,AŘKXTEKTYXZ,ār#cħítectûŕèś
+22742:vultures,22129,VULTYXZ,vultûŕèś
+25546:overtures,25593,OẆVERKHOŘZ,ôvèŕťūrèś
+26149:natures,26364,NAETYXZ,nâtûŕèś
+27324:postures,27873,POSTYXZ,postûŕèś
+28349:matures,29223,MXKHOŘZ,máťūrèś
+28670:legislatures,29654,LEJISLAETYXZ,leĝislâtûŕèś
+34008:subcultures,37382,SUBKULTYXZ,subcultûŕèś
+35345:dentures,39604,DENTYXZ,dentûŕèś
+36139:caricatures,40815,KARIKXTYXZ,caricátûŕèś
+38100:sutures,44370,SOOTYXZ,sütûŕèś
+43706:tortures,55347,TOŘTYXZ,tør#tûŕèś
+43753:punctures,55436,PUNGKSHXZ,puñcţùŕèś
+46189:infrastructures,61674,INFRXSTRUKTYXZ,infrástructûŕèś
+46221:ruptures,61794,RUPTYXZ,ruptûŕèś
+46577:indentures,62844,INDENTYXZ,indentûŕèś
+49222:superstructures,70630,SOOPERSTRUKTYXZ,süpèŕstructûŕèś
+51520:misadventures,78651,MISXDVENTYXZ,misádventûŕèś
+53428:restructures,86321,REESTRUKTYXZ,rêstructûŕèś
+54225:tinctures,89911,TINGKTYXZ,tiñctûŕèś
+54701:apertures,999999,APERTYXZ,apèŕtûŕèś
+5034:manufacturer,4601,MANOOFAKKHXRX,manûfacťúrèŕ
+5035:manufacturer,4601,MANYOOFAKKHXRX,manûfacťúrèŕ
+7817:lecturer,7162,LEKKHXRX,lecťúrèŕ
+25824:adventurer,25940,ADVENKHXRX,advenťúrèŕ
+3665:manufacturers,3320,MANOOFAKKHXRXZ,manûfacťúrèŕś
+3666:manufacturers,3320,MANYOOFAKKHXRXZ,manûfacťúrèŕś
+12428:adventurers,11636,XDVENKHXRXZ,ádvenťúrèŕś
+12730:lecturers,11943,LEKKHXRXZ,lecťúrèŕś
+367:actually,331,AKTOOXLEE,actûállý
+368:actually,331,AKTYOOXLEE,actûállý
+1188:eventually,1091,XVENSHYOOXLEE,ėvenţûállý
+1581:actual,1460,AKKHYOOXL,acťûál
+2422:virtually,2243,VERKHOOXLEE,vìŕťüállý
+3422:intellectual,3093,INTXLEKKHOOXL,intéllecťüál
+4108:spiritual,3730,SPIRIKHWX,spiriťυál0
+4253:mutual,3866,MYOOKHXL,mûťùál
+5846:ritual,5359,RIKHOOXL,riťüál
+7369:eventual,6814,XVENKHOOXL,évenťüál
+7494:conceptual,6943,KXNSEPKHOOXL,cónçepťüál
+8284:virtual,7618,VERKHOOXL,vìŕťüál
+8359:contractual,7689,KXNTRAKKHOOXL,cóntracťüál
+9031:factual,8336,FAKKHOOXL,facťüál
+10005:intellectuals,9265,INTXLEKKHOOXLZ,intéllecťüálś
+10285:mutually,9542,MYOOKHOOXLEE,mûťüállý
+11779:rituals,11000,RIKHOOXLZ,riťüálś
+11898:perpetual,11119,PERPEKHOOXL,pèŕpeťüál
+13506:contextual,12711,KONTEKSTOOAL,contextûal
+13507:contextual,12711,KONTEKSTYOOAL,contextûal
+13989:textual,13192,TEKSKHUXL,texťuál
+15000:perceptual,14188,PERSEPKHXL,pèŕçepťúàl
+15848:effectual,15000,XFEKTOOXL,ėffectûál
+15849:effectual,15000,XFEKTYOOXL,ėffectûál
+16009:intellectually,15048,INTXLEKKHOOXLEE,intéllecťüállý
+16982:habitual,16032,HXBIKHOOXL,hábiťüál
+19403:spirituality,18495,SPIRIKHOOALXTEE,spiriťüalítý
+20099:habitually,19203,HXBIKHOOXLEE,hábiťüállý
+22422:perpetually,21748,PERPEKHOOXLEE,pèŕpeťüállý
+22502:effectual,21847,XFEKKHOOXL,éffecťüál
+22503:ineffectual,21847,INXFEKKHOOXL,inéffecťüál
+22504:ineffectually,21847,INXFEKKHOOXLEE,inéffecťüállý
+25497:conceptually,25528,KXNSEPKHOOXLEE,cónçepťüállý
+25536:eventuality,25580,EEVENKHOOALITEE,êvenťüalitý
+31529:punctual,33583,PUNGKKHOOAL,puñcťüal
+31530:punctuality,33583,PUNGKKHOOALITEE,puñcťüalitý
+31821:conceptualization,34016,KXNSEPKHWXLIZAESHN,cónçepťυálizâţìòn
+32770:ritualistic,35457,RIKHOOXLISTIK,riťüálistic
+36211:contractually,40936,KXNTRAKKHOOXLEE,cóntracťüállý
+37346:factually,42942,FAKKHOOXLEE,facťüállý
+38232:effectually,44444,XFEKTOOXLEE,ėffectûál0lý
+38233:effectually,44444,XFEKTYOOXLEE,ėffectûál0lý
+47421:intellectualism,65306,INTELXKKHOOXLIZM,intellécťüáliśm
+509:century,468,SENTOOREE,çentûrý
+510:century,468,SENTYOOREE,çentûrý
+2912:centuries,2696,SENKHXREEZ,çenťúrìêś
