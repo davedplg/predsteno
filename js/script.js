@@ -60,14 +60,12 @@ const keyMap2ndPass = {
   'p': 10,
   'g': 11,
   'h': 11,
-  'b': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
-  ' ': 1,   // duplicated so user can dbl click b; 1st & 2nd parse
-  'j': 3,
-  'k': 4,
-  'v': 2,
+  'v': 1,   
+  'a': 3,
+  's': 4,
   'n': 2,
-  'l': 5,
-  ';': 6
+  'd': 5,
+  'f': 6
 };
 const optionKeys = Object.keys(keyMap2ndPass);
 
@@ -751,6 +749,27 @@ function on2ndPass(key){
    }
    return;
 }
+
+
+function findNextSentenceMarker(text, currentCol, forward = true) {
+    const set = [];
+    const step = forward ? 1 : -1;
+    const startPos = currentCol + step;
+    const searchMethod = forward ? 'indexOf' : 'lastIndexOf';
+
+    // Loop through the markers to build the set dynamically
+    ['.', '?', '!'].forEach(marker => {
+        const idx = text[searchMethod](marker, startPos);
+        if (idx !== -1) set.push(idx);
+    });
+
+    if (set.length === 0) {
+        return forward ? currentCol : 0;
+    }
+
+    return forward ? Math.min(...set) : Math.max(...set);
+}
+
 function setCursorPos(direction,divider) {
   const text=doc.lines[doc.row];
   console.log('line: '+doc.row+'/'+doc.lines.length);

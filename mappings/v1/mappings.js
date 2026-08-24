@@ -16,12 +16,12 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'q': 11,            //def  1+1 = 2
-    'w': 3,             //ghi 3   = 3 
-    'e': 5,             //mon  5   = 5
-    'r': 23,           //pqrs  2x3 = 6 
+    'a': 11,            //def  1+1 = 2
+    's': 3,             //ghi 3   = 3 
+    'd': 5,             //mon  5   = 5
+    'f': 23,           //pqrs  2x3 = 6 
     // Left: squared key doubles middle row keys 
-    't': 29,
+    'g': 29,
 
     // Right: doubled primes
     'u': 34,  //abc 

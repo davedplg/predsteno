@@ -113,7 +113,7 @@ sub simplesubs {
    $text =~  s/X/KS/g;
    $text =~  s/([^,]{2})Ŕ\b/$1X/g;
    $text =~  s/([^,]{2})ŔŚ\b/$1XZ/g;
-   $text =~  s/Ŕ/ER/g;
+   $text =~  s/Ŕ/EŘ/g;
 #  $text =~  s/ĀR/AŘ/g;
    $text =~  s/ĀR?#?/AŘ/g;
    $text =~  s/[A-Z]0//g;
