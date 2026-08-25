@@ -1,14 +1,16 @@
 # Features/Upgrade List
-##
-swap variant lhs down a row and make r swy. This will make all the variants consistant
-
+## voicless
+gonna add voiced checkbox
+color will be either red or red + blue
+red+blue may give headaches and red only may be marginally faster;
 
 ## slowness 2
 the large documents seem slower than i remember. They are okay when we turn the color off. 
 
 
-## autoscroll failing backwards 1
 ## arrow up   1
+
+sometimes this goes into a loop backwards i wonder if doc.row or col is going to -∞ 
 
 at the moment it just goes to the next doc.line
 maybe it would be better doing indexof('.'). 

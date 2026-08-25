@@ -54,12 +54,38 @@
    <summary accesskey="v"><u>V</u>iew</summary>  
  
    <dialog open class="view-dialog">
+      <br/>
       <label>
-        <input accesskey="t" type="checkbox" 
+        <input type="checkbox" 
                id="toggle-fullscreen">
         Fullscreen
       </label>
-      <br/> <br/> <br/> 
+      <br/>
+      <label>
+        <input type="checkbox" 
+               id="toggle-consonants">
+        Color Voiced Consonants
+      </label>
+      <br/>
+      <label>
+        Font Size (select with:- ↑↓)
+      </label>  
+      <label>
+        <input type="radio" name="textrem" value="1.2" checked>
+        Small (1.2rem)
+      </label>
+      
+      <label>
+        <input type="radio" name="textrem" value="1.4">
+        Medium (1.4rem)
+      </label>
+      
+      <label>
+        <input type="radio" name="textrem" value="1.6">
+        Large (1.6rem)
+      </label>
+
+ <br/> 
   <!--     Future controls can go here easily -->
     </dialog>
   </details> 
@@ -69,8 +95,13 @@
      <summary accesskey="a"><u>A</u>bout</summary>
      <dialog open>
        <p> 8-key English <a href='https://en.wikipedia.org/wiki/Markdown#Examples' target="_blank" rel="noopener noreferrer">Markdown</a> Editor.</p>
-       <p><u>FƏNETI</u>K <u>SPELI</u>NG <u>INPUU</u>T, <u>MARKT</u> T<u>RƏDI</u>SHNAL <u>SPELI</u>NG <u>OUT</u>PUUT</p>
-       <p> phónetic spelling inpūt (like machine stenography), markeð trádiţionál outpūt </a>)</p>
+       <p><u>F<v>Ə</v>N<v>E</v>T<v>I</v></u>K <u>SP<v>E</v>L<v>I</v></u>NG <u><v>I</v>NP<v>UU</v></u>T
+       <br/>
+       <u>M<v>AR</v>KT</u> T<u>R<v>Ə</v>D<v>I</v></u>SHN<v>Á</v>L <u>SP<v>E</v>L<v>I</v></u>NG <u><v>OU</v>T</u>P<v>UU</v>T</p>
+       <p> ph<v>ó</v>n<v>e</v>t<v>i</v>c sp<v>e</v>ll<v>i</v>ng <v>i</v>np<v>ū</v>t (l<v>î</v>k<x>è</x> 
+       m<v>á</v>ćħ<v</v>n<x>è</x> st<v>e</v>n<v>o</v>gr<v>á</v>ph<v>ý</v>)
+       <br/>
+       m<v>ar</v>k<x>e</x>ð tr<v>á</v>d<v>i</v>ţ<x>io</x>n<v>á</v>l sp<v>e</v>ll<v>i</v>ng <v>ou</v>tp<v>ū</v>t </a></p>
        <li><a href="../../index.html" target="_blank" rel="noopener noreferrer">Other variants</a></li>
      </ul>
 
@@ -89,6 +120,7 @@
        <li><a href='../../kb2.html' target="_blank" rel="noopener noreferrer">keymap</a></li>
        <li> <a href="../../input.html" target="_blank" rel="noopener noreferrer">3-round word selection</a></li>
        <li><a href="../../examples.html" target="_blank" rel="noopener noreferrer">phonetic</a> examples </li>
+       <li>For longer documents black and white is faster.</li>
      </ul>
      </dialog>
    </details>
@@ -178,6 +210,5 @@ Half Neanderthal
   });
   </script>
   <script src="../../js/uiUtils.js"></script>
-
   </body>
 </html>

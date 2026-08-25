@@ -14,6 +14,9 @@ const fileDialog     = document.getElementById("file-dialog")
 
 const invisibleToggle = document.getElementById('show-invisible');
 
+let exportcssmodifier = 'div#outpt2 {font-size:1.4rem;}';
+   
+
 glossWords.addEventListener('focusin',renderFocus);
 colorVowels.addEventListener('focusin',renderFocus);
 markLetters.addEventListener('focusin',renderFocus);
@@ -252,6 +255,16 @@ function clearFrag(){
  * insertWord — the single source of truth for ALL word insertion
  * Replaces firstParse() word insertion, second-parse insertion, singleton reserves, everything.
  */
+function setFontSizeRadioBoxes(){
+  document.querySelectorAll('input[name="textrem"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.checked) {
+        document.getElementById('outpt2').style.fontSize = radio.value + 'rem';
+        exportcssmodifier='div#outpt2 {font-size:'+radio.value +'rem;';
+      }
+    });
+  });
+}
 
 // Initialize document model from current textarea content
 async function initDocument() {
@@ -266,6 +279,7 @@ const content = await loadFileFromQuery();
   doc.row = 0;
   doc.col = doc.lines[doc.row].length;
   updateDisplay();
+setFontSizeRadioBoxes();
 }
 
 
@@ -279,14 +293,14 @@ function autoScroll(columnWidth) {
 
   const nodeLeftPosition = activeElementNode.offsetLeft;
   const nodeColumn = Math.trunc(nodeLeftPosition/columnWidth) ;
-  const outputHTMLcolumn = Math.trunc(outputHTML.scrollLeft/columnWidth) ;
+  const outputHTMLcolumn = Math.trunc(outputHTML.scrollLeft+5/columnWidth) ;
   // left of div is more than column width
   const colgap = nodeColumn-outputHTMLcolumn;
   if (Math.abs(colgap) > 0) {
     console.log('--autoscrolling--'+nodeColumn+' nodeLeftPosition: '+nodeLeftPosition);
     outputHTML.scrollTo({
       left:nodeColumn*columnWidth ,
-      behavior: 'instant'
+      behavior: 'smooth'
     });
   } else{
       console.log('--NO-autoscroll--'+nodeColumn+' nodeLeftPosition: '+nodeLeftPosition);
@@ -596,6 +610,7 @@ function format_augmented_words(t,style){
   t=caseReplace(t,'èŕ','eř');
   t=caseReplace(t,'ìŕ','iř');
   t=caseReplace(t,'ùŕ','uř');
+  t=caseReplace(t,'øòr0','òoř');
   t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
   //non doubled silents  ř ẇ ġ ḩ υ
   
@@ -707,7 +722,7 @@ async function makeHTML(){
   <style>
     /* Embedded live CSS */
     ${css}
-    
+    ${exportcssmodifier} 
     /* Fallback: ensure v/vc colors */
     v  { color: red  !important; }
     vc { color: blue !important; }
