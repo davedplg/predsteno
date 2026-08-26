@@ -12,7 +12,7 @@ const glossWords     = document.getElementById("show-superscripts")
 //const typepseudo     = document.getElementById("type")
 const fileDialog     = document.getElementById("file-dialog")
 
-const invisibleToggle = document.getElementById('show-invisible');
+const showMarkdown = document.getElementById('show-invisible');
 
 let exportcssmodifier = 'div#outpt2 {font-size:1.4rem;}';
    
@@ -20,7 +20,7 @@ let exportcssmodifier = 'div#outpt2 {font-size:1.4rem;}';
 glossWords.addEventListener('focusin',renderFocus);
 colorVowels.addEventListener('focusin',renderFocus);
 markLetters.addEventListener('focusin',renderFocus);
-invisibleToggle.addEventListener('focusin',renderFocus);
+showMarkdown.addEventListener('focusin',renderFocus);
  
 function renderFocus(){
   renderMarkdown();
@@ -149,17 +149,21 @@ function getDisplayText() {
 
 //  text = text.replace(/¶.*$/gm, '');   // clean old markers
 
-//    if (invisibleToggle.checked) {
+//    if (showMarkdown.checked) {
 //        text = text.replace(/^\s*$/gm, '¶  ');           // only on blank lines
 //    }
 
     return text;
 }
 
-
-// Listen for changes
-invisibleToggle.addEventListener('change', () => {
-    updateDisplay();
+// Forces an immediate pipeline evaluation whenever a state changes
+[markLetters, colorVowels, glossWords, showMarkdown].forEach(checkbox => {
+  if (checkbox) {
+    checkbox.addEventListener('change', () => {
+      updateDisplay(); // Triggers internal renderMarkdown loop cleanly
+      outputHTML.focus(); // Hands focus back to the steno typewriter
+    });
+  }
 });
 
 //// =============== get column width ==============
@@ -377,7 +381,7 @@ function renderMarkdown_old() {
 //  if (!text.endsWith(cursor))  text += cursor; 
 
   // 4b. Add paragraph markers if checked
-    if (invisibleToggle.checked) {
+    if (showMarkdown.checked) {
       console.log(text)
       text = showMdCharacters(text);
 //    text = text.replace(/^\s*$/gm,"  \n¶  ")
