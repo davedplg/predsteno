@@ -8,6 +8,7 @@ const outputHTML     = document.getElementById("outpt2");
 
 const markLetters    = document.getElementById("markLetters")
 const colorVowels    = document.getElementById("colorVowels")
+const colorConsonants= document.getElementById("toggle-consonants")
 const glossWords     = document.getElementById("show-superscripts")
 //const typepseudo     = document.getElementById("type")
 const fileDialog     = document.getElementById("file-dialog")
@@ -15,6 +16,8 @@ const fileDialog     = document.getElementById("file-dialog")
 const showMarkdown = document.getElementById('show-invisible');
 
 let exportcssmodifier = 'div#outpt2 {font-size:1.4rem;}';
+let showVoicedConsonants = false;
+
    
 
 glossWords.addEventListener('focusin',renderFocus);
@@ -157,7 +160,7 @@ function getDisplayText() {
 }
 
 // Forces an immediate pipeline evaluation whenever a state changes
-[markLetters, colorVowels, glossWords, showMarkdown].forEach(checkbox => {
+[markLetters, colorVowels, colorConsonants, glossWords, showMarkdown].forEach(checkbox => {
   if (checkbox) {
     checkbox.addEventListener('change', () => {
       updateDisplay(); // Triggers internal renderMarkdown loop cleanly
@@ -397,7 +400,8 @@ function renderMarkdown_old() {
   // 7. Apply p+honetic formatting
   
   let state = (markLetters.checked ? "marks " : "") +
-              (colorVowels.checked ? "color" : "");
+              (colorVowels.checked ? "color" : "") +
+              (colorConsonants.checked ? "consonants" : "");
 
 //htm = format_augmented_words(htm,state);
   htm = applyToTextNodes(htm,format_augmented_words,state);
@@ -635,7 +639,8 @@ function format_augmented_words(t,style){
   t=t.replace(/ñ/g,'n');
   t=t.replace(/Ñ/g,'N');
   //tag voiced consonants <vc>ĥ  
-  if(style.includes('color')) {
+  if(style.includes('color') && 
+     style.includes('consonants')) {
 t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJĤLMNRVZYŚbĉdĝjĥlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
   }
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
