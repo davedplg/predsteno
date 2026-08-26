@@ -611,8 +611,8 @@ function format_augmented_words(t,style){
   t = t.replace(/([τΤ])([ħĦĤĥ])/gi, '<vc>$1$2</vc>');
   t=loopReplace(t);
 
-  t=caseReplace(t,'τħ','<vc>th</vc>');
-  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
+//  t=caseReplace(t,'τħ','<vc>th</vc>');
+//  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
   t=caseReplace(t,'Ĥ','<vc>H</vc>');
   t=caseReplace(t,'Τ','<vc>T</vc>');
   t=caseReplace(t,'èŕ','eř');
@@ -642,6 +642,8 @@ function format_augmented_words(t,style){
   if(style.includes('color') && 
      style.includes('consonants')) {
 t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJĤLMNRVZYŚbĉdĝjĥlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
+  t=caseReplace(t,'τħ','<vc>th</vc>');
+  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
   }
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
   t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
