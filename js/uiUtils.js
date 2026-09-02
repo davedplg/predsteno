@@ -292,6 +292,7 @@ setFontSizeRadioBoxes();
 
 function autoScroll(columnWidth) {
 //  console.log('----autoScroll---');
+  if(need3rdPass) return;
   const activeElementNode = document.querySelector("#firstParse,#cursor");
   if (!activeElementNode) {
     console.log('early return: autoscroll')
@@ -494,10 +495,13 @@ function caseReplace(text, match,replace){
  return text;
 
 }
+
+//what is this for ngrams?
 function loopReplace(t){
 
 const obj = { 
-  "τħ":'th',"πħ":'th', "ŝħ":'sh', "ĉħ":'ch', "þħ":'ph',
+//  "τħ":'th',
+  "πħ":'th', "ŝħ":'sh', "ĉħ":'ch', "þħ":'ph',
   //funky eye sound
   "îg0ħ":'iġḩ',
   //ing is treated as lexical/trigraph
@@ -507,7 +511,7 @@ const obj = {
 //  "õw(0)*":'oẇ',
   "σì":'oi'    , "σy(0)*":'oÿ', "õù":'ou'    , "âì" :'ai'   , 
   "êè":'ee'    , "êà":'ea'    , "öò":'oo'    , "åw(0)*":'aẇ',
-  "ey":'ey'     , "ãÿ":'aÿ'    , "åù":'au', "ôw0":"oẇ",   "ōù":'ōū'
+  "ey":'ey'     , "ãÿ":'aÿ'    , "åù":'au', "ôw0":"oẇ",   "ōù":'ōū', "ùŷ":"uÿ", "îè":"ie"
 
 }
  
@@ -608,18 +612,18 @@ function format_augmented_words(t,style){
   //spread sound from one to two letters
   //ie dont treat h as silent its a digraph
 
-  t = t.replace(/([τΤ])([ħĦĤĥ])/gi, '<vc>$1$2</vc>');
+//  t = t.replace(/([τΤ])([ħĦĤĥ])/gi, '<vc>$1$2</vc>');
+ //f(!style)style='color';
   t=loopReplace(t);
 
-//  t=caseReplace(t,'τħ','<vc>th</vc>');
-//  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
-  t=caseReplace(t,'Ĥ','<vc>H</vc>');
-  t=caseReplace(t,'Τ','<vc>T</vc>');
+//  t=caseReplace(t,'Ĥ','<vc>H</vc>');
+//  t=caseReplace(t,'Τ','<vc>T</vc>');
   t=caseReplace(t,'èŕ','eř');
   t=caseReplace(t,'ìŕ','iř');
   t=caseReplace(t,'ùŕ','uř');
   t=caseReplace(t,'øòr0','òoř');
-  t=t.replace(/[ħàèìòùĦÀÈÌÒÙ]/g, '<x>$&</x>');  
+  t=caseReplace(t,'ōò','ōō');
+  t=t.replace(/[àèìòùÀÈÌÒÙ]/g, '<x>$&</x>');  
   //non doubled silents  ř ẇ ġ ḩ υ
   
   
@@ -630,9 +634,14 @@ function format_augmented_words(t,style){
   if(style.includes('color')) {
   t=t.replace(/(?<![<][^>]*|&[^;]*)[Əaeŕiouâêîôûáéíóúåãāĕėëøöõőōüūÿŷẏýġḩřẇ]+/gi,'<v>$&</v>');
 
+t=t.replace(/(?<![<][^>]*|&[^;]*)[ĜŚĝśƒ]+(?!<\/x)/gi,'<vc>$&</vc>');
+  t=caseReplace(t,'τħ','<vc>th</vc>');
+  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
+  t=caseReplace(t,'Ĥ','<vc>H</vc>');
+  t=caseReplace(t,'Τ','<vc>T</vc>');
   }
-
-  //forgot what im doing next
+  t=t.replace(/[Ħħ]/g, '<x>$&</x>');  
+  //getting rid of silent 0 makers?
   t=t.replace(/(<v[^<0]*)0/gi,'$1');
   //remaing doubled letters remove silent marking
   t=t.replace(/([a-zA-Z])0/gi,'<x>$1</x>');
@@ -642,8 +651,6 @@ function format_augmented_words(t,style){
   if(style.includes('color') && 
      style.includes('consonants')) {
 t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJĤLMNRVZYŚbĉdĝjĥlmnrvzyś]+(?!<\/x)/gi,'<vc>$&</vc>');
-  t=caseReplace(t,'τħ','<vc>th</vc>');
-  t=caseReplace(t,'ΤĤ','<vc>TH</vc>');
   }
   t=t.replace(/ÿ/g,'y');  t=t.replace(/Ÿ/g,'Y');
   t=t.replace(/ř/g,'r');  t=t.replace(/Ř/g,'R');
@@ -667,6 +674,8 @@ t=t.replace(/(?<![<][^>]*|&[^;]*)[BĈDĜJĤLMNRVZYŚbĉdĝjĥlmnrvzyś]+(?!<\/x)
   t=t.replace(/ù/g,"u");t=t.replace(/Ù/g,"U");
   t=t.replace(/ħ/g,"h");t=t.replace(/Ħ/g,"H");
   }
+  t=t.replace(/ő/g,"ǒ");t=t.replace(/Ő/g,"Ǒ");
+  t=caseReplace(t,'τħ',"th");
   
  if(!style.includes("marks")) t=removeDiacritics(t);
  return t;
@@ -1093,23 +1102,8 @@ function vimLein(input) {
 window.addEventListener('DOMContentLoaded', initFileControls);
 
 initDocument();
-//let col = getActualColumnWidth();
-//let column_width = col.width;
-//
-//outputHTML.addEventListener('keydown', function(e) {
-//  const key = e.key.toLowerCase();
-//
-//  if (key.includes('page')) {
-//      e.preventDefault();
-//
-//  if (key === 'pagedown') {
-//      outputHTML.scrollLeft += column_width;      // scroll right
-//  } else if (key === 'pageup') {
-//      outputHTML.scrollLeft -= column_width;      // scroll left
-//      }
-//  }
-//});
 
+//maybe this should be in script.js
 outputHTML.addEventListener('keydown', function(e) {
   const key = e.key.toLowerCase();
 

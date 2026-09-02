@@ -18,14 +18,14 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'q': 19,            //abc  1+9 = 10; 1+0=1
-    'w': 13,            //def  1+3 = 4 
-    'e': 7,             //ghi  7   = 7
-    'r': 17,            //jkl  1+7 = 8 
-    'a': 11,            //mno  1+1 = 2
-    's': 3,             //pqrs 3   = 3 
-    'd': 5,             //tuv  5   = 5
-    'f': 23,           //wxyz  2x3 = 6 
+    'a': 19,            //abc  1+9 = 10; 1+0=1
+    's': 13,            //def  1+3 = 4 
+    'd': 7,             //ghi  7   = 7
+    'f': 17,            //jkl  1+7 = 8 
+    'q': 11,            //mno  1+1 = 2
+    'w': 3,             //pqrs 3   = 3 
+    'e': 5,             //tuv  5   = 5
+    'r': 23,           //wxyz  2x3 = 6 
     // Left: squared key doubles middle row keys 
     'g': 29,
     't': 31,
@@ -44,15 +44,15 @@ const primeMap = {
      'y':  62,
     
     'backspace': 97,
-    'delete': 101,
-    'enter':  71,
+    'delete'   : 101,
+    'enter'    :  71,
 
-//  ' ': 86,     //reserves
-    'c': 94,    //spacebar3
-    'n': 74,     //spacebar2
-    'v': 74,     //spacebar2
-    'm': 94,     //spacebar3
-    'b': 106,    //spacebar1
+    'capslock' : 86,     //reserves
+    'c'        : 94,    //spacebar3
+    'n'        : 74,     //spacebar2
+    'v'        : 74,     //spacebar2
+    'm'        : 94,     //spacebar3
+    'b'        : 106,    //spacebar1
 
 };
 

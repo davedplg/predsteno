@@ -1,8 +1,20 @@
 # Features/Upgrade List
-## voicless
-gonna add voiced checkbox
-color will be either red or red + blue
-red+blue may give headaches and red only may be marginally faster;
+## tiny markdown joins line
+start
+return
+type e    -- markdown joins typed line WHY?
+
+
+## blends 2.5
+
+maybe a list of this but perhaps this is a content tangent
+
+## long 2nd parse selections 2
+When there is a super long second parse selection the cursor jumps over the next page and causes a column increment which is kinda funky but not helpful
+maybe we should prevent column across when there is a second or first parse state
+
+## the access keys 
+are not working in desktop. I thought i added event listeners for this
 
 ## slowness 2
 the large documents seem slower than i remember. They are okay when we turn the color off. 

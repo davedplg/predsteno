@@ -7,18 +7,88 @@
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body class="markdown striped">
- ## Phonetic Spellings
-
-  | Traditional  |  Input       | Traditional  | Input        |
-  |:------------:|:------------:|:------------:|:------------:|
-  | lâter        |LEYTA         | chêàplý      |KHIYPLIY      |
-  | formûlâţìònś |FAWMUELEYSHNZ | lōòkèð       |LUUKT         |
-  | çertáìn      |SURTAN        | artíclès     |ARTIKLS       |
-  | ôvernight    |OEVURNUYT     | phônèd       |FOEND         | 
-  | ėxclüdèś     |IKSKLOODZ     | fōòtbåll0er  |FUUTBAWLER    |
-  | checkouts    |KHEKOWTS      | ĉello        |KHELOE        |  
-
-  <script src="lib/marked.min.js"></script>
+|Sound |Letters||
+|:--:|:---:|:---:|
+|[A → a](#Aa)|AT      |at      |x 
+|[E → e](#Ee)|END     |end     | x 
+|[E → ã](#Eã)|SED     |sãìd    |  x
+|[I → i](#Ii)|IT      |it      |  x
+|[O → o](#Oo)|ON      |on      |  x
+|[U → U](#UU)|UP1     |up      |  x
+|[U → ő](#Uő)|UVƏN    |ővén    |  x
+|[UU → ū](#UUū)|BUUL    |būll    |  x
+|[UU → ō](#UUō)|BUUK    |bōòk    |  x
+|[Ə → [áéíóú]](#Ə[áéíóú])|ábővè   |ƏBUV    *|
+|[AE → â](#AEâ)|AEJ     |âĝè     *|
+|[AE → ey](#AEey)|ΤĤAE    |τħey    |  x
+|[EE → êà](#EEêà)|EET     |êàt     |  x
+|[EE → êè](#EEêè)|KEEP    |kêèp    *|
+|       |BEEF    |bêèf    *|
+|[EE → ê](#EEê)|EEVƏL   |êvíl    |  x
+|[EE → ý](#EEý)|ėpoxý   |ƏPOKSEE *|
+|[EE → ï](#EEï)|EEƏN1   |ïán     |  x
+|[IE → î](#IEî)|IES     |îçè     |  x
+|[IE → ŷ](#IEŷ)|BIE1    |bŷ      |  x
+|[IE → îġħ](#IEîġħ)|*|
+|[IE → uý](#IEuý)|*|
+|[OW → ô](#OWô)|*|
+|       |OẆLD1   |ôld     |  x
+|[OW → w](#OWôw0)|OẆN     |ôw0n    |  x
+|      |BOẆL1   |bôw0l   *|  x
+|[YOO → û](#YOOû)|YOOS    |ûsè     |  x
+|[AR → ār](#ARār)|AŘM    |ār0m   |  x
+|[AR → ā](#ARā)|UK|
+|       |AŘSK    |āsk     |  x
+|[ER → èŕ](#ERèŕ)||
+|[ER → ìŕ](#ERìŕ)|GEŘL    |gìŕl    |  x
+|[ER → ùŕ](#ERùŕ)|NEŘS    |nùŕsè   |  x
+|[OR → ør](#ORør0)|OŘ1     |ør0     |  x
+|[OR → ø](#ORø)|YOŘ1    |yøùr0   |  x
+|[OU → õù](#OUõù)|OUT     |õùt     |  x
+|[OU → õ](#OUõ)|KOUZ    |cõw0ś   |  x
+|[OO → ö](#OOö)|FOOD    |föòd    |  x
+|[OO → ü](#OOü)|BLOO1   |blüè    |  x
+|rare vowels||
+|[EER → exŕ](#EERŕ)|KEEŘƏ   |cãŕèŕ   *|
+|[IER → ixŕ](#IERixŕ)|*|
+|[EEER → êxŕ](#EEERêxŕ)|*|
+|[I → ẏ](#Iẏ)|MITH    |mẏπħ    *|
+|consonants|||
+|[B → b](#Bb)|BEE1    |bê      |  x
+|[C → c](#Cc)|KAN1    |can     |  x cat
+|[C → k](#Ck)|KING1   |kiñg0   |  x
+|[D → d](#Dd)|DOG     |dog     |  x
+|[F → f](#Ff)|FOŘ1    |før0    *|
+|[G → g](#Gg)|GET     |get     |  x
+|[J → ĝ](#Jĝ)|JINJƏ   |ĝinĝèŕ  |  x
+|[H → h](#Hh)|HAV1    |havè    *|
+|[J → j](#Jj)|JUG     |jug     |  x
+|[L → l](#Ll)|LEG    |leg    |  x
+|[M → m](#Mm)|MAN1    |man     |  x
+|[N → n](#Nn)|NOT1    |not     | x 
+|[P → p](#Pp)|PIG     |pig     | x
+|[R → r](#Rr)|RUN     |run     | x  
+|[S → ç](#Sç)|SIEKL   |çŷclè   | x
+|[S → s](#Ss)|SAT     |sat     |  x
+|[T → t](#Tt)|TOO1    |tö      |  x
+|[V → v](#Vv)|VAN1    |van     |  x
+|[W → w](#Ww)|WEE1    |wê      |  x
+|[W → w](#Ww)|||
+|[Y → y](#Yy)|YES     |yes     |  x
+|[Z → z](#Zz)|ZIP     |zip     |  x zip
+|[Z → ś](#Zś)|IZ      |iś      |  x
+|[SH → ŝ](#SHŝ)|SHOŘ1   |ŝūrè    |  x sugar
+|[SH → ŝħ](#SHŝħ)|SHEE1   |ŝħê     |  x 
+|[SH → x](#SHx)|AKSHN   |acţìòn  | x? 
+|[KH → [əàèìòù]](#KH[əàèìòù])|MƏKHƏ   |máťùŕè  |x ?  
+|[KH → ĉħ](#KHĉħ)|KHIN1   |ĉħin    | x 
+|[KH → ĉ](#KHĉ)|KHZEK   |ĉzecħ   |  x cello?
+|[TH → τħ](#THτ)|        |        |x
+|[TH → πħ](#THπ)|THUM    |πħumb0  | x 
+|[F → þħ](#Fþħ)|FOẆN    |þħônè   |  x
+|[F → għ](#Fgħ)|        |        |x
+|[0 → [0àèìòùħ]](#0[0àèìòùħ])|FOŘ1    |før0    | x messed up 
+| <script src="lib/marked.min.js"></script>
   <script>
     // Process all Markdown content within the body
     document.querySelector('body.markdown').innerHTML = marked.parse(document.querySelector('body.markdown').innerHTML);
@@ -28,4 +98,4 @@
   Powered by <a href="https://github.com/markedjs/marked">marked.js</a> (MIT License)
 </footer>
 </body>
-</html>
+</html>       |        |        |

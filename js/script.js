@@ -33,10 +33,10 @@ sep2 = '\u2194'
 sep3 = '\u2014';
 
 // cursor characters increasing thickness
-cursor4 = '\u2758';
-cursor2 = '\u2503';
-cursor3 = '\u2759';
-cursor = '\u275A';
+cursor4 = '\u2758 ';
+cursor2 = '\u2503 ';
+cursor3 = '\u2759 ';
+cursor = '\u275A ';
 
 //finding cursors to wrap later for navigation
 const cursorpat =[cursor,cursor2,cursor3,cursor4].filter(Boolean).join('|');
@@ -61,6 +61,7 @@ const keyMap2ndPass = {
   'g': 11,
   'h': 11,
   'v': 1,   
+  'capslock': 1,   
   'a': 3,
   's': 4,
   'n': 2,
@@ -340,11 +341,13 @@ function parseCaseMarking(text) {
   t=t.replace(/([^\p{L}^0|^])([\p{Ll}]\s*) ⟐ /gu,(m,before,letter)=> before + letter.toUpperCase());
   
   // Title case word «»
-  let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     
+//let tCâs = /([\p{Lu}][\p{Ll}0]+\s*) ⟐ /gu;     
+  let tCâs = /([\p{Lu}][\p{Ll}0]*[\p{Ll}][\p{Ll}0]*\s*) ⟐ /gu;
   // Lower case  (initial)(rest) 
   let lCâs = /([\p{Ll}0])([\p{Ll}0«»]+\s*) ⟐ /gu;    
   // Uppercase
   let uCâs = /([\p{Lu}0][\p{Lu}0]*\s*) ⟐ /gu;     
+//let uCâs = /([\p{Lu}0][\p{Lu}0]+\s*) ⟐ /gu;     
 
   t = t.replace(tCâs, (_,FRODO) => FRODO.toUpperCase());
   t = t.replace(lCâs, (_,B,ilbo) => B.toUpperCase() + ilbo);
@@ -550,8 +553,9 @@ function firstParse() {
     case 'wd2'  : wd = wdList[1] || ''; break;
     case 'wd3'  : wd = wdList[2] || ''; break;
     case 'missed' : 
-        wd = (frag) ? missingRegEx.source : " ";
-        if(wdList[2]){ wd =res; }
+        wd = (frag) ? missingRegEx.source : ' ⟐ ';
+//      wd = (frag) ? missingRegEx.source : " ";
+        if(wdList[2]){ wd =res; } 
           break;
     default:
       wd = ' ';
