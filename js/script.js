@@ -62,11 +62,11 @@ const keyMap2ndPass = {
   'h': 11,
   'v': 1,   
   'capslock': 1,   
-  'a': 3,
-  's': 4,
+  'q': 3,
+  'w': 4,
   'n': 2,
-  'd': 5,
-  'f': 6
+  'e': 5,
+  'r': 6
 };
 const optionKeys = Object.keys(keyMap2ndPass);
 
@@ -124,7 +124,7 @@ function calcPrimeProducts() {
     const p = primeMap[key]; 
     if (p % 2 === 0 ) {
 //    if(p > 58){     
-      if(p > 62){     
+      if(p > 63){     
       //thumb product 
       tp *= p / 2  
       } else {

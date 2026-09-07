@@ -5,7 +5,7 @@ binmode STDOUT, ':utf8';
 while (<>) {
     chomp;
 
-    $_  =~ s/WÅTÈŔ/WÅXXXTƏ/g;
+    $_  =~ s/WÅTÈŔ/WÅXXXTX/g;
     $_  =~ s/WĦÅT/WOT/g;
     $_  =~ s/WĦ*ÅL(?!0)/WOL/g;
     $_  =~ s/WĦ*ÅL0/WÅXXX/g;
@@ -123,14 +123,17 @@ sub nonRhoticUK {
 #  $text =~  s/ĀR/AŘ/g;
    $text =~  s/ĀR?#?/AŘ/g;
    $text =~  s/[A-Z]0//g;
+   $text =~  s/,Ė([^A-E])/,X$1/g;
+   $text =~  s/Ė([A-E])/I$1/g;
    $text =~  tr/ÁÉÍÓÚ/XXXXX/;
-   $text =~  tr/ĜΜĖẎÞÇQĴĨŚŐΥÐ/JIXIFSKYYZUWT/;
+   $text =~  tr/ĜΜĖẎÞÇQĴĨŚŐΥÐ/JIIIFSKYYZUWT/;
    $text =~  s/WW/W/g;
    $text =~  s/UUR/OŘ/g;
    $text =~  s/DUERING/DOŘING/g;
    $text =~  s/YY/Y/g;
    $text =~  s/YOOX,/YX,/g;
    $text =~  s/YOOXZ,/YXZ,/g;
+   $text =~  s/IEŘ/IX/g;
  
   return $text;
 

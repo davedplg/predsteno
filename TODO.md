@@ -1,5 +1,54 @@
 # Features/Upgrade List
-## tiny markdown joins line
+#augment words
+is losing focus on tablet but not github pages
+
+
+## command language
+There needs to be a page describing
+the command language
+ - need to add find replace
+ - add heteronym resolution
+indexOf lastIndexOf maybe?
+
+# first parse 
+arrows getting through
+
+
+
+##
+split oo and uu at the second table level not in the main matrix..
+
+## purple semi vowels
+where a semivowel is flanked by two vowel tags 
+maybe we turn it purple
+
+
+## variant 5 2
+should we have a 2 finger chord for the
+8 and 6 key?  should the chords change 
+inner of pairs is the target; i.e. 
+er: 8 ew:7 wq:4 and round the corner qr:1
+this might be more logical and better on
+human hands.
+
+## The monster 2
+should we force all two letter words to be 
+unordered. it would open up 84 extra words
+Does this have a knock on on reserves of
+are the 84 independent. I have little feel
+for this possibility.
+
+## martian field and blanket function 2
+it would be good to have an sms-a-bet field so
+users could incidently learn this it might be
+more anchoring with fluctuating frags that
+pairwise reorder.
+
+# v4 double keys
+these are not on the keymap or 3-parse input
+pages
+
+## tiny markdown joins line 2
 start
 return
 type e    -- markdown joins typed line WHY?
@@ -13,7 +62,7 @@ maybe a list of this but perhaps this is a content tangent
 When there is a super long second parse selection the cursor jumps over the next page and causes a column increment which is kinda funky but not helpful
 maybe we should prevent column across when there is a second or first parse state
 
-## the access keys 
+## the access keys 1 
 are not working in desktop. I thought i added event listeners for this
 
 ## slowness 2
