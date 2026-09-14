@@ -3,8 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sound Letter Patterns</title>
-  <link rel="stylesheet" href="styles/styles.css">
+  <title>Exported Notes</title>
+  <style>
+    /* Embedded live CSS */
+    
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Montserrat:wght@400;600;700&family=EB+Garamond:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+  /* Modern fluid base font size */
+  font-size: clamp(15px, 0.9vw + 0.6rem, 18px);
+  font-family:"Montserat" system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body, :root {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" off, "clig" off;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 1rem;
+  background-color: #eee;
+  padding: 20px;
+  box-sizing: border-box;
+  line-height: 1.2;
+}
+
+/* ====================== MODERN REM-BASED HEADING SCALE ====================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1rem 0 1rem 0;
+  line-height: 1;
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight: 600;
+}
+
+h1 { font-size: 180%; }
+h2 { font-size: 180%; }
+h3 { font-size: 140%; }
+h4 { font-size: 140%; }
+h5 { font-size: 110%; }
+h6 { font-size: 110%; }
+
+/* Underline on odd levels (your preference) */
+h1, h3, h5 {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 3px;
+  text-decoration-color: #333;
+  line-height: 1.7;
+}
+
+/* ====================== REST OF YOUR STYLES (cleaned) ====================== */
+
+
+#instructions {
+  margin-top: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.underline {
+    display:inline-block;
+    text-decoration: underline;
+}
+
+div#outpt2 {
+  /* Make container narrower so paging is obvious */
+  width: 85svw;           /* or 70vw — this is key */
+  margin: 0 auto;        /* centers it nicely */
+
+  overflow-x: auto;
+
+  height: 82svh;
+  color:#000;
+  font-size: 1.25rem;
+  padding: 1.5rem;
+  font-weight: 600;
+  border: 2px solid #aaa;
+
+  /* Column settings */
+  column-gap: 2.5rem;
+  column-rule: 2px solid #ccc;
+  column-fill: auto;
+}
+
+/* NEW - subtle monospace serif */
+/*div#outpt2,*/
+textarea#output,
+table,
+#debug,
+.textarea {
+  font-family: 'Courier Prime', 'IBM Plex Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, "Courier New", monospace;
+ font-size:1.25rem;
+}
+
+/* Justified paragraphs */
+#outpt2 p,
+#outpt2 {
+  text-align: justify;
+  hyphens: auto;           /* optional but recommended for better justification */
+  text-justify: inter-word; /* helps with spacing */
+}
+/* Portrait → 1 column */
+@media (orientation: portrait) {
+  div#outpt2 {
+    column-count: 1;
+  }
+  div#outpt2 * {
+/*    font-size:120%;*/
+  }
+
+}
+
+/* Landscape → 2 columns */
+@media (orientation: landscape) {
+  div#outpt2  {
+    column-count: 2;
+   }
+  div#outpt2 * {
+    font-size:100%;
+  }
+}
+
+textarea#output {
+  height: auto;
+  min-height: 7em;
+  line-height: 1.4;
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  width: 94%;
+  height: 82svh;
+  max-width: 820px;
+  max-width: 94%;
+  display: block;
+  resize: vertical;
+}
+ 
+@keyframes cursor {
+  0%   { opacity:0.8; }
+  50%  { opacity:0.4; }
+  100% { opacity:0.8; }
+}
+
+#cursor {
+  color: #090;
+  animation: cursor 1.2s ease-in-out infinite;
+}
+
+
+
+table {
+  margin: 2rem auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 820px;
+}
+
+table td, table th {
+  padding: 10px 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+}
+
+/* Striped tables */
+table.striped th,
+.striped table th {
+  background-color: navy;
+  color: white;
+}
+
+table.striped tr:nth-child(even),
+.striped table tr:nth-child(even) {
+  background-color: #eef;
+}
+
+/* Tables inside #outpt2 */
+#outpt2 table {
+  width: auto !important;
+  width: 90% !important;
+  table-layout: fixed;
+  margin: 1.5rem 8% !important;
+  border: 1px solid #777;
+}
+
+#outpt2 table th {
+  background-color: #ddd;
+  color: black;
+  font-size: 1.25rem;
+  padding: 12px;
+  border-bottom: 2px solid #777;
+}
+
+v { color: #b00; font-weight: 600; }
+vc { color: #00d; font-weight: 600; }
+x { color: #777; font-weight: 500; }
+
+z {
+  text-decoration: underline;
+  text-decoration-thickness: 2.5px;
+  text-decoration-color: #d00;
+  text-underline-offset: 3px;
+}
+
+label, select {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  margin-right: 0.1rem;
+}
+
+#outpt2 {
+  background-color: #f8f9fa;           /* normal state */
+
+  transition: background-color 0.2s ease;
+}
+
+
+
+    div#outpt2 {font-size:1.4rem;} 
+    /* Fallback: ensure v/vc colors */
+    v  { color: red  !important; }
+    vc { color: blue !important; }
+    x  { color: grey !important; }
+  </style>
 </head>
 <body>
   <div id="outpt2">
@@ -14,108 +247,108 @@
 <th align="center"></th>
 <th align="center"></th>
 <th align="center"></th>
-<th align="center">Ə</th>
-<th align="center"> <a href="#%C6%8F">Ə</a></th>
-<th align="center">áéí</th>
-<th align="center">óú</th>
+<th align="center"><v>Ə</v></th>
+<th align="center">  <a href="#schwa"><v>Ə</v></a></th>
+<th align="center"><v>áéí</v></th>
+<th align="center"><v>óú</v></th>
 </tr>
 </thead>
 <tbody><tr>
-    <td align="center">A»</td>
-<td align="center"><a href="#a-a">a</a></td>
-<td align="center"><a href="#a-us-%C4%81">ā¹</a></td>
-<td align="center">AE»</td>
-<td align="center"> <a href="#ae-%C3%A2">â</a></td>
-<td align="center"><a href="#ae-%C3%A2%C3%A3%C3%BD">ay</a> <a href="#ae-ey">ey</a></td>
-<td align="center"><a href="#ae-%C3%A2%C3%AC">ai</a></td>
+<td align="center"><v>A</v></td>
+<td align="center"><a href="#a-a"><v>a</v></a></td>
+<td align="center"><a href="#a-%C4%81%C2%B9"><v>ā</v>¹</a></td>
+<td align="center"><v>AE</v></td>
+<td align="center">  <a href="#ae-%C3%A2"><v>â</v></a></td>
+<td align="center"><a href="#ae-%C3%A2%C3%A3%C3%BD"><v>ay</v></a> <a href="#ae-ey"><v>ey</v></a></td>
+<td align="center"><a href="#ae-%C3%A2%C3%AC"><v>ai</v></a></td>
 </tr>
 <tr>
-<td align="center">E»</td>
-<td align="center"><a href="#e-e">e</a></td>
-<td align="center"><a href="#e-%C3%A3">ã</a></td>
-<td align="center">EE»</td>
-<td align="center"> <a href="#ee-%C3%AA">ê</a></td>
-<td align="center"><a href="#ee-%C3%AA%C3%A0">ea</a>&nbsp;<a href="#ee-%C3%AA%C3%A8">ee</a></td>
-<td align="center"><a href="#ee-%C3%BD">ý</a></td>
+<td align="center"><v>E</v></td>
+<td align="center"><a href="#e-e"><v>e</v></a></td>
+<td align="center"><a href="#e-%C3%A3"><v>ã</v></a></td>
+<td align="center"><v>EE</v></td>
+<td align="center">  <a href="#ee-%C3%AA"><v>ê</v></a></td>
+<td align="center"><a href="#ee-%C3%AA%C3%A0"><v>ea</v></a>&nbsp;<a href="#ee-%C3%AA%C3%A8"><v>ee</v></a></td>
+<td align="center"><a href="#ee-%C3%BD"><v>ý</v></a></td>
 </tr>
 <tr>
-<td align="center">I»</td>
-<td align="center"><a href="#i-i">i</a></td>
-<td align="center"><a href="#i-%E1%BA%8F">ẏ</a></td>
-<td align="center">IE»</td>
-<td align="center"> <a href="#ie-%C3%AE">î</a></td>
-<td align="center"><a href="#ie-%C3%AEg0%C4%A7">igh</a></td>
-<td align="center"><a href="#ie-%C3%B9%C5%B7">uy</a>&nbsp;<a href="#ie-%C5%B7">ŷ</a></td>
+<td align="center"><v>I</v></td>
+<td align="center"><a href="#i-i"><v>i</v></a></td>
+<td align="center"><a href="#i-%E1%BA%8F"><v>y</v></a></td>
+<td align="center"><v>IE</v></td>
+<td align="center">  <a href="#ie-%C3%AE"><v>î</v></a></td>
+<td align="center"><a href="#ie-%C3%AEg0%C4%A7"><v>igh</v></a></td>
+<td align="center"><a href="#ie-%C3%B9%C5%B7"><v>uy</v></a>&nbsp;<a href="#ie-%C5%B7"><v>ŷ</v></a></td>
 </tr>
 <tr>
-<td align="center">O»</td>
-<td align="center"><a href="#o-o">o</a></td>
-<td align="center"><a href="#o-%C3%A5">å¹</a></td>
-<td align="center">OW»</td>
-<td align="center"> <a href="#ow-%C3%B4">ô</a></td>
-<td align="center"><a href="#ow-%C3%B4w">ow</a></td>
-<td align="center"><a href="#ow-%C3%B4%C3%A0">oa</a></td>
+<td align="center"><v>O</v></td>
+<td align="center"><a href="#o-o"><v>o</v></a></td>
+<td align="center"><a href="#o-%C3%A5%C2%B9"><v>å</v>¹</a></td>
+<td align="center"><v>OW</v></td>
+<td align="center">  <a href="#ow-%C3%B4"><v>ô</v></a></td>
+<td align="center"><a href="#ow-%C3%B4w"><v>ow</v></a></td>
+<td align="center"><a href="#ow-%C3%B4%C3%A0"><v>oa</v></a></td>
 </tr>
 <tr>
-<td align="center">U»</td>
-<td align="center"><a href="#u-u">u</a></td>
-<td align="center"><a href="#u-%C5%91">ǒ</a></td>
-<td align="center">YOO»</td>
-<td align="center"> <a href="#yoo-%C3%BB">û</a></td>
-<td align="center"><a href="#yoo-%C3%AB">ew²</a></td>
+<td align="center"><v>U</v></td>
+<td align="center"><a href="#u-u"><v>u</v></a></td>
+<td align="center"><a href="#u-%C5%91"><v>ǒ</v></a></td>
+<td align="center"><v>YOO</v></td>
+<td align="center">  <a href="#yoo-%C3%BB"><v>û</v></a></td>
+<td align="center"><a href="#yoo-%C3%AB%C2%B2"><v>ew</v>²</a></td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">UU»</td>
-<td align="center"><a href="#uu-%C5%AB">ū</a></td>
-<td align="center"><a href="#uu-%C5%8D">ō</a></td>
-<td align="center">OO»</td>
-<td align="center"> <a href="#oo-%C3%B6">ö</a></td>
-<td align="center"><a href="#oo-%C3%BC">ü</a></td>
-<td align="center"><a href="#oo-%C3%AB">ew</a></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">OU»</td>
-<td align="center"> <a href="#ou-%C3%B5%C3%B9">ou</a></td>
-<td align="center"><a href="#ou-%C3%B5">õ<x>w</x></a></td>
-<td align="center"></td>
+<td align="center"><v>UU</v></td>
+<td align="center"><a href="#uu-%C5%AB"><v>ū</v></a></td>
+<td align="center"><a href="#uu-%C5%8D"><v>ō</v></a></td>
+<td align="center"><v>OO</v></td>
+<td align="center">  <a href="#oo-%C3%B6"><v>ö</v></a></td>
+<td align="center"><a href="#oo-%C3%BC"><v>ü</v></a></td>
+<td align="center"><a href="#oo-%C3%AB"><v>ew</v></a></td>
 </tr>
 <tr>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">OI»</td>
-<td align="center"> <a href="#oi-%CF%83%C3%AC">oi</a></td>
-<td align="center"><a href="#oi-%CF%83y0">oy</a></td>
+<td align="center"><v>OU</v></td>
+<td align="center">→ <a href="#ou-%C3%B5%C3%B9"><v>ou</v></a></td>
+<td align="center"><a href="#ou-%C3%B5"><v>õ</v><x>w</x></a></td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">AR»</td>
-<td align="center"><a href="#ar-%C4%81r">ar</a></td>
-<td align="center"><a href="#ar-uk-%C4%81">ā²</a></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">EƏ</td>
-<td align="center"> <a href="#%C3%A3%C3%AC%C5%95">ãir</a></td>
+<td align="center"></td>
+<td align="center"><v>OI</v></td>
+<td align="center">  <a href="#oi-%CF%83%C3%AC"><v>oi</v></a></td>
+<td align="center"><a href="#oi-%CF%83y0"><v>oý</v></a></td>
+<td align="center"></td>
 </tr>
 <tr>
-<td align="center">ER»</td>
-<td align="center"><a href="#er-%C3%A8%C5%95">er</a></td>
-<td align="center"><a href="#er-%C3%AC%C5%95">ir</a></td>
-<td align="center"><a href="#er-%C3%B9%C5%95">ur</a></td>
+<td align="center"><v>A</v>R</td>
 <td align="center"></td>
-<td align="center">IƏ</td>
-<td align="center"> <a href="#i%C9%99-ear">ear</a></td>
+<td align="center"><a href="#ar-%C4%81r"><v>ar</v></a></td>
+<td align="center"><a href="#ar-%C4%81%C2%B2"><v>ā</v>²</a></td>
+<td align="center"></td>
+<td align="center"><v>EƏ</v></td>
+<td align="center">  <a href="#%C3%A3%C3%AC%C5%95"><v>ãir</v></a></td>
 </tr>
 <tr>
-<td align="center">OR»</td>
-<td align="center"><a href="#or-%C3%B8r">or</a></td>
-<td align="center"><a href="#or-%C3%B8">ø</a></td>
-<td align="center"><a href="#or-%C3%A5">å²</a></td>
+<td align="center"><v>E</v>R</td>
 <td align="center"></td>
+<td align="center"><a href="#er-%C3%A8%C5%95"><v>er</v></a></td>
+<td align="center"><a href="#er-%C3%AC%C5%95"><v>ir</v></a></td>
+<td align="center"><a href="#er-%C3%B9%C5%95"><v>ur</v></a></td>
+<td align="center"><v>IƏ</v></td>
+<td align="center">  <a href="#i%C9%99-ear"><v>ė</v><x>a</x><v>ŕ</v></a></td>
+</tr>
+<tr>
+<td align="center"><v>O</v>R</td>
+<td align="center"></td>
+<td align="center"><a href="#or-%C3%B8r"><v>or</v></a></td>
+<td align="center"><a href="#or-%C3%B8"><v>ø</v></a></td>
+<td align="center"><a href="#or-%C3%A5%C2%B2"><v>å</v>²</a></td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
@@ -129,68 +362,68 @@
 <td align="center"><x>uh</x></td>
 </tr>
 <tr>
-<td align="center"><a href="#b-b">B» b</a></td>
-<td align="center"><a href="#c-c">C» c</a></td>
-<td align="center"><a href="#c-k">C» k</a></td>
-<td align="center"><a href="#d-d">D» d</a></td>
-<td align="center"><a href="#f-f">F» f</a></td>
-<td align="center"><a href="#g-g">G» g</a></td>
-<td align="center"><a href="#j-%C4%9D">J» ĝ</a></td>
+<td align="center"><a href="#b-b">B→b</a></td>
+<td align="center"><a href="#c-c">C→c</a></td>
+<td align="center"><a href="#c-k">C→k</a></td>
+<td align="center"><a href="#d-d">D→d</a></td>
+<td align="center"><a href="#f-f">F→f</a></td>
+<td align="center"><a href="#g-g">G→g</a></td>
+<td align="center"><a href="#j-%C4%9D">J→<vc>ĝ</vc></a></td>
 </tr>
 <tr>
-<td align="center"><a href="#h-h">H» h</a></td>
-<td align="center"><a href="#j-j">J» j</a></td>
-<td align="center"><a href="#l-l">L» l</a></td>
-<td align="center"><a href="#m-m">M» m</a></td>
-<td align="center"><a href="#n-n">N» n</a></td>
-<td align="center"><a href="#p-p">P» p</a></td>
-<td align="center"><a href="#kw-qu">KW» qu</a></td>
+<td align="center"><a href="#h-h">H→h</a></td>
+<td align="center"><a href="#j-j">J→j</a></td>
+<td align="center"><a href="#l-l">L→l</a></td>
+<td align="center"><a href="#m-m">M→m</a></td>
+<td align="center"><a href="#n-n">N→n</a></td>
+<td align="center"><a href="#p-p">P→p</a></td>
+<td align="center"><a href="#kw-qu">KW→qu</a></td>
 </tr>
 <tr>
-<td align="center"><a href="#r-r">R» r</a></td>
-<td align="center"><a href="#s-%C3%A7">S» ç</a></td>
-<td align="center"><a href="#s-s">S» s</a></td>
-<td align="center"><a href="#t-t">T» t</a></td>
-<td align="center"><a href="#v-v">V» v</a></td>
-<td align="center"><a href="#w-w">W» w</a></td>
-<td align="center"><a href="#ks-x">KS» x</a></td>
+<td align="center"><a href="#r-r">R→r</a></td>
+<td align="center"><a href="#s-%C3%A7">S→ç</a></td>
+<td align="center"><a href="#s-s">S→s</a></td>
+<td align="center"><a href="#t-t">T→t</a></td>
+<td align="center"><a href="#v-v">V→v</a></td>
+<td align="center"><a href="#w-w">W→w</a></td>
+<td align="center"><a href="#ks-x">KS→x</a></td>
 </tr>
 <tr>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center"><a href="#y-y">Y» y</a></td>
-<td align="center"><a href="#z-z">Z» z</a></td>
-<td align="center"><a href="#z-%C5%9B">Z» ś</a></td>
+<td align="center"><a href="#y-y">Y→y</a></td>
+<td align="center"><a href="#z-z">Z→z</a></td>
+<td align="center"><a href="#z-%C5%9B">Z→<vc>ś</vc></a></td>
 </tr>
 <tr>
-<td align="center">TH»</td>
-<td align="center"> <a href="#th-%CF%84">th</a></td>
+<td align="center">TH</td>
+<td align="center">→ <a href="#th-%CF%84"><vc>th</vc></a></td>
 <td align="center"><a href="#th-%CF%80">th</a></td>
-<td align="center">SH»</td>
-<td align="center"> <a href="#sh-%C5%9D%C4%A7">sh</a></td>
+<td align="center">SH</td>
+<td align="center">→ <a href="#sh-%C5%9D%C4%A7">sh</a></td>
 <td align="center"><a href="#sh-%C5%9D">ŝ</a></td>
 <td align="center"><a href="#sh-%C5%A3%C3%AC">ţ<x>i</x></a></td>
 </tr>
 <tr>
-<td align="center">F»</td>
-<td align="center"> <a href="#f-%C3%BE%C4%A7">ph</a></td>
+<td align="center">F</td>
+<td align="center">→ <a href="#f-%C3%BE%C4%A7">ph</a></td>
 <td align="center"></td>
-<td align="center">KH»</td>
-<td align="center"> <a href="#kh-%C4%89%C4%A7">ch</a></td>
+<td align="center">KH</td>
+<td align="center">→ <a href="#kh-%C4%89%C4%A7">ch</a></td>
 <td align="center"><a href="#kh-%C5%A5">ť</a></td>
 <td align="center"></td>
 </tr>
 </tbody></table>
-<p>¹-R<x>ħ</x><v>o</v>t<v>i</v>c     (<v>Û</v>S)<br>²-N<v>o</v>n-R<x>ħ</x><v>o</v>t<v>i</v>c (<v>Û</v>K)</p>
+<p>¹-R<x>ħ</x><v>o</v>t<v>i</v>c     (<v>Û</v>S)<br>²-N<v>o</v>n-R<x>ħ</x><v>o</v>t<v>i</v>c (<v>U</v>K)</p>
 <!--
  ################################################
      EXAMPLES BELOW 
  ################################################
  --->
 
- <h2 id="short-vowels">Sh<v>or</v>t V<v>õ</v><x>w</x><v>é</v>l<vc>ś</vc></h2>
+ <h2 id="short-vowels">Sh<v>or</v>t V<v>õ</v><x>w</x><v>é</v>lś</h2>
 <h4 id="a-a"><v>A</v> <v>a</v></h4>
 <table>
 <thead>
@@ -237,11 +470,6 @@
 </tr>
 <tr>
 <td align="center"><v>A</v>-&gt;<v>a</v></td>
-<td align="center"><v>A</v>GN<v>Ə</v>S</td>
-<td align="center"><v>a</v>gn<v>ė</v>s</td>
-</tr>
-<tr>
-<td align="center"><v>A</v>-&gt;<v>a</v></td>
 <td align="center"><v>A</v>KT</td>
 <td align="center"><v>a</v>ct</td>
 </tr>
@@ -259,11 +487,6 @@
 <td align="center"><v>A</v>-&gt;<v>a</v></td>
 <td align="center"><v>A</v>VR<v>Ə</v>J</td>
 <td align="center"><v>a</v>v<x>e</x>r<v>á</v><vc>ĝ</vc><x>e</x></td>
-</tr>
-<tr>
-<td align="center"><v>A</v>-&gt;<v>a</v></td>
-<td align="center"><v>A</v>F<v>Ə</v>BL</td>
-<td align="center"><v>a</v>ff<v>á</v>bl<x>e</x></td>
 </tr>
 <tr>
 <td align="center"><v>A</v>-&gt;<v>a</v></td>
@@ -341,7 +564,7 @@
 <td align="center">h<v>a</v>nd</td>
 </tr>
 </tbody></table>
-<h4 id="a-us-ā"><v>A</v> <v>ā</v> (<v>Û</v>S)</h4>
+<h4 id="a-ā¹"><v>A</v> <v>ā</v>¹</h4>
 <table>
 <thead>
 <tr>
@@ -351,22 +574,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center"><v>A</v>FT<v>Ə</v></td>
 <td align="center"><v>ā</v>ft<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center"><v>A</v>SKT</td>
 <td align="center"><v>ā</v>sk<x>e</x>ð</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
-<td align="center"><v>A</v>B<v>ER</v>N</td>
-<td align="center"><v>ā</v><x>u</x>b<v>ur</v>n</td>
-</tr>
-<tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center"><v>A</v>NT<v>IE</v></td>
 <td align="center"><v>ā</v><x>u</x>nt<v>ie</v></td>
 </tr>
@@ -376,64 +594,59 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">GL<v>A</v>S1</td>
 <td align="center">gl<v>ā</v>ss</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">FR<v>A</v>NS</td>
 <td align="center">fr<v>ā</v>nç<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">H<v>A</v>F</td>
 <td align="center">h<v>ā</v><x>l</x>f</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">K<v>A</v>STL</td>
 <td align="center">c<v>ā</v>stl<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">K<v>A</v>ST1</td>
 <td align="center">c<v>ā</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">KL<v>A</v>S1</td>
 <td align="center">cl<v>ā</v>ss</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">M<v>A</v>ST<v>Ə</v></td>
 <td align="center">m<v>ā</v>st<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">R<v>A</v><vc>TH</vc><v>Ə</v></td>
 <td align="center">r<v>ā</v><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">P<v>A</v>ST1</td>
 <td align="center">p<v>ā</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">B<v>A</v>TH</td>
 <td align="center">b<v>ā</v>th</td>
 </tr>
 <tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>-&gt;<v>ā</v>¹</td>
 <td align="center">BR<v>A</v>S</td>
 <td align="center">br<v>ā</v>ss</td>
-</tr>
-<tr>
-<td align="center"><v>Aā</v>-<v>u</v>s-&gt;<v>ā</v></td>
-<td align="center"><v>á</v>s<v>ā</v>hï</td>
-<td align="center"><v>Ə</v>S<v>A</v>H<v>EE</v></td>
 </tr>
 </tbody></table>
 <h4 id="e-e"><v>E</v> <v>e</v></h4>
@@ -462,11 +675,6 @@
 </tr>
 <tr>
 <td align="center"><v>E</v>-&gt;<v>e</v></td>
-<td align="center"><v>E</v>ZR<v>Ə</v></td>
-<td align="center"><v>e</v>zr<v>á</v></td>
-</tr>
-<tr>
-<td align="center"><v>E</v>-&gt;<v>e</v></td>
 <td align="center"><v>E</v>V<v>Ə</v></td>
 <td align="center"><v>e</v>v<v>er</v></td>
 </tr>
@@ -479,11 +687,6 @@
 <td align="center"><v>E</v>-&gt;<v>e</v></td>
 <td align="center"><v>E</v>KS<v>I</v>T</td>
 <td align="center"><v>e</v>x<v>i</v>t</td>
-</tr>
-<tr>
-<td align="center"><v>E</v>-&gt;<v>e</v></td>
-<td align="center"><v>E</v>ND<v>I</v>L</td>
-<td align="center"><v>e</v>nd<v>i</v>ll</td>
 </tr>
 <tr>
 <td align="center"><v>E</v>-&gt;<v>e</v></td>
@@ -582,8 +785,8 @@
 </tr>
 <tr>
 <td align="center"><v>E</v>-&gt;<v>ã</v></td>
-<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 <td align="center"><v>Ə</v>G<v>E</v>N</td>
+<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 </tr>
 <tr>
 <td align="center"><v>E</v>-&gt;<v>ã</v></td>
@@ -881,7 +1084,7 @@
 <td align="center">r<v>o</v>d</td>
 </tr>
 </tbody></table>
-<h4 id="o-å"><v>O</v> <v>å</v> (<v>Û</v>S)</h4>
+<h4 id="o-å¹"><v>O</v> <v>å</v>¹</h4>
 <table>
 <thead>
 <tr>
@@ -891,82 +1094,82 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center"><v>O</v>TH<v>Ə</v></td>
 <td align="center"><v>au</v>th<x>o</x><v>ŕ</v></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center"><v>O</v>F<v>U</v>L</td>
 <td align="center"><v>aw</v>f<v>u</v>l</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center"><v>O</v>KW<v>Ə</v>D</td>
 <td align="center"><v>aw</v>kw<x>a</x><v>ŕ</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center"><v>O</v>T<v>U</v>M</td>
 <td align="center"><v>au</v>t<v>u</v>m<x>n</x></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center"><v>O</v>T<v>OW</v>Z</td>
 <td align="center"><v>au</v>t<v>ô</v><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"></td>
+<td align="center">¹</td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">W<v>O</v>Z</td>
 <td align="center">w<v>å</v><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">W<v>O</v>T1</td>
 <td align="center">w<x>h</x><v>å</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">B<v>Ə</v>K<v>O</v>Z</td>
 <td align="center">b<v>ė</v>c<v>au</v><vc>ś</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">D<v>O</v>T<v>Ə</v></td>
 <td align="center">d<v>au</v><x>gh</x>t<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">DR<v>O</v>N</td>
 <td align="center">dr<v>aw</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">T<v>O</v>K1</td>
 <td align="center">t<v>å</v><x>l</x>k</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">W<v>O</v>KT</td>
 <td align="center">w<v>å</v><x>l</x>k<x>e</x>ð</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">W<v>O</v>T<v>Ə</v></td>
 <td align="center">w<v>å</v>t<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">K<v>O</v>ZD</td>
 <td align="center">c<v>au</v><vc>ś</vc><x>e</x>d</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>-&gt;<v>å</v>¹</td>
 <td align="center">T<v>O</v>KS</td>
 <td align="center">t<v>å</v><x>l</x>ks</td>
 </tr>
@@ -1381,7 +1584,7 @@
 <td align="center">st<v>ōō</v>d</td>
 </tr>
 </tbody></table>
-<h4 id="ə"><v>Ə</v></h4>
+<h4 id="schwa">Schw<v>a</v></h4>
 <table>
 <thead>
 <tr>
@@ -1392,78 +1595,78 @@
 </thead>
 <tbody><tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ó</v><vc>ƒ</vc></td>
 <td align="center"><v>Ə</v><vc>Ƒ</vc></td>
+<td align="center"><v>ó</v><vc>ƒ</vc></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>b<v>ou</v>t</td>
 <td align="center"><v>Ə</v>B<v>OU</v>T</td>
+<td align="center"><v>á</v>b<v>ou</v>t</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 <td align="center"><v>Ə</v>G<v>E</v>N</td>
+<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>w<v>ãý</v></td>
 <td align="center"><v>Ə</v>W<v>AE</v></td>
+<td align="center"><v>á</v>w<v>ãý</v></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>b<v>ǒ</v>v<x>e</x></td>
 <td align="center"><v>Ə</v>B<v>U</v>V</td>
+<td align="center"><v>á</v>b<v>ǒ</v>v<x>e</x></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>h<v>e</v><x>a</x>d</td>
 <td align="center"><v>Ə</v>H<v>E</v>D</td>
+<td align="center"><v>á</v>h<v>e</v><x>a</x>d</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>g<v>ô</v></td>
 <td align="center"><v>Ə</v>G<v>OW</v></td>
+<td align="center"><v>á</v>g<v>ô</v></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>v<v>oi</v>d</td>
 <td align="center"><v>Ə</v>V<v>OI</v>D</td>
+<td align="center"><v>á</v>v<v>oi</v>d</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>w<v>â</v>k<x>e</x></td>
 <td align="center"><v>Ə</v>W<v>AE</v>K</td>
+<td align="center"><v>á</v>w<v>â</v>k<x>e</x></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>w<v>ãŕ</v><x>e</x></td>
 <td align="center"><v>Ə</v>W<v>EƏ</v></td>
+<td align="center"><v>á</v>w<v>ãŕ</v><x>e</x></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>dm<v>i</v>t</td>
 <td align="center"><v>Ə</v>DM<v>I</v>T</td>
+<td align="center"><v>á</v>dm<v>i</v>t</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ė</v><x>a</x><v>ŕ</v><vc>ś</vc></td>
 <td align="center"><v>ƏER</v>Z</td>
+<td align="center"><v>ė</v><x>a</x><v>ŕ</v><vc>ś</vc></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>d<v>u</v>lt</td>
 <td align="center"><v>Ə</v>D<v>U</v>LT</td>
+<td align="center"><v>á</v>d<v>u</v>lt</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>gr<v>ee</v></td>
 <td align="center"><v>Ə</v>GR<v>EE</v></td>
+<td align="center"><v>á</v>gr<v>ee</v></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>á</v>l<v>er</v>t</td>
 <td align="center"><v>Ə</v>L<v>ER</v>T</td>
+<td align="center"><v>á</v>l<v>er</v>t</td>
 </tr>
 <tr>
 <td align="center"></td>
@@ -1512,12 +1715,12 @@
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center">Y<v>ƏƏ</v></td>
+<td align="center">Y<v>IƏ</v></td>
 <td align="center">y<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center">B<v>ƏƏ</v></td>
+<td align="center">B<v>IƏ</v></td>
 <td align="center">b<v>ėer</v></td>
 </tr>
 <tr>
@@ -1542,38 +1745,38 @@
 </thead>
 <tbody><tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ó</v><vc>ƒ</vc></td>
 <td align="center"><v>Ə</v><vc>Ƒ</vc></td>
+<td align="center"><v>ó</v><vc>ƒ</vc></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ė</v><x>a</x><v>ŕ</v><vc>ś</vc></td>
 <td align="center"><v>ƏER</v>Z</td>
+<td align="center"><v>ė</v><x>a</x><v>ŕ</v><vc>ś</vc></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ė</v>v<v>e</v>nt</td>
 <td align="center"><v>Ə</v>V<v>E</v>NT</td>
+<td align="center"><v>ė</v>v<v>e</v>nt</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ė</v>x<v>a</v>ct</td>
 <td align="center"><v>Ə</v>KS<v>A</v>KT</td>
+<td align="center"><v>ė</v>x<v>a</v>ct</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ė</v>qu<v>i</v>p</td>
 <td align="center"><v>Ə</v>KW<v>I</v>P</td>
+<td align="center"><v>ė</v>qu<v>i</v>p</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ė</v>x<v>i</v>st</td>
 <td align="center"><v>Ə</v>KS<v>I</v>ST</td>
+<td align="center"><v>ė</v>x<v>i</v>st</td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center"><v>ó</v>v<v>é</v>n<vc>ś</vc></td>
 <td align="center"><v>Ə</v>V<v>Ə</v>NZ</td>
+<td align="center"><v>ó</v>v<v>é</v>n<vc>ś</vc></td>
 </tr>
 <tr>
 <td align="center"></td>
@@ -1632,12 +1835,12 @@
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center">Y<v>ƏƏ</v></td>
+<td align="center">Y<v>IƏ</v></td>
 <td align="center">y<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
 <td align="center"><v>Ə</v>-&gt;.</td>
-<td align="center">B<v>ƏƏ</v></td>
+<td align="center">B<v>IƏ</v></td>
 <td align="center">b<v>ėer</v></td>
 </tr>
 <tr>
@@ -1646,10 +1849,6 @@
 <td align="center"></td>
 </tr>
 </tbody></table>
-
-
-<h2>V<v>õ</v><x>w</x><v>é</v>l N<v>â</v>m<x>è</x><vc>ś</vc></h2>
-
 <h4 id="ae-â"><v>AE</v> <v>â</v></h4>
 <table>
 <thead>
@@ -1668,11 +1867,6 @@
 <td align="center"><v>AE</v>-&gt;<v>â</v></td>
 <td align="center"><v>AE</v>J</td>
 <td align="center"><v>â</v><vc>ĝ</vc><x>e</x></td>
-</tr>
-<tr>
-<td align="center"><v>AE</v>-&gt;<v>â</v></td>
-<td align="center"><v>AE</v>SH<v>Ə</v></td>
-<td align="center"><v>â</v>ŝ<x>i</x><v>á</v></td>
 </tr>
 <tr>
 <td align="center"><v>AE</v>-&gt;<v>â</v></td>
@@ -1731,8 +1925,8 @@
 </tr>
 <tr>
 <td align="center"><v>AE</v>-&gt;<v>â</v></td>
-<td align="center"><v>á</v>w<v>â</v>k<x>e</x></td>
 <td align="center"><v>Ə</v>W<v>AE</v>K</td>
+<td align="center"><v>á</v>w<v>â</v>k<x>e</x></td>
 </tr>
 <tr>
 <td align="center"><v>AE</v>-&gt;<v>â</v></td>
@@ -2305,26 +2499,6 @@
 <td align="center">sh<v>ê</v></td>
 </tr>
 </tbody></table>
-<h4 id="ee-ý"><v>EE</v> <v>ý</v></h4>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">0</th>
-<th align="center">1</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"><v>EE</v>-&gt;<v>ý</v></td>
-<td align="center"><v>ė</v>p<v>o</v>x<v>ý</v></td>
-<td align="center"><v>Ə</v>P<v>O</v>KS<v>EE</v></td>
-</tr>
-</tbody></table>
 <h4 id="ee-ï"><v>EE</v> ï</h4>
 <table>
 <thead>
@@ -2351,23 +2525,18 @@
 </tr>
 <tr>
 <td align="center"><v>EE</v>-&gt;ï</td>
-<td align="center"><v>á</v>mïg<v>á</v></td>
 <td align="center"><v>Ə</v>M<v>EE</v>G<v>Ə</v></td>
+<td align="center"><v>á</v>mïg<v>á</v></td>
 </tr>
 <tr>
 <td align="center"><v>EE</v>-&gt;ï</td>
-<td align="center"><v>á</v>mïg<v>ô</v></td>
 <td align="center"><v>Ə</v>M<v>EE</v>G<v>OW</v></td>
+<td align="center"><v>á</v>mïg<v>ô</v></td>
 </tr>
 <tr>
 <td align="center"><v>EE</v>-&gt;ï</td>
-<td align="center"><v>á</v>mïn<v>ô</v></td>
 <td align="center"><v>Ə</v>M<v>EE</v>N<v>OW</v></td>
-</tr>
-<tr>
-<td align="center"><v>EE</v>-&gt;ï</td>
-<td align="center"><x>h</x><v>é</v>nrï</td>
-<td align="center"><v>Ə</v>NR<v>EE</v></td>
+<td align="center"><v>á</v>mïn<v>ô</v></td>
 </tr>
 </tbody></table>
 <h4 id="ie-î"><v>IE</v> <v>î</v></h4>
@@ -2705,7 +2874,7 @@
 <td align="center">s<v>igh</v>t</td>
 </tr>
 </tbody></table>
-<h4 id="ow-ô"><v>OW</v> <v>ô</v></h4>
+<h4 id="ow-ô"><v>O</v>W <v>ô</v></h4>
 <table>
 <thead>
 <tr>
@@ -2766,8 +2935,8 @@
 </tr>
 <tr>
 <td align="center"><v>O</v>W-&gt;<v>ô</v></td>
-<td align="center"><v>á</v>g<v>ô</v></td>
 <td align="center"><v>Ə</v>G<v>OW</v></td>
+<td align="center"><v>á</v>g<v>ô</v></td>
 </tr>
 <tr>
 <td align="center"><v>O</v>W-&gt;<v>ô</v></td>
@@ -2801,11 +2970,6 @@
 </tr>
 <tr>
 <td align="center"><v>O</v>W-&gt;<v>ô</v></td>
-<td align="center">R<v>OW</v>D1</td>
-<td align="center">r<v>ô</v><x>a</x>d</td>
-</tr>
-<tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v></td>
 <td align="center"><vc>TH</vc><v>OW</v>Z</td>
 <td align="center"><vc>th</vc><v>ô</v><vc>ś</vc><x>e</x></td>
 </tr>
@@ -2816,8 +2980,8 @@
 </tr>
 <tr>
 <td align="center"><v>O</v>W-&gt;<v>ô</v></td>
-<td align="center"><v>á</v>l<v>ô</v>n<x>e</x></td>
 <td align="center"><v>Ə</v>L<v>OW</v>N</td>
+<td align="center"><v>á</v>l<v>ô</v>n<x>e</x></td>
 </tr>
 <tr>
 <td align="center"><v>O</v>W-&gt;<v>ô</v></td>
@@ -2825,7 +2989,7 @@
 <td align="center">b<v>ô</v>n<x>e</x><vc>ś</vc></td>
 </tr>
 </tbody></table>
-<h4 id="ow-ôw"><v>OW</v> <v>ow</v></h4>
+<h4 id="ow-ôw"><v>O</v>W <v>ô</v>w</h4>
 <table>
 <thead>
 <tr>
@@ -2960,7 +3124,7 @@
 <td align="center">w<v>i</v>ll<v>ow</v></td>
 </tr>
 </tbody></table>
-<h4 id="ow-ôà"><v>OW</v> <v>oa</v></h4>
+<h4 id="ow-ôà"><v>O</v>W <v>oa</v></h4>
 <table>
 <thead>
 <tr>
@@ -2970,19 +3134,19 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center"><v>OW</v>KS1</td>
-<td align="center"><v>ô</v><x>a</x>ks</td>
+<td align="center"><v>oa</v>ks</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center"><v>OW</v>TH</td>
-<td align="center"><v>ô</v><x>a</x>th</td>
+<td align="center"><v>oa</v>th</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center"><v>OW</v>TS1</td>
-<td align="center"><v>ô</v><x>a</x>ts</td>
+<td align="center"><v>oa</v>ts</td>
 </tr>
 <tr>
 <td align="center"></td>
@@ -2990,99 +3154,99 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">B<v>OW</v>T</td>
-<td align="center">b<v>ô</v><x>a</x>t</td>
+<td align="center">b<v>oa</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">R<v>OW</v>D1</td>
-<td align="center">r<v>ô</v><x>a</x>d</td>
+<td align="center">r<v>oa</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">B<v>OW</v>ST</td>
-<td align="center">b<v>ô</v><x>a</x>st</td>
+<td align="center">b<v>oa</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">L<v>OW</v>D1</td>
-<td align="center">l<v>ô</v><x>a</x>d</td>
+<td align="center">l<v>oa</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">K<v>OW</v>L1</td>
-<td align="center">c<v>ô</v><x>a</x>l</td>
+<td align="center">c<v>oa</v>l</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">L<v>OW</v>N1</td>
-<td align="center">l<v>ô</v><x>a</x>n</td>
+<td align="center">l<v>oa</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">K<v>OW</v>T1</td>
-<td align="center">c<v>ô</v><x>a</x>t</td>
+<td align="center">c<v>oa</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">K<v>OW</v>ST</td>
-<td align="center">c<v>ô</v><x>a</x>st</td>
+<td align="center">c<v>oa</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">T<v>OW</v>ST</td>
-<td align="center">t<v>ô</v><x>a</x>st</td>
+<td align="center">t<v>oa</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">S<v>OW</v>P</td>
-<td align="center">s<v>ô</v><x>a</x>p</td>
+<td align="center">s<v>oa</v>p</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">FL<v>OW</v>T</td>
-<td align="center">fl<v>ô</v><x>a</x>t</td>
+<td align="center">fl<v>oa</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">F<v>OW</v>MZ</td>
-<td align="center">f<v>ô</v><x>a</x>m<vc>ś</vc></td>
+<td align="center">f<v>oa</v>m<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">G<v>OW</v>LZ</td>
-<td align="center">g<v>ô</v><x>a</x>l<vc>ś</vc></td>
+<td align="center">g<v>oa</v>l<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">G<v>OW</v>TS</td>
-<td align="center">g<v>ô</v><x>a</x>ts</td>
+<td align="center">g<v>oa</v>ts</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">K<v>OW</v>KH</td>
-<td align="center">c<v>ô</v><x>a</x>ch</td>
+<td align="center">c<v>oa</v>ch</td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">L<v>OW</v>VZ</td>
-<td align="center">l<v>ô</v><x>a</x>v<x>e</x><vc>ś</vc></td>
+<td align="center">l<v>oa</v>v<x>e</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">M<v>OW</v>NZ</td>
-<td align="center">m<v>ô</v><x>a</x>n<vc>ś</vc></td>
+<td align="center">m<v>oa</v>n<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">R<v>OW</v>MZ</td>
-<td align="center">r<v>ô</v><x>a</x>m<vc>ś</vc></td>
+<td align="center">r<v>oa</v>m<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>O</v>W-&gt;<v>ô</v><x>a</x></td>
+<td align="center"><v>O</v>W-&gt;<v>oa</v></td>
 <td align="center">S<v>OW</v>KT</td>
-<td align="center">s<v>ô</v><x>a</x>k<x>e</x>ð</td>
+<td align="center">s<v>oa</v>k<x>e</x>ð</td>
 </tr>
 </tbody></table>
 <h4 id="yoo-û">Y<v>OO</v> <v>û</v></h4>
@@ -3160,7 +3324,7 @@
 <td align="center">p<v>û</v>k<x>e</x></td>
 </tr>
 </tbody></table>
-<h4 id="yoo-ë">Y<v>OO</v> <v>ë</v></h4>
+<h4 id="yoo-ë²">Y<v>OO</v> <v>ë</v>²</h4>
 <table>
 <thead>
 <tr>
@@ -3175,22 +3339,22 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">Y<v>OO</v>-&gt;<v>ë</v></td>
+<td align="center">Y<v>OO</v>-&gt;<v>ë</v>²</td>
 <td align="center">NY<v>OO</v>1</td>
 <td align="center">n<v>ew</v></td>
 </tr>
 <tr>
-<td align="center">Y<v>OO</v>-&gt;<v>ë</v></td>
+<td align="center">Y<v>OO</v>-&gt;<v>ë</v>²</td>
 <td align="center">VY<v>OO</v>1</td>
 <td align="center">vĩ<v>ew</v></td>
 </tr>
 <tr>
-<td align="center">Y<v>OO</v>-&gt;<v>ë</v></td>
+<td align="center">Y<v>OO</v>-&gt;<v>ë</v>²</td>
 <td align="center">NY<v>OO</v>2</td>
 <td align="center"><x>k</x>n<v>ew</v></td>
 </tr>
 <tr>
-<td align="center">Y<v>OO</v>-&gt;<v>ë</v></td>
+<td align="center">Y<v>OO</v>-&gt;<v>ë</v>²</td>
 <td align="center">NY<v>OO</v>Z</td>
 <td align="center">n<v>ew</v><vc>ś</vc></td>
 </tr>
@@ -3200,7 +3364,7 @@
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h4 id="ar-ār"><v>AR</v> <v>ar</v></h4>
+<h4 id="ar-ār"><v>A</v>R <v>ar</v></h4>
 <table>
 <thead>
 <tr>
@@ -3210,42 +3374,42 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>1</td>
 <td align="center"><v>ar</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>T</td>
 <td align="center"><v>ar</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>M<v>Ə</v></td>
 <td align="center"><v>ar</v>m<x>o</x><v>ur</v></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>MZ</td>
 <td align="center"><v>ar</v>m<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>PS</td>
 <td align="center"><v>ar</v>ps</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>TH<v>Ə</v></td>
 <td align="center"><v>ar</v>th<v>ur</v></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>G<v>O</v>N</td>
 <td align="center"><v>ar</v>g<v>o</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center"><v>AR</v>KHT</td>
 <td align="center"><v>ar</v>ch<x>e</x>ð</td>
 </tr>
@@ -3255,97 +3419,97 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">P<v>AR</v>T</td>
 <td align="center">p<v>ar</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">B<v>AR</v>1</td>
 <td align="center">b<v>ar</v></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">F<v>AR</v>1</td>
 <td align="center">f<v>ar</v></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">H<v>AR</v>D</td>
 <td align="center">h<v>ar</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">L<v>AR</v>J</td>
 <td align="center">l<v>ar</v><vc>ĝ</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">K<v>AR</v>1</td>
 <td align="center">c<v>ar</v></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">M<v>AR</v>KH</td>
 <td align="center">m<v>ar</v>ch</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">SM<v>AR</v>T</td>
 <td align="center">sm<v>ar</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">ST<v>AR</v>T</td>
 <td align="center">st<v>ar</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">D<v>AR</v>K1</td>
 <td align="center">d<v>ar</v>k</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">F<v>AR</v>M</td>
 <td align="center">f<v>ar</v>m</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">D<v>AR</v>TS</td>
 <td align="center">d<v>ar</v>ts</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">H<v>AR</v>M</td>
 <td align="center">h<v>ar</v>m</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">H<v>AR</v>T1</td>
 <td align="center">h<x>e</x><v>ar</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">H<v>AR</v>SH</td>
 <td align="center">h<v>ar</v>sh</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">KH<v>AR</v>J</td>
 <td align="center">ch<v>ar</v><vc>ĝ</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">M<v>AR</v>BL</td>
 <td align="center">m<v>ar</v>bl<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-&gt;<v>ar</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ar</v></td>
 <td align="center">M<v>AR</v>K1</td>
 <td align="center">m<v>ar</v>k</td>
 </tr>
 </tbody></table>
-<h4 id="ar-uk-ā"><v>AR</v> <v>ā</v>(<v>Û</v>S)</h4>
+<h4 id="ar-ā²"><v>A</v>R <v>ā</v>²</h4>
 <table>
 <thead>
 <tr>
@@ -3355,17 +3519,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center"><v>AR</v>FT<v>Ə</v></td>
 <td align="center"><v>ā</v>ft<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center"><v>AR</v>SK</td>
 <td align="center"><v>ā</v>sk</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center"><v>AR</v>NT</td>
 <td align="center"><v>ā</v><x>u</x>nt</td>
 </tr>
@@ -3375,62 +3539,62 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">GL<v>AR</v>S</td>
 <td align="center">gl<v>ā</v>ss</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">H<v>AR</v>F</td>
 <td align="center">h<v>ā</v><x>l</x>f</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">T<v>AR</v>SK</td>
 <td align="center">t<v>ā</v>sk</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">D<v>AR</v>NS</td>
 <td align="center">d<v>ā</v>nç<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">F<v>AR</v>ST</td>
 <td align="center">f<v>ā</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">GR<v>AR</v>S</td>
 <td align="center">gr<v>ā</v>ss</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">K<v>AR</v>M</td>
 <td align="center">c<v>ā</v><x>l</x>m</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">L<v>AR</v>ST</td>
 <td align="center">l<v>ā</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">P<v>AR</v>S1</td>
 <td align="center">p<v>ā</v>ss</td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">V<v>AR</v>Z1</td>
 <td align="center">v<v>ā</v><vc>ś</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>AR</v>-<v>u</v>k-&gt;<v>ā</v></td>
+<td align="center"><v>A</v>R-&gt;<v>ā</v>²</td>
 <td align="center">V<v>AR</v>ST</td>
 <td align="center">v<v>ā</v>st</td>
 </tr>
 </tbody></table>
-<h4 id="er-èŕ"><v>ER</v> <v>er</v></h4>
+<h4 id="er-èŕ"><v>E</v>R <v>er</v></h4>
 <table>
 <thead>
 <tr>
@@ -3440,7 +3604,7 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center"><v>ER</v>N<v>EE</v></td>
 <td align="center"><v>er</v>n<x>i</x><v>ê</v></td>
 </tr>
@@ -3450,42 +3614,42 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center">H<v>ER</v>1</td>
 <td align="center">h<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center">W<v>ER</v>1</td>
 <td align="center">w<v>er</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
-<td align="center"><v>á</v>l<v>er</v>t</td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center"><v>Ə</v>L<v>ER</v>T</td>
+<td align="center"><v>á</v>l<v>er</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center">N<v>ER</v>V</td>
 <td align="center">n<v>er</v>v<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center">V<v>ER</v>S</td>
 <td align="center">v<v>er</v>s<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center">F<v>ER</v>NZ</td>
 <td align="center">f<v>er</v>n<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>er</v></td>
+<td align="center"><v>E</v>R-&gt;<v>er</v></td>
 <td align="center">H<v>ER</v>DZ</td>
 <td align="center">h<v>er</v>d<vc>ś</vc></td>
 </tr>
 </tbody></table>
-<h4 id="er-ìŕ"><v>ER</v> <v>ir</v></h4>
+<h4 id="er-ìŕ"><v>E</v>R <v>ir</v></h4>
 <table>
 <thead>
 <tr>
@@ -3495,7 +3659,7 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center"><v>ER</v>KT</td>
 <td align="center"><v>ir</v>k<x>e</x>ð</td>
 </tr>
@@ -3505,52 +3669,52 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">F<v>ER</v>ST</td>
 <td align="center">f<v>ir</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">B<v>ER</v>D</td>
 <td align="center">b<v>ir</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">F<v>ER</v>M</td>
 <td align="center">f<v>ir</v>m</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">SH<v>ER</v>T</td>
 <td align="center">sh<v>ir</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">SK<v>ER</v>T</td>
 <td align="center">sk<v>ir</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">SM<v>ER</v>K</td>
 <td align="center">sm<v>ir</v>k</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">B<v>ER</v>KH</td>
 <td align="center">b<v>ir</v>ch</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">FL<v>ER</v>T</td>
 <td align="center">fl<v>ir</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ir</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ir</v></td>
 <td align="center">S<v>ER</v>KL</td>
 <td align="center">ç<v>ir</v>cl<x>e</x></td>
 </tr>
 </tbody></table>
-<h4 id="er-ùŕ"><v>ER</v> <v>ur</v></h4>
+<h4 id="er-ùŕ"><v>E</v>R <v>ur</v></h4>
 <table>
 <thead>
 <tr>
@@ -3560,17 +3724,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center"><v>ER</v>B<v>Ə</v>N</td>
 <td align="center"><v>ur</v>b<v>á</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center"><v>ER</v>JD</td>
 <td align="center"><v>ur</v><vc>ĝ</vc><x>e</x>d</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center"><v>ER</v>D<v>OO</v></td>
 <td align="center"><v>ur</v>d<v>ü</v></td>
 </tr>
@@ -3580,42 +3744,42 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">T<v>ER</v>N</td>
 <td align="center">t<v>ur</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">B<v>ER</v>ST</td>
 <td align="center">b<v>ur</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">H<v>ER</v>T</td>
 <td align="center">h<v>ur</v>t</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">N<v>ER</v>S</td>
 <td align="center">n<v>ur</v>s<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">B<v>ER</v>NZ</td>
 <td align="center">b<v>ur</v>n<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">K<v>ER</v>DZ</td>
 <td align="center">k<v>ur</v>d<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ur</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ur</v></td>
 <td align="center">K<v>ER</v>VZ</td>
 <td align="center">c<v>ur</v>v<x>e</x><vc>ś</vc></td>
 </tr>
 </tbody></table>
-<h4 id="er-ŕ"><v>ER</v> <v>ŕ</v></h4>
+<h4 id="er-ŕ"><v>E</v>R <v>ŕ</v></h4>
 <table>
 <thead>
 <tr>
@@ -3625,12 +3789,12 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center"><v>ER</v>TH</td>
 <td align="center"><x>ea</x><v>ŕ</v>th</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center"><v>ER</v>ND</td>
 <td align="center"><x>ea</x><v>ŕ</v>n<x>e</x>d</td>
 </tr>
@@ -3640,52 +3804,52 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">H<v>ER</v>D1</td>
 <td align="center">h<x>ea</x><v>ŕ</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">W<v>ER</v>K</td>
 <td align="center">w<x>o</x><v>ŕ</v>k</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">L<v>ER</v>N</td>
 <td align="center">l<x>ea</x><v>ŕ</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">W<v>ER</v>D</td>
 <td align="center">w<x>o</x><v>ŕ</v>d</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">W<v>ER</v>MZ</td>
 <td align="center">w<x>o</x><v>ŕ</v>m<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">W<v>ER</v>S</td>
 <td align="center">w<x>o</x><v>ŕ</v>s<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">W<v>ER</v>ST</td>
 <td align="center">w<x>o</x><v>ŕ</v>st</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">S<v>ER</v>KH</td>
 <td align="center">s<x>ea</x><v>ŕ</v>ch</td>
 </tr>
 <tr>
-<td align="center"><v>ER</v>-&gt;<v>ŕ</v></td>
+<td align="center"><v>E</v>R-&gt;<v>ŕ</v></td>
 <td align="center">Y<v>ER</v>NZ</td>
 <td align="center">y<x>ea</x><v>ŕ</v>n<vc>ś</vc></td>
 </tr>
 </tbody></table>
-<h4 id="or-ør"><v>OR</v> <v>or</v></h4>
+<h4 id="or-ør"><v>O</v>R <v>or</v></h4>
 <table>
 <thead>
 <tr>
@@ -3695,17 +3859,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center"><v>OR</v>1</td>
 <td align="center"><v>or</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center"><v>OR</v>D<v>Ə</v></td>
 <td align="center"><v>or</v>d<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center"><v>OR</v>K<v>Ə</v>D</td>
 <td align="center"><v>or</v>c<x>h</x><v>í</v>d</td>
 </tr>
@@ -3715,62 +3879,62 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">F<v>OR</v>1</td>
 <td align="center">f<v>or</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">M<v>OR</v>1</td>
 <td align="center">m<v>or</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">B<v>Ə</v>F<v>OR</v></td>
 <td align="center">b<v>ė</v>f<v>or</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">FL<v>OR</v>1</td>
 <td align="center">fl<x>o</x><v>or</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">F<v>OR</v>M</td>
 <td align="center">f<v>or</v>m</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">D<v>OR</v>1</td>
 <td align="center">d<x>o</x><v>or</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center"><v>I</v>GN<v>OR</v></td>
 <td align="center"><v>i</v>gn<v>or</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">N<v>OR</v>TH</td>
 <td align="center">n<v>or</v>th</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">P<v>OR</v>1</td>
 <td align="center">p<x>o</x><v>or</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">B<v>OR</v>N1</td>
 <td align="center">b<v>or</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">BR<v>OR</v>D</td>
 <td align="center">br<v>ø</v><x>a</x>d</td>
 </tr>
 </tbody></table>
-<h4 id="or-ø"><v>OR</v> <v>ø</v> (<v>Û</v>K)</h4>
+<h4 id="or-ø"><v>O</v>R <v>ø</v></h4>
 <table>
 <thead>
 <tr>
@@ -3780,7 +3944,7 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center"><v>OR</v>T1</td>
 <td align="center"><v>ø</v><x>ugh</x>t</td>
 </tr>
@@ -3790,82 +3954,82 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">Y<v>OR</v>1</td>
 <td align="center">y<v>ø</v><x>ur</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">B<v>OR</v>D1</td>
 <td align="center">b<v>ø</v><x>ar</x>d</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">B<v>OR</v>T</td>
 <td align="center">b<v>ø</v><x>ugh</x>t</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">BR<v>OR</v>T</td>
 <td align="center">br<v>ø</v><x>ugh</x>t</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">K<v>OR</v>T1</td>
 <td align="center">c<v>ø</v><x>ur</x>t</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">TH<v>OR</v>T</td>
 <td align="center">th<v>ø</v><x>ugh</x>t</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">BR<v>OR</v>D</td>
 <td align="center">br<v>ø</v><x>a</x>d</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">F<v>OR</v>Z</td>
 <td align="center">f<v>ø</v><x>ur</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">K<v>OR</v>S1</td>
 <td align="center">c<v>ø</v><x>ur</x>s<x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">P<v>OR</v>D1</td>
 <td align="center">p<v>ø</v><x>ure</x>d</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">T<v>OR</v>Z</td>
 <td align="center">t<v>ø</v><x>ur</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center"><v>U</v>PR<v>OR</v></td>
 <td align="center"><v>u</v>pr<v>ø</v><x>ar</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">Y<v>OR</v>Z</td>
 <td align="center">y<v>ø</v><x>ur</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">S<v>OR</v>T2</td>
 <td align="center">s<v>ø</v><x>ugh</x>t</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>ø</v></td>
+<td align="center"><v>O</v>R-&gt;<v>ø</v></td>
 <td align="center">S<v>OR</v>S1</td>
 <td align="center">s<v>ø</v><x>ur</x>ç<x>e</x></td>
 </tr>
 </tbody></table>
-<h4 id="or-å"><v>OR</v> <v>å</v> (<v>Û</v>K)</h4>
+<h4 id="or-å²"><v>O</v>R <v>å</v>²</h4>
 <table>
 <thead>
 <tr>
@@ -3875,22 +4039,22 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center"><v>OR</v>L</td>
 <td align="center"><v>å</v>ll</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center"><v>OR</v>F<v>U</v>L</td>
 <td align="center"><v>aw</v>f<v>u</v>l</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center"><v>OR</v>TH<v>Ə</v></td>
 <td align="center"><v>au</v>th<x>o</x><v>ŕ</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center"><v>OR</v>T<v>U</v>M</td>
 <td align="center"><v>au</v>t<v>u</v>m<x>n</x></td>
 </tr>
@@ -3900,87 +4064,87 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">DR<v>OR</v></td>
 <td align="center">dr<v>aw</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">H<v>OR</v>L1</td>
 <td align="center">h<v>å</v>ll</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">K<v>OR</v>LD</td>
 <td align="center">c<v>å</v>ll<x>e</x>d</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">L<v>OR</v>1</td>
 <td align="center">l<v>aw</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">T<v>OR</v>K1</td>
 <td align="center">t<v>å</v><x>l</x>k</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">W<v>OR</v>T<v>Ə</v></td>
 <td align="center">w<v>å</v>t<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">W<v>OR</v>1</td>
 <td align="center">w<v>å</v><x>r</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">B<v>OR</v>L1</td>
 <td align="center">b<v>å</v>ll</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">D<v>OR</v>T<v>Ə</v></td>
 <td align="center">d<v>au</v><x>gh</x>t<v>er</v></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">DW<v>OR</v>F</td>
 <td align="center">dw<v>å</v><x>r</x>f</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">K<v>OR</v>LZ</td>
 <td align="center">c<v>å</v>ll<vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">K<v>OR</v>Z1</td>
 <td align="center">c<v>au</v><vc>ś</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">K<v>OR</v>T2</td>
 <td align="center">c<v>au</v><x>gh</x>t</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">P<v>OR</v>L1</td>
 <td align="center">p<v>au</v>l</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">P<v>OR</v>N1</td>
 <td align="center">p<v>aw</v>n</td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">P<v>OR</v>Z1</td>
 <td align="center">p<v>au</v><vc>ś</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center"><v>OR</v>-&gt;<v>å</v></td>
+<td align="center"><v>O</v>R-&gt;<v>å</v></td>
 <td align="center">T<v>OR</v>KS</td>
 <td align="center">t<v>å</v><x>l</x>ks</td>
 </tr>
@@ -4066,8 +4230,8 @@
 </tr>
 <tr>
 <td align="center"><v>OI</v>-&gt;<v>oi</v></td>
-<td align="center"><v>á</v>v<v>oi</v>d</td>
 <td align="center"><v>Ə</v>V<v>OI</v>D</td>
+<td align="center"><v>á</v>v<v>oi</v>d</td>
 </tr>
 <tr>
 <td align="center"><v>OI</v>-&gt;<v>oi</v></td>
@@ -4196,8 +4360,8 @@
 </tr>
 <tr>
 <td align="center"><v>OU</v>-&gt;<v>ou</v></td>
-<td align="center"><v>á</v>b<v>ou</v>t</td>
 <td align="center"><v>Ə</v>B<v>OU</v>T</td>
+<td align="center"><v>á</v>b<v>ou</v>t</td>
 </tr>
 <tr>
 <td align="center"><v>OU</v>-&gt;<v>ou</v></td>
@@ -4731,7 +4895,7 @@
 </tr>
 <tr>
 <td align="center">B-&gt;b</td>
-<td align="center">B<v>ƏƏ</v></td>
+<td align="center">B<v>IƏ</v></td>
 <td align="center">b<v>ėer</v></td>
 </tr>
 <tr>
@@ -4821,13 +4985,13 @@
 </tr>
 <tr>
 <td align="center">B-&gt;b</td>
-<td align="center"><v>á</v>b<v>ou</v>t</td>
 <td align="center"><v>Ə</v>B<v>OU</v>T</td>
+<td align="center"><v>á</v>b<v>ou</v>t</td>
 </tr>
 <tr>
 <td align="center">B-&gt;b</td>
-<td align="center"><v>á</v>b<v>ǒ</v>v<x>e</x></td>
 <td align="center"><v>Ə</v>B<v>U</v>V</td>
+<td align="center"><v>á</v>b<v>ǒ</v>v<x>e</x></td>
 </tr>
 <tr>
 <td align="center">B-&gt;b</td>
@@ -4921,7 +5085,7 @@
 </tr>
 <tr>
 <td align="center">C-&gt;c</td>
-<td align="center">KL<v>ƏƏ</v></td>
+<td align="center">KL<v>IƏ</v></td>
 <td align="center">cl<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -5241,7 +5405,7 @@
 </tr>
 <tr>
 <td align="center">D-&gt;d</td>
-<td align="center">D<v>ƏƏ</v>1</td>
+<td align="center">D<v>IƏ</v>1</td>
 <td align="center">d<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -5351,13 +5515,13 @@
 </tr>
 <tr>
 <td align="center">D-&gt;d</td>
-<td align="center"><v>á</v>h<v>e</v><x>a</x>d</td>
 <td align="center"><v>Ə</v>H<v>E</v>D</td>
+<td align="center"><v>á</v>h<v>e</v><x>a</x>d</td>
 </tr>
 <tr>
 <td align="center">D-&gt;d</td>
-<td align="center"><v>á</v>v<v>oi</v>d</td>
 <td align="center"><v>Ə</v>V<v>OI</v>D</td>
+<td align="center"><v>á</v>v<v>oi</v>d</td>
 </tr>
 <tr>
 <td align="center">D-&gt;d</td>
@@ -5406,7 +5570,7 @@
 </tr>
 <tr>
 <td align="center">F-&gt;f</td>
-<td align="center">F<v>ƏƏ</v></td>
+<td align="center">F<v>IƏ</v></td>
 <td align="center">f<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -5646,8 +5810,8 @@
 </tr>
 <tr>
 <td align="center">G-&gt;g</td>
-<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 <td align="center"><v>Ə</v>G<v>E</v>N</td>
+<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 </tr>
 <tr>
 <td align="center">G-&gt;g</td>
@@ -5666,8 +5830,8 @@
 </tr>
 <tr>
 <td align="center">G-&gt;g</td>
-<td align="center"><v>á</v>g<v>ô</v></td>
 <td align="center"><v>Ə</v>G<v>OW</v></td>
+<td align="center"><v>á</v>g<v>ô</v></td>
 </tr>
 <tr>
 <td align="center">G-&gt;g</td>
@@ -5851,12 +6015,12 @@
 </tr>
 <tr>
 <td align="center">H-&gt;h</td>
-<td align="center">H<v>ƏƏ</v>1</td>
+<td align="center">H<v>IƏ</v>1</td>
 <td align="center">h<v>ėŕ</v><x>e</x></td>
 </tr>
 <tr>
 <td align="center">H-&gt;h</td>
-<td align="center">H<v>ƏƏ</v>2</td>
+<td align="center">H<v>IƏ</v>2</td>
 <td align="center">h<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -6136,7 +6300,7 @@
 </tr>
 <tr>
 <td align="center">L-&gt;l</td>
-<td align="center">KL<v>ƏƏ</v></td>
+<td align="center">KL<v>IƏ</v></td>
 <td align="center">cl<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -6466,7 +6630,7 @@
 </tr>
 <tr>
 <td align="center">N-&gt;n</td>
-<td align="center">N<v>ƏƏ</v></td>
+<td align="center">N<v>IƏ</v></td>
 <td align="center">n<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -6551,8 +6715,8 @@
 </tr>
 <tr>
 <td align="center">N-&gt;n</td>
-<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 <td align="center"><v>Ə</v>G<v>E</v>N</td>
+<td align="center"><v>á</v>g<v>ã</v><x>i</x>n</td>
 </tr>
 <tr>
 <td align="center">N-&gt;n</td>
@@ -6926,7 +7090,7 @@
 </tr>
 <tr>
 <td align="center">R-&gt;r</td>
-<td align="center">R<v>ƏƏ</v></td>
+<td align="center">R<v>IƏ</v></td>
 <td align="center">r<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -7391,7 +7555,7 @@
 </tr>
 <tr>
 <td align="center">T-&gt;t</td>
-<td align="center">T<v>ƏƏ</v>Z</td>
+<td align="center">T<v>IƏ</v>Z</td>
 <td align="center">t<v>ė</v><x>a</x><v>ŕ</v><vc>ś</vc></td>
 </tr>
 <tr>
@@ -7771,13 +7935,13 @@
 </tr>
 <tr>
 <td align="center">W-&gt;w</td>
-<td align="center"><v>á</v>w<v>ãý</v></td>
 <td align="center"><v>Ə</v>W<v>AE</v></td>
+<td align="center"><v>á</v>w<v>ãý</v></td>
 </tr>
 <tr>
 <td align="center">W-&gt;w</td>
-<td align="center"><v>á</v>w<v>â</v>k<x>e</x></td>
 <td align="center"><v>Ə</v>W<v>AE</v>K</td>
+<td align="center"><v>á</v>w<v>â</v>k<x>e</x></td>
 </tr>
 <tr>
 <td align="center">W-&gt;w</td>
@@ -7855,77 +8019,77 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">B<v>O</v>KS</td>
 <td align="center">b<v>o</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">F<v>I</v>KST</td>
 <td align="center">f<v>i</v>x<x>e</x>ð</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">N<v>E</v>KST</td>
 <td align="center">n<v>e</v>xt</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">T<v>A</v>KS1</td>
 <td align="center">t<v>a</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">F<v>I</v>KS</td>
 <td align="center">f<v>i</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center"><v>E</v>KS<v>I</v>T</td>
 <td align="center"><v>e</v>x<v>i</v>t</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">M<v>A</v>KS1</td>
 <td align="center">m<v>a</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">M<v>I</v>KST</td>
 <td align="center">m<v>i</v>x<x>e</x>ð</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">PL<v>A</v>KS</td>
 <td align="center">pl<v>a</v>q<x>ue</x>s</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">T<v>E</v>KST</td>
 <td align="center">t<v>e</v>xt</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">S<v>E</v>KS</td>
 <td align="center">s<v>e</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center"><v>A</v>L<v>Ə</v>KS</td>
 <td align="center"><v>a</v>l<v>é</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
-<td align="center"><v>ė</v>x<v>i</v>st</td>
+<td align="center">KS-&gt;x</td>
 <td align="center"><v>Ə</v>KS<v>I</v>ST</td>
+<td align="center"><v>ė</v>x<v>i</v>st</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center"><v>A</v>M<v>E</v>KS</td>
 <td align="center"><v>a</v>m<v>e</v>x</td>
 </tr>
 <tr>
-<td align="center">X-&gt;.</td>
+<td align="center">KS-&gt;x</td>
 <td align="center">B<v>O</v>KST</td>
 <td align="center">b<v>o</v>x<x>e</x>ð</td>
 </tr>
@@ -7946,7 +8110,7 @@
 </tr>
 <tr>
 <td align="center">Y-&gt;y</td>
-<td align="center">Y<v>ƏƏ</v></td>
+<td align="center">Y<v>IƏ</v></td>
 <td align="center">y<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
@@ -8166,7 +8330,7 @@
 </tr>
 <tr>
 <td align="center">Z-&gt;<vc>ś</vc></td>
-<td align="center">Y<v>ƏƏ</v>Z</td>
+<td align="center">Y<v>IƏ</v>Z</td>
 <td align="center">y<v>ė</v><x>a</x><v>ŕ</v><vc>ś</vc></td>
 </tr>
 <tr>
@@ -8460,77 +8624,77 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>OI</v>S</td>
 <td align="center">ch<v>oi</v>ç<x>e</x></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>A</v>NS</td>
 <td align="center">ch<v>ā</v>nç<x>e</x></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>AR</v>J</td>
 <td align="center">ch<v>ar</v><vc>ĝ</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>A</v>T</td>
 <td align="center">ch<v>a</v>t</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>EƏ</v></td>
 <td align="center">ch<v>ãir</v></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>EE</v>F</td>
 <td align="center">ch<x>i</x><v>ê</v>f</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>E</v>K1</td>
 <td align="center">ch<v>e</v>c<x>k</x></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>E</v>ST</td>
 <td align="center">ch<v>e</v>st</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>I</v>L</td>
 <td align="center">ch<v>i</v>ll</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>I</v>N1</td>
 <td align="center">ch<v>i</v>n</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>I</v>PS</td>
 <td align="center">ch<v>i</v>ps</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>O</v>P</td>
 <td align="center">ch<v>o</v>p</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>U</v>NK</td>
 <td align="center">ch<v>u</v>nk</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
-<td align="center">KH<v>ƏƏ</v>Z</td>
+<td align="center">CH-&gt;ch</td>
+<td align="center">KH<v>IƏ</v>Z</td>
 <td align="center">ch<v>ėer</v><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">KH<v>AE</v>S</td>
 <td align="center">ch<v>â</v>s<x>e</x></td>
 </tr>
@@ -8540,92 +8704,92 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center"><v>EE</v>KH</td>
 <td align="center"><v>ea</v>ch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">M<v>U</v>KH</td>
 <td align="center">m<v>u</v>ch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">W<v>I</v>KH</td>
 <td align="center">w<x>h</x><v>i</v>ch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">K<v>A</v>TKH</td>
 <td align="center">c<v>a</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">M<v>AR</v>KH</td>
 <td align="center">m<v>ar</v>ch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">P<v>I</v>TKH</td>
 <td align="center">p<v>i</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">T<v>U</v>KH</td>
 <td align="center">t<x>o</x><v>u</v>ch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">S<v>U</v>KH</td>
 <td align="center">s<v>u</v>ch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">B<v>E</v>NKH</td>
 <td align="center">b<v>e</v>nch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">B<v>U</v>NKH</td>
 <td align="center">b<v>u</v>nch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">F<v>E</v>TKH</td>
 <td align="center">f<v>e</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">D<v>I</v>TKH</td>
 <td align="center">d<v>i</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">D<v>U</v>TKH</td>
 <td align="center">d<v>u</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">H<v>I</v>TKH</td>
 <td align="center">h<v>i</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center"><v>I</v>NKH</td>
 <td align="center"><v>i</v>nch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center"><v>I</v>TKH</td>
 <td align="center"><v>i</v>tch</td>
 </tr>
 <tr>
-<td align="center">KH-&gt;ch</td>
+<td align="center">CH-&gt;ch</td>
 <td align="center">K<v>OU</v>KH</td>
 <td align="center">c<v>ou</v>ch</td>
 </tr>
 </tbody></table>
-<h4 id="th-τ">TH τ</h4>
+<h4 id="th-τħ">TH <vc>th</vc></h4>
 <table>
 <thead>
 <tr>
@@ -8635,57 +8799,57 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>Ə</v>1</td>
 <td align="center"><vc>th</vc><v>é</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>A</v>T</td>
 <td align="center"><vc>th</vc><v>a</v>t</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>I</v>S</td>
 <td align="center"><vc>th</vc><v>i</v>s</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>AE</v></td>
 <td align="center"><vc>th</vc><v>e</v>y</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>EƏ</v>1</td>
 <td align="center"><vc>th</vc><v>eŕ</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>A</v>N</td>
 <td align="center"><vc>th</vc><v>a</v>n</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>EƏ</v>2</td>
 <td align="center"><vc>th</vc><v>eir</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>E</v>M</td>
 <td align="center"><vc>th</vc><v>e</v>m</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>E</v>N</td>
 <td align="center"><vc>th</vc><v>e</v>n</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>OW</v>Z</td>
 <td align="center"><vc>th</vc><v>ô</v><vc>ś</vc><x>e</x></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><vc>TH</vc><v>EE</v>Z</td>
 <td align="center"><vc>th</vc><v>ê</v><vc>ś</vc><x>e</x></td>
 </tr>
@@ -8695,52 +8859,52 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">W<v>I</v><vc>TH</vc></td>
 <td align="center">w<v>i</v><vc>th</vc></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><v>U</v><vc>TH</vc><v>Ə</v></td>
 <td align="center"><v>ǒ</v><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center"><v>EE</v><vc>TH</vc><v>Ə</v></td>
 <td align="center"><v>ê</v><x>i</x><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">M<v>U</v><vc>TH</vc><v>Ə</v></td>
 <td align="center">m<v>ǒ</v><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">G<v>A</v><vc>TH</vc><v>Ə</v></td>
 <td align="center">g<v>a</v><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">L<v>E</v><vc>TH</vc><v>Ə</v></td>
 <td align="center">l<v>e</v><x>a</x><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">R<v>I</v><vc>TH</vc>M</td>
 <td align="center">r<x>h</x><v>ẏ</v><vc>th</vc>m</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">F<v>E</v><vc>TH</vc><v>Ə</v></td>
 <td align="center">f<v>e</v><x>a</x><vc>th</vc><v>er</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;τ</td>
+<td align="center">TH-&gt;<vc>th</vc></td>
 <td align="center">L<v>AE</v><vc>TH</vc></td>
 <td align="center">l<v>â</v><vc>th</vc><x>e</x></td>
 </tr>
 </tbody></table>
-<h4 id="th-π">TH π</h4>
+<h4 id="th-πħ">TH th</h4>
 <table>
 <thead>
 <tr>
@@ -8750,62 +8914,62 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>Ə</v>D</td>
 <td align="center">th<v>ir</v>d</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>I</v>NK</td>
 <td align="center">th<v>i</v>nk</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>I</v>NG</td>
 <td align="center">th<v>i</v>ng</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>OR</v>T</td>
 <td align="center">th<v>ø</v><x>ugh</x>t</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>O</v>T</td>
 <td align="center">th<v>ø</v><x>ugh</x>t</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>U</v>M</td>
 <td align="center">th<v>u</v>m<x>b</x></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>A</v>NK</td>
 <td align="center">th<v>a</v>nk</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>IE</v></td>
 <td align="center">th<v>igh</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>I</v>K</td>
 <td align="center">th<v>i</v>c<x>k</x></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>I</v>N</td>
 <td align="center">th<v>i</v>n</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">THR<v>OW</v></td>
 <td align="center">thr<v>ow</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">TH<v>U</v>MZ</td>
 <td align="center">th<v>u</v>m<x>b</x><vc>ś</vc></td>
 </tr>
@@ -8815,77 +8979,77 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">B<v>OW</v>TH</td>
 <td align="center">b<v>ô</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center"><v>ER</v>TH</td>
 <td align="center"><x>ea</x><v>ŕ</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">H<v>E</v>LTH</td>
 <td align="center">h<v>e</v><x>a</x>lth</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">M<v>I</v>TH</td>
 <td align="center">m<v>ẏ</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">N<v>OR</v>TH</td>
 <td align="center">n<v>or</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">M<v>OU</v>TH</td>
 <td align="center">m<v>ou</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center"><v>O</v>TH<v>Ə</v></td>
 <td align="center"><v>au</v>th<x>o</x><v>ŕ</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">S<v>OU</v>TH</td>
 <td align="center">s<v>ou</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">B<v>A</v>TH</td>
 <td align="center">b<v>ā</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">BR<v>E</v>TH</td>
 <td align="center">br<v>e</v><x>a</x>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center"><v>AR</v>TH<v>Ə</v></td>
 <td align="center"><v>ar</v>th<v>ur</v></td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">F<v>AE</v>TH</td>
 <td align="center">f<v>ai</v>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">F<v>I</v>FTH</td>
 <td align="center">f<v>i</v>fth</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">F<v>O</v>TH</td>
 <td align="center">f<v>ø</v><x>ur</x>th</td>
 </tr>
 <tr>
-<td align="center">TH-&gt;π</td>
+<td align="center">TH-&gt;th</td>
 <td align="center">KL<v>O</v>TH</td>
 <td align="center">cl<v>o</v>th</td>
 </tr>
@@ -9120,7 +9284,7 @@
 <td align="center">ph<v>ãŕ</v><x>a</x><v>ô</v><x>h</x></td>
 </tr>
 </tbody></table>
-<h4 id="ee-ý-1"><v>EE</v> <v>ý</v></h4>
+<h4 id="ee-ý"><v>EE</v> <v>ý</v></h4>
 <table>
 <thead>
 <tr>
@@ -9440,117 +9604,117 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center"><v>E</v>LS</td>
 <td align="center"><v>e</v>ls<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">H<v>A</v>V1</td>
 <td align="center">h<v>a</v>v<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">D<v>U</v>Z</td>
 <td align="center">d<v>ǒ</v><x>e</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">P<v>EE</v>PL</td>
 <td align="center">p<v>ê</v><x>o</x>pl<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center"><v>AR</v>1</td>
 <td align="center"><v>ar</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">K<v>AE</v>M</td>
 <td align="center">c<v>â</v>m<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">K<v>AE</v>S</td>
 <td align="center">c<v>â</v>s<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">L<v>IE</v>K</td>
 <td align="center">l<v>î</v>k<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">L<v>IE</v>F</td>
 <td align="center">l<v>î</v>f<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center"><v>A</v>SKT</td>
 <td align="center"><v>ā</v>sk<x>e</x>ð</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center"><v>ER</v>L<v>EE</v>1</td>
 <td align="center"><x>ea</x><v>ŕ</v>l<v>ý</v></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center"><v>E</v>VR<v>EE</v></td>
 <td align="center"><v>e</v>v<x>e</x>r<v>ý</v></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">D<v>U</v>N1</td>
 <td align="center">d<v>ǒ</v>n<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">H<v>IƏ</v>1</td>
 <td align="center">h<v>ėŕ</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">GR<v>AE</v>T1</td>
 <td align="center">gr<x>e</x><v>â</v>t</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center"><v>I</v>SSH<v>OO</v></td>
 <td align="center"><v>i</v>sŝ<v>ü</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">KL<v>IƏ</v></td>
 <td align="center">cl<v>ė</v><x>a</x><v>ŕ</v></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">KR<v>EEAE</v>T</td>
 <td align="center">cr<v>êâ</v>t<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">M<v>AE</v>D1</td>
 <td align="center">m<v>â</v>d<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">M<v>AE</v>K</td>
 <td align="center">m<v>â</v>k<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">M<v>OR</v>1</td>
 <td align="center">m<v>or</v><x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">PL<v>AE</v>S</td>
 <td align="center">pl<v>â</v>ç<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<x>aieou</x>]</td>
+<td align="center">S<v>i</v>l<v>e</v>ntV</td>
 <td align="center">T<v>AE</v>K</td>
 <td align="center">t<v>â</v>k<x>e</x></td>
 </tr>
@@ -9560,77 +9724,77 @@
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">D<v>OU</v>T</td>
 <td align="center">d<v>ou</v><x>b</x>t</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">L<v>I</v>S<v>Ə</v>N</td>
 <td align="center">l<v>i</v>s<x>t</x><v>é</v>n</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">K<v>U</v>B<v>Ə</v>D</td>
 <td align="center">c<v>u</v><x>p</x>b<x>oa</x><v>ŕ</v>d</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">M<v>U</v>SLZ</td>
 <td align="center">m<v>u</v>s<x>c</x>l<x>e</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">TH<v>U</v>M</td>
 <td align="center">th<v>u</v>m<x>b</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">B<v>A</v>L<v>AE</v></td>
 <td align="center">b<v>a</v>ll<v>ĕ</v><x>t</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">B<v>O</v>MZ</td>
 <td align="center">b<v>o</v>m<x>b</x><vc>ś</vc></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">D<v>AE</v>BY<v>OO</v></td>
 <td align="center">d<v>ĕ</v>b<v>û</v><x>t</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">D<v>A</v>MD1</td>
 <td align="center">d<v>a</v>m<x>ne</x>d</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center"><v>IE</v>L<v>Ə</v>ND</td>
 <td align="center"><v>î</v><x>s</x>l<v>á</v>nd</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">D<v>E</v>TS</td>
 <td align="center">d<v>e</v><x>b</x>ts</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">D<v>I</v>S<v>E</v>NT1</td>
 <td align="center">d<v>ė</v>s<x>c</x><v>e</v>nt</td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">H<v>A</v>NS<v>U</v>M1</td>
 <td align="center">h<v>a</v>n<x>d</x>s<v>ǒ</v>m<x>e</x></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center"><v>A</v>ZM<v>Ə</v></td>
 <td align="center"><v>a</v><vc>ś</vc><x>th</x>m<v>á</v></td>
 </tr>
 <tr>
-<td align="center">S<v>i</v>l<v>e</v>nt-&gt;[<v>a</v>-z]0</td>
+<td align="center">S<v>i</v>l<v>e</v>ntC</td>
 <td align="center">D<v>Ə</v>BR<v>EE</v></td>
 <td align="center">d<v>é</v>brï<x>s</x></td>
 </tr>

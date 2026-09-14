@@ -17,11 +17,11 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
 // export \
  const primeMap = {
     // Left:  primes
-    'q': 11,          //def
-    'w':  3,          //ghi
-    'e':  5,          //mon
-    'r': 23,          //prz 
-    'f': 17,          //ab
+    'a': 11,          //def
+    's':  3,          //ghi
+    'd':  5,          //mon
+    'f': 23,          //prz 
+    'r': 17,          //ab
    
     't': 29,  // left: function key
 
@@ -40,8 +40,8 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
 
 //  ' ': 86,     //reserves
     'c': 94,    //spacebar3
-    'n': 74,     //spacebar2
-    'v': 74,     //spacebar2
+    'n': 118,     //spacebar2
+    'v': 118,     //spacebar2
     'm': 94,     //spacebar3
     'b': 106,    //spacebar1
 
@@ -83,8 +83,8 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
  [ 29  *  7]        : '94', 
  [ 29  * 13]        : '95', 
  [ 29  * 19]        : '97', 
- [ 37  * 37]        : 'missed', 
- [ 37  * 53]        : 'wd3', 
+ [ 59  * 59]        : 'missed', 
+ [ 59  * 53]        : 'wd3', 
 
 
 
@@ -101,7 +101,7 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
 
 
     53       : 'wd1',  // <space>  selct 1st word
-    37       : 'wd2', //  /        selct 2nd word
+    59       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
 //  53       : 'wd4', //  /        selct 4th word
     47       : 'wd3', //  <space>/ select 3rd word

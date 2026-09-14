@@ -18,16 +18,17 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
 //export \
 const primeMap = {
     // Left:  primes    keys   mnemonic
-    'q': 11,            //def  1+1 = 2
-    'w': 3,             //ghi  3   = 3 
-    'e': 5,             //mon  5   = 5
-    'r': 23,            //pqrs 2x3 = 6 
-    'a': 19,            //abc  1+9 = 1+0 = 1
-    's': 13,            //jkl  1+3 = 4
-    'd':  7,            //tuv  7   = 7
-    'f': 17,            //wxyz 1+7 = 8  
+    'a': 11,            //def  1+1 = 2
+    's': 3,             //ghi  3   = 3 
+    'd': 5,             //mon  5   = 5
+    'f': 23,            //pqrs 2x3 = 6 
+    'q': 19,            //abc  1+9 = 1+0 = 1
+    'w': 13,            //jkl  1+3 = 4
+    'e':  7,            //tuv  7   = 7
+    'r': 17,            //wxyz 1+7 = 8  
     
     't': 29,  // Left: function key
+    'g': 29,  // Left: function key
 
     // Right: doubled primes
     ';': 22,            //def  
@@ -47,8 +48,8 @@ const primeMap = {
 
     'capslock' : 86,     //reserves
     'c'        : 94,    //spacebar3
-    'n'        : 74,     //spacebar2
-    'v'        : 74,     //spacebar2
+    'n'        : 118,     //spacebar2
+    'v'        : 118,     //spacebar2
     'm'        : 94,     //spacebar3
     'b'        : 106,    //spacebar1
 
@@ -82,8 +83,8 @@ const productMap = {
  [ 29  *  3]        : '95', 
  [ 29  *  5]        : '94', 
  [ 29  * 23]        : '92', 
- [ 37  * 37]        : 'missed', 
- [ 37  * 53]        : 'wd3', 
+ [ 59  * 59]        : 'missed', 
+ [ 59  * 53]        : 'wd3', 
 
 
 //comma, stop, delete
@@ -95,7 +96,7 @@ const productMap = {
   71:'94',   //enter
 
     53       : 'wd1',  // <space>  selct 1st word
-    37       : 'wd2', //  /        selct 2nd word
+    59       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
 //  53       : 'wd4', //  /        selct 4th word
     47       : 'wd3', //  <space>/ select 3rd word

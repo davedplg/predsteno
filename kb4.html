@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chorded Keypress to Digit Input</title>
+  <title>Keyboard</title>
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body class="markdown striped">
 #### Alphabet Map 4
   ||||||||||
   |:------------:|:------------:|:------------:|:------------:|:------------:|:------------:|:------------:|:------------:|:------------:|
-  |def|ghi|mon|prz||swy|tuv|jkl|abə|
+  |abə|jkl|tuv|swy||swy|tuv|jkl|abə|
   | <key>Q</key>| <key>W</key>| <key>E</key>| <key>R</key>|| <key>U</key>| <key>I</key>| <key>O</key>| <key>P</key>|
   ||||||||||
   | <key>A</key>| <key>S</key>| <key>D</key>| <key>F</key>|| <key>J</key>| <key>K</key>| <key>L</key>| <key>;</key>|
-  |abə|jkl|tuv|swy||prz|mon|ghi|def|
+  |def|ghi|mon|prz||prz|mon|ghi|def|
+
+[Advanced Chords](#advanced-chords)
 
 #### Key Map
   |key|shortcut lhs|shortcut rhs|
@@ -31,6 +33,17 @@
  - backspace
  - numbers
 
+#### Advanced Chords
+
+ |output|lhs<br/>top|lhs<br/>bottom|rhs<br/>top|rhs<br/>bottom|
+  |:------------:|:------------:|:------------:|:------------:|:------------:|
+  |abə<br/>def  |_ <key>W</key> <key>E</key> <key>R</key> |_ <key>S</key> <key>D</key> <key>F</key> |<key>U</key> <key>I</key> <key>O</key> _|<key>J</key> <key>K</key> <key>L</key> _|
+  |jkl<br/>ghi  |<key>Q</key> _ <key>E</key> <key>R</key> |<key>A</key> _ <key>D</key> <key>F</key> |<key>U</key> <key>I</key> _ <key>P</key> |<key>J</key> <key>K</key> _ <key>;</key>|
+  |tuv<br/>mno  |<key>Q</key> <key>W</key> _ <key>R</key> |<key>A</key> <key>S</key> _ <key>F</key> |<key>U</key> _ <key>O</key> <key>P</key> |<key>J</key> _ <key>L</key> <key>;</key>|
+  |swy<br/>prz  |<key>Q</key> <key>W</key> <key>E</key> _|<key>A</key> <key>S</key> <key>D</key> _|_ <key>I</key> <key>O</key> <key>P</key> |_ <key>K</key> <key>L</key> <key>;</key>|
+|key x2|<key>G</key>|lhs |<key>H</key>|rhs |
+
+The key not pressed is in one of the pair that makes up the column with both wanted keys. To hit both these buttons requires one finger to move out of its usual column. These alternate three finger chords (which are like the inverse of the target) are to improve the ergonomics of these letter combinations.
  <script src="lib/marked.min.js"></script>
   <script>
     // Process all Markdown content within the body

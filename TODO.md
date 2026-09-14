@@ -1,6 +1,17 @@
 # Features/Upgrade List
+## w examples
+do i need wa examples in the tables
+yes probs
+
 #augment words
 is losing focus on tablet but not github pages
+##
+access keys dont work in the desktop
+## check through example
+enhill agnis affable wtf
+oa is fucked  
+
+cluster ål,åu,åw
 
 
 ## command language

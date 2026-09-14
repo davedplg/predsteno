@@ -37,8 +37,8 @@ const primeMap = {
 
     'capslock': 86,     //reserves
     'c': 94,    //spacebar3
-    'n': 74,     //spacebar2
-    'v': 74,     //spacebar2
+    'n': 118,     //spacebar2
+    'v': 118,     //spacebar2
     'm': 94,     //spacebar3
     'b': 106,    //spacebar1
 };
@@ -72,8 +72,8 @@ const productMap = {
  [ 29  *  7]        : '94', 
  [ 29  * 13]        : '95', 
  [ 29  * 19]        : '97', 
- [ 37  * 37]        : 'missed', 
- [ 37  * 53]        : 'wd3', 
+ [ 59  * 59]        : 'missed', 
+ [ 59  * 53]        : 'wd3', 
 
 
 
@@ -90,7 +90,7 @@ const productMap = {
 
 
     53       : 'wd1',  // <space>  selct 1st word
-    37       : 'wd2', //  /        selct 2nd word
+    59       : 'wd2', //  /        selct 2nd word
     43       : 'missed', //  /        selct 3rd word
 //  53       : 'wd4', //  /        selct 4th word
     47       : 'wd3', //  <space>/ select 3rd word
