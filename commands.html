@@ -6,19 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Input Steps</title>
   <link rel="stylesheet" href="styles/styles.css">
+  <style>
+     li,p  {
+    font-size: 1.5rem;
+    }
+  </style>  
 </head>
 <body class="markdown striped">
-  ||| 3-Step |Input|||
-  |-------|------------|-------------|-----------|----------------|--------|
-  ||| ||||
-  |Step<br/>&nbsp;|Word<br/> 1      |Word<br/> 2       |Word<br/> 3     |Word<br/> 4-10          |Other<br/>&nbsp;   |
-  | 1|<key>B</key>|<key>N</key> |<key>B</key>+<key>N</key><br/><br/> <key>M/C</key> ||<key>Caps</key><br/><br/> Step 2|
-  | 2|  <key>Caps</key><br/><key>V</key>  |   <key>N</key>   |   |<key>QWER</key><br/><br/><key>UIOP</key>     | <key>h</key><br/><br/>  Step 3|
-  | 3|  missing  | word        |use| qwerty |
+ # Commands
+  
+ In the third input step there is a semi-colon. Instead of typing over it to enter a missing word, here are some commands that can be used. 
 
+## Move
+ - ;gg  move to top
+ - ;20g move to line 20
+ - ;ng  move to line n
 
-[Advanced Commands](commands.html)
+## Deletion
+ - ;dd  delete current line  
+ - ;3d  delete 3 lines
+ - ;nd  delete n lines
+ - ;dgg delete to top
 
+## Copy
+ - ;yy copy current line
+ - ;5y copy 5 lines
+ - ;ny copy n lines
+
+ ## Paste
+ - ;p  paste below
+ - ;P  paste above
   <script src="lib/marked.min.js"></script>
   <script>
     // Process all Markdown content within the body
