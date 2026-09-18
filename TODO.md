@@ -1,4 +1,9 @@
 # Features/Upgrade List
+## WW
+blow is BLOWW yuk
+## the doesnt like changing case 
+do i just need <>/ in th case changing regex?
+
 ## w examples
 do i need wa examples in the tables
 yes probs
@@ -24,11 +29,6 @@ indexOf lastIndexOf maybe?
 # first parse 
 arrows getting through
 
-
-
-##
-split oo and uu at the second table level not in the main matrix..
-
 ## purple semi vowels
 where a semivowel is flanked by two vowel tags 
 maybe we turn it purple
@@ -38,6 +38,7 @@ maybe we turn it purple
 should we have a 2 finger chord for the
 8 and 6 key?  should the chords change 
 inner of pairs is the target; i.e. 
+
 er: 8 ew:7 wq:4 and round the corner qr:1
 this might be more logical and better on
 human hands.
@@ -54,10 +55,6 @@ it would be good to have an sms-a-bet field so
 users could incidently learn this it might be
 more anchoring with fluctuating frags that
 pairwise reorder.
-
-# v4 double keys
-these are not on the keymap or 3-parse input
-pages
 
 ## tiny markdown joins line 2
 start
