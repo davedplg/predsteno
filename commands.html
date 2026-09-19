@@ -4,38 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Input Steps</title>
+  <title>Commands</title>
   <link rel="stylesheet" href="styles/styles.css">
   <style>
      li,p  {
-    font-size: 1.5rem;
-    }
+       font-size: 1.5rem;
+     }
+     th {
+        background-color: #c8e0e0;
+     } 
   </style>  
 </head>
 <body class="markdown striped">
  # Commands
   
- In the third input step there is a semi-colon. Instead of typing over it to enter a missing word, here are some commands that can be used. 
+ In the third input step there is a semi-colon.  
+ Type over it to enter a missing word.  
+ Leave the semi-colon for these commands. 
+ |  MOVE <br/>(go) |where to  |  DELETE <br/>------ | what        |
+|:------:|:--------:|:-------:|:-----------:|
+| ;gg    | start    | ;dd      | 1 line     |
+| ;3g    | line 3   | ;3d      | 3 lines    |
+| ;ng    | line n   | ;nd      | n lines    |
+| ;G     | end      | ;dgg     | ➞top       |
+|        |          | ;dG      | ➞bottom    |
 
-## Move
- - ;gg     move to top
- - ;20g    move to line 20
- - ;ng     move to line n
+|  **COPY** <br/>**(yank)** | **what**    |  **PASTE**<br/>**------**  | **where**        |
+|:------:|:--------:|:-------:|:-----------:|
+| ;yy    | 1 line   | ;p      | below       |
+| ;3y    | 3 lines  | ;P      | above       |
+| ;ny    | n lines  |         |             |
 
-## Deletion
- - ;dd  delete current line  
- - ;3d  delete 3 lines
- - ;nd  delete n lines
- - ;dgg delete to top
 
-## Copy
- - ;yy copy current line
- - ;5y copy 5 lines
- - ;ny copy n lines
-
- ## Paste
- - ;p  paste below
- - ;P  paste above
   <script src="lib/marked.min.js"></script>
   <script>
     // Process all Markdown content within the body

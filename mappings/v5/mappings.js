@@ -37,6 +37,7 @@ const passThroughKeys = new Set(['tab','1', '2', '3', '4', '5', '6', '7', '8', '
      'backspace': 97,
      'delete': 101,
      'enter': 71,
+     'capslock': 86,
 
 //  ' ': 86,     //reserves
     'c': 94,    //spacebar3
