@@ -5,7 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keyboard</title>
   <link rel="stylesheet" href="styles/styles.css">
+
+<style>
+  /* Targets only the 3rd markdown table on the page */
+  table:nth-of-type(3) th {
+      background-color: #c8e0e0 !important;
+  }
+
+  table:nth-of-type(3) tbody tr td:nth-child(3n),
+  table:nth-of-type(4) tbody tr td:nth-child(3n),
+  table:nth-of-type(5) tbody tr td:nth-child(3n), s {
+      background-color: #c8c8e0 !important;
+  }
+  td,key  {
+    font-size: 0.9em;
+  }
+  
+  table:nth-of-type(5) { display: none  !important; }
+
+  @media screen and (min-width: 800px) {
+    table:nth-of-type(3) { display: none  !important; }
+    table:nth-of-type(4) { display: none  !important; }
+    table:nth-of-type(5) { display: block  !important; }
+  }
+
+</style>
 </head>
+
 <body class="markdown striped">
 #### Alphabet Map 4
   ||||||||||
@@ -17,6 +43,7 @@
   |def|ghi|mon|prz||prz|mon|ghi|def|
 
 [Advanced Chords](#advanced-chords)
+
 #### Key Map
   |key|shortcut lhs|shortcut rhs|
   |:------------:|:------------:|:------------:|
@@ -33,14 +60,33 @@
  - numbers
 
 #### Advanced Chords
- |output|lhs-top|lhs-bottom|rhs-top|rhs-bottom|
-  |:------------:|:------------:|:------------:|:------------:|:------------:|
-  |abə x def  |<s>Q</s>+<key>W</key>+<key>E</key>+<key>R</key> |<s>A</s>+<key>S</key>+<key>D</key>+<key>F</key> |<key>U</key>+<key>I</key>+<key>P</key>+<s>P</s> |<key>J</key>+<key>K</key>+<key>L</key>+<s>;</s>|
-  |jkl x ghi  |<key>Q</key>+<s>W</s>+<key>E</key>+<key>R</key> |<key>A</key>+<s>A</s>+<key>D</key>+<key>F</key> |<key>U</key>+<key>I</key>+<s>O</s>+<key>P</key> |<key>J</key>+<key>K</key>+<s>L</s>+<key>;</key>|
-  |tuv x mno  |<key>Q</key>+<key>E</key>+<s>R</s>+<key>W</key> |<key>A</key>+<key>S</key>+<s>D</s>+<key>F</key> |<key>U</key>+<s>I</s>+<key>O</key>+<key>P</key> |<key>J</key>+<s>K</s>+<key>L</key>+<key>;</key>|
-  |swy x prz  |<key>Q</key>+<key>E</key>+<key>R</key>+<s>W</s> |<key>S</key>+<key>D</key>+<key>F</key>+<s>A</s> |<s>P</s>+<key>U</key>+<key>I</key>+<key>P</key> |<s>J</s>+<key>K</key>+<key>L</key>+<key>;</key>|
 
-The key not pressed is in one of the pair that makes up the column with both wanted keys. To hit both these buttons is requires one finger to move out of its usual column. These alternate three finger chords which are like the inverse of the target are to improve the ergonomics of these letter combinations.
+<key>G</key> , <key>H</key> - double lhs, double rhs 
+
+|top|bottom|lhs <br/> output|
+|:------------:|:------------:|:------------:|
+ |<s>Q</s>+<key>W</key>+<key>E</key>+<key>R</key> |<s>A</s>+<key>S</key>+<key>D</key>+<key>F</key> | <key>Q</key><br/>+<key>A</key>|
+|<key>Q</key>+<s>W</s>+<key>E</key>+<key>R</key> |<key>A</key>+<s>S</s>+<key>D</key>+<key>F</key> | <key>W</key><br/>+<key>S</key>| 
+|<key>Q</key>+<key>W</key>+<s>E</s>+<key>R</key> |<key>A</key>+<key>S</key>+<s>D</s>+<key>F</key> | <key>E</key><br/>+<key>D</key>| 
+|<key>Q</key>+<key>W</key>+<key>E</key>+<s>R</s> |<key>A</key>+<key>S</key>+<key>D</key>+<s>F</s> | <key>R</key><br/>+<key>F</key>| 
+
+|top|bottom|rhs <br/> output|
+|:------------:|:------------:|:------------:|
+|<key>U</key>+<key>I</key>+<key>P</key>+<s>P</s> |<key>J</key>+<key>K</key>+<key>L</key>+<s>;</s>| <key>P</key><br/> +<key>;</key>|
+|<key>U</key>+<key>I</key>+<s>O</s>+<key>P</key> |<key>J</key>+<key>K</key>+<s>L</s>+<key>;</key>| <key>O</key><br/> +<key>L</key>|
+|<key>U</key>+<s>I</s>+<key>O</key>+<key>P</key> |<key>J</key>+<s>K</s>+<key>L</key>+<key>;</key>| <key>I</key><br/>+<key>K</key>|
+|<s>U</s>+<key>I</key>+<key>O</key>+<key>P</key> |<s>J</s>+<key>K</key>+<key>L</key>+<key>;</key>| <key>U</key><br/> +<key>J</key>|
+
+|top|bottom|lhs <br/> output|top|bottom|rhs <br/> output|
+|:------------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+ |<s>Q</s>+<key>W</key>+<key>E</key>+<key>R</key> |<s>A</s>+<key>S</key>+<key>D</key>+<key>F</key> | <key>Q</key><br/>+<key>A</key>|<key>U</key>+<key>I</key>+<key>P</key>+<s>P</s> |<key>J</key>+<key>K</key>+<key>L</key>+<s>;</s>| <key>P</key><br/> +<key>;</key>|
+|<key>Q</key>+<s>W</s>+<key>E</key>+<key>R</key> |<key>A</key>+<s>S</s>+<key>D</key>+<key>F</key> | <key>W</key><br/>+<key>S</key>|<key>U</key>+<key>I</key>+<s>O</s>+<key>P</key> |<key>J</key>+<key>K</key>+<s>L</s>+<key>;</key>| <key>O</key><br/> +<key>L</key>|
+|<key>Q</key>+<key>W</key>+<s>E</s>+<key>R</key> |<key>A</key>+<key>S</key>+<s>D</s>+<key>F</key> | <key>E</key><br/>+<key>D</key>|<key>U</key>+<s>I</s>+<key>O</key>+<key>P</key> |<key>J</key>+<s>K</s>+<key>L</key>+<key>;</key>| <key>I</key><br/>+<key>K</key>|
+|<key>Q</key>+<key>W</key>+<key>E</key>+<s>R</s> |<key>A</key>+<key>S</key>+<key>D</key>+<s>F</s> | <key>R</key><br/>+<key>F</key>|<s>U</s>+<key>I</key>+<key>O</key>+<key>P</key> |<s>J</s>+<key>K</key>+<key>L</key>+<key>;</key>| <key>U</key><br/> +<key>J</key>|
+
+The key not pressed is in one of the pair that makes up the column with both wanted keys.  
+To hit both these buttons is requires one finger to move out of its usual column.  
+These alternate three finger chords which are like the inverse of the target are to improve the ergonomics of these letter combinations.
  <script src="lib/marked.min.js"></script>
   <script>
     // Process all Markdown content within the body
